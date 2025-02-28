@@ -1,0 +1,16 @@
+name: cm-core-0.1
+include: src
+depend:
+flags:
+  --erased-cubical
+  --erasure
+  --erased-matches
+  --exact-split
+  --guardedness
+  --hidden-argument-puns
+  --no-import-sorts
+  --postfix-projections
+  --qualified-instances
+
+  -Werror
+  -WnoUnsupportedIndexedMatch
