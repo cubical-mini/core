@@ -3,12 +3,10 @@ module Foundations.Cat.Composition where
 
 open import Foundations.Prim.Type
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  (Ob  : (ℓ : Level) → Type (ob-lvl ℓ))
-  (Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy))
-  where
+open import Foundations.Cat.Structures.Quiver
+
+module _ (C : Quiver) where
+  open Quiver C
 
   record Comp : Typeω where
     no-eta-equality
@@ -16,6 +14,7 @@ module _
     field _∙_ : {ℓx ℓy ℓz : Level} {x : Ob ℓx} {y : Ob ℓy} {z : Ob ℓz}
               → Hom x y → Hom y z → Hom x z
 
+    -- TODO remove?
     infixr 90 _∘_
     _∘_ : {ℓx ℓy ℓz : Level} {x : Ob ℓx} {y : Ob ℓy} {z : Ob ℓz}
         → Hom y z → Hom x y → Hom x z
@@ -24,4 +23,3 @@ module _
 open Comp ⦃ ... ⦄ public
 
 {-# DISPLAY Comp._∙_ _ f g = f ∙ g #-}
-{-# DISPLAY Comp._∘_ _ f g = f ∘ g #-} -- remove?

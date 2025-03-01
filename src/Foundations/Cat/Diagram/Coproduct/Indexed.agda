@@ -5,15 +5,11 @@ open import Foundations.Prim.Kan
 open import Foundations.Prim.Type
 
 open import Foundations.Cat.Composition
+open import Foundations.Cat.Structures.Quiver
 open import Foundations.Cat.Underlying
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  (Ob  : (ℓ : Level) → Type (ob-lvl ℓ))
-  (Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy))
-  ⦃ _ : Comp Ob Hom ⦄ {ℓi : Level} {Idx : Type ℓi}
-  where
+module _ (C : Quiver) ⦃ _ : Comp C ⦄ {ℓi : Level} {Idx : Type ℓi} where
+  open Quiver C
 
   record is-indexed-coproduct ℓy {ℓs ℓf} {S : Ob ℓs} (F : Idx → Ob ℓf) (ι : ∀ i → Hom (F i) S) : Type (ℓi l⊔ ob-lvl ℓy l⊔ hom-lvl ℓs ℓy l⊔ hom-lvl ℓf ℓy) where
     no-eta-equality
@@ -28,19 +24,14 @@ module _
       ι         : ∀ i → Hom (F i) ∐F
       has-is-ic : {ℓy : Level} → is-indexed-coproduct ℓy F ι
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  (Ob  : (ℓ : Level) → Type (ob-lvl ℓ))
-  (Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy))
-  ⦃ _ : Comp Ob Hom ⦄ {ℓi : Level} (Idx : Type ℓi)
-  where
+module _ (C : Quiver) ⦃ _ : Comp C ⦄ {ℓi : Level} (Idx : Type ℓi) where
+  open Quiver C
 
   record Indexed-coproducts : Typeω where
     no-eta-equality
     field
       ∐      : {ℓf : Level} → (Idx → Ob ℓf) → Ob (ℓi l⊔ ℓf)
-      has-ic : {ℓf : Level} {F : Idx → Ob ℓf} → Indexed-coproduct Ob Hom F (∐ F)
+      has-ic : {ℓf : Level} {F : Idx → Ob ℓf} → Indexed-coproduct C F (∐ F)
 
 open is-indexed-coproduct ⦃ ... ⦄ public
   renaming (match to ∐-match; commute to ι-commute; unique to ∐-unique)
@@ -55,43 +46,25 @@ open Indexed-coproducts ⦃ ... ⦄ public
 {-# DISPLAY Indexed-coproduct.ι _ i = ι i #-}
 {-# DISPLAY Indexed-coproducts.∐ _ F = ∐ F #-}
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  {Ob  : (ℓ : Level) → Type (ob-lvl ℓ)}
-  {Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy)}
-  ⦃ _ : Comp Ob Hom ⦄ {ℓi ℓf : Level}
-  where
-
-  ∐[_] : {Idx : Type ℓi} ⦃ _ : Indexed-coproducts Ob Hom Idx ⦄ → (Idx → Ob ℓf) → Ob (ℓi l⊔ ℓf)
+module _ {C : Quiver} (let open Quiver C) ⦃ _ : Comp C ⦄ {ℓi ℓf : Level} where
+  ∐[_] : {Idx : Type ℓi} ⦃ _ : Indexed-coproducts C Idx ⦄ → (Idx → Ob ℓf) → Ob (ℓi l⊔ ℓf)
   ∐[_] = ∐
 
   infixr 60 ∐-syntax
-  ∐-syntax : ⦃ u : Underlying Ob Hom ⦄ (X : Ob ℓi) ⦃ _ : Indexed-coproducts Ob Hom ⌞ X ⌟ ⦄
+  ∐-syntax : ⦃ u : Underlying C ⦄ (X : Ob ℓi) ⦃ _ : Indexed-coproducts C ⌞ X ⌟ ⦄
            → (⌞ X ⌟ → Ob ℓf) → Ob (ℓf l⊔ u .ℓ-und ℓi)
   ∐-syntax _ = ∐
   syntax ∐-syntax X (λ x → F) = ∐[ x ꞉ X ] F
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  {Ob  : (ℓ : Level) → Type (ob-lvl ℓ)}
-  {Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy)}
-  ⦃ _ : Comp Ob Hom ⦄ {ℓi ℓf : Level} {Idx : Type ℓi} {F : Idx → Ob ℓf}
-  where instance
-    is-ic-helper : {ℓy : Level} {∐F : Ob (ℓi l⊔ ℓf)} ⦃ ic : Indexed-coproduct Ob Hom F ∐F ⦄ → is-indexed-coproduct Ob Hom ℓy F ι
+  module _ {Idx : Type ℓi} {F : Idx → Ob ℓf} where instance
+    is-ic-helper : {ℓy : Level} {∐F : Ob (ℓi l⊔ ℓf)} ⦃ ic : Indexed-coproduct C F ∐F ⦄ → is-indexed-coproduct C ℓy F ι
     is-ic-helper ⦃ ic ⦄ = ic .Indexed-coproduct.has-is-ic
 
-    ic-helper : ⦃ ic : Indexed-coproducts Ob Hom Idx ⦄ → Indexed-coproduct Ob Hom F ∐[ F ]
+    ic-helper : ⦃ ic : Indexed-coproducts C Idx ⦄ → Indexed-coproduct C F ∐[ F ]
     ic-helper ⦃ ic ⦄ = ic .Indexed-coproducts.has-ic
 
 module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  {Ob  : (ℓ : Level) → Type (ob-lvl ℓ)}
-  {Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy)}
-  ⦃ _ : Comp Ob Hom ⦄ {ℓi ℓf ℓg : Level} {Idx : Type ℓi} {F : Idx → Ob ℓf} {G : Idx → Ob ℓg}
-  ⦃ _ : Indexed-coproducts Ob Hom Idx ⦄
-  where
+  {C : Quiver} (let open Quiver C) ⦃ _ : Comp C ⦄
+  {ℓi ℓf ℓg : Level} {Idx : Type ℓi} {F : Idx → Ob ℓf} {G : Idx → Ob ℓg} ⦃ _ : Indexed-coproducts C Idx ⦄ where
     ∐→ : (α : (i : Idx) → Hom (F i) (G i)) → Hom ∐[ F ] ∐[ G ]
     ∐→ α = ∐-match λ i → α i ∙ ι i

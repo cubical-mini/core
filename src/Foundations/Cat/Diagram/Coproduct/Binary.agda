@@ -5,14 +5,10 @@ open import Foundations.Prim.Kan
 open import Foundations.Prim.Type
 
 open import Foundations.Cat.Composition
+open import Foundations.Cat.Structures.Quiver
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  (Ob  : (ℓ : Level) → Type (ob-lvl ℓ))
-  (Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy))
-  ⦃ _ : Comp Ob Hom ⦄
-  where
+module _ (C : Quiver) ⦃ _ : Comp C ⦄ where
+  open Quiver C
 
   -- \(4 and \)4
   record is-coproduct ℓq {ℓa ℓb ℓs} {A : Ob ℓa} {B : Ob ℓb} {S : Ob ℓs} (ι₁ : Hom A S) (ι₂ : Hom B S) : Type (ob-lvl ℓq l⊔ hom-lvl ℓa ℓq l⊔ hom-lvl ℓb ℓq l⊔ hom-lvl ℓs ℓq) where
@@ -58,30 +54,16 @@ open Binary-coproducts ⦃ ... ⦄ public
 {-# DISPLAY Coproduct.ι₂ _ = ι₂ #-}
 {-# DISPLAY Binary-coproducts._⨿_ _ A B = A ⨿ B #-}
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  {Ob  : (ℓ : Level) → Type (ob-lvl ℓ)}
-  {Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy)}
-  ⦃ _ : Comp Ob Hom ⦄
-  {ℓa ℓb : Level}
-  {A : Ob ℓa} {B : Ob ℓb}
-  where instance
-    is-coproduct-helper : {ℓq : Level} {S : Ob (ℓa l⊔ ℓb)} ⦃ c : Coproduct Ob Hom A B S ⦄ → is-coproduct Ob Hom ℓq ι₁ ι₂
+module _ {C : Quiver} ⦃ _ : Comp C ⦄ (let open Quiver C) where
+  module _ {ℓa ℓb : Level} {A : Ob ℓa} {B : Ob ℓb} where instance
+    is-coproduct-helper : {ℓq : Level} {S : Ob (ℓa l⊔ ℓb)} ⦃ c : Coproduct C A B S ⦄ → is-coproduct C ℓq ι₁ ι₂
     is-coproduct-helper ⦃ c ⦄ = c .Coproduct.has-is-coproduct
 
-    coproduct-helper : ⦃ c : Binary-coproducts Ob Hom ⦄ → Coproduct Ob Hom A B (A ⨿ B)
+    coproduct-helper : ⦃ c : Binary-coproducts C ⦄ → Coproduct C A B (A ⨿ B)
     coproduct-helper ⦃ c ⦄ = c .Binary-coproducts.has-coproduct
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  {Ob  : (ℓ : Level) → Type (ob-lvl ℓ)}
-  {Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy)}
-  ⦃ _ : Comp Ob Hom ⦄
-  ⦃ _ : Binary-coproducts Ob Hom ⦄
-  where
   infixr 71 _⨿→_
-  _⨿→_ : {ℓa ℓb ℓs ℓq : Level} {A : Ob ℓa} {B : Ob ℓb} {S : Ob ℓs} {Q : Ob ℓq}
+  _⨿→_ : ⦃ _ : Binary-coproducts C ⦄
+       → {ℓa ℓb ℓs ℓq : Level} {A : Ob ℓa} {B : Ob ℓb} {S : Ob ℓs} {Q : Ob ℓq}
        → Hom S A → Hom Q B → Hom (S ⨿ Q) (A ⨿ B)
   f ⨿→ g = ⁅ f ∙ ι₁ , g ∙ ι₂ ⁆

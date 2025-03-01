@@ -8,16 +8,10 @@ open import Foundations.Cat.Composition
 open import Foundations.Cat.Diagram.Product.Binary
 open import Foundations.Cat.Diagram.Terminal
 open import Foundations.Cat.Reflexivity
+open import Foundations.Cat.Structures.Quiver
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  (Ob  : (ℓ : Level) → Type (ob-lvl ℓ))
-  (Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy))
-  ⦃ _ : Refl Ob Hom ⦄
-  ⦃ _ : Comp Ob Hom ⦄
-  ⦃ _ : Binary-products Ob Hom ⦄
-  where
+module _ (C : Quiver) ⦃ _ : Refl C ⦄ ⦃ _ : Comp C ⦄ ⦃ _ : Binary-products C ⦄ where
+  open Quiver C
 
   record is-exponential ℓg {ℓa ℓb ℓe} {A : Ob ℓa} {B : Ob ℓb}
     (B^A : Ob ℓe) (ev : Hom (B^A × A) B) : Type (ob-lvl ℓg l⊔ hom-lvl ℓg ℓe l⊔ hom-lvl (ℓg l⊔ ℓa) ℓb) where
@@ -55,18 +49,10 @@ open Cartesian-closed ⦃ ... ⦄ public
 {-# DISPLAY Cartesian-closed._⇒_ _ A B = A ⇒ B #-}
 
 module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  {Ob  : (ℓ : Level) → Type (ob-lvl ℓ)}
-  {Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy)}
-  ⦃ _ : Refl Ob Hom ⦄
-  ⦃ _ : Comp Ob Hom ⦄
-  ⦃ _ : Binary-products Ob Hom ⦄
-  {ℓa ℓb : Level}
-  {A : Ob ℓa} {B : Ob ℓb}
-  where instance
-    is-exp-helper : {ℓg : Level} {E : Ob (ℓa l⊔ ℓb)} ⦃ e : Exponential Ob Hom A B E ⦄ → is-exponential Ob Hom ℓg E ev
+  {C : Quiver} (let open Quiver C) ⦃ _ : Refl C ⦄ ⦃ _ : Comp C ⦄ ⦃ _ : Binary-products C ⦄
+  {ℓa ℓb : Level} {A : Ob ℓa} {B : Ob ℓb} where instance
+    is-exp-helper : {ℓg : Level} {E : Ob (ℓa l⊔ ℓb)} ⦃ e : Exponential C A B E ⦄ → is-exponential C ℓg E ev
     is-exp-helper ⦃ e ⦄ = e .Exponential.has-is-exp
 
-    exp-helper : ⦃ e : Cartesian-closed Ob Hom ⦄ → Exponential Ob Hom A B (A ⇒ B)
+    exp-helper : ⦃ e : Cartesian-closed C ⦄ → Exponential C A B (A ⇒ B)
     exp-helper ⦃ e ⦄ = e .Cartesian-closed.has-exp

@@ -3,12 +3,10 @@ module Foundations.Cat.Symmetry where
 
 open import Foundations.Prim.Type
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  (Ob  : (ℓ : Level) → Type (ob-lvl ℓ))
-  (Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy))
-  where
+open import Foundations.Cat.Structures.Quiver
+
+module _ (C : Quiver) where
+  open Quiver C
 
   record Symmetry : Typeω where
     no-eta-equality

@@ -5,14 +5,10 @@ open import Foundations.Prim.Kan
 open import Foundations.Prim.Type
 
 open import Foundations.Cat.Composition
+open import Foundations.Cat.Structures.Quiver
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  (Ob  : (ℓ : Level) → Type (ob-lvl ℓ))
-  (Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy))
-  {ℓt : Level}
-  where
+module _ (C : Quiver) {ℓt : Level} where
+  open Quiver C
 
   is-terminal : {ℓ : Level} → Ob ℓt → Type (ob-lvl ℓ l⊔ hom-lvl ℓ ℓt)
   is-terminal {ℓ} t = (x : Ob ℓ) → is-contr (Hom x t)

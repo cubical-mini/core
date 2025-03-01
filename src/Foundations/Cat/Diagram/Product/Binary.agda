@@ -5,14 +5,10 @@ open import Foundations.Prim.Kan
 open import Foundations.Prim.Type
 
 open import Foundations.Cat.Composition
+open import Foundations.Cat.Structures.Quiver
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  (Ob  : (ℓ : Level) → Type (ob-lvl ℓ))
-  (Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy))
-  ⦃ _ : Comp Ob Hom ⦄
-  where
+module _ (C : Quiver) ⦃ _ : Comp C ⦄ where
+  open Quiver C
 
   record is-product ℓq {ℓa ℓb ℓp} {A : Ob ℓa} {B : Ob ℓb} {P : Ob ℓp} (π₁ : Hom P A) (π₂ : Hom P B) : Type (ob-lvl ℓq l⊔ hom-lvl ℓq ℓa l⊔ hom-lvl ℓq ℓb l⊔ hom-lvl ℓq ℓp) where
     no-eta-equality
@@ -56,30 +52,16 @@ open Binary-products ⦃ ... ⦄ public
 {-# DISPLAY Product.π₂ _ = π₂ #-}
 {-# DISPLAY Binary-products._×_ _ A B = A × B #-}
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  {Ob  : (ℓ : Level) → Type (ob-lvl ℓ)}
-  {Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy)}
-  ⦃ _ : Comp Ob Hom ⦄
-  {ℓa ℓb : Level}
-  {A : Ob ℓa} {B : Ob ℓb}
-  where instance
-    is-product-helper : {ℓq : Level} {P : Ob (ℓa l⊔ ℓb)} ⦃ p : Product Ob Hom A B P ⦄ → is-product Ob Hom ℓq π₁ π₂
+module _ {C : Quiver} ⦃ _ : Comp C ⦄ (let open Quiver C) where
+  module _ {ℓa ℓb : Level} {A : Ob ℓa} {B : Ob ℓb} where instance
+    is-product-helper : {ℓq : Level} {P : Ob (ℓa l⊔ ℓb)} ⦃ p : Product C A B P ⦄ → is-product C ℓq π₁ π₂
     is-product-helper ⦃ p ⦄ = p .Product.has-is-product
 
-    product-helper : ⦃ p : Binary-products Ob Hom ⦄ → Product Ob Hom A B (A × B)
+    product-helper : ⦃ p : Binary-products C ⦄ → Product C A B (A × B)
     product-helper ⦃ p ⦄ = p .Binary-products.has-product
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  {Ob  : (ℓ : Level) → Type (ob-lvl ℓ)}
-  {Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy)}
-  ⦃ _ : Comp Ob Hom ⦄
-  ⦃ _ : Binary-products Ob Hom ⦄
-  where
   infixr 81 _×→_
-  _×→_ : {ℓa ℓb ℓp ℓq : Level} {A : Ob ℓa} {B : Ob ℓb} {P : Ob ℓp} {Q : Ob ℓq}
+  _×→_ : ⦃ _ : Binary-products C ⦄
+       → {ℓa ℓb ℓp ℓq : Level} {A : Ob ℓa} {B : Ob ℓb} {P : Ob ℓp} {Q : Ob ℓq}
        → Hom A P → Hom B Q → Hom (A × B) (P × Q)
   _×→_ f g = ⟨ π₁ ∙ f , π₂ ∙ g ⟩

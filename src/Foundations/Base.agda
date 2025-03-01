@@ -18,6 +18,7 @@ open import Foundations.Cat.Diagram.Initial public
 open import Foundations.Cat.Diagram.Product.Binary public
 open import Foundations.Cat.Diagram.Product.Indexed public
 open import Foundations.Cat.Diagram.Terminal public
+open import Foundations.Cat.Structures.Quiver public
 open import Foundations.Cat.Symmetry public
 open import Foundations.Cat.Underlying public
 
@@ -27,24 +28,31 @@ open import Agda.Builtin.Unit public
   renaming (⊤ to ⊤ₜ)
 
 -- We reside in the double ∞-category of types, functions and binary correspondences, let's get comfy
+
+FunQ : Quiver
+FunQ = mk-quiver (λ ℓ → Type ℓ) Fun
+
+CorrQ : (ℓ : Level) → Quiver
+CorrQ ℓ = mk-quiver (λ _ → Type ℓ) (Corr² ℓ)
+
 instance
-  Refl-Fun : Refl (λ ℓ → Type ℓ) Fun
+  Refl-Fun : Refl FunQ
   Refl-Fun .refl x = x
 
-  Comp-Fun : Comp (λ ℓ → Type ℓ) Fun
+  Comp-Fun : Comp FunQ
   Comp-Fun ._∙_ f g x = g (f x)
 
-  Underlying-Fun : Underlying (λ ℓ → Type ℓ) Fun
+  Underlying-Fun : Underlying FunQ
   Underlying-Fun .ℓ-und ℓ = ℓ
   Underlying-Fun .⌞_⌟ X = X
 
-  Refl-Corr² : {ℓ : Level} → Refl (λ _ → Type ℓ) (Corr² ℓ)
+  Refl-Corr² : {ℓ : Level} → Refl (CorrQ ℓ)
   Refl-Corr² .refl = _＝_
 
-  Comp-Corr² : {ℓ : Level} → Comp (λ _ → Type ℓ) (Corr² ℓ)
+  Comp-Corr² : {ℓ : Level} → Comp (CorrQ ℓ)
   Comp-Corr² ._∙_ {x = A} {y = B} {z = C} R S a c = Σₜ B λ b → Σₜ (R a b) (λ _ → S b c)
 
-  Symmetry-Corr : {ℓ : Level} → Symmetry (λ _ → Type ℓ) (Corr² ℓ)
+  Symmetry-Corr : {ℓ : Level} → Symmetry (CorrQ ℓ)
   Symmetry-Corr .sym R B A = R A B
 
 {-# INCOHERENT Refl-Fun Comp-Fun Underlying-Fun
@@ -57,16 +65,17 @@ module _ where
   open Terminal
 
   instance
-    Initial-Fun : Initial (λ ℓ → Type ℓ) Fun
+    Initial-Fun : Initial FunQ
     Initial-Fun .⊥ = ⊥ₜ
     Initial-Fun .has-is-init _ .centre ()
     Initial-Fun .has-is-init _ .paths _ _ ()
 
-    Terminal-Fun : Terminal (λ ℓ → Type ℓ) Fun
+    Terminal-Fun : Terminal FunQ
     Terminal-Fun .⊤ = ⊤ₜ
     Terminal-Fun .has-is-terminal _ .centre _ = tt
     Terminal-Fun .has-is-terminal _ .paths _ _ _ = tt
 {-# INCOHERENT Initial-Fun Terminal-Fun #-}
+
 
 module _ where
   open Binary-coproducts
@@ -75,7 +84,7 @@ module _ where
   open Product
 
   instance
-    Binary-coproducts-Fun : Binary-coproducts (λ ℓ → Type ℓ) Fun
+    Binary-coproducts-Fun : Binary-coproducts FunQ
     Binary-coproducts-Fun ._⨿_ = _⊎_
     Binary-coproducts-Fun .has-coproduct .ι₁ = inl
     Binary-coproducts-Fun .has-coproduct .ι₂ = inr
@@ -85,7 +94,7 @@ module _ where
     Binary-coproducts-Fun .has-coproduct .has-is-coproduct .⁅⁆-unique fs sn i (inl x) = fs i x
     Binary-coproducts-Fun .has-coproduct .has-is-coproduct .⁅⁆-unique fs sn i (inr x) = sn i x
 
-    Binary-products-Fun : Binary-products (λ ℓ → Type ℓ) Fun
+    Binary-products-Fun : Binary-products FunQ
     Binary-products-Fun ._×_ A B = Σₜ A λ _ → B
     Binary-products-Fun .has-product .π₁ = fst
     Binary-products-Fun .has-product .π₂ = snd
@@ -111,7 +120,7 @@ module _ where
   open Exponential
 
   instance
-    Cartesian-closed-Fun : Cartesian-closed (λ ℓ → Type ℓ) Fun
+    Cartesian-closed-Fun : Cartesian-closed FunQ
     Cartesian-closed-Fun ._⇒_ = Fun
     Cartesian-closed-Fun .has-exp .ev (f , x) = f x
     Cartesian-closed-Fun .has-exp .has-is-exp .ƛ w g a = w (g , a)
@@ -131,7 +140,7 @@ module _ where
   open Indexed-product
 
   instance
-    Indexed-products-Fun : {ℓi : Level} {Idx : Type ℓi} → Indexed-products (λ ℓ → Type ℓ) Fun Idx
+    Indexed-products-Fun : {ℓi : Level} {Idx : Type ℓi} → Indexed-products FunQ Idx
     Indexed-products-Fun {Idx} .∏ B = (x : Idx) → B x
     Indexed-products-Fun .has-ip .π i f = f i
     Indexed-products-Fun .has-ip .has-is-ip .∏-tuple f y i = f i y
@@ -176,7 +185,7 @@ module _ where
   open Indexed-coproduct
 
   instance
-    Indexed-coproducts-Fun : {ℓi : Level} {Idx : Type ℓi} → Indexed-coproducts (λ ℓ → Type ℓ) Fun Idx
+    Indexed-coproducts-Fun : {ℓi : Level} {Idx : Type ℓi} → Indexed-coproducts FunQ Idx
     Indexed-coproducts-Fun .∐ = Σₜ _
     Indexed-coproducts-Fun .has-ic .ι = _,_
     Indexed-coproducts-Fun .has-ic .has-is-ic .∐-match f (i , x) = f i x

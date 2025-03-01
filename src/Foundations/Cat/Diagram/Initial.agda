@@ -6,14 +6,10 @@ open import Foundations.Prim.Type
 
 open import Foundations.Cat.Composition
 open import Foundations.Cat.Reflexivity
+open import Foundations.Cat.Structures.Quiver
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  (Ob  : (ℓ : Level) → Type (ob-lvl ℓ))
-  (Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy))
-  {ℓi : Level}
-  where
+module _ (C : Quiver) {ℓi : Level} where
+  open Quiver C
 
   is-initial : {ℓ : Level} → Ob ℓi → Type (ob-lvl ℓ l⊔ hom-lvl ℓi ℓ)
   is-initial {ℓ} i = (x : Ob ℓ) → is-contr (Hom i x)
@@ -36,13 +32,10 @@ open Initial ⦃ ... ⦄ public
 
 
 module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  {Ob  : (ℓ : Level) → Type (ob-lvl ℓ)}
-  {Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy)}
-  ⦃ _ : Refl Ob Hom ⦄ ⦃ _ : Comp Ob Hom ⦄
-  {ℓi : Level} ⦃ _ : Initial Ob Hom {ℓi} ⦄
+  {C : Quiver} ⦃ _ : Refl C ⦄ ⦃ _ : Comp C ⦄
+  {ℓi : Level} ⦃ _ : Initial C {ℓi} ⦄
   where
+  open Quiver C
 
   infixr 0 ¬_
   ¬_ : {ℓa : Level} → Ob ℓa → Type (hom-lvl ℓa ℓi)
