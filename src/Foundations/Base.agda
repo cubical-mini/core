@@ -130,7 +130,7 @@ module _ where
 
 infixr 0 ¬ₜ_
 ¬ₜ_ : {ℓ : Level} → Type ℓ → Type ℓ
-¬ₜ_ = ¬_ ⦃ Refl-Fun ⦄ ⦃ Comp-Fun ⦄ ⦃ Initial-Fun ⦄
+¬ₜ_ = ¬_ ⦃ Initial-Fun ⦄
 {-# INLINE ¬ₜ_ #-}
 
 

@@ -4,8 +4,6 @@ module Foundations.Cat.Diagram.Initial where
 open import Foundations.Prim.Kan
 open import Foundations.Prim.Type
 
-open import Foundations.Cat.Composition
-open import Foundations.Cat.Reflexivity
 open import Foundations.Cat.Structures.Quiver
 
 module _ (C : Quiver) {ℓi : Level} where
@@ -31,10 +29,7 @@ open Initial ⦃ ... ⦄ public
 {-# DISPLAY Initial.⊥ _ = ⊥ #-}
 
 
-module _
-  {C : Quiver} ⦃ _ : Refl C ⦄ ⦃ _ : Comp C ⦄
-  {ℓi : Level} ⦃ _ : Initial C {ℓi} ⦄
-  where
+module _ {C : Quiver} {ℓi : Level} ⦃ _ : Initial C {ℓi} ⦄ where
   open Quiver C
 
   infixr 0 ¬_

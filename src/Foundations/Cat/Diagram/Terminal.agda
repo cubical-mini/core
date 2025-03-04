@@ -4,7 +4,6 @@ module Foundations.Cat.Diagram.Terminal where
 open import Foundations.Prim.Kan
 open import Foundations.Prim.Type
 
-open import Foundations.Cat.Composition
 open import Foundations.Cat.Structures.Quiver
 
 module _ (C : Quiver) {ℓt : Level} where
