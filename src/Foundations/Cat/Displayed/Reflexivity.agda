@@ -4,13 +4,9 @@ module Foundations.Cat.Displayed.Reflexivity where
 open import Foundations.Prim.Type
 
 open import Foundations.Cat.Reflexivity
+open import Foundations.Cat.Structures.Quiver
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  {Ob  : (ℓ : Level) → Type (ob-lvl ℓ)}
-  {Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy)}
-  ⦃ _ : Refl Ob Hom ⦄
+module _ {C : Quiver} ⦃ _ : Refl C ⦄ (let open Quiver C)
   {ob-lvlᴰ : Level → Level }
   {hom-lvlᴰ : Level → Level → Level }
   (Ob[_] : {ℓ : Level} → Ob ℓ → Type (ob-lvlᴰ ℓ))

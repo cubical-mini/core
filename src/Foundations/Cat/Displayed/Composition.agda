@@ -4,13 +4,9 @@ module Foundations.Cat.Displayed.Composition where
 open import Foundations.Prim.Type
 
 open import Foundations.Cat.Composition
+open import Foundations.Cat.Structures.Quiver
 
-module _
-  {ob-lvl : Level → Level}
-  {hom-lvl : Level → Level → Level}
-  {Ob  : (ℓ : Level) → Type (ob-lvl ℓ)}
-  {Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy)}
-  ⦃ _ : Comp Ob Hom ⦄
+module _ {C : Quiver} ⦃ _ : Comp C ⦄ (let open Quiver C)
   {ob-lvlᴰ : Level → Level }
   {hom-lvlᴰ : Level → Level → Level }
   (Ob[_] : {ℓ : Level} → Ob ℓ → Type (ob-lvlᴰ ℓ))
@@ -35,4 +31,3 @@ module _
 open Compᴰ ⦃ ... ⦄ public
 
 {-# DISPLAY Compᴰ._∙ᴰ_ _ f g = f ∙ᴰ g #-}
-{-# DISPLAY Compᴰ._∘ᴰ_ _ f g = f ∘ᴰ g #-} -- remove?
