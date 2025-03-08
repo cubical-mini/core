@@ -5,6 +5,7 @@ open import Agda.Primitive public
   using ()
   renaming ( Set  to 𝒰
            ; Setω to 𝒰ω )
+open import Agda.Primitive.Cubical
 open import Agda.Primitive public
   using ( SSet
         ; SSetω
