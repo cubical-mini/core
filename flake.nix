@@ -104,6 +104,7 @@
               devShells.default = pkgs.mkShell {
                 buildInputs = with pkgs; [
                   (agda.withPackages [ cm-core ])
+                  just
                 ];
               };
             };
