@@ -1,28 +1,28 @@
 {-# OPTIONS --safe #-}
-module Foundations.Cat.Diagram.Product.Binary where
+module Control.Diagram.Product.Binary where
 
-open import Foundations.Prim.Kan
-open import Foundations.Prim.Type
+open import Prim.Kan
+open import Prim.Type
 
-open import Foundations.Cat.Composition
-open import Foundations.Cat.Structures.Quiver
+open import Control.Composition
+open import Control.Structures.Quiver
 
 module _ (C : Quiver) ⦃ _ : Comp C ⦄ where
   open Quiver C
 
-  record is-product ℓq {ℓa ℓb ℓp} {A : Ob ℓa} {B : Ob ℓb} {P : Ob ℓp} (π₁ : Hom P A) (π₂ : Hom P B) : Type (ob-lvl ℓq l⊔ hom-lvl ℓq ℓa l⊔ hom-lvl ℓq ℓb l⊔ hom-lvl ℓq ℓp) where
+  record is-product ℓq {u v ℓp} {A : Ob u} {B : Ob v} {P : Ob ℓp} (π₁ : Hom P A) (π₂ : Hom P B) : Type (ob-lvl ℓq ⊔ hom-lvl ℓq u ⊔ hom-lvl ℓq v ⊔ hom-lvl ℓq ℓp) where
     no-eta-equality
     field
       ⟨_,_⟩ : {Q : Ob ℓq} (f : Hom Q A) (g : Hom Q B) → Hom Q P
-      π₁∘⟨⟩ : {Q : Ob ℓq} {f : Hom Q A} {g : Hom Q B} → π₁ ∘ ⟨ f , g ⟩ ＝ f
-      π₂∘⟨⟩ : {Q : Ob ℓq} {f : Hom Q A} {g : Hom Q B} → π₂ ∘ ⟨ f , g ⟩ ＝ g
+      π₁∘⟨⟩ : {Q : Ob ℓq} {f : Hom Q A} {g : Hom Q B} → π₁ ∘ ⟨ f , g ⟩ ≡ f
+      π₂∘⟨⟩ : {Q : Ob ℓq} {f : Hom Q A} {g : Hom Q B} → π₂ ∘ ⟨ f , g ⟩ ≡ g
 
       unique : {Q : Ob ℓq} {f : Hom Q A} {g : Hom Q B}
                {h : Hom Q P}
-               (fs : π₁ ∘ h ＝ f) (sn : π₂ ∘ h ＝ g)
-             → h ＝ ⟨ f , g ⟩
+               (fs : π₁ ∘ h ≡ f) (sn : π₂ ∘ h ≡ g)
+             → h ≡ ⟨ f , g ⟩
 
-  record Product {ℓa ℓb} (A : Ob ℓa) (B : Ob ℓb) (P : Ob (ℓa l⊔ ℓb)) : Typeω where
+  record Product {u v} (A : Ob u) (B : Ob v) (P : Ob (u ⊔ v)) : Typeω where
     no-eta-equality
     field
       π₁  : Hom P A
@@ -33,8 +33,8 @@ module _ (C : Quiver) ⦃ _ : Comp C ⦄ where
     no-eta-equality
     infixr 80 _×_
     field
-      _×_ : {ℓa ℓb : Level} (A : Ob ℓa) (B : Ob ℓb) → Ob (ℓa l⊔ ℓb)
-      has-product : {ℓa ℓb : Level} {A : Ob ℓa} {B : Ob ℓb} → Product A B (A × B)
+      _×_ : ∀ {u v} (A : Ob u) (B : Ob v) → Ob (u ⊔ v)
+      has-product : ∀ {u v} {A : Ob u} {B : Ob v} → Product A B (A × B)
 
 
 open is-product ⦃ ... ⦄ public
@@ -53,8 +53,8 @@ open Binary-products ⦃ ... ⦄ public
 {-# DISPLAY Binary-products._×_ _ A B = A × B #-}
 
 module _ {C : Quiver} ⦃ _ : Comp C ⦄ (let open Quiver C) where
-  module _ {ℓa ℓb : Level} {A : Ob ℓa} {B : Ob ℓb} where instance
-    is-product-helper : {ℓq : Level} {P : Ob (ℓa l⊔ ℓb)} ⦃ p : Product C A B P ⦄ → is-product C ℓq π₁ π₂
+  module _ ∀ {u v} {A : Ob u} {B : Ob v} where instance
+    is-product-helper : {ℓq : Level} {P : Ob (u ⊔ v)} ⦃ p : Product C A B P ⦄ → is-product C ℓq π₁ π₂
     is-product-helper ⦃ p ⦄ = p .Product.has-is-product
 
     product-helper : ⦃ p : Binary-products C ⦄ → Product C A B (A × B)
@@ -62,6 +62,6 @@ module _ {C : Quiver} ⦃ _ : Comp C ⦄ (let open Quiver C) where
 
   infixr 81 _×→_
   _×→_ : ⦃ _ : Binary-products C ⦄
-       → {ℓa ℓb ℓp ℓq : Level} {A : Ob ℓa} {B : Ob ℓb} {P : Ob ℓp} {Q : Ob ℓq}
+       → {u v ℓp ℓq : Level} {A : Ob u} {B : Ob v} {P : Ob ℓp} {Q : Ob ℓq}
        → Hom A P → Hom B Q → Hom (A × B) (P × Q)
   _×→_ f g = ⟨ π₁ ∙ f , π₂ ∙ g ⟩

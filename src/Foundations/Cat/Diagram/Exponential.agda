@@ -1,28 +1,28 @@
 {-# OPTIONS --safe #-}
-module Foundations.Cat.Diagram.Exponential where
+module Control.Diagram.Exponential where
 
-open import Foundations.Prim.Kan
-open import Foundations.Prim.Type
+open import Prim.Kan
+open import Prim.Type
 
-open import Foundations.Cat.Composition
-open import Foundations.Cat.Diagram.Product.Binary
-open import Foundations.Cat.Diagram.Terminal
-open import Foundations.Cat.Reflexivity
-open import Foundations.Cat.Structures.Quiver
+open import Control.Composition
+open import Control.Diagram.Product.Binary
+open import Control.Diagram.Terminal
+open import Control.Reflexivity
+open import Control.Structures.Quiver
 
 module _ (C : Quiver) ⦃ _ : Refl C ⦄ ⦃ _ : Comp C ⦄ ⦃ _ : Binary-products C ⦄ where
   open Quiver C
 
-  record is-exponential ℓg {ℓa ℓb ℓe} {A : Ob ℓa} {B : Ob ℓb}
-    (B^A : Ob ℓe) (ev : Hom (B^A × A) B) : Type (ob-lvl ℓg l⊔ hom-lvl ℓg ℓe l⊔ hom-lvl (ℓg l⊔ ℓa) ℓb) where
+  record is-exponential ℓg {u v ℓe} {A : Ob u} {B : Ob v}
+    (B^A : Ob ℓe) (ev : Hom (B^A × A) B) : Type (ob-lvl ℓg ⊔ hom-lvl ℓg ℓe ⊔ hom-lvl (ℓg ⊔ u) v) where
     no-eta-equality
     field
       ƛ        : {Γ : Ob ℓg} → Hom (Γ × A) B → Hom Γ B^A
-      commutes : {Γ : Ob ℓg} (m : Hom (Γ × A) B) → ev ∘ (ƛ m ×→ refl) ＝ m
+      commutes : {Γ : Ob ℓg} (m : Hom (Γ × A) B) → ev ∘ (ƛ m ×→ refl) ≡ m
       unique   : {Γ : Ob ℓg} {m : Hom (Γ × A) B} (m′ : Hom Γ B^A)
-               → ev ∘ (m′ ×→ refl) ＝ m → m′ ＝ ƛ m
+               → ev ∘ (m′ ×→ refl) ≡ m → m′ ≡ ƛ m
 
-  record Exponential {ℓa ℓb} (A : Ob ℓa) (B : Ob ℓb) (B^A : Ob (ℓa l⊔ ℓb)) : Typeω where
+  record Exponential {u v} (A : Ob u) (B : Ob v) (B^A : Ob (u ⊔ v)) : Typeω where
     no-eta-equality
     field
       ev : Hom (B^A × A) B
@@ -32,8 +32,8 @@ module _ (C : Quiver) ⦃ _ : Refl C ⦄ ⦃ _ : Comp C ⦄ ⦃ _ : Binary-produ
     no-eta-equality
     infixr 50 _⇒_
     field
-      _⇒_ : {ℓa ℓb : Level} (A : Ob ℓa) (B : Ob ℓb) → Ob (ℓa l⊔ ℓb)
-      has-exp : {ℓa ℓb : Level} {A : Ob ℓa} {B : Ob ℓb} → Exponential A B (A ⇒ B)
+      _⇒_ : ∀ {u v} (A : Ob u) (B : Ob v) → Ob (u ⊔ v)
+      has-exp : ∀ {u v} {A : Ob u} {B : Ob v} → Exponential A B (A ⇒ B)
 
 open is-exponential ⦃ ... ⦄ public
   renaming (commutes to ƛ-commutes; unique to ƛ-unique)
@@ -50,8 +50,8 @@ open Cartesian-closed ⦃ ... ⦄ public
 
 module _
   {C : Quiver} (let open Quiver C) ⦃ _ : Refl C ⦄ ⦃ _ : Comp C ⦄ ⦃ _ : Binary-products C ⦄
-  {ℓa ℓb : Level} {A : Ob ℓa} {B : Ob ℓb} where instance
-    is-exp-helper : {ℓg : Level} {E : Ob (ℓa l⊔ ℓb)} ⦃ e : Exponential C A B E ⦄ → is-exponential C ℓg E ev
+  ∀ {u v} {A : Ob u} {B : Ob v} where instance
+    is-exp-helper : {ℓg : Level} {E : Ob (u ⊔ v)} ⦃ e : Exponential C A B E ⦄ → is-exponential C ℓg E ev
     is-exp-helper ⦃ e ⦄ = e .Exponential.has-is-exp
 
     exp-helper : ⦃ e : Cartesian-closed C ⦄ → Exponential C A B (A ⇒ B)

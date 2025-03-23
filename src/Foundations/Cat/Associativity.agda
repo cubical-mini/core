@@ -1,11 +1,11 @@
 {-# OPTIONS --safe #-}
-module Foundations.Cat.Associativity where
+module Control.Associativity where
 
-open import Foundations.Prim.Kan
-open import Foundations.Prim.Type
+open import Prim.Kan
+open import Prim.Type
 
-open import Foundations.Cat.Composition
-open import Foundations.Cat.Structures.Quiver
+open import Control.Composition
+open import Control.Structures.Quiver
 
 module _ {C : Quiver} ⦃ _ : Comp C ⦄ where
   open Quiver C
@@ -14,7 +14,7 @@ module _ {C : Quiver} ⦃ _ : Comp C ⦄ where
     no-eta-equality
     field assoc : {ℓw ℓx ℓy ℓz : Level} {w : Ob ℓw} {x : Ob ℓx} {y : Ob ℓy} {z : Ob ℓz}
                   (f : Hom w x) (g : Hom x y) (h : Hom y z)
-                → f ∙ (g ∙ h) ＝ (f ∙ g) ∙ h
+                → f ∙ (g ∙ h) ≡ (f ∙ g) ∙ h
 
 open Assoc ⦃ ... ⦄ public
 

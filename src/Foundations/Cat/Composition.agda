@@ -1,9 +1,9 @@
 {-# OPTIONS --safe #-}
-module Foundations.Cat.Composition where
+module Control.Composition where
 
-open import Foundations.Prim.Type
+open import Prim.Type
 
-open import Foundations.Cat.Structures.Quiver
+open import Control.Structures.Quiver
 
 module _ (C : Quiver) where
   open Quiver C

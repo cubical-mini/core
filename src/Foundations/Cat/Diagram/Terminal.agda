@@ -1,16 +1,16 @@
 {-# OPTIONS --safe #-}
-module Foundations.Cat.Diagram.Terminal where
+module Control.Diagram.Terminal where
 
-open import Foundations.Prim.Kan
-open import Foundations.Prim.Type
+open import Prim.Kan
+open import Prim.Type
 
-open import Foundations.Cat.Composition
-open import Foundations.Cat.Structures.Quiver
+open import Control.Composition
+open import Control.Structures.Quiver
 
 module _ (C : Quiver) {ℓt : Level} where
   open Quiver C
 
-  is-terminal : {ℓ : Level} → Ob ℓt → Type (ob-lvl ℓ l⊔ hom-lvl ℓ ℓt)
+  is-terminal : ∀ {ℓ} → Ob ℓt → Type (ob-lvl ℓ ⊔ hom-lvl ℓ ℓt)
   is-terminal {ℓ} t = (x : Ob ℓ) → is-contr (Hom x t)
 
   record Terminal : Typeω where
@@ -18,9 +18,9 @@ module _ (C : Quiver) {ℓt : Level} where
     constructor mk-terminal
     field
       ⊤               : Ob ℓt
-      has-is-terminal : {ℓ : Level} → is-terminal {ℓ} ⊤
+      has-is-terminal : ∀ {ℓ} → is-terminal {ℓ} ⊤
 
-    ! : {ℓ : Level} {x : Ob ℓ} → Hom x ⊤
+    ! : ∀ {ℓ} {x : Ob ℓ} → Hom x ⊤
     ! {x} = has-is-terminal x .centre
 
 {-# INLINE mk-terminal #-}

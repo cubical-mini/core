@@ -4,6 +4,7 @@ depend:
 flags:
   --erased-cubical
   --erasure
+  --auto-inline
   --erased-matches
   --exact-split
   --guardedness

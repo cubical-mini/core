@@ -1,17 +1,17 @@
 {-# OPTIONS --safe #-}
-module Foundations.Cat.Diagram.Initial where
+module Control.Diagram.Initial where
 
-open import Foundations.Prim.Kan
-open import Foundations.Prim.Type
+open import Prim.Kan
+open import Prim.Type
 
-open import Foundations.Cat.Composition
-open import Foundations.Cat.Reflexivity
-open import Foundations.Cat.Structures.Quiver
+open import Control.Composition
+open import Control.Reflexivity
+open import Control.Structures.Quiver
 
 module _ (C : Quiver) {ℓi : Level} where
   open Quiver C
 
-  is-initial : {ℓ : Level} → Ob ℓi → Type (ob-lvl ℓ l⊔ hom-lvl ℓi ℓ)
+  is-initial : ∀ {ℓ} → Ob ℓi → Type (ob-lvl ℓ ⊔ hom-lvl ℓi ℓ)
   is-initial {ℓ} i = (x : Ob ℓ) → is-contr (Hom i x)
 
   record Initial : Typeω where
@@ -19,9 +19,9 @@ module _ (C : Quiver) {ℓi : Level} where
     constructor mk-initial
     field
       ⊥           : Ob ℓi
-      has-is-init : {ℓ : Level} → is-initial {ℓ} ⊥
+      has-is-init : ∀ {ℓ} → is-initial {ℓ} ⊥
 
-    ¡ : {ℓ : Level} {x : Ob ℓ} → Hom ⊥ x
+    ¡ : ∀ {ℓ} {x : Ob ℓ} → Hom ⊥ x
     ¡ {x} = has-is-init x .centre
 
 {-# INLINE mk-initial #-}
@@ -38,5 +38,5 @@ module _
   open Quiver C
 
   infixr 0 ¬_
-  ¬_ : {ℓa : Level} → Ob ℓa → Type (hom-lvl ℓa ℓi)
+  ¬_ : {u : Level} → Ob u → Type (hom-lvl u ℓi)
   ¬ A = Hom A ⊥

@@ -1,16 +1,16 @@
 {-# OPTIONS --safe #-}
-module Foundations.Cat.Reflexivity where
+module Control.Reflexivity where
 
-open import Foundations.Prim.Type
+open import Prim.Type
 
-open import Foundations.Cat.Structures.Quiver
+open import Control.Structures.Quiver
 
 module _ (C : Quiver) where
   open Quiver C
 
   record Refl : Typeω where
     no-eta-equality
-    field refl : {ℓ : Level} {x : Ob ℓ} → Hom x x
+    field refl : ∀ {ℓ} {x : Ob ℓ} → Hom x x
 
 open Refl ⦃ ... ⦄ public
 

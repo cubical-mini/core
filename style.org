@@ -1,0 +1,87 @@
+#+TITLE: Cubical-mini Design & Guidelines Draft + PR changelog
+
+* Changelog
++ Changed structure of Primitives, including building module structure for handling our notion of equivalence. These primitives will be included in a Prim top-level module imported in Prim.Base
+** Renamings
+*** Prim.is-equiv.equiv-proof to Prim.is-equiv.equiv-witness
+Made to follow 1lab's convention
+*** Prim.equiv-proof-fast to Prim.equiv-proof
+Now that we don't have a name collision with the field of is-equiv
+* Intentions (from Paul)
+- basic theorems about agda primitives (pi, sigma, paths, builtin equivalences)
+- widely usable constructions with common notation ([co]products, quasiisos, equivs etc)
+- a bunch of tactics and solver interfaces, metaprogramming gadgets
+** abstractions for writing code like effects
+We'll provide a suite of modules used explicitly for this purpose living in the top-level "Control" namespace.
+
+1lab uses "Meta" for theirs, and it makes sense for their context. Their library is not meant for general purpose usage, but to be a wiki for their annotated rendition of Mathematics in HoTT. I think this is too broad for our usage however, certainly "Meta" should be reserved for Metaprogramming, but the suite of tools used for it should be isolated in Control, where it may be used across the whole library.
+
+Our "Meta" hosts implementations for domain-specific MP applications, like the ones we imagine for the host of libraries dependent on cm-core, which can all live in their own Meta.* namespace. The intention is that importing new libraries just cleanly layers over the base module structure, and we can correctly segregate module namespaces to avoid name conflicts.
+
+Agda-stdlib decided to change this to "Effect" instead of control, here's discussion from when agda-stdlib changes: https://github.com/agda/agda-stdlib/issues/1636. Asabel makes the point that perhaps its better to be familiar to Haskell programmers, so he agrees with us. So "Control" it is. 
+** Core must provide a proof of univalence
+"I'm not fond of builtin equiv definition. It's provably equivalent to any other correct definition and is easy to work with but it's not obvious how to generalize it from the category of Types. Biinvertible maps are available in any wild category and Chen's equivs are even more general -- minimal requirement is that of a quiver with composition, you don't even need the associativity."
+
+Indeed. We'll go with Bi-inv for now, I'm open to HAE -- its actually kinda nice. That also happens to be Kraus's choice. Biinv is used in TypeTopology however, so we have a rich suite of proofs to take inspiration from for a variety of cutting edge HoTT/CS applications.
+* Library design and coding practices
+** Library structure
+*** Prim -- Core Agda primitives
+**** Base 
+***** Type - Base Agda primitives
+***** Interval - Cubical primitives (includes `_≡_`)
+**** Kan - hcomp and other fundamentals for CTT
+**** Glue - Primitives necessary for computational univalence
+**** Path - Builtin Path primitives and elementary constructions
+*** Control - Abstractions for Agda coding
+I considered going with Effect here, to be 
+** Module design structure
+These are modules within a root namespace, e.g. `Data.Nat`
+**** Root.Base
+Should be very small, containing only the most fundamental definitions required for the rest of the module namespace
+***** Remark
+If it is prudent to break up fundamental definitions within base itself, these should be labeled by the name of the fundamental construction, broken up according to the discretion of the maintaner. A prelude for these ought to be supplied by a Root.Base.Type module
+**** Root.*
+Each module should focus on some construction depending on the construction in Root.Base
+**** Root.Control
+Should contain implementation of instances, each named by the relevant module in the Control namespace
+**** Root.Everything
+Should export all of the modules in Root.*
+**** Root
+This is the prelude, exporting a canonical choice of definitions from within the namespace
+** Theoretical treatment
+*** HLevels
+- Prefer constructions that preserve hlevel of its arguments or change them in a predictable way instead of constructions that force a specific hlevel
+** Style
+*** Names, arguments, annotations
+**** Type naming convention
+We distinguish between a meta-theoretic layer of constructions and a domain-specific layer of constructions pertaining to particular theories. The most general types in our library should be denoted by capitalization, while the types comprising particular theories ought to be rendered in lower case. For example, fundamental data types in the Data or Control top-level module namespace ought to be capitalized, for example, the kind of types that are declared in Data.*.Base. A type can be seen to demarcate an associated theoretical domain induced by its initial definition; hence, fields, properties, and helpers associated with a type ought to be rendered in lower case letters.
+****** Remark
+Following such a guideline consistently, we should consider that wild constructions should be rendered by capitalized names, while specific constructions within category theory should be rendered by lower case. i.e. our canonical choice of (Wild) Category should be rendered by the name "Category", while our specific formalization of the notions of category, ought to be rendered by "precategory", "category" (for univalent categories), or "bicategory", and so on. This emphasizes that we are pursuing a specific theoretical domain. It also allows us the opportunity to define all of the boilerplate for categories by the capitalized constructions, while instantiating them in particular constructions for more conventional formulations. It also gives us a straightforward way to compare our state of the art for wild category constructions with the constructions that for the time being are only possible by the assumption of specific axioms we seek to generalize from.
+**** Arguments
+***** Implicits
+If a given variable may be readily inferred from another argument, mark it
+implicit. If you must deviate from this, provide a comment above the relevant definition and explain the rationale
+***** Universe level symbols
++ Because implicit inference works well for identifying levels used in type declarations, use forall notation for compactness and readibility
+  - e.g. `∀ {ℓ} (A : Type ℓ) → ...`
++ Use `ℓ` for single levels, and for two levels use `ℓ` and `ℓ'`
+  + If more than two levels are needed, use `u`, `v`, `w`
+    + Alternatively, use 𝓤, 𝓥, 𝓦 or other `\MC_` characters to designate levels if distinction is needed from character literals
++ If working in a category, use `o` and `h` with apostrophes to denote trivially distinguished levels for object and hom, as in 1lab.
+  - If you have multiple categories in a module, we consider cases:
+    * 2 categories: use o, h and o' h' to distinguish
+    * 2+ categories: for each category, name a universe level and distinguish between object and hom with apostrophe. I.e. `u, u'`, `v, v'`, `w, w'` and so on
+****** Justification and alternatives
++ I'm aware that the current style guideline seems partial to explicit Level annotations, I propose forall notation to keep close to established coding practices of various libraries, 1lab being a prominent example; in my experience I appreciated the advantage for code readability. I trust that they wouldn't have leaned so heavily on implicit resolution of levels if the performance penalty was too great to counter the convenience for readability for type former definitions.
++ I take influence of the 'u' 'v' 'w' notation from TypeTopology's use of `\MC_` symbols. `Type u`, `Type v`, and so on ought to be familiar enough notation. I think that this is better than ℓx, ℓy, which each require four characters to type. I don't think reserving 'u', 'v', and 'w' as our convention for universe level names is a great sacrifice, as they will be exclusively used for local definitions.
+***** Interval symbols
+Use index notation, `i`, `j`, `k` and so on to follow established practice for Cubical coding style (in lambdas)
++ Outside of lambda variable binding, explicitly annotate intervals, for example in type formers like so: `(i : I)`. Although in practice these should not be too
+***** Dependent types
++ Use names A, B, C to index a succession of dependency, such as
+    `{x : A} (b : B y) → C x y`
++ For dependent types with common dependency that do not depend on each other, use X, Y to denote the dependencies and then use A, B, C
+  - i.e. (X Y : Type) (A : X → Y → Type) (B : X → Y → Type)
+****** Remark
+If we are enforce consistency in naming conventions, the hope is that the programmer will easily be able to predict what name to annotate in implicits,
+- e.g. `{A = <name>}`.

@@ -1,24 +1,24 @@
 {-# OPTIONS --safe #-}
-module Foundations.Cat.Diagram.Product.Indexed where
+module Control.Diagram.Product.Indexed where
 
-open import Foundations.Prim.Kan
-open import Foundations.Prim.Type
+open import Prim.Kan
+open import Prim.Type
 
-open import Foundations.Cat.Composition
-open import Foundations.Cat.Structures.Quiver
-open import Foundations.Cat.Underlying
+open import Control.Composition
+open import Control.Structures.Quiver
+open import Control.Underlying
 
 module _ (C : Quiver) ⦃ _ : Comp C ⦄ {ℓi : Level} {Idx : Type ℓi} where
   open Quiver C
 
-  record is-indexed-product ℓy {ℓp ℓf} {P : Ob ℓp} (F : Idx → Ob ℓf) (π : ∀ i → Hom P (F i)) : Type (ℓi l⊔ ob-lvl ℓy l⊔ hom-lvl ℓy ℓp l⊔ hom-lvl ℓy ℓf) where
+  record is-indexed-product ℓy {ℓp ℓf} {P : Ob ℓp} (F : Idx → Ob ℓf) (π : ∀ i → Hom P (F i)) : Type (ℓi ⊔ ob-lvl ℓy ⊔ hom-lvl ℓy ℓp ⊔ hom-lvl ℓy ℓf) where
     no-eta-equality
     field
       tuple   : {Y : Ob ℓy} → (∀ i → Hom Y (F i)) → Hom Y P
-      commute : ∀{i} {Y : Ob ℓy} {f : ∀ i → Hom Y (F i)} → π i ∘ tuple f ＝ f i
-      unique  : {Y : Ob ℓy} {h : Hom Y P} (f : ∀ i → Hom Y (F i)) → (∀ i → π i ∘ h ＝ f i) → h ＝ tuple f
+      commute : ∀{i} {Y : Ob ℓy} {f : ∀ i → Hom Y (F i)} → π i ∘ tuple f ≡ f i
+      unique  : {Y : Ob ℓy} {h : Hom Y P} (f : ∀ i → Hom Y (F i)) → (∀ i → π i ∘ h ≡ f i) → h ≡ tuple f
 
-  record Indexed-product {ℓf : Level} (F : Idx → Ob ℓf) (∏F : Ob (ℓi l⊔ ℓf)) : Typeω where
+  record Indexed-product {ℓf : Level} (F : Idx → Ob ℓf) (∏F : Ob (ℓi ⊔ ℓf)) : Typeω where
     no-eta-equality
     field
       π         : ∀ i → Hom ∏F (F i)
@@ -30,7 +30,7 @@ module _ (C : Quiver) ⦃ _ : Comp C ⦄ {ℓi : Level} (Idx : Type ℓi) where
   record Indexed-products : Typeω where
     no-eta-equality
     field
-      ∏      : {ℓf : Level} → (Idx → Ob ℓf) → Ob (ℓi l⊔ ℓf)
+      ∏      : {ℓf : Level} → (Idx → Ob ℓf) → Ob (ℓi ⊔ ℓf)
       has-ip : {ℓf : Level} {F : Idx → Ob ℓf} → Indexed-product C F (∏ F)
 
 open is-indexed-product ⦃ ... ⦄ public
@@ -47,17 +47,17 @@ open Indexed-products ⦃ ... ⦄ public
 {-# DISPLAY Indexed-products.∏ _ F = ∏ F #-}
 
 module _ {C : Quiver} (let open Quiver C) ⦃ _ : Comp C ⦄ {ℓi ℓf : Level} where
-  ∏[_] : {Idx : Type ℓi} ⦃ _ : Indexed-products C Idx ⦄ → (Idx → Ob ℓf) → Ob (ℓi l⊔ ℓf)
+  ∏[_] : {Idx : Type ℓi} ⦃ _ : Indexed-products C Idx ⦄ → (Idx → Ob ℓf) → Ob (ℓi ⊔ ℓf)
   ∏[_] = ∏
 
   infixr 60 ∏-syntax
   ∏-syntax : ⦃ u : Underlying C ⦄ (X : Ob ℓi) ⦃ _ : Indexed-products C ⌞ X ⌟ ⦄
-           → (⌞ X ⌟ → Ob ℓf) → Ob (ℓf l⊔ u .ℓ-und ℓi)
+           → (⌞ X ⌟ → Ob ℓf) → Ob (ℓf ⊔ u .ℓ-und ℓi)
   ∏-syntax _ = ∏
   syntax ∏-syntax X (λ x → F) = ∏[ x ꞉ X ] F
 
   module _ {Idx : Type ℓi} {F : Idx → Ob ℓf} where instance
-    is-ip-helper : {ℓy : Level} {ΠF : Ob (ℓi l⊔ ℓf)} ⦃ ip : Indexed-product C F ΠF ⦄ → is-indexed-product C ℓy F π
+    is-ip-helper : {ℓy : Level} {ΠF : Ob (ℓi ⊔ ℓf)} ⦃ ip : Indexed-product C F ΠF ⦄ → is-indexed-product C ℓy F π
     is-ip-helper ⦃ ip ⦄ = ip .Indexed-product.has-is-ip
 
     ip-helper : ⦃ ip : Indexed-products C Idx ⦄ → Indexed-product C F ∏[ F ]

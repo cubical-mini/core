@@ -1,13 +1,11 @@
 {-# OPTIONS --safe #-}
-module Foundations.Cat.Structures.Quiver where
+module Control.Structures.Quiver where
 
-open import Foundations.Prim.Type
+open import Prim.Type
 
-record Quiver : Typeω where
-  constructor mk-quiver
+record Quiver o h : Type₊ (o ⊔ h) where
+  constructor quiver
   no-eta-equality
   field
-    {ob-lvl} : Level → Level
-    {hom-lvl} : Level → Level → Level
-    Ob : (ℓ : Level) → Type (ob-lvl ℓ)
-    Hom : {ℓx ℓy : Level} → Ob ℓx → Ob ℓy → Type (hom-lvl ℓx ℓy)
+    Ob : Type o
+    Hom : Ob → Ob → Type h

@@ -1,7 +1,7 @@
 {-# OPTIONS --safe --default-level #-}
-module Foundations.Test where
+module Lib.Test where
 
-open import Foundations.Base
+open import Lib.Base
 
 open import Agda.Builtin.Nat
   renaming (Nat to ℕ)
@@ -59,5 +59,5 @@ F : Bool → ℕ
 F false = 5
 F true  = 7
 
-_ : ∏ F ＝ 5
-_ = reflₚ
+_ : ∏ F ≡ 5
+_ = refl
