@@ -64,14 +64,14 @@ _$_ : ∀ {u v} {A : Type u} {B : A → Type v}
 f $ a = f a
 {-# INLINE _$_ #-}
 
+_$ᵢ_ : ∀ {ℓ} {A : I → Type ℓ} {a : A i0} {b : A i1} → PathP A a b → (i : I) → A i
+p $ᵢ i = p i
+{-# INLINE _$ᵢ_ #-}
+
 _&_ : ∀ {u v} {A : Type u} {B : A → Type v}
     → (x : A) (f : (a : A) → B a) → B x
 a & f = f a
 {-# INLINE _&_ #-}
-
-_$ᵢ_ : ∀ {ℓ} {A : I → Type ℓ} {a : A i0} {b : A i1} → PathP A a b → (i : I) → A i
-p $ᵢ i = p i
-{-# INLINE _$ᵢ_ #-}
 
 auto : ∀ {ℓ} {A : Type ℓ} → ⦃ A ⦄ → A
 auto ⦃ (a) ⦄ = a
