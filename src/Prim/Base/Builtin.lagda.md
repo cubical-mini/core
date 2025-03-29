@@ -68,7 +68,7 @@ we will have access to the Builtin version of is-contr through the
 Prim helper module:
 
 > isContr : ∀ {ℓ} → Type ℓ → Type ℓ
-> isContr A = Σ A \ x → (∀ y → x ≡ y)
+> isContr A = Σ A \ x → (∀ y → x ＝ y)
 
 ```
 
@@ -96,7 +96,7 @@ definition does not deviate from it we introduce this builtin
 to the top-level namespace
 
 > fiber : ∀ {ℓ ℓ'} {A : Type ℓ} {B : Type ℓ'} (f : A → B) (y : B) → Type (ℓ ⊔ ℓ')
-> fiber {A = A} f y = Σ A \ x → f x ≡ y
+> fiber {A = A} f y = Σ A \ x → f x ＝ y
 
 ```
 open H using ( fiber ) public

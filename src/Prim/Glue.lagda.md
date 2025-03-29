@@ -6,7 +6,7 @@ module Prim.Glue where
 
 open import Prim.Base
   using ( Type; I; i0; i1; 1=1; Partial; PartialP; _≃ᶠ_; module Prim )
-open import Prim.Kan using ( _[_↦_]; outS )
+open import Prim.Base.Kan using ( _[_↦_]; outS )
 open import Prim.Data.Sigma using ( Sigma; fst; snd )
 
 open Prim public

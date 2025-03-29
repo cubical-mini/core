@@ -18,9 +18,9 @@ record is-equiv {u v} {A : Type u} {B : Type v} (f : A → B) : Type (u ⊔ v) w
   constructor equiv
   field
     inv : B → A
-    sec : (x : A) → inv (f x) ≡ x
-    retr : (y : B) → f (inv y) ≡ y
-    coh : (x : A) → ap f (sec x) ≡ retr (f x)
+    sec : (x : A) → inv (f x) ＝ x
+    retr : (y : B) → f (inv y) ＝ y
+    coh : (x : A) → ap f (sec x) ＝ retr (f x)
 
   fun = f
 
@@ -47,8 +47,8 @@ Basic properties of is-equiv
 --   where
 --   open is-equiv eq
 
---   path : ap inv (retr y) ≡ sec (inv y)
---   path i = tr2 (λ x y → ap inv x ≡ y) {!!} {!!} {!!} i
+--   path : ap inv (retr y) ＝ sec (inv y)
+--   path i = tr2 (λ x y → ap inv x ＝ y) {!!} {!!} {!!} i
 
 
 
@@ -57,26 +57,26 @@ Basic properties of is-equiv
 -- eqv-is-contr eq y .ctr = eqinv eq y , eqv-is-retr eq y
 -- eqv-is-contr {f = f} eq y .paths (x , p) i = α i , β i where
 --   open is-equiv eq
---   α : inv y ≡ x
+--   α : inv y ＝ x
 --   α = ap inv (sym p) ∙ sec x
 
---   fib : f x ≡ y
+--   fib : f x ＝ y
 --   fib = p
 
---   r : (y : _) → f (inv y) ≡ y
+--   r : (y : _) → f (inv y) ＝ y
 --   r y = retr y
 
---   fcoh : (i : I) → f (inv (f x)) ≡ f x
+--   fcoh : (i : I) → f (inv (f x)) ＝ f x
 --   fcoh i = coh x i
 
---   fsec : (x : _) → f (inv (f x)) ≡ f x
+--   fsec : (x : _) → f (inv (f x)) ＝ f x
 --   fsec = λ x → ap f (sec x)
 
---   coh-sec : (i : I) → ∀ x → coh x i ≡ ap f (sec x)
+--   coh-sec : (i : I) → ∀ x → coh x i ＝ ap f (sec x)
 --   coh-sec i x j k = {!!}
 
---   β : PathP (λ i → f (α i) ≡ y) (retr y) p
---   β i j = comp (λ k → f (α i) ≡ y) (λ k → λ {
+--   β : PathP (λ i → f (α i) ＝ y) (retr y) p
+--   β i j = comp (λ k → f (α i) ＝ y) (λ k → λ {
 --     (j = i0) → f (α i)
 --     (j = i1) → y }) (λ _ → retr y j)
 
@@ -124,40 +124,40 @@ Basic properties of is-equiv
 -- --   inv-is-equiv .is-retr x = e.sec x
 -- --   inv-is-equiv .is-coh y i j = φ i j
 -- --     where
--- --     α : e.inv (f (e.inv y)) ≡ e.inv y
+-- --     α : e.inv (f (e.inv y)) ＝ e.inv y
 -- --     α = ap e.inv (e.retr y)
 
--- --     β : e.inv (f (e.inv y)) ≡ e.inv y
+-- --     β : e.inv (f (e.inv y)) ＝ e.inv y
 -- --     β = e.sec (e.inv y)
 
--- --     sec-coh : e.inv (f (e.inv y)) ≡ e.inv y
+-- --     sec-coh : e.inv (f (e.inv y)) ＝ e.inv y
 -- --     sec-coh = e.sec (e.inv y)
 
--- --     retr-coh : f (e.inv y) ≡ y
+-- --     retr-coh : f (e.inv y) ＝ y
 -- --     retr-coh = e.retr y
 
--- --     ap-coh : ap f (e.sec (e.inv y)) ≡ e.retr (f (e.inv y))
+-- --     ap-coh : ap f (e.sec (e.inv y)) ＝ e.retr (f (e.inv y))
 -- --     ap-coh = e.coh (e.inv y)
 
--- --     ap-face₁ : (k : I) → e.inv (f (e.inv (f (e.inv y)))) ≡ e.sec (e.inv y) k
+-- --     ap-face₁ : (k : I) → e.inv (f (e.inv (f (e.inv y)))) ＝ e.sec (e.inv y) k
 -- --     ap-face₁ k = {! !}
 
--- --     ap-face₂ : (k : I) → e.inv (f (e.inv y)) ≡ e.inv (e.retr y k)
+-- --     ap-face₂ : (k : I) → e.inv (f (e.inv y)) ＝ e.inv (e.retr y k)
 -- --     ap-face₂ k = ap e.inv {!!}
 
--- --     inv-sec : f (e.inv (f (e.inv y))) ≡ f (e.inv y)
+-- --     inv-sec : f (e.inv (f (e.inv y))) ＝ f (e.inv y)
 -- --     inv-sec = ap f (e.sec (e.inv y))
 
--- --     sec-path : e.inv (f (e.inv y)) ≡ e.inv y
+-- --     sec-path : e.inv (f (e.inv y)) ＝ e.inv y
 -- --     sec-path = e.sec (e.inv y)
 
--- --     inv-retr : e.inv (f (e.inv y)) ≡ e.inv y
+-- --     inv-retr : e.inv (f (e.inv y)) ＝ e.inv y
 -- --     inv-retr = ap e.inv (e.retr y)
 
--- --     γ : e.inv (f (e.inv y)) ≡ e.inv y
+-- --     γ : e.inv (f (e.inv y)) ＝ e.inv y
 -- --     γ = ap e.inv (e.retr y)
 
--- --     φ : ap e.inv (e.retr y) ≡ e.sec (e.inv y)
+-- --     φ : ap e.inv (e.retr y) ＝ e.sec (e.inv y)
 -- --     φ i = {!γ i!}
 
 
@@ -182,5 +182,5 @@ Basic properties of is-equiv
 
 
 -- module _ {ℓ} {A B : Type ℓ} where
---   idtoeqv : {i : I} → A ≡ B → A ≃ B
+--   idtoeqv : {i : I} → A ＝ B → A ≃ B
 --   idtoeqv p = tr (A ≃_) p (refl-eqv A)

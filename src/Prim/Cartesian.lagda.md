@@ -5,7 +5,7 @@
 module Prim.Cartesian where
 
 open import Prim.Base
-  using ( Level; Type; I; i0; i1; ~_; _∨_; _∧_; transp; _≡_; funext
+  using ( Level; Type; I; i0; i1; ~_; _∨_; _∧_; transp; _＝_; funext
         ; interp-I; eq-I )
 open import Prim.Pi using ( idfun )
 
@@ -30,8 +30,8 @@ coei→0 A i a = transp (λ j → A (i ∧ ~ j)) (~ i) a
 coei→1 : ∀ {ℓ : I → Level} (A : ∀ i → Type (ℓ i)) (i : I) → A i → A i1
 coei→1 A i a = transp (λ j → A (i ∨ j)) i a
 
-coei→i : ∀ {ℓ} (A : I → Type ℓ) i x → coe A i i x ≡ x
+coei→i : ∀ {ℓ} (A : I → Type ℓ) i x → coe A i i x ＝ x
 coei→i A i x j = transp (λ _ → A i) (j ∨ i ∨ ~ i) x
 
-coe-id : ∀ {ℓ} (A : I → Type ℓ) {i : I} → coe A i i ≡ idfun (A i)
+coe-id : ∀ {ℓ} (A : I → Type ℓ) {i : I} → coe A i i ＝ idfun (A i)
 coe-id A {i} = funext (coei→i A i)

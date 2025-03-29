@@ -6,7 +6,6 @@ module Prim.Prelude where
 
 open import Prim.Base public
 open import Prim.Pi public
-open import Prim.Kan public
 open import Prim.Glue public
 open import Prim.Literals public
 

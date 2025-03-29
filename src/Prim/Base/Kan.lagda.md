@@ -2,9 +2,11 @@
 
 {-# OPTIONS --safe #-}
 
-module Prim.Kan where
+module Prim.Base.Kan where
 
-open import Prim.Base
+open import Prim.Base.Type
+open import Prim.Base.Interval
+open import Prim.Base.Builtin
 
 open import Agda.Builtin.Cubical.Sub
   using ( inS )
@@ -46,14 +48,3 @@ fill A φ i u = comp (λ j → A (i ∧ j)) (φ ∨ ~ i) λ where
   j (φ = i1) → u (i ∧ j) 1=1
   j (i = i0) → u i0 1=1
   j (j = i0) → u i0 1=1
-
-hcomp-unique : ∀ {ℓ} {A : Type ℓ} (φ : I)
-               (u : ∀ i → Partial (φ ∨ ~ i) A)
-             → (h₂ : ∀ i → A [ _ ↦ (λ { (i = i0) → u i0 1=1
-                                      ; (φ = i1) → u i  1=1 }) ])
-             → hcomp φ u ≡ outS (h₂ i1)
-hcomp-unique φ u h₂ i =
-  hcomp (φ ∨ i) λ where
-    k (k = i0) → u i0 1=1
-    k (i = i1) → outS (h₂ k)
-    k (φ = i1) → u k 1=1

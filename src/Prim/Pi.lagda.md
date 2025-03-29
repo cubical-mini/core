@@ -5,10 +5,11 @@
 module Prim.Pi where
 
 open import Prim.Base.Type
-open import Prim.Base.Interval using ( PathP; _≡_; I; i0; i1 )
+open import Prim.Base.Interval using ( PathP; _＝_; I; i0; i1 )
 
 infixr 40 _∘_
 infixr -1 _$_
+infixr -1 _$ᵢ_
 infixl -1 _&_
 
 Π : ∀ {u v} {A : Type u} (B : A → Type v) → Type (u ⊔ v)
@@ -17,7 +18,7 @@ infixl -1 _&_
 pi-syntax : ∀ {u v} (A : Type u) (B : A → Type v) → Type (u ⊔ v)
 pi-syntax A = Π {A = A}
 syntax pi-syntax A (λ x → M) = Π x ꞉ A , M
-{-# DISPLAY pi-syntax _ B = Π B #-}
+{-# DISPLAY pi-syntax A B = Π {A = A} B #-}
 
 Fun : ∀ {u v} → Type u → Type v → Type (u ⊔ v)
 Fun A B = A → B
@@ -128,7 +129,7 @@ instance
   Underlying-Fun .⌞_⌟ X = X
 
   Refl-Corr² : ∀ {ℓ} → Refl (CorrQ ℓ)
-  Refl-Corr² .refl = _≡_
+  Refl-Corr² .refl = _＝_
 
   Comp-Corr² : ∀ {ℓ} → Comp (CorrQ ℓ)
   Comp-Corr² ._∙_ {x = A} {y = B} {z = C} R S a c = Σₜ B λ b → Σₜ (R a b) (λ _ → S b c)

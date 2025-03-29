@@ -19,7 +19,7 @@ record Semicategory o h : Type₊ (o ⊔ h) where
     Hom : Ob → Ob → Type h
     _∘_ : ∀ {x y z} → Hom y z → Hom x y → Hom x z
     assoc : ∀ {w x y z} (f : Hom w x) (g : Hom x y) (h : Hom y z)
-          → (h ∘ g) ∘ f ≡ h ∘ (g ∘ f)
+          → (h ∘ g) ∘ f ＝ h ∘ (g ∘ f)
 
 ```
 
@@ -39,7 +39,7 @@ module _ {o h} (S : Semicategory o h) where
       rinv : is-right-inverse e
 
   is-idempotent : ∀ {x} → Hom x x → Type h
-  is-idempotent f = f ∘ f ≡ f
+  is-idempotent f = f ∘ f ＝ f
 
   Eqv : Ob → Ob → Type (o ⊔ h)
   Eqv x y = Σ f ∶ Hom x y , is-equivalence f

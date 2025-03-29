@@ -5,7 +5,7 @@
 module Prim.Data.Sigma where
 
 open import Prim.Base.Type using ( Type; _⊔_ )
-open import Prim.Base.Interval using ( _≡_ )
+open import Prim.Base.Interval using ( _＝_ )
 
 infixr 5 _×_
 infixr -1 Σ-syntax 
@@ -45,7 +45,7 @@ module _ {u v w} {A : Type u} {B : A → Type v} (P : Σ B → Type w) where
   ind-Σ g z = g (fst z) (snd z)
 
   indβ-Σ : (g : (x : A) (y : B x) → P (x , y)) ((x , y) : Σ B)
-       → ind-Σ g (x , y) ≡ g x y  
+       → ind-Σ g (x , y) ＝ g x y  
   indβ-Σ g z i = g (fst z) (snd z)
 
   ev-Σ : ((z : Σ B) → P z) → (x : A) (y : B x) → P (x , y)
@@ -66,5 +66,5 @@ module _ {u v w} {A : Type u} {B : Type v} (P : A × B → Type w) where
   ind-× g z = g (fst z) (snd z)
 
   indβ-× : (g : (x : A) (y : B) → P (x , y)) ((x , y) : A × B)
-         → ind-× g (x , y) ≡ g x y
+         → ind-× g (x , y) ＝ g x y
   indβ-× g z i = g (fst z) (snd z)

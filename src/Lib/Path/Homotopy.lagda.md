@@ -13,12 +13,7 @@ infix 2 _∼_
 
 _∼_ :  ∀ {ℓ ℓ'} {A : Type ℓ} {B : A → Type ℓ'}
     → ((x : A) → B x) → ((x : A) → B x) → Type (ℓ ⊔ ℓ')
-f ∼ g = ∀ x → f x ≡ g x
-
--- happly is an on-the-nose inverse to funext
-happly : ∀ {a b} {A : Type a} {B : A → Type b} {f g : (x : A) → B x}
-       → f ≡ g → (x : A) → f x ≡ g x
-happly p x i = p i x
+f ∼ g = ∀ x → f x ＝ g x
 
 ```
 
@@ -44,7 +39,7 @@ We also have the type of homotopies over homotopies
 
 module _ {ℓ ℓ'} {A : Type ℓ} {B : A → Type ℓ'} where
   _≈_ : {f g : (x : A) → B x} → f ∼ g → f ∼ g → Type (ℓ ⊔ ℓ')
-  H ≈ K = (x : A) → H x ≡ K x
+  H ≈ K = (x : A) → H x ＝ K x
 
 ```
 
@@ -54,10 +49,10 @@ Predicate definitions for homotopies we are often concerned with
 
 module _ {ℓ ℓ'} {A : Type ℓ} {B : Type ℓ'} where
   left-inverse : (B → A) → (A → B) → Type ℓ
-  left-inverse g f = (x : A) → g (f x) ≡ x --
+  left-inverse g f = (x : A) → g (f x) ＝ x --
 
   right-inverse : (B → A) → (A → B) → Type ℓ'
-  right-inverse g f = (x : B) → f (g x) ≡ x
+  right-inverse g f = (x : B) → f (g x) ＝ x
 
 
 -- As defined in Rijke's Intro to HoTT
