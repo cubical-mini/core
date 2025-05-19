@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
-module Foundations.Prim.Interval where
+module Prim.Interval where
 
-open import Foundations.Prim.Type
+open import Prim.Type
 
 open import Agda.Primitive.Cubical public
   using ( IUniv -- IUniv : SSet₁
@@ -13,9 +13,9 @@ open import Agda.Primitive.Cubical public
                   -- Partial i A = IsOne i → A
         ; PartialP
         ; primPOr )
-  renaming ( primIMin to _i∧_ -- _i∧_ : I → I → I
-           ; primIMax to _i∨_ -- _i∨_ : I → I → I
-           ; primINeg to i~_  -- i~_ : I → I
+  renaming ( primIMin to _∧_ -- _∧_ : I → I → I
+           ; primIMax to _∨_ -- _∨_ : I → I → I
+           ; primINeg to ~_  -- ~_ : I → I
 
            ; itIsOne    to 1=1       -- 1=1 : IsOne i1
            ; isOneEmpty to is1-empty -- is1-empty : ∀ {ℓ} {A : Partial i0 (Type ℓ)} → PartialP i0 A

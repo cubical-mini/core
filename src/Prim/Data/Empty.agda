@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
-module Foundations.Prim.Empty where
+module Prim.Data.Empty where
 
-open import Foundations.Prim.Type
+open import Prim.Type
 
 data ⊥ₜ : Type where
 

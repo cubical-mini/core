@@ -1,12 +1,12 @@
 {-# OPTIONS --safe #-}
-module Foundations.Cat.Reflexivity where
+module Notation.Reflexivity where
 
-open import Foundations.Prim.Type
+open import Prim.Type
 
-open import Foundations.Cat.Structures.Quiver
+open import Notation.Quiver
 
-module _ (C : Quiver) where
-  open Quiver C
+module _ {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob)
+  {ℓ-hom : ℓ-hom-sig} (Hom : hom-sig Ob ℓ-hom) where
 
   record Refl : Typeω where
     no-eta-equality

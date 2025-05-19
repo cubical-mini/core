@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
-module Foundations.Prim.Sum where
+module Prim.Data.Sum where
 
-open import Foundations.Prim.Type
+open import Prim.Type
 
 infixr 70 _⊎_
 data _⊎_ {ℓa ℓb} (A : Type ℓa) (B : Type ℓb) : Type (ℓa l⊔ ℓb) where
