@@ -1,0 +1,15 @@
+name: cm-core-test-0.1
+include: ../src .
+flags:
+  --erased-cubical
+  --erasure
+  --erased-matches
+  --exact-split
+  --guardedness
+  --hidden-argument-puns
+  --no-import-sorts
+  --postfix-projections
+  --qualified-instances
+
+  -Werror
+  -WnoUnsupportedIndexedMatch

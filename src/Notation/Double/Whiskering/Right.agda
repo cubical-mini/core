@@ -3,25 +3,23 @@ module Notation.Double.Whiskering.Right where
 
 open import Prim.Type
 
+open import Notation.Base
 open import Notation.Composition
+open import Notation.Double.Base
 open import Notation.Double.Composition
-open import Notation.Double.Quiver
-open import Notation.Quiver
 open import Notation.Reflexivity
 
-module _ {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) {ℓ-hom□ : ℓ-square-sig}
-  {Homₕ : hom-sig Ob (ℓ-homₕ ℓ-hom□)} ⦃ _ : Comp Ob Homₕ ⦄
-  {Homᵥ : hom-sig Ob (ℓ-homᵥ ℓ-hom□)} ⦃ _ : Refl Ob Homᵥ ⦄
-  (Hom□ : square-sig Ob Homₕ Homᵥ ℓ-hom□)
-  where
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-sq : ℓ-sq-sig}
+  (C : ℚuiver-on Ob ℓ-sq) (open ℚuiver-on C)
+  ⦃ _ : Compω Quiverₕ ⦄ ⦃ _ : Reflω Quiverᵥ ⦄ where
 
-  record 𝕎hisker-r : Typeω where
+  record 𝕎hisker-r : Typeω where -- TODO levels
     no-eta-equality
     infixr 24 _▷_
-    field _▷_ : {ℓw ℓx ℓy ℓz : Level} {w : Ob ℓw} {x : Ob ℓx} {f : Homₕ w x}
-                {y : Ob ℓy} {g : Homᵥ w y} {h : Homₕ y x} (α : Hom□ f g refl h)
-                {z : Ob ℓz} (k : Homₕ x z)
-              → Hom□ (f ∙ k) g refl (h ∙ k)
+    field _▷_ : {ℓw ℓx ℓy ℓz : Level} {w : Ob ℓw} {x : Ob ℓx} {f : Hor w x}
+                {y : Ob ℓy} {g : Ver w y} {h : Hor y x} (α : Sq f g refl h)
+                {z : Ob ℓz} (k : Hor x z)
+              → Sq (f ∙ k) g refl (h ∙ k)
 
 open 𝕎hisker-r ⦃ ... ⦄ public
 

@@ -3,21 +3,21 @@ module Notation.Double.Reflexivity where
 
 open import Prim.Type
 
-open import Notation.Double.Quiver
-open import Notation.Quiver
+open import Notation.Base
+open import Notation.Double.Base
 open import Notation.Reflexivity
 
-module _ {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) {ℓ-hom□ : ℓ-square-sig}
-  {Homₕ : hom-sig Ob (ℓ-homₕ ℓ-hom□)} ⦃ _ : Refl Ob Homₕ ⦄
-  {Homᵥ : hom-sig Ob (ℓ-homᵥ ℓ-hom□)} ⦃ _ : Refl Ob Homᵥ ⦄
-  (Hom□ : square-sig Ob Homₕ Homᵥ ℓ-hom□)
-  where
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-sq : ℓ-sq-sig}
+  (C : ℚuiver-on Ob ℓ-sq) (open ℚuiver-on C)
+  (ℓx ℓy : Level)
+  ⦃ _ : Refl Quiverₕ ℓx ⦄ ⦃ _ : Refl Quiverₕ ℓy ⦄
+  ⦃ _ : Refl Quiverᵥ ℓx ⦄ ⦃ _ : Refl Quiverᵥ ℓy ⦄ where
 
-  record ℝefl : Typeω where
+  record ℝefl : Type (ℓ-ob ℓx l⊔ ℓ-ob ℓy l⊔ ℓ-ver ℓ-sq ℓx ℓy l⊔ ℓ-hor ℓ-sq ℓx ℓy) where
     no-eta-equality
     field
-      reflₕ : {ℓx ℓy : Level} {x : Ob ℓx} {y : Ob ℓy} {f : Homᵥ x y} → Hom□ refl f f refl
-      reflᵥ : {ℓx ℓy : Level} {x : Ob ℓx} {y : Ob ℓy} {f : Homₕ x y} → Hom□ f refl refl f
+      reflₕ : {x : Ob ℓx} {y : Ob ℓy} {f : Ver x y} → Sq refl f f refl
+      reflᵥ : {x : Ob ℓx} {y : Ob ℓy} {f : Hor x y} → Sq f refl refl f
 
 open ℝefl ⦃ ... ⦄ public
 

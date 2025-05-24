@@ -3,28 +3,27 @@ module Notation.Double.Composition where
 
 open import Prim.Type
 
+open import Notation.Base
+open import Notation.Double.Base
 open import Notation.Composition
-open import Notation.Double.Quiver
-open import Notation.Quiver
 
-module _ {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) {ℓ-hom□ : ℓ-square-sig}
-  {Homₕ : hom-sig Ob (ℓ-homₕ ℓ-hom□)} ⦃ _ : Comp Ob Homₕ ⦄
-  {Homᵥ : hom-sig Ob (ℓ-homᵥ ℓ-hom□)} ⦃ _ : Comp Ob Homᵥ ⦄
-  (Hom□ : square-sig Ob Homₕ Homᵥ ℓ-hom□)
-  where
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-sq : ℓ-sq-sig}
+  (C : ℚuiver-on Ob ℓ-sq) (open ℚuiver-on C)
+  (ℓw ℓx ℓy ℓz ℓu ℓv : Level)
+  ⦃ _ : Compω Quiverₕ ⦄ ⦃ _ : Compω Quiverᵥ ⦄ where
 
-  record ℂomp : Typeω where
+  record ℂomp : Typeω where -- FIXME levels
     no-eta-equality
     infixl 90 _∙ₕ_ _∙ᵥ_
     field
-      _∙ₕ_ : {ℓw ℓx ℓy ℓz ℓu ℓv : Level} {w : Ob ℓw} {x : Ob ℓx} {f : Homₕ w x}
-             {y : Ob ℓy} {g : Homᵥ w y} {z : Ob ℓz} {h : Homᵥ x z} {k : Homₕ y z} (α : Hom□ f g h k)
-             {u : Ob ℓu} {l : Homₕ x u} {v : Ob ℓv} {m : Homᵥ u v} {n : Homₕ z v} (β : Hom□ l h m n)
-           → Hom□ (f ∙ l) g m (k ∙ n)
-      _∙ᵥ_ : {ℓw ℓx ℓy ℓz ℓu ℓv : Level} {w : Ob ℓw} {x : Ob ℓx} {f : Homₕ w x}
-             {y : Ob ℓy} {g : Homᵥ w y} {z : Ob ℓz} {h : Homᵥ x z} {k : Homₕ y z} (α : Hom□ f g h k)
-             {u : Ob ℓu} {l : Homᵥ y u} {v : Ob ℓv} {m : Homᵥ z v} {n : Homₕ u v} (β : Hom□ k l m n)
-           → Hom□ f (g ∙ l) (h ∙ m) n
+      _∙ₕ_ : {w : Ob ℓw} {x : Ob ℓx} {f : Hor w x}
+             {y : Ob ℓy} {g : Ver w y} {z : Ob ℓz} {h : Ver x z} {k : Hor y z} (α : Sq f g h k)
+             {u : Ob ℓu} {l : Hor x u} {v : Ob ℓv} {m : Ver u v} {n : Hor z v} (β : Sq l h m n)
+           → Sq (f ∙ l) g m (k ∙ n)
+      _∙ᵥ_ : {w : Ob ℓw} {x : Ob ℓx} {f : Hor w x}
+             {y : Ob ℓy} {g : Ver w y} {z : Ob ℓz} {h : Ver x z} {k : Hor y z} (α : Sq f g h k)
+             {u : Ob ℓu} {l : Ver y u} {v : Ob ℓv} {m : Ver z v} {n : Hor u v} (β : Sq k l m n)
+           → Sq f (g ∙ l) (h ∙ m) n
 
 open ℂomp ⦃ ... ⦄ public
 

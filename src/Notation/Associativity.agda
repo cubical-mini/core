@@ -4,18 +4,17 @@ module Notation.Associativity where
 open import Prim.Kan
 open import Prim.Type
 
+open import Notation.Base
 open import Notation.Composition
-open import Notation.Quiver
 
-module _ {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob)
-  {ℓ-hom : ℓ-hom-sig} (Hom : hom-sig Ob ℓ-hom) ⦃ _ : Comp Ob Hom ⦄
-  (_~_ : {ℓx ℓy : Level} {x : Ob ℓx} {y : Ob ℓy} (f g : Hom x y) → Type (ℓ-hom ℓx ℓy)) where
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
+  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (CC : 2-Quiver-on C) (open 2-Quiver-on CC)
+  (ℓw ℓx ℓy ℓz : Level) ⦃ _ : Comp C ℓw ℓx ℓz ⦄ ⦃ _ : Comp C ℓx ℓy ℓz ⦄ ⦃ _ : Comp C ℓw ℓx ℓy ⦄ ⦃ _ : Comp C ℓw ℓy ℓz ⦄ where
 
-  record Assoc : Typeω where
+  record Assoc : Type (ℓ-ob ℓw l⊔ ℓ-ob ℓx l⊔ ℓ-ob ℓy l⊔ ℓ-ob ℓz l⊔ ℓ-hom ℓw ℓx l⊔ ℓ-hom ℓw ℓz l⊔ ℓ-hom ℓx ℓy l⊔ ℓ-hom ℓy ℓz) where
     no-eta-equality
-    field assoc : {ℓw ℓx ℓy ℓz : Level} {w : Ob ℓw} {x : Ob ℓx} {y : Ob ℓy} {z : Ob ℓz}
-                  (f : Hom w x) (g : Hom x y) (h : Hom y z)
-                → f ∙ (g ∙ h) ~ (f ∙ g) ∙ h
+    field assoc : {w : Ob ℓw} {x : Ob ℓx} (f : Hom w x) {y : Ob ℓy} (g : Hom x y) {z : Ob ℓz} (h : Hom y z)
+                → 2-Hom (f ∙ (g ∙ h)) ((f ∙ g) ∙ h)
 
 open Assoc ⦃ ... ⦄ public
 

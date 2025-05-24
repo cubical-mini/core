@@ -3,14 +3,17 @@ module Notation.Reflexivity where
 
 open import Prim.Type
 
-open import Notation.Quiver
+open import Notation.Base
 
-module _ {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob)
-  {ℓ-hom : ℓ-hom-sig} (Hom : hom-sig Ob ℓ-hom) where
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
+  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) where
 
-  record Refl : Typeω where
+  record Refl ℓ : Type (ℓ-ob ℓ l⊔ ℓ-hom ℓ ℓ) where
     no-eta-equality
-    field refl : {ℓ : Level} {x : Ob ℓ} → Hom x x
+    field refl : {x : Ob ℓ} → Hom x x
+
+  Reflω : Typeω
+  Reflω = {ℓ : Level} → Refl ℓ
 
 open Refl ⦃ ... ⦄ public
 
