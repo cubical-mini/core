@@ -38,7 +38,7 @@ comp A φ u = primHComp sys (transp A i0 (u i0 1=1))
   sys : ∀ j → Partial φ (A i1)
   sys j (φ = i1) = transp (λ i → A (i ∨ j)) j (u j 1=1)
 {-# DISPLAY primHComp {_} {_} {φ} (comp-sys.sys A _ u) _ = comp A φ u #-}
--- TODO check why 1Lab stopped using `primComp` 
+-- TODO check why 1Lab stopped using `primComp`
 -- primComp A (λ j .o → u j (is1-left φ (~ j) o)) (u i0 1=1)
 
 fill : {ℓ^ : I → Level} (A : ∀ i → Type (ℓ^ i)) (φ : I) (i : I)

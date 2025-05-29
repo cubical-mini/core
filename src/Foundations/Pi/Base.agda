@@ -1,9 +1,13 @@
 {-# OPTIONS --safe #-}
 module Foundations.Pi.Base where
 
-open import Prim.Interval
-open import Prim.Kan
 open import Prim.Type
+
+Fun : {ℓa ℓb : Level} → Type ℓa → Type ℓb → Type (ℓa l⊔ ℓb)
+Fun A B = A → B
+
+DFun : {ℓa ℓb : Level} (A : Type ℓa) → (A → Type ℓb) → Type (ℓa l⊔ ℓb)
+DFun A B = (a : A) → B a
 
 id : {ℓa : Level} {A : Type ℓa} → A → A
 id x = x
@@ -14,36 +18,29 @@ _∘_ : {ℓa ℓb ℓc : Level} {A : Type ℓa} {B : A → Type ℓb} {C : (a :
       (x : A) → C x (f x)
 (g ∘ f) x = g (f x)
 
+flip : {ℓa ℓb ℓc : Level} {A : Type ℓa} {B : Type ℓb} {C : A → B → Type ℓc}
+     → (∀ a b → C a b) → (∀ b a → C a b)
+flip f y x = f x y
+{-# INLINE flip #-}
 
--- Path
+implicit : {ℓa ℓb : Level} {A : Type ℓa} {B : A → Type ℓb}
+         → ((a : A) → B a) → ({x : A} → B x)
+implicit f {x} = f x
+{-# INLINE implicit #-}
 
-ap : {ℓa ℓb : Level} {A : Type ℓa} {B : A → Type ℓb}
-     (f : (a : A) → B a)
-     {x y : A} (p : x ＝ y)
-   → Pathᴾ (λ i → B (p i)) (f x) (f y)
-ap f p i = f (p i)
+explicit : {ℓa ℓb : Level} {A : Type ℓa} {B : A → Type ℓb}
+         → ({a : A} → B a) → ((x : A) → B x)
+explicit f x = f {x}
+{-# INLINE explicit #-}
 
-ap² : {ℓa ℓb ℓc : Level} {A : Type ℓa} {B : A → Type ℓb} {C : (a : A) (b : B a) → Type ℓc}
-      (f : (a : A) (b : B a) → C a b)
-      {x y : A} (p : x ＝ y)
-      {u : B x} {v : B y} (q : Pathᴾ (λ i → B (p i)) u v)
-    → Pathᴾ (λ i → C (p i) (q i)) (f x u) (f y v)
-ap² f p q i = f (p i) (q i)
+infixr -1 _$_
+_$_ : {ℓa ℓb : Level} {A : Type ℓa} {B : A → Type ℓb}
+    → (f : (a : A) → B a) (x : A) → B x
+f $ a = f a
+{-# INLINE _$_ #-}
 
-apᴾ : {ℓa ℓb : Level} {A : I → Type ℓa} {B : (i : I) → A i → Type ℓb}
-      (f : (i : I) (a : A i) → B i a)
-      {x : A i0} {y : A i1} (p : Pathᴾ A x y)
-    → Pathᴾ (λ i → B i (p i)) (f i0 x) (f i1 y)
-apᴾ f p i = f i (p i)
-
-fun-ext : {ℓa ℓb : Level} {A : Type ℓa} {B : A → I → Type ℓb}
-          {f : (a : A) → B a i0} {g : (a : A) → B a i1}
-        → ((a : A) → Pathᴾ (B a) (f a) (g a))
-        → Pathᴾ (λ i → (x : A) → B x i) f g
-fun-ext p i x = p x i
-
-happly : {ℓa ℓb : Level} {A : Type ℓa} {B : A → I → Type ℓb}
-         {f : (a : A) → B a i0} {g : (a : A) → B a i1}
-       → Pathᴾ (λ i → (a : A) → B a i) f g
-       → (x : A) → Pathᴾ (B x) (f x) (g x)
-happly eq x i = eq i x
+infixl -1 _&_
+_&_ : {ℓa ℓb : Level} {A : Type ℓa} {B : A → Type ℓb}
+    → (x : A) (f : (a : A) → B a) → B x
+a & f = f a
+{-# INLINE _&_ #-}

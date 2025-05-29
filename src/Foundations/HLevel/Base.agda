@@ -17,7 +17,7 @@ is-contr A = Connected (𝑩 A) Strict lzero lzero
 {-# DISPLAY Connected {_} {_} {_} (𝑩 A) Strict _ _ = is-contr A #-}
 
 is-contr⁻ : {ℓ : Level} (A : Type ℓ) → Type ℓ
-is-contr⁻ A = Connected (𝑩 A) Strict⁻ lzero lzero
+is-contr⁻ A = Connected (𝑩 A) (Strict ²ᵒᵖω) lzero lzero
 {-# DISPLAY Connected {_} {_} {_} (𝑩 A) (_²ᵒᵖω Strict) _ _ = is-contr⁻ A #-}
 
 module _ {ℓ : Level} {A : Type ℓ} where

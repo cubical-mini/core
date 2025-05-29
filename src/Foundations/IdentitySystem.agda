@@ -23,7 +23,7 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
       to-path-over
         : {x y : Ob ℓ} (p : Hom x y)
         → Pathᴾ (λ i → Hom x (to-path p i)) refl p
-    
+
     eww : {x : Ob ℓ} → is-contr (Σₜ (Ob ℓ) (Hom x))
     eww {x} .Wild-initial.source = x , refl
     eww .Wild-initial.from-source {x′ , p} i = to-path p i , to-path-over p i

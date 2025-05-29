@@ -20,3 +20,8 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
       field
         retraction      : Hom y x
         retraction-cell : Weak-retraction retraction s
+
+open Weak-split-mono ⦃ ... ⦄ public
+  using (retraction-cell)
+
+{-# DISPLAY Weak-split-mono.retraction-cell _ = retraction-cell #-}

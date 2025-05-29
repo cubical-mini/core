@@ -1,6 +1,7 @@
 {-# OPTIONS --safe #-}
-module Foundations.Transport.Base where
+module Foundations.Path.Transport where
 
+open import Prim.Data.Sigma
 open import Prim.Interval
 open import Prim.Kan
 open import Prim.Type
@@ -46,7 +47,7 @@ transport-flip {A} {y} p =
 opaque
   transport-path : {ℓ : Level} {A : Type ℓ}
                    {x y x′ y′ : A} (p : x ＝ y) (left : x ＝ x′) (right : y ＝ y′)
-                 → transport (λ i → left i ＝ right i) p ＝ sym left ∙ p ∙ right
+                 → transport (λ i → left i ＝ right i) p ＝ sym left ∙ (p ∙ right)
   transport-path {A} p left right = lemma ∙ ∙∙=∙ (sym left) right p
     where
     lemma : transport (λ i → left i ＝ right i) p ＝ sym left ∙∙ p ∙∙ right
@@ -168,6 +169,12 @@ subst-slice-filler : {ℓa ℓb ℓc : Level} {A : Type ℓa} (B : A → Type �
                    → Pathᴾ (λ i → B (p i) → C (p i)) F (subst C p ∘ F ∘ subst B (sym p))
 subst-slice-filler B C F p i b = transport-filler (ap C p) (F (transport⁻-filler-ext (ap B p) i b)) i
 
+Σ-path : {ℓa ℓb : Level} {A : Type ℓa} {B : A → Type ℓb}
+         {x y : Σ A B} (p : x .fst ＝ y .fst)
+       → subst B p (x .snd) ＝ (y .snd)
+       → x ＝ y
+Σ-path p q = p ,ₚ to-pathᴾ q
+
 opaque
   subst-path-left : {ℓ : Level} {A : Type ℓ}
                     {x y x′ : A} (p : x ＝ y) (left : x ＝ x′)
@@ -181,7 +188,7 @@ opaque
 
   subst-path-both : {ℓ : Level} {A : Type ℓ}
                     {x x′ : A} (p : x ＝ x) (adj : x ＝ x′)
-                  → subst (λ x → x ＝ x) adj p ＝ sym adj ∙ p ∙ adj
+                  → subst (λ x → x ＝ x) adj p ＝ sym adj ∙ (p ∙ adj)
   subst-path-both p adj = transport-path p adj adj
 
 subst² : {ℓa ℓb ℓc : Level} {A : Type ℓa} {B : Type ℓb} (C : A → B → Type ℓc)

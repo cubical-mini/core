@@ -20,3 +20,8 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
       field
         section      : Hom y x
         section-cell : Weak-section section r
+
+open Weak-split-epi ⦃ ... ⦄ public
+  using (section-cell)
+
+{-# DISPLAY Weak-split-epi.section-cell _ = section-cell #-}

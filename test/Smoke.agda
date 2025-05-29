@@ -17,19 +17,16 @@ open import Notation.Strict
 open import Notation.Unitality.Inner
 open import Notation.Unitality.Outer
 
-module _ {ℓa : Level} {A : Type ℓa} where
-  Pa : Quiver-on (λ _ → A) _
-  Pa .Quiver-on.Hom = _＝_
+open import Foundations.Sigma.Base
+open import Foundations.Path.Interface
 
+module _ {ℓa : Level} {A : Type ℓa} where
   Squares : ℚuiver-on (λ _ → A) _
-  Squares .ℚuiver-on.Quiverₕ = Pa
-  Squares .ℚuiver-on.Quiverᵥ = Pa
+  Squares .ℚuiver-on.Quiverₕ = Paths A
+  Squares .ℚuiver-on.Quiverᵥ = Paths A
   Squares .ℚuiver-on.Sq p q r s = Pathᴾ (λ i → q i ＝ r i) p s
 
   instance
-    pare : Refl Pa lzero
-    pare .Refl.refl {x} _ = x
-
     sqre : ℝefl Squares lzero lzero
     sqre .ℝefl.reflₕ {f} i _ = f i
     sqre .ℝefl.reflᵥ {f} _ j = f j
@@ -56,7 +53,7 @@ instance
 
 open import Prim.Data.Sigma
 Rels : (ℓ : Level) → Quiver-on (λ _ → Type ℓ) _
-Rels ℓ .Quiver-on.Hom X Y = Σₜ (Type ℓ) λ S → (S → X) ×ₜ (S → Y)
+Rels ℓ .Quiver-on.Hom X Y = Σ (Type ℓ) λ S → (S → X) × (S → Y)
 
 -- open import Prim.Equiv
 -- instance
@@ -70,11 +67,11 @@ module _ where private
   open Quiver-on Funs
 
   open import Prim.Data.Unit
-  kek : Hom ⊤ₜ Type₃
+  kek : Hom ⊤ Type₃
   kek tt = Type₂
 
-  lol : {ℓ : Level} → Hom ⊤ₜ (Type ℓ)
-  lol _ = Lift _ ⊤ₜ
+  lol : {ℓ : Level} → Hom ⊤ (Type ℓ)
+  lol _ = Lift _ ⊤
 
 -- module _ {ℓ-ob : Level → Level} {Ob : ob-sig ℓ-ob} (C : Quiver-on Ob) ⦃ _ : Comp C ⦄ where private
 --   open Quiver-on C
