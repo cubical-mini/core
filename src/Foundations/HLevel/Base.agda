@@ -8,6 +8,7 @@ open import Prim.Type
 
 open import Notation.Base
 open import Notation.Connected
+open import Notation.Connected.Strict
 open import Notation.Delooping
 open import Notation.Strict
 open import Notation.Thin

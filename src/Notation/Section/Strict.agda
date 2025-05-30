@@ -21,4 +21,11 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
     Split-epi : {x : Ob ℓx} {y : Ob ℓy} (r : Hom x y) → Type (ℓ-hom ℓy ℓx l⊔ ℓ-hom ℓy ℓy)
     Split-epi = Weak-split-epi C Strict
 
+    infix 10 _↠!_
+    record _↠!_ (x : Ob ℓx) (y : Ob ℓy) : Type (ℓ-hom ℓx ℓy l⊔ ℓ-hom ℓy ℓx l⊔ ℓ-hom ℓy ℓy) where
+      no-eta-equality
+      field
+        to            : Hom x y
+        has-split-epi : Split-epi to
+
 {-# DISPLAY Weak-split-epi {_} {_} {_} _ Strict {_} {_} ⦃ _ ⦄ ⦃ _ ⦄ {_} {_} s = Split-epi s #-}

@@ -6,6 +6,7 @@ open import Prim.Type
 open import Notation.Associativity
 open import Notation.Base
 open import Notation.Composition
+open import Notation.Idempotent
 open import Notation.Reflexivity
 open import Notation.Strict
 open import Notation.Unitality.Inner
@@ -37,7 +38,11 @@ instance
   Fun-Unit-o : {ℓx ℓy : Level} → Unit-o Funs Strict ℓx ℓy
   Fun-Unit-o .id-o _ = refl
 
+  Fun-Refl-Idem : {ℓ : Level} {A : Type ℓ} → Idem Funs Strict {x = A} refl
+  Fun-Refl-Idem .idem = refl
+
 {-# INCOHERENT
   Fun-Refl Fun-Comp
   Fun-Assoc Fun-Unit-i Fun-Unit-o
+  Fun-Refl-Idem
 #-}

@@ -21,4 +21,11 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
     Split-mono : {x : Ob ℓx} {y : Ob ℓy} (s : Hom x y) → Type (ℓ-hom ℓx ℓx l⊔ ℓ-hom ℓy ℓx)
     Split-mono = Weak-split-mono C Strict
 
+    infix 10 _↣!_
+    record _↣!_ (x : Ob ℓx) (y : Ob ℓy) : Type (ℓ-hom ℓx ℓy l⊔ ℓ-hom ℓy ℓx l⊔ ℓ-hom ℓx ℓx) where
+      no-eta-equality
+      field
+        to             : Hom x y
+        has-split-mono : Split-mono to
+
 {-# DISPLAY Weak-split-mono {_} {_} {_} _ Strict {_} {_} ⦃ _ ⦄ ⦃ _ ⦄ {_} {_} s = Split-mono s #-}

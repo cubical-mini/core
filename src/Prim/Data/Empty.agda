@@ -3,10 +3,10 @@ module Prim.Data.Empty where
 
 open import Prim.Type
 
-data ⊥ₜ : Type where
+data ⊥ : Type where
 
-elim : {ℓ : Level} {B : ⊥ₜ → Type ℓ} (x : ⊥ₜ) → B x
+elim : {ℓ : Level} {B : ⊥ → Type ℓ} (x : ⊥) → B x
 elim ()
 
-rec : {ℓ : Level} {A : Type ℓ} → ⊥ₜ → A
+rec : {ℓ : Level} {A : Type ℓ} → ⊥ → A
 rec = elim

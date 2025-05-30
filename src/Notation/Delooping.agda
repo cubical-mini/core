@@ -7,5 +7,5 @@ open import Prim.Type
 open import Notation.Base
 
 -- \MIB
-𝑩 : {ℓ : Level} (A : Type ℓ) → Quiver-on (λ _ → ⊤ₜ) (λ _ _ → ℓ)
+𝑩 : {ℓ : Level} (A : Type ℓ) → Quiver-on (λ _ → ⊤) (λ _ _ → ℓ)
 𝑩 A .Quiver-on.Hom _ _ = A

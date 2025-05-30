@@ -8,6 +8,7 @@ open import Notation.Associativity
 open import Notation.Base
 open import Notation.Composition
 open import Notation.Duality
+open import Notation.Idempotent
 open import Notation.Reflexivity
 open import Notation.Retraction
 open import Notation.Retraction.Strict
@@ -69,10 +70,13 @@ module _ {ℓa : Level} {A : Type ℓa} where instance
   Path-Section {ℓx} {ℓy} {p} .Weak-split-epi.section = sym {ℓx = ℓx} {ℓy = ℓy} p
   Path-Section {p} .section-cell = inv-iₚ p
 
+  Path-Refl-Idem : {ℓ : Level} {x : A} → Idem (Paths A) Strict {ℓ = ℓ} {x = x} _
+  Path-Refl-Idem .idem = refl-idem
+
 {-# INCOHERENT
   Path-Refl Path-Sym Path-Comp
   Path-Dual Path-Assoc Path-Unit-i Path-Unit-o
-  Path-Retraction Path-Section
+  Path-Retraction Path-Section Path-Refl-Idem
 #-}
 
 
@@ -104,8 +108,11 @@ module _ {ℓ : Level} {A : Type ℓ} where instance
   Path-Section0 : {x y : A} {p : x ＝ y} → Split-epi p
   Path-Section0 = Path-Section
 
+  Path-Refl-Idem0 : {x : A} → Idem (Paths A) Strict {ℓ = lzero} {x = x} _
+  Path-Refl-Idem0 = Path-Refl-Idem
+
 {-# OVERLAPPABLE
   Path-Refl0 Path-Sym0 Path-Comp0
   Path-Dual0 Path-Assoc0 Path-Unit-i0 Path-Unit-o0
-  Path-Retraction0 Path-Section0
+  Path-Retraction0 Path-Section0 Path-Refl-Idem0
 #-}

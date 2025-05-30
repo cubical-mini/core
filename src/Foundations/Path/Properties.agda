@@ -21,6 +21,12 @@ opaque
 
 opaque
   unfolding _∙_
+  refl-idem : {ℓ : Level} {A : Type ℓ}
+              {x : A} → refl ∙ refl ＝ refl {x = x}
+  refl-idem {x} i j = hcomp (i ∨ ∂ j) λ _ _ → x
+
+opaque
+  unfolding _∙_
   sym-∙ : {ℓ : Level} {A : Type ℓ}
           {x y z : A} (p : x ＝ y) (q : y ＝ z)
         → sym (p ∙ q) ＝ sym q ∙ sym p
