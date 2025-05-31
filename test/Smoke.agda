@@ -19,6 +19,7 @@ open import Notation.Unitality.Outer
 
 open import Foundations.Sigma.Base
 open import Foundations.Path.Interface
+open import Foundations.Pi.Interface
 
 module _ {ℓa : Level} {A : Type ℓa} where
   Squares : ℚuiver-on (λ _ → A) _
@@ -37,19 +38,6 @@ module _ {ℓa : Level} {A : Type ℓa} {x y : A} {p : x ＝ y} where
 
   kooz : p ＝ p
   kooz = reflᵥ
-
-Fun : ∀{ℓa ℓb} → Type ℓa → Type ℓb → Type (ℓa l⊔ ℓb)
-Fun A B = A → B
-
-Funs : Quiver-on (λ ℓ → Type ℓ) _
-Funs .Quiver-on.Hom = Fun
-
-instance
-  Funs-Comp : Compω Funs
-  Funs-Comp .Comp._∙_ f g x = g (f x)
-
-  Funs-Assoc : {ℓw ℓx ℓy ℓz : Level} → Assoc Funs Strict ℓw ℓx ℓy ℓz
-  Funs-Assoc .Assoc.assoc f g h _ x = h (g (f x))
 
 open import Prim.Data.Sigma
 Rels : (ℓ : Level) → Quiver-on (λ _ → Type ℓ) _

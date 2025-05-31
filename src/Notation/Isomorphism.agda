@@ -1,6 +1,5 @@
 {-# OPTIONS --safe #-}
-module Notation.Adjoint.Isomorphism where
-
+module Notation.Isomorphism where
 
 open import Prim.Type
 
@@ -34,6 +33,9 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   ⦃ _ : Assoc C Strict ℓc ℓd ℓc ℓd ⦄ ⦃ _ : Unit-i C Strict ℓc ℓd ⦄ ⦃ _ : Unit-o C Strict ℓd ℓc ⦄
   where
 
+  Inverses : Hom c d → Hom d c → Type (ℓ-hom ℓc ℓc l⊔ ℓ-hom ℓc ℓd l⊔ ℓ-hom ℓd ℓc l⊔ ℓ-hom ℓd ℓd)
+  Inverses to from = Adjoint C Strict 3-Trivial to from
+
   infix 10 _≅_
   record _≅_ : Type (ℓ-hom ℓc ℓd l⊔ ℓ-hom ℓd ℓc l⊔ ℓ-hom ℓc ℓc l⊔ ℓ-hom ℓd ℓd) where
     no-eta-equality
@@ -41,3 +43,5 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
       to       : Hom c d
       from     : Hom d c
       inverses : Adjoint C Strict 3-Trivial to from
+
+{-# DISPLAY Adjoint _ Strict 3-Trivial = Inverses #-}

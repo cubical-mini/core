@@ -20,6 +20,7 @@ open import Notation.Whiskering.Right.Strict
 
 open import Foundations.Path.Interface
 
+-- TODO levels?
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom} (open Quiver-on C)
   ⦃ _ : Reflω C ⦄ ⦃ _ : Compω C ⦄ where
@@ -32,7 +33,6 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
     Retract-Refl .refl ._Retract-of_.to = refl
     Retract-Refl .refl ._Retract-of_.from = refl
     Retract-Refl .refl ._Retract-of_.retract-cell = idem
-    {-# INCOHERENT Retract-Refl #-}
 
   module _ {ℓx ℓy ℓz : Level} {x : Ob ℓx} {y : Ob ℓy} {z : Ob ℓz} (f : x Retract-of y) (g : y Retract-of z)
     ⦃ _ : Assoc C Strict ℓx ℓy ℓz ℓy ⦄ ⦃ _ : Assoc C Strict ℓx ℓz ℓy ℓx ⦄ ⦃ _ : Unit-o C Strict ℓx ℓy ⦄ where
@@ -53,4 +53,5 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   module _ ⦃ _ : ∀{ℓw ℓx ℓy ℓz} → Assoc C Strict ℓw ℓx ℓy ℓz ⦄ ⦃ _ : ∀{ℓx ℓy} → Unit-o C Strict ℓx ℓy ⦄ where instance
     Retract-Comp : Compω Retracts
     Retract-Comp ._∙_ f g = f ∙ᵣ g
-    {-# INCOHERENT Retract-Comp #-}
+
+{-# INCOHERENT Retract-Refl Retract-Comp #-}
