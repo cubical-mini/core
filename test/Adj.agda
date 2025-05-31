@@ -29,6 +29,9 @@ open import Notation.Whiskering.Right.Strict
 open import Foundations.Pi.Interface
 open import Foundations.Path.Interface
 
+open Fun-cat
+open Path-gpd
+open Path-gpd0
 module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} {g : B → A} {θ : f ⊣ g} where
   η : idₜ ＝ g ∘ₜ f
   η = θ .Adjoint.η

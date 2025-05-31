@@ -6,8 +6,8 @@ open import Prim.Type
 
 open import Notation.Associativity.Strict
 open import Notation.Adjoint
-open import Notation.Adjoint.Isomorphism
 open import Notation.Base
+open import Notation.Isomorphism
 open import Notation.Section
 open import Notation.Section.Strict
 open import Notation.Retraction
@@ -20,6 +20,7 @@ open import Notation.Whiskering.Right.Strict
 open import Foundations.Path.Interface
 open import Foundations.Pi.Interface
 
+open Fun-cat
 module _ {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb} (e : A ↠! B) where private
   to : A → B
   to = e ._↠!_.to

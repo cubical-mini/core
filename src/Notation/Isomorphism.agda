@@ -32,6 +32,7 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   ⦃ _ : Assoc C Strict ℓd ℓc ℓd ℓc ⦄ ⦃ _ : Unit-o C Strict ℓc ℓd ⦄ ⦃ _ : Unit-i C Strict ℓd ℓc ⦄
   ⦃ _ : Assoc C Strict ℓc ℓd ℓc ℓd ⦄ ⦃ _ : Unit-i C Strict ℓc ℓd ⦄ ⦃ _ : Unit-o C Strict ℓd ℓc ⦄
   where
+  open Path-gpd
 
   Inverses : Hom c d → Hom d c → Type (ℓ-hom ℓc ℓc l⊔ ℓ-hom ℓc ℓd l⊔ ℓ-hom ℓd ℓc l⊔ ℓ-hom ℓd ℓd)
   Inverses to from = Adjoint C Strict 3-Trivial to from

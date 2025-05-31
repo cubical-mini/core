@@ -27,12 +27,14 @@ module _ {ℓa : Level} {A : Type ℓa} where
   Squares .ℚuiver-on.Quiverᵥ = Paths A
   Squares .ℚuiver-on.Sq p q r s = Pathᴾ (λ i → q i ＝ r i) p s
 
+  open Path-gpd0
   instance
     sqre : ℝefl Squares lzero lzero
     sqre .ℝefl.reflₕ {f} i _ = f i
     sqre .ℝefl.reflᵥ {f} _ j = f j
 
 module _ {ℓa : Level} {A : Type ℓa} {x y : A} {p : x ＝ y} where
+  open Path-gpd0
   zook : Pathᴾ (λ i → p i ＝ p i) refl refl
   zook = reflₕ
 

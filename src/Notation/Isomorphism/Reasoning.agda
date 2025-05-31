@@ -34,6 +34,8 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   ⦃ _ : ∀{ℓw ℓx ℓy ℓz} → Assoc C Strict ℓw ℓx ℓy ℓz ⦄
   ⦃ _ : ∀{ℓx ℓy} → Unit-i C Strict ℓx ℓy ⦄ ⦃ _ : ∀{ℓx ℓy} → Unit-o C Strict ℓx ℓy ⦄
   where
+  open Path-gpd0
+  open Path-gpd
 
   iso→retract : {ℓx ℓy : Level} {x : Ob ℓx} {y : Ob ℓy} → x ≅ y → x Retract-of y
   iso→retract e ._Retract-of_.to = e ._≅_.to

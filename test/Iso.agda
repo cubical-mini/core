@@ -20,6 +20,8 @@ open import Notation.Whiskering.Right.Strict
 open import Foundations.Path.Interface
 open import Foundations.Pi.Interface
 
+open Fun-cat
+open Path-gpd
 module _ {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb} (e : A ≅ B) where private
   to : A → B
   to = e ._≅_.to

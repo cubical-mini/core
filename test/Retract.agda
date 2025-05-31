@@ -13,6 +13,7 @@ open import Notation.Retract.Reasoning
 open import Foundations.Pi.Interface
 open import Foundations.Path.Interface
 
+open Fun-cat
 module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} (e : A Retract-of B) where private
   to : A → B
   to = e ._Retract-of_.to

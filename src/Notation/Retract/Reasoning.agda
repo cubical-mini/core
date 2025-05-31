@@ -39,6 +39,7 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
     open _Retract-of_ f renaming (to to f⁺; from to f⁻; retract-cell to f⁺f⁻)
     open _Retract-of_ g renaming (to to g⁺; from to g⁻; retract-cell to g⁺g⁻)
 
+    open Path-gpd0
     _∙ᵣ_ : x Retract-of z
     _∙ᵣ_ ._Retract-of_.to   = f⁺ ∙ g⁺
     _∙ᵣ_ ._Retract-of_.from = g⁻ ∙ f⁻
