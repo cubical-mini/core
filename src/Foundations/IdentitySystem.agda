@@ -7,7 +7,7 @@ open import Prim.Type
 open import Foundations.HLevel.Base
 
 open import Notation.Base
-open import Notation.Initial.Wild
+open import Notation.Connected
 open import Notation.Reflexivity
 
 open import Prim.Data.Sigma
@@ -24,9 +24,9 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
         : {x y : Ob ℓ} (p : Hom x y)
         → Pathᴾ (λ i → Hom x (to-path p i)) refl p
 
-    eww : {x : Ob ℓ} → is-contr (Σₜ (Ob ℓ) (Hom x))
-    eww {x} .Wild-initial.source = x , refl
-    eww .Wild-initial.from-source {x′ , p} i = to-path p i , to-path-over p i
+    eww : {x : Ob ℓ} → is-contr (Σ (Ob ℓ) (Hom x))
+    eww .centre = _ , refl
+    eww .centre-cell (x′ , p) i = to-path p i , to-path-over p i
 
     -- Fan : (ℓ : Level) {ℓc : Level} {c : Ob ℓc} →  Type (ℓ-ob ℓ l⊔ ℓ-hom ℓc ℓ)
     -- Fan ℓ {ℓc} {c} = Σₜ (Ob ℓ) (λ w → Hom c w)

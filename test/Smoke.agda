@@ -13,7 +13,9 @@ open import Notation.Double.Composition
 open import Notation.Double.Interchange
 open import Notation.Double.Reflexivity
 open import Notation.Reflexivity
+open import Notation.Split
 open import Notation.Strict
+open import Notation.Symmetry
 open import Notation.Unitality.Inner
 open import Notation.Unitality.Outer
 
@@ -37,6 +39,9 @@ module _ {ℓa : Level} {A : Type ℓa} {x y : A} {p : x ＝ y} where
   open Path-gpd0
   zook : Pathᴾ (λ i → p i ＝ p i) refl refl
   zook = reflₕ
+
+  one : p ∙ sym p ＝ refl
+  one = split
 
   kooz : p ＝ p
   kooz = reflᵥ

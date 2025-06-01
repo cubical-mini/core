@@ -4,38 +4,39 @@ module Iso where
 open import Prim.Kan
 open import Prim.Type
 
-open import Notation.Associativity.Strict
+open import Notation.Associativity
 open import Notation.Adjoint
 open import Notation.Base
 open import Notation.Composition
+open import Notation.Displayed.Base
 open import Notation.Duality
 open import Notation.Isomorphism
-open import Notation.Isomorphism.Reasoning
+open import Notation.Invertibility.Quasi
 open import Notation.Symmetry
-open import Notation.Unitality.Inner.Strict
-open import Notation.Unitality.Outer.Strict
-open import Notation.Whiskering.Left.Strict
-open import Notation.Whiskering.Right.Strict
+open import Notation.Unitality.Inner
+open import Notation.Unitality.Outer
+open import Notation.Whiskering.Left
+open import Notation.Whiskering.Right
 
 open import Foundations.Path.Interface
 open import Foundations.Pi.Interface
 
 open Fun-cat
-open Path-gpd
 module _ {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb} (e : A ≅ B) where private
   to : A → B
-  to = e ._≅_.to
+  to = e .hom
 
   from : B → A
-  from = e ._≅_.from
+  from = e .preserves .Quasi-inverse.from
 
-  li : idₜ ＝ from ∘ₜ to
-  li = e ._≅_.inverses .Adjoint.η
+  li : from ∘ₜ to ＝ idₜ
+  li = e .preserves .Quasi-inverse.to-from
 
   ri : to ∘ₜ from ＝ idₜ
-  ri = e ._≅_.inverses .Adjoint.ε
+  ri = e .preserves .Quasi-inverse.from-to
 
 module _ {ℓa ℓb ℓc : Level} {A : Type ℓa} {B : Type ℓb} {C : Type ℓc} (f : A ≅ B) (g : B ≅ C) where
+  open Iso-quiver
 
   _ : A ≅ C
   _ = f ∙ g

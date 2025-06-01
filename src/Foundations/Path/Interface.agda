@@ -9,19 +9,16 @@ open import Notation.Base
 open import Notation.Composition
 open import Notation.Duality
 open import Notation.Idempotent
+open import Notation.Invertibility.Retraction
+open import Notation.Invertibility.Section
 open import Notation.Reflexivity
-open import Notation.Retraction
-open import Notation.Retraction.Strict
-open import Notation.Section
-open import Notation.Section.Strict
+open import Notation.Split
 open import Notation.Strict
 open import Notation.Symmetry
 open import Notation.Unitality.Inner
 open import Notation.Unitality.Outer
 open import Notation.Whiskering.Left
-open import Notation.Whiskering.Left.Strict
 open import Notation.Whiskering.Right
-open import Notation.Whiskering.Right.Strict
 
 open import Foundations.Path.Base
   public
@@ -63,13 +60,8 @@ module Path-gpd where
     Path-Unit-o : {ℓx ℓy : Level} → Unit-o (Paths A) Strict ℓx ℓy
     Path-Unit-o .id-o = id-oₚ
 
-    Path-Retraction : {ℓx ℓy : Level} {x y : A} {p : x ＝ y} → Split-mono {ℓx = ℓx} {ℓy = ℓy} p
-    Path-Retraction {ℓx} {ℓy} {p} .Weak-split-mono.retraction = sym {ℓx = ℓx} {ℓy = ℓy} p
-    Path-Retraction {p} .retraction-cell = inv-oₚ p
-
-    Path-Section : {ℓx ℓy : Level} {x y : A} {p : x ＝ y} → Split-epi {ℓx = ℓx} {ℓy = ℓy} p
-    Path-Section {ℓx} {ℓy} {p} .Weak-split-epi.section = sym {ℓx = ℓx} {ℓy = ℓy} p
-    Path-Section {p} .section-cell = inv-iₚ p
+    Path-Split : {ℓx ℓy : Level} {x y : A} {p : x ＝ y} → Split-pair (Paths A) {ℓx = ℓx} {ℓy = ℓy} p (symₚ p)
+    Path-Split {p} .split = inv-oₚ p
 
     Path-Refl-Idem : {ℓ : Level} {x : A} → Idem (Paths A) Strict {ℓ = ℓ} {x = x} _
     Path-Refl-Idem .idem = refl-idem
@@ -77,7 +69,7 @@ module Path-gpd where
     {-# INCOHERENT
       Path-Refl Path-Sym Path-Comp
       Path-Dual Path-Assoc Path-Unit-i Path-Unit-o
-      Path-Retraction Path-Section Path-Refl-Idem
+      Path-Split Path-Refl-Idem
     #-}
 
 
@@ -105,11 +97,8 @@ module Path-gpd0 where
     Path-Unit-o0 : Unit-o (Paths A) Strict lzero lzero
     Path-Unit-o0 = Path-Unit-o
 
-    Path-Retraction0 : {x y : A} {p : x ＝ y} → Split-mono p
-    Path-Retraction0 = Path-Retraction
-
-    Path-Section0 : {x y : A} {p : x ＝ y} → Split-epi p
-    Path-Section0 = Path-Section
+    Path-Split0 : {x y : A} {p : x ＝ y} → Split-pair (Paths A) {ℓx = lzero} {ℓy = lzero} p (symₚ p)
+    Path-Split0 = Path-Split
 
     Path-Refl-Idem0 : {x : A} → Idem (Paths A) Strict {ℓ = lzero} {x = x} _
     Path-Refl-Idem0 = Path-Refl-Idem
@@ -117,5 +106,5 @@ module Path-gpd0 where
     {-# OVERLAPPABLE
       Path-Refl0 Path-Sym0 Path-Comp0
       Path-Dual0 Path-Assoc0 Path-Unit-i0 Path-Unit-o0
-      Path-Retraction0 Path-Section0 Path-Refl-Idem0
+      Path-Split0 Path-Refl-Idem0
     #-}

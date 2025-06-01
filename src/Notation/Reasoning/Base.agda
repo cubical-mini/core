@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Notation.Reasoning where
+module Notation.Reasoning.Base where
 
 open import Prim.Type
 

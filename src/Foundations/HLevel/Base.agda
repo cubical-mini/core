@@ -8,7 +8,6 @@ open import Prim.Type
 
 open import Notation.Base
 open import Notation.Connected
-open import Notation.Connected.Strict
 open import Notation.Delooping
 open import Notation.Strict
 open import Notation.Thin
@@ -16,18 +15,6 @@ open import Notation.Thin
 is-contr : {ℓ : Level} (A : Type ℓ) → Type ℓ
 is-contr A = Connected (𝑩 A) Strict lzero lzero
 {-# DISPLAY Connected {_} {_} {_} (𝑩 A) Strict _ _ = is-contr A #-}
-
-is-contr⁻ : {ℓ : Level} (A : Type ℓ) → Type ℓ
-is-contr⁻ A = Connected (𝑩 A) (Strict ²ᵒᵖω) lzero lzero
-{-# DISPLAY Connected {_} {_} {_} (𝑩 A) (_²ᵒᵖω Strict) _ _ = is-contr⁻ A #-}
-
-module _ {ℓ : Level} {A : Type ℓ} where
-  paths : ⦃ A-c : is-contr A ⦄ (x : A) → centre ＝ x
-  paths =  centre-cell
-
-  paths⁻ : ⦃ A-c : is-contr⁻ A ⦄ (x : A) → x ＝ centre
-  paths⁻ = centre-cell
-
 
 is-prop : {ℓ : Level} (A : Type ℓ) → Type ℓ
 is-prop A = Thin (𝑩 A) Strict lzero lzero
@@ -64,9 +51,9 @@ is-contr→is-prop : {ℓ : Level} {A : Type ℓ} → is-contr A → is-prop A
 is-contr→is-prop {A} A-c .thin-cell x y i = hcomp (∂ i) sys
   module is-contr→is-prop-sys where
   sys : (j : I) → Partial (∂ i ∨ ~ j) A
-  sys j (i = i0) = paths ⦃ A-c ⦄ x j
-  sys j (i = i1) = paths ⦃ A-c ⦄ y j
-  sys j (j = i0) = centre ⦃ A-c ⦄
+  sys j (i = i0) = A-c .centre-cell x j
+  sys j (i = i1) = A-c .centre-cell y j
+  sys j (j = i0) = A-c .centre
 {-# DISPLAY hcomp _ (is-contr→is-prop-sys.sys {ℓ} {A} A-c x y i) = is-contr→is-prop {ℓ} {A} A-c x y i #-}
 
 contractible-if-inhabited : {ℓ : Level} {A : Type ℓ} → (A → is-contr A) → is-prop A
