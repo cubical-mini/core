@@ -4,22 +4,18 @@ module Notation.Terminal where
 open import Prim.Type
 
 open import Notation.Base
+open import Notation.Composition
+open import Notation.Symmetry
+open import Notation.Terminal.Base public
 
--- coherent when strict, can be used for instance resolution
-module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
-  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (CC : 2-Quiver-on C) (open 2-Quiver-on CC) where
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
+  {C : Quiver-on Ob ℓ-hom} (open Quiver-on C) {C₂ : 2-Quiver-on C} (open 2-Quiver-on C₂)
+  {ℓt ℓ : Level} ⦃ _ : Weak-Terminal C C₂ ℓt ℓ ⦄ where
 
-  record Terminal ℓt ℓ : Type (ℓ-ob ℓt l⊔ ℓ-ob ℓ l⊔ ℓ-hom ℓ ℓt) where
-    no-eta-equality
-    constructor mk-terminal
-    field
-      ⊤      : Ob ℓt
-      !      : {x : Ob ℓ} → Hom x ⊤
-      !-cell : {x : Ob ℓ} (h : Hom x ⊤) → 2-Hom h !
+  module _ ⦃ _ : Symmetryω₂ C C₂ ⦄ where
+    !-unique : {x : Ob ℓ} (h : Hom x ⊤) → 2-Hom h !
+    !-unique h = sym (!-cell h)
 
-open Terminal ⦃ ... ⦄ public
-  using (⊤ ; ! ; !-cell)
-
-{-# DISPLAY Terminal.⊤ _ = ⊤ #-}
-{-# DISPLAY Terminal.! _ = ! #-}
-{-# DISPLAY Terminal.!-cell _ h = !-cell h #-}
+    module _ ⦃ _ : Compω₂ C C₂ ⦄ where
+      !-unique² : {x : Ob ℓ} (f g : Hom x ⊤) → 2-Hom f g
+      !-unique² f g = sym (!-cell f) ∙ !-cell g

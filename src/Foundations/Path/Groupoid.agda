@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Foundations.Path.Interface where
+module Foundations.Path.Groupoid where
 
 open import Prim.Kan
 open import Prim.Type
@@ -8,17 +8,15 @@ open import Notation.Associativity
 open import Notation.Base
 open import Notation.Composition
 open import Notation.Duality
-open import Notation.Idempotent
-open import Notation.Invertibility.Retraction.Base
-open import Notation.Invertibility.Section.Base
 open import Notation.Reflexivity
-open import Notation.Split
-open import Notation.Strict
 open import Notation.Symmetry
 open import Notation.Unitality.Inner
 open import Notation.Unitality.Outer
 open import Notation.Whiskering.Left
 open import Notation.Whiskering.Right
+
+open import Foundations.Idempotent
+open import Foundations.Split
 
 open import Foundations.Path.Base
   public
@@ -28,6 +26,8 @@ open import Foundations.Path.Base
 
            ; Square to Squareₚ
            )
+open import Foundations.Path.Groupoid.Base
+  public
 open import Foundations.Path.Properties
   public
   renaming ( id-i  to id-iₚ
@@ -36,6 +36,8 @@ open import Foundations.Path.Properties
            ; inv-i to inv-iₚ
            ; inv-o to inv-oₚ
   )
+open import Foundations.Path.Groupoid.Whiskering
+  public
 
 module Path-gpd where
   module _ {ℓa} {A : Type ℓa} where instance
@@ -60,13 +62,13 @@ module Path-gpd where
     Path-Unit-o : Unit-oω (Paths A) Strict
     Path-Unit-o .id-o = id-oₚ
 
-    Path-Split : ∀{ℓx ℓy} {x y : A} {p : x ＝ y} → Split-pair (Paths A) {ℓx = ℓx} {ℓy = ℓy} p (symₚ p)
+    Path-Split : ∀{ℓx ℓy} {x y : A} {p : x ＝ y} → Split (Paths A) {ℓx = ℓx} {ℓy = ℓy} p (symₚ p)
     Path-Split {p} .split = inv-oₚ p
 
-    Path-Refl-Idem : ∀{ℓ} {x : A} → Idem (Paths A) Strict {ℓ = ℓ} {x = x} _
+    Path-Refl-Idem : ∀{ℓ} {x : A} → Weak-Idem (Paths A) Strict {ℓ = ℓ} {x = x} _
     Path-Refl-Idem .idem = refl-idem
 
-    {-# INCOHERENT
+    {-# OVERLAPS
       Path-Refl Path-Sym Path-Comp
       Path-Dual Path-Assoc Path-Unit-i Path-Unit-o
       Path-Split Path-Refl-Idem
@@ -97,10 +99,10 @@ module Path-gpd0 where
     Path-Unit-o0 : Unit-o (Paths A) Strict lzero lzero
     Path-Unit-o0 = Path-Unit-o
 
-    Path-Split0 : {x y : A} {p : x ＝ y} → Split-pair (Paths A) {ℓx = lzero} {ℓy = lzero} p (symₚ p)
+    Path-Split0 : {x y : A} {p : x ＝ y} → Split (Paths A) {ℓx = lzero} {ℓy = lzero} p (symₚ p)
     Path-Split0 = Path-Split
 
-    Path-Refl-Idem0 : {x : A} → Idem (Paths A) Strict {ℓ = lzero} {x = x} _
+    Path-Refl-Idem0 : {x : A} → Idem (Paths A) {ℓ = lzero} {x = x} _
     Path-Refl-Idem0 = Path-Refl-Idem
 
     {-# OVERLAPPABLE

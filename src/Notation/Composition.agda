@@ -21,3 +21,13 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
 open Comp ⦃ ... ⦄ public
 
 {-# DISPLAY Comp._∙_ _ f g = f ∙ g #-}
+
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
+  (C  : Quiver-on Ob ℓ-hom) (open Quiver-on C)
+  (C₂ : 2-Quiver-on C) (open 2-Quiver-on C₂)
+  where
+  Comp₂ : (ℓx ℓy : Level) → Type (ℓ-ob ℓx l⊔ ℓ-ob ℓy l⊔ ℓ-hom ℓx ℓy)
+  Comp₂ ℓx ℓy = {x : Ob ℓx} {y : Ob ℓy} → Comp (Quiver₂ x y) ℓx ℓx ℓx
+
+  Compω₂ : Typeω
+  Compω₂ = ∀{ℓx ℓy} → Comp₂ ℓx ℓy

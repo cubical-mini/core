@@ -1,14 +1,11 @@
 {-# OPTIONS --safe #-}
 module Notation.Unitality.Outer where
 
-open import Prim.Interval
-open import Prim.Kan
 open import Prim.Type
 
 open import Notation.Base
 open import Notation.Composition
 open import Notation.Reflexivity
-open import Notation.Strict
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (C₂ : 2-Quiver-on C) (open 2-Quiver-on C₂)
@@ -29,11 +26,3 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
 
   Unit-oω : Typeω
   Unit-oω = ∀{ℓx ℓy} → Unit-o C C₂ ℓx ℓy
-
-module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
-  {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom} (open Quiver-on C)
-  ⦃ _ : Reflω C ⦄ ⦃ _ : Compω C ⦄ where instance
-
-  Unit-o⁻ : ⦃ UO : Unit-oω C Strict ⦄ → Unit-oω C (Strict ²ᵒᵖω)
-  Unit-o⁻ ⦃ UO ⦄ .id-o f i = UO .Unit-o.id-o f (~ i)
-  {-# INCOHERENT Unit-o⁻ #-}

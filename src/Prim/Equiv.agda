@@ -3,12 +3,11 @@ module Prim.Equiv where
 
 -- equivalence of types is builtin
 open import Agda.Builtin.Cubical.Equiv public
-  using ()
-  renaming ( _≃_           to infix 1 _≃ₜ_
-           ; equiv-proof   to equiv-proofₜ
-           ; isEquiv       to is-equivₜ
-           ; equivFun      to equiv-forwardₜ
-           ; equivProof    to equiv-proof-fastₜ
-           ; pathToisEquiv to =→is-equivₜ
-           ; pathToEquiv   to =→≃ₜ
+  using (equiv-proof)
+  renaming ( _≃_           to infix 10 _≃_
+           ; isEquiv       to is-equiv
+           ; equivFun      to equiv-forward
+           ; equivProof    to equiv-proof-fast
+           ; pathToisEquiv to =→is-equiv
+           ; pathToEquiv   to =→≃
            )

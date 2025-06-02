@@ -3,7 +3,6 @@ module Notation.Double.Adjunction where
 
 -- TODO conjoints
 
--- open import Prim.Kan
 -- open import Prim.Type
 
 -- open import Notation.Associativity

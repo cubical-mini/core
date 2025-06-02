@@ -19,28 +19,26 @@ open import Notation.Base              public
 open import Notation.Composition       public
 -- open import Notation.Coproduct.Binary  public -- TODO need displayed ids
 -- open import Notation.Coproduct.Indexed public -- TODO need displayed ids
+open import Notation.Displayed.Base public
 open import Notation.Duality           public
 -- open import Notation.Equivalence       public -- TODO as is-biinv
-open import Notation.Idempotent        public
-open import Notation.Invertibility.Quasi       public
-open import Notation.Invertibility.Retraction  public
-open import Notation.Invertibility.Section     public
 -- open import Notation.Identity      public -- NB: idemp equiv
 open import Notation.Initial           public
 -- open import Notation.Product.Binary    public -- TODO need displayed ids
 -- open import Notation.Product.Indexed   public -- TODO need displayed ids
 open import Notation.Reflexivity       public
-open import Notation.Strict            public
 open import Notation.Symmetry          public
 open import Notation.Terminal          public
 open import Notation.Unitality.Inner   public
 open import Notation.Unitality.Outer   public
 
-open import Notation.Displayed.Base public
+open import Foundations.Idempotent        public
+open import Foundations.Invertible.Quasi       public
+open import Foundations.Invertible.Retraction       public
+open import Foundations.Invertible.Section       public
+open import Foundations.Path.Groupoid public
+open import Foundations.Pi.Category   public
 
-
-open import Foundations.Path.Interface public
-open import Foundations.Pi.Interface   public
 
 -- Identity systems
 

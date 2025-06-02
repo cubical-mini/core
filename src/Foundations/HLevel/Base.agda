@@ -2,29 +2,31 @@
 module Foundations.HLevel.Base where
 
 open import Prim.Data.Nat
+open import Prim.Data.Sigma
 open import Prim.Interval
 open import Prim.Kan
 open import Prim.Type
 
 open import Notation.Base
-open import Notation.Connected
-open import Notation.Delooping
-open import Notation.Strict
-open import Notation.Thin
 
-is-contr : ∀{ℓ} (A : Type ℓ) → Type ℓ
-is-contr A = Connected (𝑩 A) Strict lzero lzero
-{-# DISPLAY Connected {_} {_} {_} (𝑩 A) Strict _ _ = is-contr A #-}
+open import Foundations.Path.Groupoid.Base
+open import Foundations.Path.Transport
+
+record is-contr {ℓ} (A : Type ℓ) : Type ℓ where
+  no-eta-equality
+  field
+    centre : A
+    paths  : (x : A) → centre ＝ x
+
+open is-contr public
 
 is-prop : ∀{ℓ} (A : Type ℓ) → Type ℓ
-is-prop A = Thin (𝑩 A) Strict lzero lzero
-{-# DISPLAY Thin {_} {_} {_} (𝑩 A) Strict _ _ = is-prop A #-}
-
+is-prop  A = (x y : A) → x ＝ y
 
 HLevel : Type₀
 HLevel = ℕ
 
--- TODO generalize to structures on hom types
+-- TODO generalize to structures on hom types or use display?
 _on-paths-of_ : ∀{ℓ ℓ′} (S : Type ℓ → Type ℓ′) → Type ℓ → Type (ℓ l⊔ ℓ′)
 S on-paths-of A = (a a′ : A) → S (a ＝ a′)
 
@@ -41,32 +43,32 @@ is-2-groupoid = is-of-hlevel 4
 
 -- Essential properties of `is-prop` and `is-contr`
 
--- is-prop→pathᴾ : {ℓ : Level} {B : I → Type ℓ}
---                 (h : (i : I) → is-prop (B i))
---               → (b₀ : B i0) (b₁ : B i1)
---               → Pathᴾ B b₀ b₁
--- is-prop→pathᴾ h b₀ b₁ = to-pathᴾ (h _ _ _)
+is-prop→pathᴾ : {ℓ : Level} {B : I → Type ℓ}
+                (h : (i : I) → is-prop (B i))
+              → (b₀ : B i0) (b₁ : B i1)
+              → Pathᴾ B b₀ b₁
+is-prop→pathᴾ h b₀ b₁ = to-pathᴾ (h i1 _ b₁)
 
 is-contr→is-prop : ∀{ℓ} {A : Type ℓ} → is-contr A → is-prop A
-is-contr→is-prop {A} A-c .thin-cell x y i = hcomp (∂ i) sys
+is-contr→is-prop {A} A-c x y i = hcomp (∂ i) sys
   module is-contr→is-prop-sys where
   sys : (j : I) → Partial (∂ i ∨ ~ j) A
-  sys j (i = i0) = A-c .centre-cell x j
-  sys j (i = i1) = A-c .centre-cell y j
+  sys j (i = i0) = A-c .paths x j
+  sys j (i = i1) = A-c .paths y j
   sys j (j = i0) = A-c .centre
 {-# DISPLAY hcomp _ (is-contr→is-prop-sys.sys {ℓ} {A} A-c x y i) = is-contr→is-prop {ℓ} {A} A-c x y i #-}
 
 contractible-if-inhabited : ∀{ℓ} {A : Type ℓ} → (A → is-contr A) → is-prop A
-contractible-if-inhabited cont .thin-cell x y = is-contr→is-prop (cont x) .thin-cell x y
+contractible-if-inhabited cont x y = is-contr→is-prop (cont x) x y
 
 is-prop→is-set : ∀{ℓ} {A : Type ℓ} → is-prop A → is-set A
-is-prop→is-set {A} h a b .thin-cell p q j i = hcomp (∂ i ∨ ∂ j) sys
+is-prop→is-set {A} h a b p q j i = hcomp (∂ i ∨ ∂ j) sys
   module is-prop→is-set-sys where
   sys : (k : I) → Partial (∂ i ∨ ∂ j ∨ ~ k) A
-  sys k (i = i0) = h .thin-cell a a k
-  sys k (i = i1) = h .thin-cell a b k
-  sys k (j = i0) = h .thin-cell a (p i) k
-  sys k (j = i1) = h .thin-cell a (q i) k
+  sys k (i = i0) = h a a k
+  sys k (i = i1) = h a b k
+  sys k (j = i0) = h a (p i) k
+  sys k (j = i1) = h a (q i) k
   sys k (k = i0) = a
 {-# DISPLAY hcomp _ (is-prop→is-set-sys.sys {ℓ} {A} h a b p q j i) = is-prop→is-set {ℓ} {A} h a b p q i j #-}
 

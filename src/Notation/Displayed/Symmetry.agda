@@ -15,7 +15,7 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} (C :
   record Symmetryᵈ ℓx ℓy
    : Type ( ℓ-ob ℓx l⊔ ℓ-ob ℓy l⊔ ℓ-hom ℓx ℓy l⊔ ℓ-obᵈ ℓx l⊔ ℓ-obᵈ ℓy
           l⊔ ℓ-homᵈ ℓx ℓy l⊔ ℓ-homᵈ ℓy ℓx) where
-    no-eta-equality    
+    no-eta-equality
     field symᵈ : {x : Ob ℓx} {y : Ob ℓy}
                  {f : Hom x y}
                  {x′ : Ob[ x ]} {y′ : Ob[ y ]}

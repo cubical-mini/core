@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Foundations.Pi.Interface where
+module Foundations.Pi.Category where
 
 open import Prim.Type
 
@@ -8,18 +8,20 @@ open import Notation.Base
 open import Notation.Composition
 open import Notation.Idempotent
 open import Notation.Reflexivity
-open import Notation.Strict
 open import Notation.Unitality.Inner
 open import Notation.Unitality.Outer
+
+open import Foundations.Idempotent
+open import Foundations.Path.Base
+  using ()
+  renaming (refl to reflₚ)
+open import Foundations.Path.Groupoid.Base
 
 open import Foundations.Pi.Base
   public
   renaming ( id  to idₜ
            ; _∘_ to _∘ₜ_
            )
-open import Foundations.Path.Base
-  using ()
-  renaming (refl to reflₚ)
 
 Funs : Quiver-on (λ ℓ → Type ℓ) _l⊔_
 Funs .Quiver-on.Hom = Fun
@@ -40,7 +42,7 @@ module Fun-cat where instance
   Fun-Unit-o : Unit-oω Funs Strict
   Fun-Unit-o .id-o _ = reflₚ
 
-  Fun-Refl-Idem : ∀{ℓ} {A : Type ℓ} → Idem Funs Strict {x = A} refl
+  Fun-Refl-Idem : ∀{ℓ} {A : Type ℓ} → Idem Funs {x = A} refl
   Fun-Refl-Idem .idem = reflₚ
 
   {-# OVERLAPPING

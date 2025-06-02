@@ -1,7 +1,6 @@
 {-# OPTIONS --safe #-}
 module Smoke where
 
-open import Prim.Interval
 open import Prim.Kan
 open import Prim.Type
 
@@ -13,15 +12,14 @@ open import Notation.Double.Composition
 open import Notation.Double.Interchange
 open import Notation.Double.Reflexivity
 open import Notation.Reflexivity
-open import Notation.Split
-open import Notation.Strict
 open import Notation.Symmetry
 open import Notation.Unitality.Inner
 open import Notation.Unitality.Outer
 
+open import Foundations.Path.Groupoid
+open import Foundations.Pi.Category
 open import Foundations.Sigma.Base
-open import Foundations.Path.Interface
-open import Foundations.Pi.Interface
+open import Foundations.Split
 
 module _ {ℓa : Level} {A : Type ℓa} where
   Squares : ℚuiver-on (λ _ → A) _

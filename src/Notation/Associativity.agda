@@ -1,16 +1,13 @@
 {-# OPTIONS --safe #-}
 module Notation.Associativity where
 
-open import Prim.Interval
-open import Prim.Kan
 open import Prim.Type
 
 open import Notation.Base
 open import Notation.Composition
-open import Notation.Strict
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
-  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (CC : 2-Quiver-on C) (open 2-Quiver-on CC)
+  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (C₂ : 2-Quiver-on C) (open 2-Quiver-on C₂)
   (ℓw ℓx ℓy ℓz : Level) ⦃ _ : Comp C ℓw ℓx ℓz ⦄ ⦃ _ : Comp C ℓx ℓy ℓz ⦄ ⦃ _ : Comp C ℓw ℓx ℓy ⦄ ⦃ _ : Comp C ℓw ℓy ℓz ⦄ where
 
   record Assoc : Type (ℓ-ob ℓw l⊔ ℓ-ob ℓx l⊔ ℓ-ob ℓy l⊔ ℓ-ob ℓz l⊔ ℓ-hom ℓw ℓx l⊔ ℓ-hom ℓw ℓz l⊔ ℓ-hom ℓx ℓy l⊔ ℓ-hom ℓy ℓz) where
@@ -28,12 +25,3 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
 
   Assocω : Typeω
   Assocω = ∀{ℓw ℓx ℓy ℓz} → Assoc C C₂ ℓw ℓx ℓy ℓz
-
-
-module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
-  {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom} (open Quiver-on C)
-  ⦃ _ : Compω C ⦄ where instance
-
-  Assoc⁻ : ⦃ A : Assocω C Strict ⦄ → Assocω C (Strict ²ᵒᵖω)
-  Assoc⁻ ⦃ A ⦄ .assoc f g h i = A .Assoc.assoc f g h (~ i)
-  {-# INCOHERENT Assoc⁻ #-}

@@ -28,26 +28,26 @@ module _ where
 
 @0 Glue : {ℓ ℓ′ : Level} (A : Type ℓ)
           {φ : I}
-        → (Te : Partial φ (Σ (Type ℓ′) λ T → T ≃ₜ A))
+        → (Te : Partial φ (Σ (Type ℓ′) λ T → T ≃ A))
         → Type ℓ′
 Glue A {φ} Te = primGlue A tys eqvs
   module glue-sys where
   tys : Partial φ (Type _)
   tys (φ = i1) = Te 1=1 .fst
 
-  eqvs : PartialP φ (λ .o → tys _ ≃ₜ A)
+  eqvs : PartialP φ (λ .o → tys _ ≃ A)
   eqvs (φ = i1) = Te 1=1 .snd
 {-# DISPLAY primGlue A (glue-sys.tys _ Te) (glue-sys.eqvs _ Te) = Glue A Te #-}
 
 @0 unattach
   : {ℓ ℓ′ : Level }{A : Type ℓ} (φ : I) {T : Partial φ (Type ℓ′)}
-    {e : PartialP φ (λ o → T o ≃ₜ A)}
+    {e : PartialP φ (λ o → T o ≃ A)}
   → primGlue A T e → A
 unattach φ = prim^unglue {φ = φ}
 {-# DISPLAY prim^unglue {l} {l′} {A} {φ} {t} {e} x = unattach {l} {l′} {A} φ {t} {e} x #-}
 
 @0 attach
-  : {ℓ ℓ′ : Level} {A : Type ℓ} (φ : I) {T : Partial φ (Type ℓ′)} {e : PartialP φ (λ o → T o ≃ₜ A)}
+  : {ℓ ℓ′ : Level} {A : Type ℓ} (φ : I) {T : Partial φ (Type ℓ′)} {e : PartialP φ (λ o → T o ≃ A)}
   → (p : PartialP φ T)
   → A [ φ ↦ (λ o → e o .fst (p o)) ]
   → primGlue A T e

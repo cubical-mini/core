@@ -4,19 +4,17 @@ module MonoEpi where
 open import Prim.Kan
 open import Prim.Type
 
-open import Notation.Associativity
-open import Notation.Adjoint
 open import Notation.Base
 open import Notation.Composition
 open import Notation.Displayed.Base
 open import Notation.Reflexivity
-open import Notation.Invertibility.Retraction
-open import Notation.Invertibility.Section
 open import Notation.Unitality.Inner
 open import Notation.Unitality.Outer
 
-open import Foundations.Path.Interface
-open import Foundations.Pi.Interface
+open import Foundations.Invertible.Retraction
+open import Foundations.Invertible.Section
+open import Foundations.Path.Groupoid
+open import Foundations.Pi.Category
 
 open Fun-cat
 module _ {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb} (e : A ↠! B) where private

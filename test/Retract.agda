@@ -1,4 +1,4 @@
-{-# OPTIONS --safe #-}
+{-# OPTIONS --safe --experimental-lazy-instances #-}
 module Retract where
 
 open import Prim.Kan
@@ -9,10 +9,10 @@ open import Notation.Composition
 open import Notation.Displayed.Base
 open import Notation.Displayed.Wide
 open import Notation.Reflexivity
-open import Notation.Invertibility.Retraction
 
-open import Foundations.Pi.Interface
-open import Foundations.Path.Interface
+open import Foundations.Invertible.Retraction
+open import Foundations.Pi.Category
+open import Foundations.Path.Groupoid
 
 open Fun-cat
 module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} (e : A Retract-of B) where private
@@ -26,19 +26,20 @@ module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} (e : A Retract-of B) where 
   cell = e .preserves .retraction-cell
 
 module _ {ℓa ℓb ℓc} {A : Type ℓa} {B : Type ℓb} {C : Type ℓc}
-  (f : A Retract-of B) (g : B Retract-of C) where private
+  (f : A Retract-of B) (g : B Retract-of C) (h : B Retract-of A) where private
   open Wide-gpd
+  open Path-gpd
 
   test : A Retract-of C
   test = f ∙ g
 
   hmm : A Retract-of A
-  hmm = refl
+  hmm = f ∙ h -- refl breaks this example
 
 module Iterated
   {ℓa ℓb ℓc} {A : Type ℓa} {B : Type ℓb} {C : Type ℓc}
-  (open Wide-gpd)
-  (f : _Retract-of_ ⦃ Wide-Refl ⦄ ⦃ Wide-Comp ⦄ A B) where private
+  (open Wide-gpd) (open Path-gpd)
+  (f : A Retract-of B) where private
 
   to : A ↣! B
   to = f .hom

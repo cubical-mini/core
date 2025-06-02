@@ -1,14 +1,13 @@
 {-# OPTIONS --safe #-}
 module Notation.Duality where
 
-open import Prim.Kan
 open import Prim.Type
 
 open import Notation.Base
 open import Notation.Symmetry
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
-  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (CC : 2-Quiver-on C) (open 2-Quiver-on CC)
+  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (C₂ : 2-Quiver-on C) (open 2-Quiver-on C₂)
   (ℓx ℓy : Level) ⦃ _ : Symmetry C ℓx ℓy ⦄ ⦃ _ : Symmetry C ℓy ℓx ⦄ where
 
   record Dual : Type (ℓ-ob ℓx l⊔ ℓ-ob ℓy l⊔ ℓ-hom ℓx ℓy) where

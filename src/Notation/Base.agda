@@ -20,11 +20,6 @@ record Quiver-on {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) (ℓ-hom : ℓ-hom-s
   field Hom : hom-sig Ob ℓ-hom
 {-# INLINE mk-quiver #-}
 
-_ᵒᵖω : {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} → Quiver-on Ob ℓ-hom → Quiver-on Ob (λ ℓx ℓy → ℓ-hom ℓy ℓx)
-(C ᵒᵖω) .Quiver-on.Hom x y = Hom y x where open Quiver-on C
-
-
--- Strict 2-quivers
 
 -- globular vibe
 2-hom-sig : {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) {ℓ-hom : ℓ-hom-sig} (Hom : hom-sig Ob ℓ-hom) → Typeω
@@ -41,5 +36,18 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} (C :
     2-Hom {ℓx} {ℓy} {x} {y} = Quiver-on.Hom (Quiver₂ x y) {ℓx} {ℓx} -- TODO no idea what's going on
 {-# INLINE mk-2-quiver #-}
 
-_²ᵒᵖω : {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom} (CC : 2-Quiver-on C) → 2-Quiver-on C
-_²ᵒᵖω CC .2-Quiver-on.Quiver₂ x y = CC .2-Quiver-on.Quiver₂ x y ᵒᵖω
+
+3-hom-sig : {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) {ℓ-hom : ℓ-hom-sig} (Hom : hom-sig Ob ℓ-hom) (2-Hom : 2-hom-sig Ob Hom) → Typeω
+3-hom-sig Ob {ℓ-hom} Hom 2-Hom = {ℓx ℓy : Level} {x : Ob ℓx} {y : Ob ℓy} {f g : Hom x y} (α β : 2-Hom f g) → Type (ℓ-hom ℓx ℓy)
+{-# INLINE 3-hom-sig #-}
+
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
+  (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (C₂ : 2-Quiver-on C) (open 2-Quiver-on C₂) where
+  record 3-Quiver-on : Typeω where
+    constructor mk-3-quiver
+    no-eta-equality
+    field Quiver₃ : {ℓx ℓy : Level} {x : Ob ℓx} {y : Ob ℓy} (f g : Hom x y) → Quiver-on (λ _ → 2-Hom f g) (λ _ _ → ℓ-hom ℓx ℓy)
+
+    3-Hom : 3-hom-sig Ob Hom 2-Hom
+    3-Hom {ℓx} {ℓy} {f} {g} = Quiver-on.Hom (Quiver₃ f g) {ℓx} {ℓx}
+{-# INLINE mk-3-quiver #-}

@@ -18,3 +18,13 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
 open Refl ⦃ ... ⦄ public
 
 {-# DISPLAY Refl.refl _ = refl #-}
+
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
+  (C  : Quiver-on Ob ℓ-hom) (open Quiver-on C)
+  (C₂ : 2-Quiver-on C) (open 2-Quiver-on C₂)
+  where
+  Refl₂ : (ℓx ℓy : Level) → Type (ℓ-ob ℓx l⊔ ℓ-ob ℓy l⊔ ℓ-hom ℓx ℓy)
+  Refl₂ ℓx ℓy = {x : Ob ℓx} {y : Ob ℓy} → Refl (Quiver₂ x y) ℓx
+
+  Reflω₂ : Typeω
+  Reflω₂ = ∀{ℓx ℓy} → Refl₂ ℓx ℓy
