@@ -11,7 +11,7 @@ open import Notation.Reflexivity
 open import Notation.Strict
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
-  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (CC : 2-Quiver-on C) (open 2-Quiver-on CC)
+  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (C₂ : 2-Quiver-on C) (open 2-Quiver-on C₂)
   (ℓx ℓy : Level) ⦃ _ : Refl C ℓy ⦄ ⦃ _ : Comp C ℓx ℓy ℓy ⦄ where
 
   record Unit-o : Type (ℓ-ob ℓx l⊔ ℓ-ob ℓy l⊔ ℓ-hom ℓx ℓy) where
@@ -23,11 +23,17 @@ open Unit-o ⦃ ... ⦄ public
 
 {-# DISPLAY Unit-o.id-o _ f = id-o f #-}
 
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
+  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (C₂ : 2-Quiver-on C) (open 2-Quiver-on C₂)
+  ⦃ _ : Reflω C ⦄ ⦃ _ : Compω C ⦄ where
+
+  Unit-oω : Typeω
+  Unit-oω = ∀{ℓx ℓy} → Unit-o C C₂ ℓx ℓy
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom} (open Quiver-on C)
-  {ℓx ℓy : Level} ⦃ _ : Refl C ℓy ⦄ ⦃ _ : Comp C ℓx ℓy ℓy ⦄ where instance
+  ⦃ _ : Reflω C ⦄ ⦃ _ : Compω C ⦄ where instance
 
-  Unit-o⁻ : ⦃ UO : Unit-o C Strict ℓx ℓy ⦄ → Unit-o C (Strict ²ᵒᵖω) ℓx ℓy
+  Unit-o⁻ : ⦃ UO : Unit-oω C Strict ⦄ → Unit-oω C (Strict ²ᵒᵖω)
   Unit-o⁻ ⦃ UO ⦄ .id-o f i = UO .Unit-o.id-o f (~ i)
-  {-# OVERLAPPING Unit-o⁻ #-}
+  {-# INCOHERENT Unit-o⁻ #-}

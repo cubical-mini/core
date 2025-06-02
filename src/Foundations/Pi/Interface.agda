@@ -31,19 +31,19 @@ module Fun-cat where instance
   Fun-Comp : Compω Funs
   Fun-Comp .Comp._∙_ f g x = g (f x)
 
-  Fun-Assoc : {ℓw ℓx ℓy ℓz : Level} → Assoc Funs Strict ℓw ℓx ℓy ℓz
+  Fun-Assoc : Assocω Funs Strict
   Fun-Assoc .Assoc.assoc _ _ _ = reflₚ
 
-  Fun-Unit-i : {ℓx ℓy : Level} → Unit-i Funs Strict ℓx ℓy
+  Fun-Unit-i : Unit-iω Funs Strict
   Fun-Unit-i .id-i _ = reflₚ
 
-  Fun-Unit-o : {ℓx ℓy : Level} → Unit-o Funs Strict ℓx ℓy
+  Fun-Unit-o : Unit-oω Funs Strict
   Fun-Unit-o .id-o _ = reflₚ
 
-  Fun-Refl-Idem : {ℓ : Level} {A : Type ℓ} → Idem Funs Strict {x = A} refl
+  Fun-Refl-Idem : ∀{ℓ} {A : Type ℓ} → Idem Funs Strict {x = A} refl
   Fun-Refl-Idem .idem = reflₚ
 
-  {-# INCOHERENT
+  {-# OVERLAPPING
     Fun-Refl Fun-Comp
     Fun-Assoc Fun-Unit-i Fun-Unit-o
     Fun-Refl-Idem

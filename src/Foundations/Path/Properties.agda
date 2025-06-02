@@ -10,7 +10,7 @@ open import Foundations.Path.Base
 open import Foundations.Path.Transport
 
 opaque
-  ap-comp-∙ : {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb}
+  ap-comp-∙ : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
               (f : A → B)
               {x y z : A} (p : x ＝ y) (q : y ＝ z)
             → ap f (p ∙ q) ＝ ap f p ∙ ap f q
@@ -21,49 +21,49 @@ opaque
 
 opaque
   unfolding _∙_
-  refl-idem : {ℓ : Level} {A : Type ℓ}
+  refl-idem : ∀{ℓ} {A : Type ℓ}
               {x : A} → refl ∙ refl ＝ refl {x = x}
   refl-idem {x} i j = hcomp (i ∨ ∂ j) λ _ _ → x
 
 opaque
   unfolding _∙_
-  sym-∙ : {ℓ : Level} {A : Type ℓ}
+  sym-∙ : ∀{ℓ} {A : Type ℓ}
           {x y z : A} (p : x ＝ y) (q : y ＝ z)
         → sym (p ∙ q) ＝ sym q ∙ sym p
   sym-∙ p q _ j = (p ∙ q) (~ j)
 
 opaque
-  id-i : {ℓ : Level} {A : Type ℓ} {x y : A} (p : x ＝ y)
+  id-i : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
        → refl ∙ p ＝ p
   id-i p = sym (∙-filler-r refl p)
 
 opaque
-  id-o : {ℓ : Level} {A : Type ℓ} {x y : A} (p : x ＝ y)
+  id-o : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
        → p ∙ refl ＝ p
   id-o p = sym (∙-filler-l p refl)
 
 opaque
   unfolding _∙_
-  assoc : {ℓ : Level} {A : Type ℓ}
+  assoc : ∀{ℓ} {A : Type ℓ}
           {w x y z : A} (p : w ＝ x) (q : x ＝ y) (r : y ＝ z)
         → p ∙ (q ∙ r) ＝ (p ∙ q) ∙ r
   assoc p q r i = ∙-filler-l p q i ∙ ∙-filler-r q r (~ i)
 
 opaque
   unfolding _∙_
-  inv-i : {ℓ : Level} {A : Type ℓ} {x y : A} (p : x ＝ y)
+  inv-i : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
         → sym p ∙ p ＝ refl
   inv-i p i j = hcomp (i ∨ ∂ j) (λ k _ → p (k ∨ i))
 
 opaque
-  inv-o : {ℓ : Level} {A : Type ℓ} {x y : A} (p : x ＝ y)
+  inv-o : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
         → p ∙ sym p ＝ refl
   inv-o p = inv-i (sym p)
 
 
 -- Square manipulation
 
-commutes→square : {ℓ : Level} {A : Type ℓ} {w x y z : A}
+commutes→square : ∀{ℓ} {A : Type ℓ} {w x y z : A}
                   {p : w ＝ x} {q : w ＝ y} {r : y ＝ z} {s : x ＝ z}
                 → p ∙ s ＝ q ∙ r
                 → Square p r q s
@@ -78,7 +78,7 @@ commutes→square {A} {p} {q} {r} {s} θ i j = hcomp (∂ i ∨ ∂ j) sys
 {-# DISPLAY hcomp _ (commutes→square-sys.sys {ℓ} {A} {w} {x} {y} {z} {p} {q} {r} {s} θ i j) =
   commutes→square {ℓ} {A} {w} {x} {y} {z} {p} {q} {r} {s} θ i j #-}
 
-square→commutes : {ℓ : Level} {A : Type ℓ} {w x y z : A}
+square→commutes : ∀{ℓ} {A : Type ℓ} {w x y z : A}
                   {p : w ＝ x} {q : w ＝ y} {r : y ＝ z} {s : x ＝ z}
                 → Square p r q s
                 → p ∙ s ＝ q ∙ r
@@ -95,7 +95,7 @@ square→commutes {A} {p} {q} {r} {s} α i j = hcomp (∂ i ∨ ∂ j) sys
 
 opaque
   square→conjugate
-    : {ℓ : Level} {A : Type ℓ} {w x y z : A}
+    : ∀{ℓ} {A : Type ℓ} {w x y z : A}
       {p : x ＝ y} {q : x ＝ z} {r : z ＝ w} {s : y ＝ w}
     → Square p r q s
     → s ＝ sym p ∙ (q ∙ r)
@@ -103,7 +103,7 @@ opaque
 
 opaque
   conjugate→square
-    : {ℓ : Level} {A : Type ℓ} {w x y z : A}
+    : ∀{ℓ} {A : Type ℓ} {w x y z : A}
       {p : x ＝ y} {q : x ＝ z} {r : z ＝ w} {s : y ＝ w}
     → s ＝ sym p ∙ (q ∙ r)
     → Square p r q s
@@ -112,7 +112,7 @@ opaque
 
 -- Homotopy
 
-homotopy-invert : {ℓ : Level} {A : Type ℓ} {f : A → A}
+homotopy-invert : ∀{ℓ} {A : Type ℓ} {f : A → A}
                 → (H : (x : A) → f x ＝ x) {x : A}
                 → H (f x) ＝ ap f (H x)
 homotopy-invert {A} {f} H {x} i j = hcomp (∂ i ∨ ∂ j) sys
@@ -127,7 +127,7 @@ homotopy-invert {A} {f} H {x} i j = hcomp (∂ i ∨ ∂ j) sys
   homotopy-invert {ℓ} {A} {f} H {x} i j #-}
 
 opaque
-  homotopy-natural : {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb}
+  homotopy-natural : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
                      {f g : A → B}
                      (H : (a : A) → f a ＝ g a)
                      {x y : A} (p : x ＝ y)
@@ -141,7 +141,7 @@ opaque
     sys i j k (j = i1) = H (p (i ∧ k)) k
     sys i j k (k = i0) = f x
 
-homotopy-sym-inv : {ℓ : Level} {A : Type ℓ} {f : A → A}
+homotopy-sym-inv : ∀{ℓ} {A : Type ℓ} {f : A → A}
                    (H : (a : A) → f a ＝ a)
                    (x : A)
                  → Path (f x ＝ f x) (λ i → H (H x (~ i)) i) refl

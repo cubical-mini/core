@@ -16,7 +16,7 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-sq : ℓ-sq-sig}
   record 𝕎hisker-r : Typeω where -- TODO levels
     no-eta-equality
     infixr 24 _▷_
-    field _▷_ : {ℓw ℓx ℓy ℓz : Level} {w : Ob ℓw} {x : Ob ℓx} {f : Hor w x}
+    field _▷_ : ∀{ℓw ℓx ℓy ℓz} {w : Ob ℓw} {x : Ob ℓx} {f : Hor w x}
                 {y : Ob ℓy} {g : Ver w y} {h : Hor y x} (α : Sq f g refl h)
                 {z : Ob ℓz} (k : Hor x z)
               → Sq (f ∙ k) g refl (h ∙ k)

@@ -21,9 +21,9 @@ open import Foundations.Path.Base
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
   {C : Quiver-on Ob ℓ-hom} (open Quiver-on C)
-  ⦃ _ : Compω C ⦄ ⦃ _ : Reflω C ⦄ ⦃ _ : ∀{ℓx ℓy} → Unit-o C Strict ℓx ℓy ⦄ where
+  ⦃ _ : Compω C ⦄ ⦃ _ : Reflω C ⦄ ⦃ _ : Unit-oω C Strict ⦄ where
 
-  module _ {ℓw ℓx ℓy ℓz : Level}
+  module _ {ℓw ℓx ℓy ℓz}
            {w : Ob ℓw} {x : Ob ℓx} {y : Ob ℓy} {z : Ob ℓz}
            {f : Hom w x} {s : Hom x y} {r : Hom y x} {g : Hom x z} where
 

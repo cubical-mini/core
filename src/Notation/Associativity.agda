@@ -22,11 +22,18 @@ open Assoc ⦃ ... ⦄ public
 
 {-# DISPLAY Assoc.assoc _ f g h = assoc f g h #-}
 
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
+  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (C₂ : 2-Quiver-on C) (open 2-Quiver-on C₂)
+  ⦃ _ : Compω C ⦄ where
+
+  Assocω : Typeω
+  Assocω = ∀{ℓw ℓx ℓy ℓz} → Assoc C C₂ ℓw ℓx ℓy ℓz
+
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom} (open Quiver-on C)
-  {ℓw ℓx ℓy ℓz : Level} ⦃ _ : Comp C ℓw ℓx ℓz ⦄ ⦃ _ : Comp C ℓx ℓy ℓz ⦄ ⦃ _ : Comp C ℓw ℓx ℓy ⦄ ⦃ _ : Comp C ℓw ℓy ℓz ⦄ where instance
+  ⦃ _ : Compω C ⦄ where instance
 
-  Assoc⁻ : ⦃ A : Assoc C Strict ℓw ℓx ℓy ℓz ⦄ → Assoc C (Strict ²ᵒᵖω) ℓw ℓx ℓy ℓz
+  Assoc⁻ : ⦃ A : Assocω C Strict ⦄ → Assocω C (Strict ²ᵒᵖω)
   Assoc⁻ ⦃ A ⦄ .assoc f g h i = A .Assoc.assoc f g h (~ i)
-  {-# OVERLAPPING Assoc⁻ #-}
+  {-# INCOHERENT Assoc⁻ #-}

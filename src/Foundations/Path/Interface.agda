@@ -9,8 +9,8 @@ open import Notation.Base
 open import Notation.Composition
 open import Notation.Duality
 open import Notation.Idempotent
-open import Notation.Invertibility.Retraction
-open import Notation.Invertibility.Section
+open import Notation.Invertibility.Retraction.Base
+open import Notation.Invertibility.Section.Base
 open import Notation.Reflexivity
 open import Notation.Split
 open import Notation.Strict
@@ -38,32 +38,32 @@ open import Foundations.Path.Properties
   )
 
 module Path-gpd where
-  module _ {ℓa : Level} {A : Type ℓa} where instance
-    Path-Refl : {ℓ : Level} → Refl (Paths A) ℓ
+  module _ {ℓa} {A : Type ℓa} where instance
+    Path-Refl : Reflω (Paths A)
     Path-Refl .refl = reflₚ
 
-    Path-Sym : {ℓx ℓy : Level} → Symmetry (Paths A) ℓx ℓy
+    Path-Sym : Symmetryω (Paths A)
     Path-Sym .sym = symₚ
 
-    Path-Comp : {ℓx ℓy ℓz : Level} → Comp (Paths A) ℓx ℓy ℓz
+    Path-Comp : Compω (Paths A)
     Path-Comp ._∙_ = _∙ₚ_
 
-    Path-Dual : {ℓx ℓy : Level} → Dual (Paths A) Strict ℓx ℓy
+    Path-Dual : Dualω (Paths A) Strict
     Path-Dual .invol _ = reflₚ
 
-    Path-Assoc : {ℓw ℓx ℓy ℓz : Level} → Assoc (Paths A) Strict ℓw ℓx ℓy ℓz
+    Path-Assoc : Assocω (Paths A) Strict
     Path-Assoc .assoc p q r = assocₚ p q r
 
-    Path-Unit-i : {ℓx ℓy : Level} → Unit-i (Paths A) Strict ℓx ℓy
+    Path-Unit-i : Unit-iω (Paths A) Strict
     Path-Unit-i .id-i = id-iₚ
 
-    Path-Unit-o : {ℓx ℓy : Level} → Unit-o (Paths A) Strict ℓx ℓy
+    Path-Unit-o : Unit-oω (Paths A) Strict
     Path-Unit-o .id-o = id-oₚ
 
-    Path-Split : {ℓx ℓy : Level} {x y : A} {p : x ＝ y} → Split-pair (Paths A) {ℓx = ℓx} {ℓy = ℓy} p (symₚ p)
+    Path-Split : ∀{ℓx ℓy} {x y : A} {p : x ＝ y} → Split-pair (Paths A) {ℓx = ℓx} {ℓy = ℓy} p (symₚ p)
     Path-Split {p} .split = inv-oₚ p
 
-    Path-Refl-Idem : {ℓ : Level} {x : A} → Idem (Paths A) Strict {ℓ = ℓ} {x = x} _
+    Path-Refl-Idem : ∀{ℓ} {x : A} → Idem (Paths A) Strict {ℓ = ℓ} {x = x} _
     Path-Refl-Idem .idem = refl-idem
 
     {-# INCOHERENT

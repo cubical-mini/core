@@ -12,7 +12,7 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} (C :
   ⦃ _ : Symmetryω C ⦄
   where
 
- record Symᵈ ℓx ℓy
+  record Symmetryᵈ ℓx ℓy
    : Type ( ℓ-ob ℓx l⊔ ℓ-ob ℓy l⊔ ℓ-hom ℓx ℓy l⊔ ℓ-obᵈ ℓx l⊔ ℓ-obᵈ ℓy
           l⊔ ℓ-homᵈ ℓx ℓy l⊔ ℓ-homᵈ ℓy ℓx) where
     no-eta-equality    
@@ -21,6 +21,10 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} (C :
                  {x′ : Ob[ x ]} {y′ : Ob[ y ]}
                → Hom[ f ] x′ y′ → Hom[ sym f ] y′ x′
 
-open Symᵈ ⦃ ... ⦄ public
 
-{-# DISPLAY Symᵈ.symᵈ _ f = symᵈ f #-}
+  Symmetryᵈω : Typeω
+  Symmetryᵈω = ∀{ℓx ℓy} → Symmetryᵈ ℓx ℓy
+
+open Symmetryᵈ ⦃ ... ⦄ public
+
+{-# DISPLAY Symmetryᵈ.symᵈ _ f = symᵈ f #-}

@@ -6,7 +6,7 @@ open import Prim.Type
 
 open import Notation.Base
 
-Paths : {ℓ : Level} (A : Type ℓ) → Quiver-on (λ _ → A) _
+Paths : ∀{ℓ} (A : Type ℓ) → Quiver-on (λ _ → A) _
 Paths A .Quiver-on.Hom = Path A
 
 Strict : {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom}

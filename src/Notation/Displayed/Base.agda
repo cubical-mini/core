@@ -6,14 +6,14 @@ open import Prim.Type
 open import Notation.Base
 
 ob-sigᵈ : {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) (ℓ-obᵈ : ℓ-ob-sig) → Typeω
-ob-sigᵈ Ob ℓ-obᵈ = {ℓ : Level} → Ob ℓ → Type (ℓ-obᵈ ℓ)
+ob-sigᵈ Ob ℓ-obᵈ = ∀{ℓ} → Ob ℓ → Type (ℓ-obᵈ ℓ)
 {-# INLINE ob-sigᵈ #-}
 
 hom-sigᵈ
   : {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) {ℓ-hom : ℓ-hom-sig} (Hom : hom-sig Ob ℓ-hom)
     {ℓ-obᵈ : ℓ-ob-sig} (Ob[_] : ob-sigᵈ Ob ℓ-obᵈ) (ℓ-homᵈ : ℓ-hom-sig)
   → Typeω
-hom-sigᵈ Ob Hom Ob[_] ℓ-homᵈ = {ℓx ℓy : Level} {x : Ob ℓx} {y : Ob ℓy} → Hom x y → Ob[ x ] → Ob[ y ] → Type (ℓ-homᵈ ℓx ℓy)
+hom-sigᵈ Ob Hom Ob[_] ℓ-homᵈ = ∀{ℓx ℓy} {x : Ob ℓx} {y : Ob ℓy} → Hom x y → Ob[ x ] → Ob[ y ] → Type (ℓ-homᵈ ℓx ℓy)
 {-# INLINE hom-sigᵈ #-}
 
 record Quiver-onᵈ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom)

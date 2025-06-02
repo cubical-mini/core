@@ -14,35 +14,40 @@ open import Notation.Symmetry
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (CC : 2-Quiver-on C) (open 2-Quiver-on CC) where
 
-  record Connected ℓ ℓ′ : Type (ℓ-ob ℓ l⊔ ℓ-ob ℓ′ l⊔ ℓ-hom ℓ ℓ′) where
+  record Connected ℓx ℓy : Type (ℓ-ob ℓx l⊔ ℓ-ob ℓy l⊔ ℓ-hom ℓx ℓy) where
     no-eta-equality
     constructor mk-connected
     field
-      centre      : {x : Ob ℓ} {y : Ob ℓ′} → Hom x y
-      centre-cell : {x : Ob ℓ} {y : Ob ℓ′} (f : Hom x y) → 2-Hom centre f
+      centre      : {x : Ob ℓx} {y : Ob ℓy} → Hom x y
+      centre-cell : {x : Ob ℓx} {y : Ob ℓy} (f : Hom x y) → 2-Hom centre f
+
+  Connectedω : Typeω
+  Connectedω = ∀{ℓx ℓy} → Connected ℓx ℓy
 
 open Connected public
 
+
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom} (open Quiver-on C)
-  {CC : 2-Quiver-on C} (open 2-Quiver-on CC) where instance
+  {CC : 2-Quiver-on C} (open 2-Quiver-on CC) ⦃ co : Connectedω C CC ⦄
+  where instance
 
-  Connected→Refl : {ℓ : Level} ⦃ co : Connected C CC ℓ ℓ ⦄ → Refl C ℓ
-  Connected→Refl ⦃ co ⦄ .refl = co .centre
+  Connected→Refl : Reflω C
+  Connected→Refl .refl = co .centre
 
-  Connected→Sym : {ℓx ℓy : Level} ⦃ co : Connected C CC ℓx ℓy ⦄ → Symmetry C ℓy ℓx
-  Connected→Sym ⦃ co ⦄ .sym _ = co .centre
+  Connected→Sym : Symmetryω C
+  Connected→Sym .sym _ = co .centre
 
-  Connected→Comp : {ℓx ℓy ℓz : Level} ⦃ co : Connected C CC ℓx ℓz ⦄ → Comp C ℓx ℓy ℓz
-  Connected→Comp ⦃ co ⦄ ._∙_ _ _ = co .centre
+  Connected→Comp : Compω C
+  Connected→Comp ._∙_ _ _ = co .centre
 {-# INCOHERENT Connected→Refl Connected→Sym Connected→Comp #-}
 
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom} (open Quiver-on C)
-  {ℓx ℓy : Level} where instance
+  where instance
 
-  Connected⁻ : ⦃ co : Connected C Strict ℓx ℓy ⦄ → Connected C (Strict ²ᵒᵖω) ℓx ℓy
+  Connected⁻ : ⦃ co : Connectedω C Strict ⦄ → Connectedω C (Strict ²ᵒᵖω)
   Connected⁻ ⦃ co ⦄ .centre = co .centre
   Connected⁻ ⦃ co ⦄ .centre-cell f i = co .centre-cell f (~ i)
   {-# INCOHERENT Connected⁻ #-}

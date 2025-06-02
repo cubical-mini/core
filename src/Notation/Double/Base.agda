@@ -20,7 +20,7 @@ sq-sig
     {ℓ-ver : ℓ-hom-sig} (Ver : hom-sig Ob ℓ-ver)
   → (ℓ-sq : ℓ-sq-sig) → Typeω
 sq-sig Ob Hor Ver ℓ-sq
-  = {ℓw ℓx ℓy ℓz : Level} {W : Ob ℓw} {X : Ob ℓx} (f : Hor W X)
+  = ∀{ℓw ℓx ℓy ℓz} {W : Ob ℓw} {X : Ob ℓx} (f : Hor W X)
     {Y : Ob ℓy} (g : Ver W Y) {Z : Ob ℓz} (h : Ver X Z) (k : Hor Y Z)
   → Type (ℓ-sq ℓw ℓx ℓy ℓz)
 {-# INLINE sq-sig #-}

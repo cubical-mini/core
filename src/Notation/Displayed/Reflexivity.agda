@@ -17,7 +17,7 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} (C :
     field reflᵈ : {x : Ob ℓ} {x′ : Ob[ x ]} → Hom[ refl ] x′ x′
 
   Reflᵈω : Typeω
-  Reflᵈω = {ℓ : Level} → Reflᵈ ℓ
+  Reflᵈω = ∀{ℓ} → Reflᵈ ℓ
 
 open Reflᵈ ⦃ ... ⦄ public
 

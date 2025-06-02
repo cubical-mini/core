@@ -13,7 +13,7 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
     field sym : {x : Ob ℓx} {y : Ob ℓy} → Hom x y → Hom y x
 
   Symmetryω : Typeω
-  Symmetryω = {ℓx ℓy : Level} → Symmetry ℓx ℓy
+  Symmetryω = ∀{ℓx ℓy} → Symmetry ℓx ℓy
 
 open Symmetry ⦃ ... ⦄ public
 

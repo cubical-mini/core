@@ -11,10 +11,9 @@ open import Notation.Base
 open import Notation.Composition
 open import Notation.Reasoning.Base
 open import Notation.Reflexivity
+open import Notation.Split
 open import Notation.Strict
 open import Notation.Symmetry
-open import Notation.Section
-open import Notation.Split
 open import Notation.Unitality.Inner
 open import Notation.Unitality.Outer
 open import Notation.Whiskering.Left
@@ -37,7 +36,7 @@ module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} {g : B → A}
    unfolding _∙ₚ_
    zig : (x : A) → ap f (happly η x) ∙ happly ε (f x) ＝ refl
    zig x =
-     ap f (happly η x) ∙ happly ε (f x)                       ~⟨ id-o _ ▷ happly ε (f x) ⟩
+     ap f (happly η x) ∙ happly ε (f x)                       ~⟨ id-o (ap f (happly η x)) ▷ happly ε (f x) ⟨
      ap f (happly η x) ∙ refl ∙ happly ε (f x)                ~⟨ id-i _ ⟩
      refl ∙ (ap f (happly η x) ∙ refl ∙ happly ε (f x))       ~⟨ assoc _ _ _ ∙ (assoc _ _ _ ▷ happly ε (f x)) ⟩
      refl ∙ ap f (happly η x) ∙ refl ∙ happly ε (f x)         ~⟨ id-o _ ⟩
@@ -50,14 +49,14 @@ module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} {g : B → A}
     sym (ap f (happly η x)) ∙ refl                                  ~⟨ sym (ap f (happly η x)) ◁ zig x ⟨
     sym (ap f (happly η x)) ∙ (ap f (happly η x) ∙ happly ε (f x))  ~⟨ assoc _ _ _ ⟩
     sym (ap f (happly η x)) ∙ ap f (happly η x) ∙ happly ε (f x)    ~⟨ split ▷ happly ε (f x) ⟩
-    refl ∙ happly ε (f x)                                           ~⟨ id-i _ ⟩
+    refl ∙ happly ε (f x)                                           ~⟨ id-i (happly ε (f x)) ⟩
     happly ε (f x)                                                  ∎
 
   opaque
     unfolding _∙ₚ_
     zag : (y : B) → happly η (g y) ∙ ap g (happly ε y) ＝ refl
     zag y =
-      happly η (g y) ∙ ap g (happly ε y)                       ~⟨ id-o _ ▷ ap g (happly ε y) ⟩
+      happly η (g y) ∙ ap g (happly ε y)                       ~⟨ id-o _ ▷ ap g (happly ε y) ⟨
       happly η (g y) ∙ refl ∙ ap g (happly ε y)                ~⟨ id-i _ ⟩
       refl ∙ (happly η (g y) ∙ refl ∙ ap g (happly ε y))       ~⟨ assoc _ _ _ ∙ (assoc _ _ _ ▷ ap g (happly ε y)) ⟩
       refl ∙ happly η (g y) ∙ refl ∙ ap g (happly ε y)         ~⟨ id-o _ ⟩
@@ -70,7 +69,7 @@ module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} {g : B → A}
     refl ∙ ap g (happly ε y)                                     ~⟨ split ▷ ap g (happly ε y) ⟨
     sym (happly η (g y)) ∙ happly η (g y) ∙ ap g (happly ε y)    ~⟨ assoc _ _ _ ⟩
     sym (happly η (g y)) ∙ (happly η (g y) ∙ ap g (happly ε y))  ~⟨ sym (happly η (g y)) ◁ zag y ⟩
-    sym (happly η (g y)) ∙ refl                                  ~⟨ id-o _ ⟩
+    sym (happly η (g y)) ∙ refl                                  ~⟨ id-o (sym (happly η (g y))) ⟩
     sym (happly η (g y))                                         ∎
 
 -- module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} {g : B → A}

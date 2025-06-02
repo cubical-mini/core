@@ -12,16 +12,19 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} (C :
   ⦃ _ : Compω C ⦄
   where
 
- record Compᵈ ℓx ℓy ℓz
-   : Type ( ℓ-ob ℓx l⊔ ℓ-ob ℓy l⊔ ℓ-ob ℓz l⊔ ℓ-hom ℓx ℓy l⊔ ℓ-hom ℓy ℓz
-          l⊔ ℓ-obᵈ ℓx l⊔ ℓ-obᵈ ℓy l⊔ ℓ-obᵈ ℓz l⊔ ℓ-homᵈ ℓx ℓy
-          l⊔ ℓ-homᵈ ℓx ℓz l⊔ ℓ-homᵈ ℓy ℓz) where
+  record Compᵈ ℓx ℓy ℓz
+    : Type ( ℓ-ob ℓx l⊔ ℓ-ob ℓy l⊔ ℓ-ob ℓz l⊔ ℓ-hom ℓx ℓy l⊔ ℓ-hom ℓy ℓz
+           l⊔ ℓ-obᵈ ℓx l⊔ ℓ-obᵈ ℓy l⊔ ℓ-obᵈ ℓz l⊔ ℓ-homᵈ ℓx ℓy
+           l⊔ ℓ-homᵈ ℓx ℓz l⊔ ℓ-homᵈ ℓy ℓz) where
     no-eta-equality    
     infixl 90 _∙ᵈ_
     field _∙ᵈ_ : {x : Ob ℓx} {y : Ob ℓy} {z : Ob ℓz}
                  {f : Hom x y} {g : Hom y z}
                  {x′ : Ob[ x ]} {y′ : Ob[ y ]} {z′ : Ob[ z ]}
                → Hom[ f ] x′ y′ → Hom[ g ] y′ z′ → Hom[ f ∙ g ] x′ z′
+
+  Compᵈω : Typeω
+  Compᵈω = ∀{ℓx ℓy ℓz} → Compᵈ ℓx ℓy ℓz
 
 open Compᵈ ⦃ ... ⦄ public
 

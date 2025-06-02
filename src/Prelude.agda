@@ -27,11 +27,9 @@ open import Notation.Invertibility.Retraction  public
 open import Notation.Invertibility.Section     public
 -- open import Notation.Identity      public -- NB: idemp equiv
 open import Notation.Initial           public
-open import Notation.Isomorphism       public
 -- open import Notation.Product.Binary    public -- TODO need displayed ids
 -- open import Notation.Product.Indexed   public -- TODO need displayed ids
 open import Notation.Reflexivity       public
-open import Notation.Retract           public
 open import Notation.Strict            public
 open import Notation.Symmetry          public
 open import Notation.Terminal          public

@@ -10,42 +10,42 @@ open import Foundations.Path.Base
 open import Foundations.Path.Coe
 open import Foundations.Pi.Base
 
-transport : {ℓ : Level} {A B : Type ℓ} → A ＝ B → A → B
+transport : ∀{ℓ} {A B : Type ℓ} → A ＝ B → A → B
 transport p = transp (λ i → p i) i0
 {-# DISPLAY transp {ℓ} A i0 = transport {ℓ} {A i0} {A i1} A #-}
 
-transport-refl : {ℓ : Level} {A : Type ℓ} (x : A) → transport refl x ＝ x
+transport-refl : ∀{ℓ} {A : Type ℓ} (x : A) → transport refl x ＝ x
 transport-refl x i = coe1→i _ i x
 
-transport-filler : {ℓ : Level} {A B : Type ℓ} (p : A ＝ B) (x : A)
+transport-filler : ∀{ℓ} {A B : Type ℓ} (p : A ＝ B) (x : A)
                  → Pathᴾ (λ i → p i) x (transport p x)
 transport-filler p x i = coe0→i (λ j → p j) i x
 
-transport-filler-ext : {ℓ : Level} {A B : Type ℓ} (p : A ＝ B)
+transport-filler-ext : ∀{ℓ} {A B : Type ℓ} (p : A ＝ B)
                      → Pathᴾ (λ i → A → p i) id (transport p)
 transport-filler-ext p i x = transport-filler p x i
 
-transport⁻-filler-ext : {ℓ : Level} {A B : Type ℓ} (p : A ＝ B)
+transport⁻-filler-ext : ∀{ℓ} {A B : Type ℓ} (p : A ＝ B)
                       → Pathᴾ (λ i → p i → A) id (transport (sym p))
 transport⁻-filler-ext p i = coei→0 (λ j → p j) i
 
-transport⁻-transport : {ℓ : Level} {A B : Type ℓ} (p : A ＝ B) (a : A)
+transport⁻-transport : ∀{ℓ} {A B : Type ℓ} (p : A ＝ B) (a : A)
                      → transport (sym p) (transport p a) ＝ a
 transport⁻-transport p a i =
   transport⁻-filler-ext p (~ i) (transport-filler-ext p (~ i) a)
 
-transport-comp : {ℓ : Level} {A B C : Type ℓ} (p : A ＝ B) (q : B ＝ C) (x : A)
+transport-comp : ∀{ℓ} {A B C : Type ℓ} (p : A ＝ B) (q : B ＝ C) (x : A)
                → transport (p ∙ q) x ＝ transport q (transport p x)
 transport-comp p q x i = transport (∙-filler-r p q (~ i)) (transport-filler-ext p i x)
 
-transport-flip : {ℓ : Level} {A : I → Type ℓ} {x : A i0} {y : A i1}
+transport-flip : ∀{ℓ} {A : I → Type ℓ} {x : A i0} {y : A i1}
                → x ＝ transport (λ i → A (~ i)) y
                → transport (λ i → A i) x ＝ y
 transport-flip {A} {y} p =
   ap (transport (λ i → A i)) p ∙ transport⁻-transport (λ i → A (~ i)) y
 
 opaque
-  transport-path : {ℓ : Level} {A : Type ℓ}
+  transport-path : ∀{ℓ} {A : Type ℓ}
                    {x y x′ y′ : A} (p : x ＝ y) (left : x ＝ x′) (right : y ＝ y′)
                  → transport (λ i → left i ＝ right i) p ＝ sym left ∙ (p ∙ right)
   transport-path {A} p left right = lemma ∙ ∙∙=∙ (sym left) right p
@@ -63,17 +63,17 @@ opaque
 
 -- Pathᴾ conversion
 
-pathᴾ=path : {ℓ : Level} (P : I → Type ℓ) (p : P i0) (q : P i1)
+pathᴾ=path : ∀{ℓ} (P : I → Type ℓ) (p : P i0) (q : P i1)
            →  Pathᴾ P p q
            ＝ (transport (λ i → P i) p ＝ q)
 pathᴾ=path P p q i = Pathᴾ (λ j → P (i ∨ j)) (transport-filler (λ j → P j) p i) q
 
-pathᴾ=path⁻ : {ℓ : Level} (P : I → Type ℓ) (p : P i0) (q : P i1)
+pathᴾ=path⁻ : ∀{ℓ} (P : I → Type ℓ) (p : P i0) (q : P i1)
             →  Pathᴾ P p q
             ＝ (p ＝ transport (λ i → P (~ i)) q)
 pathᴾ=path⁻ P p q i = Pathᴾ (λ j → P (~ i ∧ j)) p (transport-filler (λ j → P (~ j)) q i)
 
-module _ {ℓ : Level} {A : I → Type ℓ} {x : A i0} {y : A i1} where
+module _ {ℓ} {A : I → Type ℓ} {x : A i0} {y : A i1} where
   -- to-pathᴾ : (transport (λ i → A i) x ＝ y) → ＜ x ／ A ＼ y ＞
   to-pathᴾ : (coe0→1 A x ＝ y) → Pathᴾ A x y
   to-pathᴾ p i = hcomp (∂ i) sys
@@ -89,7 +89,7 @@ module _ {ℓ : Level} {A : I → Type ℓ} {x : A i0} {y : A i1} where
     from-pathᴾ p i = coei→1 A i (p i)
 {-# DISPLAY hcomp _ (to-pathᴾ-sys.sys {ℓ} {A} {x} {y} p i) = to-pathᴾ {ℓ} {A} {x} {y} p i #-}
 
-module _ {ℓ : Level} {A : I → Type ℓ} {x : A i0} {y : A i1} where
+module _ {ℓ} {A : I → Type ℓ} {x : A i0} {y : A i1} where
   to-pathᴾ⁻ : x ＝ coe1→0 A y → Pathᴾ A x y
   to-pathᴾ⁻ p i = to-pathᴾ {A = λ j → A (~ j)} (λ j → p (~ j)) (~ i)
 
@@ -131,72 +131,72 @@ module _ {ℓ : Level} {A : I → Type ℓ} {x : A i0} {y : A i1} where
 
 -- Subst
 
-subst : {ℓa ℓb : Level} {A : Type ℓa} (B : A → Type ℓb)
+subst : ∀{ℓa ℓb} {A : Type ℓa} (B : A → Type ℓb)
         {x y : A} (p : x ＝ y)
       → B x → B y
 subst B p = transport (λ i → B (p i))
 
-subst-refl : {ℓa ℓb : Level} {A : Type ℓa} {B : A → Type ℓb} {x : A} (px : B x) → subst B refl px ＝ px
+subst-refl : ∀{ℓa ℓb} {A : Type ℓa} {B : A → Type ℓb} {x : A} (px : B x) → subst B refl px ＝ px
 subst-refl = transport-refl
 
-subst-filler : {ℓa ℓb : Level} {A : Type ℓa} (B : A → Type ℓb) {x y : A} (p : x ＝ y) (b : B x)
+subst-filler : ∀{ℓa ℓb} {A : Type ℓa} (B : A → Type ℓb) {x y : A} (p : x ＝ y) (b : B x)
              → Pathᴾ (λ i → B (p i)) b (subst B p b)
 subst-filler B p = transport-filler (ap B p)
 
-subst⁻-filler : {ℓa ℓb : Level} {A : Type ℓa} (B : A → Type ℓb) {x y : A} (p : x ＝ y) (b : B y)
+subst⁻-filler : ∀{ℓa ℓb} {A : Type ℓa} (B : A → Type ℓb) {x y : A} (p : x ＝ y) (b : B y)
               → Pathᴾ (λ i → B (p (~ i))) b (subst B (sym p) b)
 subst⁻-filler B p = subst-filler B (sym p)
 
-subst⁻-subst : {ℓa ℓb : Level} {A : Type ℓa} (B : A → Type ℓb) {x y : A} (p : x ＝ y)
+subst⁻-subst : ∀{ℓa ℓb} {A : Type ℓa} (B : A → Type ℓb) {x y : A} (p : x ＝ y)
              → (u : B x) → subst B (sym p) (subst B p u) ＝ u
 subst⁻-subst B p u = transport⁻-transport (ap B p) u
 
-subst-comp : {ℓa ℓb : Level} {A : Type ℓa} (B : A → Type ℓb)
+subst-comp : ∀{ℓa ℓb} {A : Type ℓa} (B : A → Type ℓb)
              {x y z : A} (p : x ＝ y) (q : y ＝ z) (u : B x)
            → subst B (p ∙ q) u ＝ subst B q (subst B p u)
 subst-comp B p q Bx i =
   transport (ap B (∙-filler-r p q (~ i))) (transport-filler-ext (ap B p) i Bx)
 
-subst-slice : {ℓa ℓb ℓc : Level} {A : Type ℓa} (B : A → Type ℓb) (C : A → Type ℓc)
+subst-slice : ∀{ℓa ℓb ℓc} {A : Type ℓa} (B : A → Type ℓb) (C : A → Type ℓc)
               (F : {a : A} → B a → C a)
               {x y : A} (p : x ＝ y) (b : B x)
             → subst C p (F b) ＝ F (subst B p b)
 subst-slice B C F p b i = transport⁻-filler-ext (ap C (sym p)) (~ i) (F (transport-filler-ext (ap B p) i b))
 
-subst-slice-filler : {ℓa ℓb ℓc : Level} {A : Type ℓa} (B : A → Type ℓb) (C : A → Type ℓc)
+subst-slice-filler : ∀{ℓa ℓb ℓc} {A : Type ℓa} (B : A → Type ℓb) (C : A → Type ℓc)
                      (F : {a : A} → B a → C a)
                      {x y : A} (p : x ＝ y)
                    → Pathᴾ (λ i → B (p i) → C (p i)) F (subst C p ∘ F ∘ subst B (sym p))
 subst-slice-filler B C F p i b = transport-filler (ap C p) (F (transport⁻-filler-ext (ap B p) i b)) i
 
-Σ-path : {ℓa ℓb : Level} {A : Type ℓa} {B : A → Type ℓb}
+Σ-path : ∀{ℓa ℓb} {A : Type ℓa} {B : A → Type ℓb}
          {x y : Σ A B} (p : x .fst ＝ y .fst)
        → subst B p (x .snd) ＝ (y .snd)
        → x ＝ y
 Σ-path p q = p ,ₚ to-pathᴾ q
 
 opaque
-  subst-path-left : {ℓ : Level} {A : Type ℓ}
+  subst-path-left : ∀{ℓ} {A : Type ℓ}
                     {x y x′ : A} (p : x ＝ y) (left : x ＝ x′)
                   → subst (λ e → e ＝ y) left p ＝ sym left ∙ p
   subst-path-left {y} p left = transport-path p left refl ∙ ap (sym left ∙_) (sym (∙-filler-l p refl))
 
-  subst-path-right : {ℓ : Level} {A : Type ℓ}
+  subst-path-right : ∀{ℓ} {A : Type ℓ}
                      {x y y′ : A} (p : x ＝ y) (right : y ＝ y′)
                    → subst (λ e → x ＝ e) right p ＝ p ∙ right
   subst-path-right {x} p right = transport-path p refl right ∙ sym (∙-filler-r refl (p ∙ right))
 
-  subst-path-both : {ℓ : Level} {A : Type ℓ}
+  subst-path-both : ∀{ℓ} {A : Type ℓ}
                     {x x′ : A} (p : x ＝ x) (adj : x ＝ x′)
                   → subst (λ x → x ＝ x) adj p ＝ sym adj ∙ (p ∙ adj)
   subst-path-both p adj = transport-path p adj adj
 
-subst² : {ℓa ℓb ℓc : Level} {A : Type ℓa} {B : Type ℓb} (C : A → B → Type ℓc)
+subst² : ∀{ℓa ℓb ℓc} {A : Type ℓa} {B : Type ℓb} (C : A → B → Type ℓc)
          {x y : A} (p : x ＝ y) {z w : B} (q : z ＝ w)
        → C x z → C y w
 subst² B p q = transport (λ i → B (p i) (q i))
 
-subst²-filler : {ℓa ℓb ℓc : Level} {A : Type ℓa} {B : Type ℓb} (C : A → B → Type ℓc)
+subst²-filler : ∀{ℓa ℓb ℓc} {A : Type ℓa} {B : Type ℓb} (C : A → B → Type ℓc)
                 {x y : A} (p : x ＝ y) {z w : B} (q : z ＝ w) (c : C x z)
               → Pathᴾ (λ i → C (p i) (q i)) c (subst² C p q c)
 subst²-filler C p q = transport-filler (ap² C p q)

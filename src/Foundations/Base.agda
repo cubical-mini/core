@@ -5,10 +5,10 @@ open import Prim.Type
 
 -- Useful gadgets
 
-the : {ℓ : Level} (A : Type ℓ) → A → A
+the : ∀{ℓ} (A : Type ℓ) → A → A
 the _ a = a
 
-auto : {ℓ : Level} {A : Type ℓ} → ⦃ A ⦄ → A
+auto : ∀{ℓ} {A : Type ℓ} → ⦃ A ⦄ → A
 auto ⦃ (a) ⦄ = a
 
 autoω : {A : Typeω} → ⦃ A ⦄ → A

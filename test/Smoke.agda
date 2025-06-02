@@ -37,6 +37,7 @@ module _ {ℓa : Level} {A : Type ℓa} where
 
 module _ {ℓa : Level} {A : Type ℓa} {x y : A} {p : x ＝ y} where
   open Path-gpd0
+  open Path-gpd
   zook : Pathᴾ (λ i → p i ＝ p i) refl refl
   zook = reflₕ
 

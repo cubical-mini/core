@@ -10,8 +10,8 @@ open import Notation.Double.Composition
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-sq : ℓ-sq-sig}
   (C : ℚuiver-on Ob ℓ-sq) (open ℚuiver-on C)
-  ⦃ _ : Compω Quiverₕ ⦄ ⦃ _ : Compω Quiverᵥ ⦄ ⦃ _ : {ℓw ℓx ℓy ℓz ℓu ℓv : Level} → ℂomp C ℓw ℓx ℓy ℓz ℓu ℓv ⦄
-  (_~_ : {ℓw ℓx ℓy ℓz : Level} {w : Ob ℓw} {x : Ob ℓx} {f : Hor w x} {y : Ob ℓy} {g : Ver w y} {z : Ob ℓz} {h : Ver x z} {k : Hor y z} (α β : Sq f g h k) → Type (ℓ-sq ℓw ℓx ℓy ℓz)) where
+  ⦃ _ : Compω Quiverₕ ⦄ ⦃ _ : Compω Quiverᵥ ⦄ ⦃ _ : ∀{ℓw ℓx ℓy ℓz ℓu ℓv} → ℂomp C ℓw ℓx ℓy ℓz ℓu ℓv ⦄
+  (_~_ : ∀{ℓw ℓx ℓy ℓz} {w : Ob ℓw} {x : Ob ℓx} {f : Hor w x} {y : Ob ℓy} {g : Ver w y} {z : Ob ℓz} {h : Ver x z} {k : Hor y z} (α β : Sq f g h k) → Type (ℓ-sq ℓw ℓx ℓy ℓz)) where
   -- ^ TODO 2-sq-sig
 
   record 𝕀nterchange : Typeω where

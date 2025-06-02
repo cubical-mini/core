@@ -12,21 +12,21 @@ open import Notation.Strict
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom} (open Quiver-on C)
-  {ℓx ℓy : Level} ⦃ _ : Refl C ℓy ⦄ ⦃ _ : Comp C ℓy ℓx ℓy ⦄ where
+  ⦃ _ : Reflω C ⦄ ⦃ _ : Compω C ⦄ where
 
-  _retraction-of_ : {x : Ob ℓx} {y : Ob ℓy} (r : Hom x y) (s : Hom y x) → Type (ℓ-hom ℓy ℓy)
+  _retraction-of_ : ∀{ℓx ℓy} {x : Ob ℓx} {y : Ob ℓy} (r : Hom x y) (s : Hom y x) → Type (ℓ-hom ℓy ℓy)
   _retraction-of_ r s = s ∙ r ＝ refl
   {-# INLINE _retraction-of_ #-}
 
-  _section-of_ : {y : Ob ℓy} {x : Ob ℓx} (s : Hom y x) (r : Hom x y) → Type (ℓ-hom ℓy ℓy)
+  _section-of_ : ∀{ℓx ℓy} {y : Ob ℓy} {x : Ob ℓx} (s : Hom y x) (r : Hom x y) → Type (ℓ-hom ℓy ℓy)
   _section-of_ s r = _retraction-of_ r s
   {-# INLINE _section-of_ #-}
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C)
-  {ℓx ℓy : Level} ⦃ _ : Refl C ℓy ⦄ ⦃ _ : Comp C ℓy ℓx ℓy ⦄ where
+  ⦃ _ : Reflω C ⦄ ⦃ _ : Compω C ⦄ where
 
-  record Split-pair {x : Ob ℓx} {y : Ob ℓy} (s : Hom y x) (r : Hom x y) : Type (ℓ-hom ℓy ℓy) where
+  record Split-pair {ℓx ℓy} {x : Ob ℓx} {y : Ob ℓy} (s : Hom y x) (r : Hom x y) : Type (ℓ-hom ℓy ℓy) where
     no-eta-equality
     field split : r retraction-of s
 

@@ -16,7 +16,7 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
           → Hom x y → Hom y z → Hom x z
 
   Compω : Typeω
-  Compω = {ℓx ℓy ℓz : Level} → Comp ℓx ℓy ℓz
+  Compω = ∀{ℓx ℓy ℓz} → Comp ℓx ℓy ℓz
 
 open Comp ⦃ ... ⦄ public
 

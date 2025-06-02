@@ -10,9 +10,8 @@ open import Notation.Base
 open import Notation.Composition
 open import Notation.Displayed.Base
 open import Notation.Reflexivity
-open import Notation.Retraction
-open import Notation.Retract
-open import Notation.Section
+open import Notation.Invertibility.Retraction
+open import Notation.Invertibility.Section
 open import Notation.Unitality.Inner
 open import Notation.Unitality.Outer
 

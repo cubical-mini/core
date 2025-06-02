@@ -9,8 +9,8 @@ open import Notation.Adjoint
 open import Notation.Base
 open import Notation.Composition
 open import Notation.Displayed.Base
+open import Notation.Displayed.Wide
 open import Notation.Duality
-open import Notation.Isomorphism
 open import Notation.Invertibility.Quasi
 open import Notation.Symmetry
 open import Notation.Unitality.Inner
@@ -36,7 +36,7 @@ module _ {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb} (e : A ≅ B) where
   ri = e .preserves .Quasi-inverse.from-to
 
 module _ {ℓa ℓb ℓc : Level} {A : Type ℓa} {B : Type ℓb} {C : Type ℓc} (f : A ≅ B) (g : B ≅ C) where
-  open Iso-quiver
+  open Wide-gpd
 
   _ : A ≅ C
   _ = f ∙ g

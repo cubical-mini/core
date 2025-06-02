@@ -24,3 +24,9 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
 open Dual ⦃ ... ⦄ public
 
 {-# DISPLAY Dual.invol _ f g h = invol f g h #-}
+
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
+  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (C₂ : 2-Quiver-on C) (open 2-Quiver-on C₂)
+  ⦃ _ : Symmetryω C ⦄ where
+  Dualω : Typeω
+  Dualω = ∀{ℓx ℓy} → Dual C C₂ ℓx ℓy

@@ -24,6 +24,13 @@ open Whisker-r ⦃ ... ⦄ public
 
 {-# DISPLAY Whisker-r._▷_ _ α h = α ▷ h #-}
 
+module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
+  {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C) (C₂ : 2-Quiver-on C) (open 2-Quiver-on C₂)
+  ⦃ _ : Compω C ⦄ where
+
+  Whisker-rω : Typeω
+  Whisker-rω = ∀{ℓx ℓy ℓz} → Whisker-r C C₂ ℓx ℓy ℓz
+
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob}
   {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom} (open Quiver-on C)
