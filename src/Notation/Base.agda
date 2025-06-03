@@ -20,6 +20,15 @@ record Quiver-on {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) (ℓ-hom : ℓ-hom-s
   field Hom : hom-sig Ob ℓ-hom
 {-# INLINE mk-quiver #-}
 
+record Small-quiver-on {ℓo : Level} (Ob : Type ℓo) (ℓh : Level) : Type (ℓo l⊔ lsuc ℓh) where
+  constructor mk-small-quiver
+  no-eta-equality
+  field Hom : (x y : Ob) → Type ℓh
+{-# INLINE mk-small-quiver #-}
+
+Enlarge : ∀{ℓo ℓh} {Ob : Type ℓo} → Small-quiver-on Ob ℓh → Quiver-on (λ _ → Ob) λ _ _ → ℓh
+Enlarge c .Quiver-on.Hom = Small-quiver-on.Hom c
+
 
 -- globular vibe
 2-hom-sig : {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) {ℓ-hom : ℓ-hom-sig} (Hom : hom-sig Ob ℓ-hom) → Typeω

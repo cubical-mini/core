@@ -23,8 +23,8 @@ open import Foundations.Split
 
 module _ {ℓa : Level} {A : Type ℓa} where
   Squares : ℚuiver-on (λ _ → A) _
-  Squares .ℚuiver-on.Quiverₕ = Paths A
-  Squares .ℚuiver-on.Quiverᵥ = Paths A
+  Squares .ℚuiver-on.Quiverₕ = Pathsω A
+  Squares .ℚuiver-on.Quiverᵥ = Pathsω A
   Squares .ℚuiver-on.Sq p q r s = Pathᴾ (λ i → q i ＝ r i) p s
 
   open Path-gpd0

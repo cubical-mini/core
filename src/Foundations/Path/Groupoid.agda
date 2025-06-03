@@ -41,31 +41,31 @@ open import Foundations.Path.Groupoid.Whiskering
 
 module Path-gpd where
   module _ {ℓa} {A : Type ℓa} where instance
-    Path-Refl : Reflω (Paths A)
+    Path-Refl : Reflω (Pathsω A)
     Path-Refl .refl = reflₚ
 
-    Path-Sym : Symmetryω (Paths A)
+    Path-Sym : Symmetryω (Pathsω A)
     Path-Sym .sym = symₚ
 
-    Path-Comp : Compω (Paths A)
+    Path-Comp : Compω (Pathsω A)
     Path-Comp ._∙_ = _∙ₚ_
 
-    Path-Dual : Dualω (Paths A) Strict
+    Path-Dual : Dualω (Pathsω A) Strict
     Path-Dual .invol _ = reflₚ
 
-    Path-Assoc : Assocω (Paths A) Strict
+    Path-Assoc : Assocω (Pathsω A) Strict
     Path-Assoc .assoc p q r = assocₚ p q r
 
-    Path-Unit-i : Unit-iω (Paths A) Strict
+    Path-Unit-i : Unit-iω (Pathsω A) Strict
     Path-Unit-i .id-i = id-iₚ
 
-    Path-Unit-o : Unit-oω (Paths A) Strict
+    Path-Unit-o : Unit-oω (Pathsω A) Strict
     Path-Unit-o .id-o = id-oₚ
 
-    Path-Split : ∀{ℓx ℓy} {x y : A} {p : x ＝ y} → Split (Paths A) {ℓx = ℓx} {ℓy = ℓy} p (symₚ p)
+    Path-Split : ∀{ℓx ℓy} {x y : A} {p : x ＝ y} → Split (Pathsω A) {ℓx = ℓx} {ℓy = ℓy} p (symₚ p)
     Path-Split {p} .split = inv-oₚ p
 
-    Path-Refl-Idem : ∀{ℓ} {x : A} → Weak-Idem (Paths A) Strict {ℓ = ℓ} {x = x} _
+    Path-Refl-Idem : ∀{ℓ} {x : A} → Weak-Idem (Pathsω A) Strict {ℓ = ℓ} {x = x} _
     Path-Refl-Idem .idem = refl-idem
 
     {-# OVERLAPS
@@ -78,31 +78,31 @@ module Path-gpd where
 module Path-gpd0 where
   open Path-gpd
   module _ {ℓ : Level} {A : Type ℓ} where instance
-    Path-Refl0 : Refl (Paths A) lzero
+    Path-Refl0 : Refl (Pathsω A) lzero
     Path-Refl0 = Path-Refl
 
-    Path-Sym0 : Symmetry (Paths A) lzero lzero
+    Path-Sym0 : Symmetry (Pathsω A) lzero lzero
     Path-Sym0 = Path-Sym
 
-    Path-Comp0 : Comp (Paths A) lzero lzero lzero
+    Path-Comp0 : Comp (Pathsω A) lzero lzero lzero
     Path-Comp0 = Path-Comp
 
-    Path-Dual0 : Dual (Paths A) Strict lzero lzero
+    Path-Dual0 : Dual (Pathsω A) Strict lzero lzero
     Path-Dual0 = Path-Dual
 
-    Path-Assoc0 : Assoc (Paths A) Strict lzero lzero lzero lzero
+    Path-Assoc0 : Assoc (Pathsω A) Strict lzero lzero lzero lzero
     Path-Assoc0 = Path-Assoc
 
-    Path-Unit-i0 : Unit-i (Paths A) Strict lzero lzero
+    Path-Unit-i0 : Unit-i (Pathsω A) Strict lzero lzero
     Path-Unit-i0 = Path-Unit-i
 
-    Path-Unit-o0 : Unit-o (Paths A) Strict lzero lzero
+    Path-Unit-o0 : Unit-o (Pathsω A) Strict lzero lzero
     Path-Unit-o0 = Path-Unit-o
 
-    Path-Split0 : {x y : A} {p : x ＝ y} → Split (Paths A) {ℓx = lzero} {ℓy = lzero} p (symₚ p)
+    Path-Split0 : {x y : A} {p : x ＝ y} → Split (Pathsω A) {ℓx = lzero} {ℓy = lzero} p (symₚ p)
     Path-Split0 = Path-Split
 
-    Path-Refl-Idem0 : {x : A} → Idem (Paths A) {ℓ = lzero} {x = x} _
+    Path-Refl-Idem0 : {x : A} → Idem (Pathsω A) {ℓ = lzero} {x = x} _
     Path-Refl-Idem0 = Path-Refl-Idem
 
     {-# OVERLAPPABLE

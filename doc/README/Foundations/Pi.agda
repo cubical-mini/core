@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module README.Foundations.Pi.Base where
+module README.Foundations.Pi where
 
 open import Prim.Kan
 open import Prim.Type
