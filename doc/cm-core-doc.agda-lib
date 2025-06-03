@@ -1,6 +1,5 @@
-name: cm-core-0.1
-include: src
-depend:
+name: cm-core-doc-0.1
+include: ../src .
 flags:
   --erased-cubical
   --erasure
