@@ -24,7 +24,7 @@ strict-contr-fibres : ∀{ℓa ℓb}{A : Type ℓa} {B : Type ℓb}
                       {f : A → B}
                       (g : B → A) (b : B)
                     → Total-ob (Pathsω (fibre f (f (g b))))
-                        (λ t → (fb : fibre f b) → Path (fibre f (f (g b))) t (total-ob (g (f (fb .carrier))) (ap (f ∘ₜ g) (fb .structured)))) lzero
+                        (λ t → (fb : fibre f b) → Path (fibre f (f (g b))) t (total-ob (g (f (fb .carrier))) (ap (f ∘ₜ g) (fb .structured)))) ℓa
 strict-contr-fibres g b .carrier .carrier = g b
 strict-contr-fibres g b .carrier .structured = refl
 strict-contr-fibres g b .structured (total-ob a p) i .carrier = g (p i)
