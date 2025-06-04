@@ -13,29 +13,63 @@ module _ {ℓ ℓr} {A : Type ℓ} (R : A → A → Type ℓr) (rfl : ∀ a → 
         : {x y : A} (p : R x y)
         → Pathᴾ (λ i → R x (to-path p i)) (rfl x) p
 
--- instance
---   path-ids : ∀{ℓa} {A : Type ℓa} → is-identity-system (Path A) λ _ → reflₚ
---   path-ids .is-identity-system.to-path p = p
---   path-ids .is-identity-system.to-path-over p i j = p (i ∧ j)
-
--- record fibre {ℓa ℓr ℓb} {A : Type ℓa} {B : Type ℓb}
---     {R : B → B → Type ℓr} {rfl : ∀ b → R b b}
---     ⦃ ids : is-identity-system R rfl ⦄
---     (f : A → B) (y : B) : Type (ℓa l⊔ ℓr) where
---   no-eta-equality
---   field
---     preimage : A
---     maps-to  : R (f preimage) y
-
--- fibreₚ : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb} (f : A → B) (y : B) → Type (ℓa l⊔ ℓb)
--- fibreₚ f y = fibre f y
-
--- --     eww : {x : Ob ℓ} → is-contr (Σ (Ob ℓ) (Hom x))
--- --     eww .centre = _ , refl
--- --     eww .centre-cell (x′ , p) i = to-path p i , to-path-over p i
-
--- --     -- Fan : (ℓ : Level) {ℓc : Level} {c : Ob ℓc} →  Type (ℓ-ob ℓ l⊔ ℓ-hom ℓc ℓ)
--- --     -- Fan ℓ {ℓc} {c} = Σₜ (Ob ℓ) (λ w → Hom c w)
-
--- --     -- Cofan : (ℓ : Level) {ℓc : Level} {c : Ob ℓc} →  Type (ℓ-ob ℓ l⊔ ℓ-hom ℓ ℓc)
--- --     -- Cofan ℓ {ℓc} {c} = Σₜ (Ob ℓ) (λ w → Hom w c)
+-- TODO remove
+-- open import Notation.Base
+-- -- TODO naming
+-- module _ {ℓo ℓh} {Ob : Type ℓo} (C : Small-quiver-on Ob ℓh) (open Small-quiver-on C) where
+--   record Based : Type (ℓo l⊔ ℓh) where
+--     no-eta-equality
+--     field
+--       centre : Ob
+--       paths  : (x : Ob) → Hom centre x
+--
+--   record Fibred {ℓa} {A : Type ℓa} (f : A → Ob) (y : Ob) : Type (ℓa l⊔ ℓh) where
+--     no-eta-equality
+--     field
+--       preimage : A
+--       maps-to  : Hom y (f preimage)
+--
+-- open Based public
+-- open Fibred public
+--
+-- open import Foundations.Path.Groupoid.Base
+-- is-contr : ∀{ℓ} (A : Type ℓ) → Type ℓ
+-- is-contr A = Based (Paths A)
+-- {-# DISPLAY Based (Paths A) = is-contr A #-}
+--
+-- fibre : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb} (f : A → B) (y : B) → Type (ℓa l⊔ ℓb)
+-- fibre {B} = Fibred (Paths B)
+-- {-# DISPLAY Fibred (Paths B) = fibre {B = B} #-}
+--
+-- Singleton : ∀{ℓa} {A : Type ℓa} (x : A) → Type ℓa
+-- Singleton = fibre (λ x → x)
+--
+-- open import Foundations.Path.Base
+-- open import Prim.Interval
+-- test : ∀{ℓa} {A : Type ℓa} (x : A) → is-contr (Singleton x)
+-- test x .centre .preimage = x
+-- test x .centre .maps-to = refl
+-- test x .paths w i .preimage = w .maps-to i
+-- test x .paths w i .maps-to j = w .maps-to (i ∧ j)
+--
+-- open import Notation.Reflexivity
+-- open import Notation.Symmetry
+-- open import Notation.Displayed.Base
+-- module _ {ℓo ℓh ℓhᵈ} {Ob : Type ℓo}
+--   (x : Ob)
+--   (C : Small-quiver-on Ob ℓh) (open Small-quiver-on C)
+--   (D : Small-quiver-onᵈ C (Hom x) ℓhᵈ) (open Small-quiver-onᵈ D)
+--   ⦃ _ : Refl (Enlarge C) lzero ⦄
+--   where
+--   open import Prim.Data.Sigma
+--
+--   serious : Based (mk-small-quiver {Ob = Fibred C (λ x → x) x} λ u v → Σ (Hom (u .preimage) (v .preimage)) λ f → Hom[ f ] (u .maps-to) (v .maps-to))
+--   serious .centre .preimage = x
+--   serious .centre .maps-to = Notation.Reflexivity.refl
+--   serious .paths w .fst = w .maps-to
+--   serious .paths w .snd = {!!}
+--
+-- module Kekus {ℓ} {A : Type ℓ} {x : A} where
+--
+--   serious2 : is-contr (Singleton x)
+--   serious2 = {!serious ? ? ? ⦃ ? ⦄!}
