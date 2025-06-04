@@ -1,7 +1,6 @@
 {-# OPTIONS --safe #-}
 module Foundations.Path.Groupoid where
 
-open import Prim.Kan
 open import Prim.Type
 
 open import Notation.Associativity

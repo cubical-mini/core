@@ -1,10 +1,10 @@
 {-# OPTIONS --safe #-}
 module Prelude where
 
-open import Prim.Equiv    public
-open import Prim.Glue     public
+-- open import Prim.Equiv    public
+-- open import Prim.Glue     public
 open import Prim.Interval public
-open import Prim.Kan      public
+-- open import Prim.Kan      public
 open import Prim.Type     public
 
 open import Prim.Literals.FromNat    public
@@ -38,7 +38,6 @@ open import Foundations.Invertible.Retraction       public
 open import Foundations.Invertible.Section       public
 open import Foundations.Path.Groupoid public
 open import Foundations.Pi.Category   public
-
 
 -- Identity systems
 

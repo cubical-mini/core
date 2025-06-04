@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 module Foundations.Path.Groupoid.Base where
 
-open import Prim.Kan
+open import Prim.Kan public
 open import Prim.Type
 
 open import Notation.Base

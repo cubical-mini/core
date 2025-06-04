@@ -4,7 +4,6 @@ module Foundations.Equiv.Base where
 open import Prim.Data.Sigma
 open import Prim.Data.Unit
 open import Prim.Interval
-open import Prim.Kan
 open import Prim.Type
 
 open import Notation.Base
@@ -63,6 +62,13 @@ equiv-proof-fast T A w a ψ f = is-contr→extend cont ψ f where
 
 open Fun-cat
 
+Equivs : Quiver-on (λ ℓ → Type ℓ) _
+Equivs = Wide Equivsᵈ
+
 instance
   Equiv-Reflᵈ : Reflᵈω Funs Equivsᵈ
   Equiv-Reflᵈ .reflᵈ .equiv-proof = strict-contr-fibres refl
+
+  -- Equiv-Sym : Symmetryω Equivs
+  -- Equiv-Sym .sym e .hom t = e .preserves .equiv-proof t .carrier .carrier
+  -- Equiv-Sym .sym e .preserves = {!!} -- TODO need quasi-inverse→is-equiv

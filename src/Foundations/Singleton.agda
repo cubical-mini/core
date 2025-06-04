@@ -2,7 +2,6 @@
 module Foundations.Singleton where
 
 open import Prim.Interval
-open import Prim.Kan
 open import Prim.Type
 
 open import Notation.Base
