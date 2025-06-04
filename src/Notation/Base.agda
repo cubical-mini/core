@@ -1,6 +1,7 @@
 {-# OPTIONS --safe #-}
 module Notation.Base where
 
+open import Prim.Data.Unit
 open import Prim.Type
 
 ℓ-ob-sig = Level → Level
@@ -28,6 +29,9 @@ record Small-quiver-on {ℓo : Level} (Ob : Type ℓo) (ℓh : Level) : Type (�
 
 Enlarge : ∀{ℓo ℓh} {Ob : Type ℓo} → Small-quiver-on Ob ℓh → Quiver-on (λ _ → Ob) λ _ _ → ℓh
 Enlarge c .Quiver-on.Hom = Small-quiver-on.Hom c
+
+Codisc : ∀{ℓ} (A : Type ℓ) → Small-quiver-on A lzero
+Codisc A .Small-quiver-on.Hom _ _ = ⊤
 
 
 -- globular vibe

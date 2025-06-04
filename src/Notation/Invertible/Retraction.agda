@@ -10,6 +10,7 @@ open import Notation.Composition
 open import Notation.Displayed.Base
 open import Notation.Displayed.Composition
 open import Notation.Displayed.Reflexivity
+open import Notation.Displayed.Total
 open import Notation.Displayed.Wide
 open import Notation.Idempotent
 open import Notation.Invertible.Retraction.Base
