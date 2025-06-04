@@ -9,14 +9,11 @@ open import Notation.Displayed.Base
 open import Notation.Displayed.Composition
 open import Notation.Displayed.Reflexivity
 open import Notation.Displayed.Symmetry
+open import Notation.Displayed.Total
+open import Notation.Displayed.Wide.Base public
 open import Notation.Composition
 open import Notation.Reflexivity
 open import Notation.Symmetry
-
-module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom} (open Quiver-on C)
-  {ℓ-homᵈ : ℓ-hom-sig} (D : Quiver-onᵈ C (λ {_} _ → ⊤) ℓ-homᵈ) (open Quiver-onᵈ D) where
-  Wide : Quiver-on Ob _
-  Wide .Quiver-on.Hom x y = Total-hom C D {x = x} {y = y} tt tt
 
 module Wide-gpd where
   module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} {C : Quiver-on Ob ℓ-hom} (open Quiver-on C)

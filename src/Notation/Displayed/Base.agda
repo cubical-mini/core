@@ -24,15 +24,14 @@ record Quiver-onᵈ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-ho
   field Hom[_] : hom-sigᵈ Ob Hom Ob[_] ℓ-homᵈ
 {-# INLINE mk-quiverᵈ #-}
 
+record Small-quiver-onᵈ {ℓo : Level} {Ob : Type ℓo} {ℓh : Level} (C : Small-quiver-on Ob ℓh)
+  {ℓoᵈ : Level} (Ob[_] : Ob → Type ℓoᵈ) (ℓhᵈ : Level) : Type (ℓo l⊔ ℓh l⊔ ℓoᵈ l⊔ lsuc ℓhᵈ) where
+  constructor mk-small-quiverᵈ
+  no-eta-equality
+  open Small-quiver-on C
+  field Hom[_] : {x y : Ob} → Hom x y → Ob[ x ] → Ob[ y ] → Type ℓhᵈ
+{-# INLINE mk-small-quiverᵈ #-}
 
-module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} (C : Quiver-on Ob ℓ-hom) (open Quiver-on C)
-  {ℓ-obᵈ : ℓ-ob-sig} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ} {ℓ-homᵈ : ℓ-hom-sig} (D : Quiver-onᵈ C Ob[_] ℓ-homᵈ) (open Quiver-onᵈ D)
-  {ℓx ℓy : Level} {x : Ob ℓx} {y : Ob ℓy} (x′ : Ob[ x ]) (y′ : Ob[ y ]) where
-
-  record Total-hom : Type (ℓ-hom ℓx ℓy l⊔ ℓ-homᵈ ℓx ℓy) where
-    constructor total-hom
-    field
-      hom       : Hom x y
-      preserves : Hom[ hom ] x′ y′
-
-open Total-hom public
+Enlargeᵈ : ∀{ℓo ℓh ℓoᵈ ℓhᵈ} {Ob : Type ℓo} {C : Small-quiver-on Ob ℓh} {Ob[_] : Ob → Type ℓoᵈ}
+         → Small-quiver-onᵈ C Ob[_] ℓhᵈ → Quiver-onᵈ (Enlarge C) (λ {_} → Ob[_]) λ _ _ → ℓhᵈ
+Enlargeᵈ d .Quiver-onᵈ.Hom[_] = d .Small-quiver-onᵈ.Hom[_]

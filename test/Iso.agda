@@ -6,6 +6,7 @@ open import Prim.Type
 
 open import Notation.Composition
 open import Notation.Displayed.Base
+open import Notation.Displayed.Total
 open import Notation.Displayed.Wide
 open import Notation.Duality
 open import Notation.Symmetry
