@@ -1,9 +1,12 @@
 module Singleton where
 
+open import Prim.Interval
 open import Prim.Type
 
 open import Notation.Displayed.Total
+open import Notation.Reflexivity
 
+open import Foundations.Path.Groupoid
 open import Foundations.Singleton
 
 module _ {ℓa ℓb} {A : Type ℓa} where private
@@ -27,3 +30,10 @@ module _ {ℓa ℓb} {A : Type ℓa} where private
   -- lel .carrier .structured x = {!!}
   -- lel .structured w i .carrier = {!!}
   -- lel .structured w i .structured = {!!}
+
+  open Path-gpd0
+  testzz : (x : A) → is-contr (Singletonₚ x)
+  testzz x .carrier .carrier = x
+  testzz x .carrier .structured = refl
+  testzz x .structured w i .carrier = w .structured i
+  testzz x .structured w i .structured j = w .structured (i ∧ j)
