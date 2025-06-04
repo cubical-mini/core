@@ -20,6 +20,15 @@ record Quiver-on {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) (ℓ-hom : ℓ-hom-s
   field Hom : hom-sig Ob ℓ-hom
 {-# INLINE mk-quiver #-}
 
+record Small-quiver-on {ℓo : Level} (Ob : Type ℓo) (ℓh : Level) : Type (ℓo l⊔ lsuc ℓh) where
+  constructor mk-small-quiver
+  no-eta-equality
+  field Hom : (x y : Ob) → Type ℓh
+{-# INLINE mk-small-quiver #-}
+
+Enlarge : ∀{ℓo ℓh} {Ob : Type ℓo} → Small-quiver-on Ob ℓh → Quiver-on (λ _ → Ob) λ _ _ → ℓh
+Enlarge c .Quiver-on.Hom = Small-quiver-on.Hom c
+
 
 -- globular vibe
 2-hom-sig : {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) {ℓ-hom : ℓ-hom-sig} (Hom : hom-sig Ob ℓ-hom) → Typeω
@@ -35,6 +44,16 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig} (C :
     2-Hom : 2-hom-sig Ob Hom
     2-Hom {ℓx} {ℓy} {x} {y} = Quiver-on.Hom (Quiver₂ x y) {ℓx} {ℓx} -- TODO no idea what's going on
 {-# INLINE mk-2-quiver #-}
+
+module _ {ℓo ℓh : Level} {Ob : Type ℓo} (C : Small-quiver-on Ob ℓh) (open Small-quiver-on C) where
+  record Small-2-quiver-on : Typeω where
+    constructor mk-small-2-quiver
+    no-eta-equality
+    field Quiver₂ : (x y : Ob) → Small-quiver-on (Hom x y) ℓh
+
+    2-Hom : {x y : Ob} (f g : Hom x y) → Type ℓh
+    2-Hom {x} {y} = Small-quiver-on.Hom (Quiver₂ x y)
+{-# INLINE mk-small-2-quiver #-}
 
 
 3-hom-sig : {ℓ-ob : ℓ-ob-sig} (Ob : ob-sig ℓ-ob) {ℓ-hom : ℓ-hom-sig} (Hom : hom-sig Ob ℓ-hom) (2-Hom : 2-hom-sig Ob Hom) → Typeω

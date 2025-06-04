@@ -14,6 +14,6 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
   {ℓ : Level} ⦃ _ : Comp C ℓ ℓ ℓ ⦄ where
 
   Idem : {x : Ob ℓ} (e : Hom x x) → Type (ℓ-hom ℓ ℓ)
-  Idem = Weak-Idem C Strict
+  Idem = Weak-Idem C Strictω
 
-{-# DISPLAY Weak-Idem C Strict = Idem C #-}
+{-# DISPLAY Weak-Idem C Strictω = Idem C #-}
