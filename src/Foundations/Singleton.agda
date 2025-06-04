@@ -1,6 +1,7 @@
 {-# OPTIONS --safe #-}
 module Foundations.Singleton where
 
+open import Prim.Interval
 open import Prim.Type
 
 open import Notation.Base
@@ -23,3 +24,14 @@ fibre {A} {B} = Fibre (Paths B)
 
 Singletonₚ : ∀{ℓ} {A : Type ℓ} → A → Type ℓ
 Singletonₚ {A} = Singleton (Paths A)
+
+opaque
+  is-contr→extend : ∀{ℓ} {A : Type ℓ} → is-contr A → (φ : I) (p : Partial φ A) → A [ φ ↦ p ]
+  is-contr→extend C φ p = inS (hcomp φ
+    λ { j (φ = i1) → C .structured (p 1=1) j
+      ; j (j = i0) → C .carrier
+      })
+
+  extend→is-contr : ∀{ℓ} {A : Type ℓ} → (∀ φ (p : Partial φ A) → A [ φ ↦ p ]) → is-contr A
+  extend→is-contr ext .carrier        = outS (ext i0 λ())
+  extend→is-contr ext .structured x i = outS (ext i λ _ → x)

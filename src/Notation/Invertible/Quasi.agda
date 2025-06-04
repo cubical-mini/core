@@ -38,19 +38,19 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
 
   open Weak-quasi-inverse
 
-  iso→iso⁻ : ∀{ℓx ℓy} {x : Ob ℓx} {y : Ob ℓy} → Weak-iso x y → Weak-iso y x
-  iso→iso⁻ e .hom = e .preserves .from
-  iso→iso⁻ e .preserves .from = e .hom
-  iso→iso⁻ e .preserves .to-from = e .preserves .from-to
-  iso→iso⁻ e .preserves .from-to = e .preserves .to-from
+  ≅→≅⁻ : ∀{ℓx ℓy} {x : Ob ℓx} {y : Ob ℓy} → Weak-iso x y → Weak-iso y x
+  ≅→≅⁻ e .hom = e .preserves .from
+  ≅→≅⁻ e .preserves .from = e .hom
+  ≅→≅⁻ e .preserves .to-from = e .preserves .from-to
+  ≅→≅⁻ e .preserves .from-to = e .preserves .to-from
 
-  iso→retract : ∀{ℓx ℓy} {x : Ob ℓx} {y : Ob ℓy} → Weak-iso x y → Weak-retract C C₂ x y
-  iso→retract e .hom = e .hom
-  iso→retract e .preserves .retraction = e .preserves .from
-  iso→retract e .preserves .retraction-cell = e .preserves .to-from
+  ≅→retract : ∀{ℓx ℓy} {x : Ob ℓx} {y : Ob ℓy} → Weak-iso x y → Weak-retract C C₂ x y
+  ≅→retract e .hom = e .hom
+  ≅→retract e .preserves .retraction = e .preserves .from
+  ≅→retract e .preserves .retraction-cell = e .preserves .to-from
 
-  iso→retract⁻ : ∀{ℓx ℓy} {x : Ob ℓx} {y : Ob ℓy} → Weak-iso x y → Weak-retract C C₂ y x
-  iso→retract⁻ e = iso→retract (iso→iso⁻ e)
+  ≅→retract⁻ : ∀{ℓx ℓy} {x : Ob ℓx} {y : Ob ℓy} → Weak-iso x y → Weak-retract C C₂ y x
+  ≅→retract⁻ e = ≅→retract (≅→≅⁻ e)
 
 
 module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
@@ -61,7 +61,7 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
 
   instance
     Weak-iso-Sym : Symmetryω (Weak-isos C C₂)
-    Weak-iso-Sym .sym = iso→iso⁻ _ _
+    Weak-iso-Sym .sym = ≅→≅⁻ _ _
 
     Quasi-inverse-Reflᵈ : ⦃ _ : ∀{ℓ} {x : Ob ℓ} → Weak-Idem C C₂ {x = x} refl ⦄
                         → Reflᵈω C (Weak-quasi-inversesᵈ C C₂)
@@ -73,6 +73,6 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
                           ⦃ _ : Symmetryω₂ C C₂ ⦄ ⦃ _ : Compω₂ C C₂ ⦄ ⦃ _ : Whisker-lω C C₂ ⦄ ⦃ _ : Whisker-rω C C₂ ⦄
                         → Compᵈω C (Weak-quasi-inversesᵈ C C₂)
     Quasi-inverse-Compᵈ ._∙ᵈ_ f′ g′ .from = g′ .from ∙ f′ .from
-    Quasi-inverse-Compᵈ ._∙ᵈ_ f′ g′ .to-from = (iso→retract _ _ (total-hom _ f′) ∙ iso→retract _ _ (total-hom _ g′)) .preserves .retraction-cell
-    Quasi-inverse-Compᵈ ._∙ᵈ_ f′ g′ .from-to = (iso→retract⁻ _ _ (total-hom _ g′) ∙ iso→retract⁻ _ _ (total-hom _ f′)) .preserves .retraction-cell
+    Quasi-inverse-Compᵈ ._∙ᵈ_ f′ g′ .to-from = (≅→retract _ _ (total-hom _ f′) ∙ ≅→retract _ _ (total-hom _ g′)) .preserves .retraction-cell
+    Quasi-inverse-Compᵈ ._∙ᵈ_ f′ g′ .from-to = (≅→retract⁻ _ _ (total-hom _ g′) ∙ ≅→retract⁻ _ _ (total-hom _ f′)) .preserves .retraction-cell
     {-# OVERLAPPING Weak-iso-Sym Quasi-inverse-Reflᵈ Quasi-inverse-Compᵈ #-}

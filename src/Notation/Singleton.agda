@@ -11,9 +11,9 @@ open import Notation.Singleton.Base public
 
 module _ {ℓo ℓh : Level} {Ob : Type ℓo}
   (C : Small-quiver-on Ob ℓh) (open Small-quiver-on C)
-  ⦃ _ : Refl (Enlarge C) lzero ⦄
+  ⦃ _ : Refl (Enlarge C) ℓo ⦄
   (c : Ob)
-  (D : Small-quiver-onᵈ C (Hom c) lzero) (open Small-quiver-onᵈ D)
+  (D : Small-quiver-onᵈ C (Hom c) ℓh) (open Small-quiver-onᵈ D)
   (push : (w : Singleton C c) → Hom[ w .structured ] refl (w .structured)) where
   -- TODO push looks like something from identity systems, can you factor it away?
 

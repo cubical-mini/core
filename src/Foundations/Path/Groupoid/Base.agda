@@ -1,13 +1,18 @@
 {-# OPTIONS --safe #-}
 module Foundations.Path.Groupoid.Base where
 
-open import Prim.Kan
+open import Prim.Interval
+open import Prim.Kan public
 open import Prim.Type
 
 open import Notation.Base
+open import Notation.Displayed.Base
 
 Paths : ∀{ℓ} (A : Type ℓ) → Small-quiver-on A ℓ
 Paths A .Small-quiver-on.Hom = Path A
+
+Pathsᵈ : ∀{ℓ} {A : Type ℓ} (c : A) → Small-quiver-onᵈ (Paths A) (c ＝_) ℓ
+Pathsᵈ c .Small-quiver-onᵈ.Hom[_] p q r = Pathᴾ (λ i → q i ＝ r i) (λ _ → c) p
 
 Pathsω : ∀{ℓ} (A : Type ℓ) → Quiver-on (λ _ → A) (λ _ _ → ℓ)
 Pathsω A = Enlarge (Paths A)

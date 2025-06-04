@@ -4,22 +4,22 @@ module Foundations.HLevel.Base where
 open import Prim.Data.Nat
 open import Prim.Data.Sigma
 open import Prim.Interval
-open import Prim.Kan
 open import Prim.Type
 
 open import Notation.Base
+open import Notation.Displayed.Total
 
 open import Foundations.Path.Groupoid.Base
 open import Foundations.Path.Transport
+open import Foundations.Singleton
 
-record is-contr {ℓ} (A : Type ℓ) : Type ℓ where
-  no-eta-equality
-  field
-    centre : A
-    paths  : (x : A) → centre ＝ x
+centre : ∀{ℓ} {A : Type ℓ} → is-contr A → A
+centre = carrier
 
-open is-contr public
+paths : ∀{ℓ} {A : Type ℓ} (A-c : is-contr A) (x : A) → centre A-c ＝ x
+paths A-c x = A-c .structured x
 
+-- TODO can you state it as a displayed structure?
 is-prop : ∀{ℓ} (A : Type ℓ) → Type ℓ
 is-prop  A = (x y : A) → x ＝ y
 
@@ -53,9 +53,9 @@ is-contr→is-prop : ∀{ℓ} {A : Type ℓ} → is-contr A → is-prop A
 is-contr→is-prop {A} A-c x y i = hcomp (∂ i) sys
   module is-contr→is-prop-sys where
   sys : (j : I) → Partial (∂ i ∨ ~ j) A
-  sys j (i = i0) = A-c .paths x j
-  sys j (i = i1) = A-c .paths y j
-  sys j (j = i0) = A-c .centre
+  sys j (i = i0) = paths A-c x j
+  sys j (i = i1) = paths A-c y j
+  sys j (j = i0) = centre A-c
 {-# DISPLAY hcomp _ (is-contr→is-prop-sys.sys {ℓ} {A} A-c x y i) = is-contr→is-prop {ℓ} {A} A-c x y i #-}
 
 contractible-if-inhabited : ∀{ℓ} {A : Type ℓ} → (A → is-contr A) → is-prop A
