@@ -85,9 +85,9 @@ module DoubleCat {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-sq : ℓ-sq-sig
     field
       rᵥ : Reflω Quiverᵥ
       cᵥ : Compω Quiverᵥ
-      unit-lᵥ : ∀{ℓx ℓy} → Unit-i Quiverᵥ Strict ℓx ℓy ⦃ rᵥ ⦄ ⦃ cᵥ ⦄
-      unit-rᵥ : ∀{ℓx ℓy} → Unit-o Quiverᵥ Strict ℓx ℓy ⦃ rᵥ ⦄ ⦃ cᵥ ⦄
-      assocᵥ : {ℓw ℓx ℓy ℓz : Level} → Assoc Quiverᵥ Strict ℓw ℓx ℓy ℓz ⦃ cᵥ ⦄ ⦃ cᵥ ⦄ ⦃ cᵥ ⦄ ⦃ cᵥ ⦄
+      unit-lᵥ : ∀{ℓx ℓy} → Unit-i Quiverᵥ Strictω ℓx ℓy ⦃ rᵥ ⦄ ⦃ cᵥ ⦄
+      unit-rᵥ : ∀{ℓx ℓy} → Unit-o Quiverᵥ Strictω ℓx ℓy ⦃ rᵥ ⦄ ⦃ cᵥ ⦄
+      assocᵥ : {ℓw ℓx ℓy ℓz : Level} → Assoc Quiverᵥ Strictω ℓw ℓx ℓy ℓz ⦃ cᵥ ⦄ ⦃ cᵥ ⦄ ⦃ cᵥ ⦄ ⦃ cᵥ ⦄
 
       rₕ : Reflω Quiverₕ
       cₕ : Compω Quiverₕ

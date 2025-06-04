@@ -19,17 +19,17 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
   ⦃ _ : Reflω C ⦄ ⦃ _ : Compω C ⦄ where
 
   Split-epi : {ℓx ℓy : Level} {x : Ob ℓx} {y : Ob ℓy} (r : Hom y x) → Type (ℓ-hom ℓx ℓx l⊔ ℓ-hom ℓx ℓy)
-  Split-epi = Weak-split-epi C Strict
+  Split-epi = Weak-split-epi C Strictω
 
   Split-episᵈ : Quiver-onᵈ C (λ _ → ⊤) _
-  Split-episᵈ = Weak-split-episᵈ C Strict
+  Split-episᵈ = Weak-split-episᵈ C Strictω
 
   infix 10 _↠!_
   _↠!_ : ∀ {ℓx ℓy} (y : Ob ℓy) (x : Ob ℓx) → Type (ℓ-hom ℓy ℓx l⊔ ℓ-hom ℓx ℓy l⊔ ℓ-hom ℓx ℓx)
   y ↠! x = Total-hom C Split-episᵈ {x = y} {y = x} tt tt
 
   Split-epis : Quiver-on Ob _
-  Split-epis = Weak-split-epis C Strict
+  Split-epis = Weak-split-epis C Strictω
 
-{-# DISPLAY Weak-split-epi _ Strict = Split-epi #-}
-{-# DISPLAY Total-hom {_} {_} {_} _ {_} {_} {_} (Weak-split-episᵈ _ Strict) {_} {_} {x} {y} _ _ = x ↠! y #-}
+{-# DISPLAY Weak-split-epi _ Strictω = Split-epi #-}
+{-# DISPLAY Total-hom {_} {_} {_} _ {_} {_} {_} (Weak-split-episᵈ _ Strictω) {_} {_} {x} {y} _ _ = x ↠! y #-}

@@ -17,19 +17,19 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
   ⦃ _ : Reflω C ⦄ ⦃ _ : Compω C ⦄ where
 
   Split-mono : {ℓx ℓy : Level} {x : Ob ℓx} {y : Ob ℓy} (s : Hom y x) → Type (ℓ-hom ℓx ℓy l⊔ ℓ-hom ℓy ℓy)
-  Split-mono = Weak-split-mono C Strict
+  Split-mono = Weak-split-mono C Strictω
 
   Split-monosᵈ : Quiver-onᵈ C (λ _ → ⊤) _
-  Split-monosᵈ = Weak-split-monosᵈ C Strict
+  Split-monosᵈ = Weak-split-monosᵈ C Strictω
 
   infix 10 _↣!_
   _↣!_ _Retract-of_ : ∀ {ℓx ℓy}(y : Ob ℓy) (x : Ob ℓx) → Type (ℓ-hom ℓy ℓx l⊔ ℓ-hom ℓx ℓy l⊔ ℓ-hom ℓy ℓy)
-  _↣!_ = Weak-retract C Strict
+  _↣!_ = Weak-retract C Strictω
   _Retract-of_ = _↣!_
 
   Split-monos Retracts : Quiver-on Ob _
-  Split-monos = Weak-split-monos C Strict
+  Split-monos = Weak-split-monos C Strictω
   Retracts = Split-monos
 
-{-# DISPLAY Weak-split-mono _ Strict = Split-mono #-}
-{-# DISPLAY Total-hom {_} {_} {_} _ {_} {_} {_} (Weak-split-monosᵈ _ Strict) {_} {_} {x} {y} _ _ = x ↣! y #-}
+{-# DISPLAY Weak-split-mono _ Strictω = Split-mono #-}
+{-# DISPLAY Total-hom {_} {_} {_} _ {_} {_} {_} (Weak-split-monosᵈ _ Strictω) {_} {_} {x} {y} _ _ = x ↣! y #-}

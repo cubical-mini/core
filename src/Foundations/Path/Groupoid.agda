@@ -50,22 +50,22 @@ module Path-gpd where
     Path-Comp : Compω (Pathsω A)
     Path-Comp ._∙_ = _∙ₚ_
 
-    Path-Dual : Dualω (Pathsω A) Strict
+    Path-Dual : Dualω (Pathsω A) Strictω
     Path-Dual .invol _ = reflₚ
 
-    Path-Assoc : Assocω (Pathsω A) Strict
+    Path-Assoc : Assocω (Pathsω A) Strictω
     Path-Assoc .assoc p q r = assocₚ p q r
 
-    Path-Unit-i : Unit-iω (Pathsω A) Strict
+    Path-Unit-i : Unit-iω (Pathsω A) Strictω
     Path-Unit-i .id-i = id-iₚ
 
-    Path-Unit-o : Unit-oω (Pathsω A) Strict
+    Path-Unit-o : Unit-oω (Pathsω A) Strictω
     Path-Unit-o .id-o = id-oₚ
 
     Path-Split : ∀{ℓx ℓy} {x y : A} {p : x ＝ y} → Split (Pathsω A) {ℓx = ℓx} {ℓy = ℓy} p (symₚ p)
     Path-Split {p} .split = inv-oₚ p
 
-    Path-Refl-Idem : ∀{ℓ} {x : A} → Weak-Idem (Pathsω A) Strict {ℓ = ℓ} {x = x} _
+    Path-Refl-Idem : ∀{ℓ} {x : A} → Weak-Idem (Pathsω A) Strictω {ℓ = ℓ} {x = x} _
     Path-Refl-Idem .idem = refl-idem
 
     {-# OVERLAPS
@@ -87,16 +87,16 @@ module Path-gpd0 where
     Path-Comp0 : Comp (Pathsω A) lzero lzero lzero
     Path-Comp0 = Path-Comp
 
-    Path-Dual0 : Dual (Pathsω A) Strict lzero lzero
+    Path-Dual0 : Dual (Pathsω A) Strictω lzero lzero
     Path-Dual0 = Path-Dual
 
-    Path-Assoc0 : Assoc (Pathsω A) Strict lzero lzero lzero lzero
+    Path-Assoc0 : Assoc (Pathsω A) Strictω lzero lzero lzero lzero
     Path-Assoc0 = Path-Assoc
 
-    Path-Unit-i0 : Unit-i (Pathsω A) Strict lzero lzero
+    Path-Unit-i0 : Unit-i (Pathsω A) Strictω lzero lzero
     Path-Unit-i0 = Path-Unit-i
 
-    Path-Unit-o0 : Unit-o (Pathsω A) Strict lzero lzero
+    Path-Unit-o0 : Unit-o (Pathsω A) Strictω lzero lzero
     Path-Unit-o0 = Path-Unit-o
 
     Path-Split0 : {x y : A} {p : x ＝ y} → Split (Pathsω A) {ℓx = lzero} {ℓy = lzero} p (symₚ p)

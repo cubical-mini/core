@@ -15,6 +15,6 @@ module _ {ℓ-ob : ℓ-ob-sig} {Ob : ob-sig ℓ-ob} {ℓ-hom : ℓ-hom-sig}
   ⦃ _ : Reflω C ⦄ ⦃ _ : Compω C ⦄ where
 
   Split : ∀{ℓx ℓy} {x : Ob ℓx} {y : Ob ℓy} (s : Hom y x) (r : Hom x y) → Type (ℓ-hom ℓy ℓy)
-  Split = Weak-Split C Strict
+  Split = Weak-Split C Strictω
 
-{-# DISPLAY Weak-Split C Strict = Split C #-}
+{-# DISPLAY Weak-Split C Strictω = Split C #-}

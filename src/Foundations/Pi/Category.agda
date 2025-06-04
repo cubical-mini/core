@@ -33,13 +33,13 @@ module Fun-cat where instance
   Fun-Comp : Compω Funs
   Fun-Comp .Comp._∙_ f g x = g (f x)
 
-  Fun-Assoc : Assocω Funs Strict
+  Fun-Assoc : Assocω Funs Strictω
   Fun-Assoc .Assoc.assoc _ _ _ = reflₚ
 
-  Fun-Unit-i : Unit-iω Funs Strict
+  Fun-Unit-i : Unit-iω Funs Strictω
   Fun-Unit-i .id-i _ = reflₚ
 
-  Fun-Unit-o : Unit-oω Funs Strict
+  Fun-Unit-o : Unit-oω Funs Strictω
   Fun-Unit-o .id-o _ = reflₚ
 
   Fun-Refl-Idem : ∀{ℓ} {A : Type ℓ} → Idem Funs {x = A} refl
