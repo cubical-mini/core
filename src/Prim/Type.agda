@@ -11,11 +11,11 @@ open import Agda.Primitive public
         ; LevelUniv
         ; Level
         ; lzero
-        ; lsuc )
-  renaming ( Prop  to DIProp
+        ; lsuc
+        ; _⊔_ )
+  renaming ( Prop  to DIProp -- TODO disallow
            ; Set   to Type
-           ; Setω  to Typeω
-           ; _⊔_   to _l⊔_ )
+           ; Setω  to Typeω )
 
 level-of-type : {ℓ : Level} → Type ℓ → Level
 level-of-type {ℓ} _ = ℓ
@@ -23,7 +23,7 @@ level-of-type {ℓ} _ = ℓ
 level-of-term : {ℓ : Level} {A : Type ℓ} → A → Level
 level-of-term {ℓ} _ = ℓ
 
-record Lift {ℓ} ℓ′ (A : Type ℓ) : Type (ℓ l⊔ ℓ′) where
+record Lift {ℓ} ℓ′ (A : Type ℓ) : Type (ℓ ⊔ ℓ′) where
   constructor lift
   field lower : A
 open Lift public

@@ -4,7 +4,7 @@ module Prim.Data.Sum where
 open import Prim.Type
 
 infixr 70 _⊎_
-data _⊎_ {ℓa ℓb} (A : Type ℓa) (B : Type ℓb) : Type (ℓa l⊔ ℓb) where
+data _⊎_ {ℓa ℓb} (A : Type ℓa) (B : Type ℓb) : Type (ℓa ⊔ ℓb) where
   inl : A → A ⊎ B
   inr : B → A ⊎ B
 
