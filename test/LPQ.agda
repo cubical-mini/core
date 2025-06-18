@@ -1,13 +1,10 @@
 {-# OPTIONS --safe #-}
 module LPQ where
 
-open import Prim.Data.Nat
-open import Prim.Data.Sigma
-open import Prim.Data.Unit
 open import Prim.Kan
-open import Prim.Type
 
 open import Notation.Base
+open import Notation.Total
 
 -- large quivers can depend on arbitrary number of levels
 Funs : Quiverω 1 lsuc _⊔_
@@ -56,14 +53,29 @@ Posetᵈ .Quiverωᵈ.Obω[_] T (lh , _) = Poset-on T lh
 Posetᵈ .Quiverωᵈ.Homω[_] f = Monotone f
 
 module DispTest {ℓa ℓb ℓp ℓq} {A : Type ℓa} {B : Type ℓb} (f : A → B)
-  (P : Poset-on A ℓp) (Q : Poset-on B ℓq) (m : Monotone f P Q) where private
+  (PA : Poset-on A ℓp) (QB : Poset-on B ℓq) (m : Monotone f PA QB) where private
   open Quiverωᵈ Posetᵈ
 
   test₁ : Ob[ A ] _
-  test₁ = P
+  test₁ = PA
 
   test₂ : Ob[ B ] _
-  test₂ = Q
+  test₂ = QB
 
-  test₃ : Hom[ f ] P Q
+  test₃ : Hom[ f ] PA QB
   test₃ = m
+
+module TotalTest where
+  Posets : Quiverω 2 _ _
+  Posets = ∫ Funs Posetᵈ
+  open Quiverω Posets
+
+  Poset : (ℓo ℓh : Level) → Type (lsuc (ℓo ⊔ ℓh))
+  Poset ℓo ℓh = Ob (ℓo , ℓh , _)
+
+  module _ {ℓa ℓb ℓp ℓq} {P : Poset ℓa ℓp} {Q : Poset ℓb ℓq} {f : Hom P Q} where
+    test₁ : P .fst → Q .fst
+    test₁ = f .hom
+
+    test₂ : Monotone (f .hom) (P .snd) (Q .snd)
+    test₂ = f .preserves
