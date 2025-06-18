@@ -101,19 +101,44 @@ hom-sigωᵈ {suc n} ℓ-obω⁻ ℓ-obω⁺ Obω⁻ Obω⁺ ℓ-homω Homω ℓ
 ℓ-obᵈ {0} ℓo ℓ-obωᵈ ls lsᵈ = ℓ-ob ℓ-obωᵈ lsᵈ
 ℓ-obᵈ {suc n} ℓ-obω ℓ-obωᵈ (l , ls) lsᵈ = ℓ-obᵈ (ℓ-obω l) (ℓ-obωᵈ l) ls lsᵈ
 
+-- saturated application of displayed arrow level signature
+ℓ-homᵈ : ∀{n} (ℓ-obω⁻ ℓ-obω⁺ : ℓ-sig n) (ℓ-homω : ℓ-sig² n) {m} (ℓ-obωᵈ⁻ ℓ-obωᵈ⁺ : ℓ-sig (n + m)) (ℓ-homωᵈ : ℓ-sig² (n + m)) (lxs lys : Levels n) (lxsᵈ lysᵈ : Levels m) → Level
+ℓ-homᵈ {0} ℓo⁻ ℓo⁺ ℓh ℓ-obωᵈ⁻ ℓ-obωᵈ⁺ ℓ-homωᵈ lxs lys lxsᵈ lysᵈ = ℓ-hom ℓ-obωᵈ⁻ ℓ-obωᵈ⁺ ℓ-homωᵈ lxsᵈ lysᵈ
+ℓ-homᵈ {suc n} ℓ-obω⁻ ℓ-obω⁺ ℓ-homω ℓ-obωᵈ⁻ ℓ-obωᵈ⁺ ℓ-homωᵈ (lx , lxs) (ly , lys) lxsᵈ lysᵈ =
+  ℓ-homᵈ (ℓ-obω⁻ lx) (ℓ-obω⁺ ly) (ℓ-homω lx ly) (ℓ-obωᵈ⁻ lx) (ℓ-obωᵈ⁺ lx) (ℓ-homωᵈ lx ly) lxs lys lxsᵈ lysᵈ
+
 private
-  -- saturated application of object signature
+  -- saturated application of displayed object signature
   Ob[_]′ : (n : ℕ) (ℓ-obω : ℓ-sig n) (Obω : ob-sigω ℓ-obω)
            (m : ℕ) (ℓ-obωᵈ : ℓ-sig (n + m)) (Obω[_] : ob-sigωᵈ ℓ-obω Obω ℓ-obωᵈ)
            (ls : Levels n)
            (x : Ob′ n ℓ-obω Obω ls)
            (lsᵈ : Levels m) → Type (ℓ-obᵈ ℓ-obω ℓ-obωᵈ ls lsᵈ)
   Ob[_]′ 0 ℓo (liftω Ob) 0 ℓoᵈ Ob[_] _ x _ = Ob[ x ] tt
-  Ob[_]′ 0 ℓo (liftω Ob) (suc m) ℓ-obωᵈ Obω[_] _ x (lᵈ , lsᵈ) =
-    Ob[_]′ 0 ℓo (liftω Ob) m (ℓ-obωᵈ lᵈ) (λ y ls′ → Obω[ y ] (lᵈ , ls′)) _ x lsᵈ
+  Ob[_]′ 0 ℓo Obω (suc m) ℓ-obωᵈ Obω[_] _ x (lᵈ , lsᵈ) =
+    Ob[_]′ 0 ℓo Obω m (ℓ-obωᵈ lᵈ) (λ y ls′ → Obω[ y ] (lᵈ , ls′)) _ x lsᵈ
   Ob[_]′ (suc n) ℓ-obω Obω m ℓ-obωᵈ Obω[_] (l , ls) x lsᵈ =
     Ob[_]′ n (ℓ-obω l) (Obω l) m (ℓ-obωᵈ l) Obω[_] ls x lsᵈ
   {-# INLINE Ob[_]′ #-}
+
+  -- saturated application of displayed arrow signature
+  Hom[_]′ : (n : ℕ) (ℓ-obω⁻ ℓ-obω⁺ : ℓ-sig n) (ℓ-homω : ℓ-sig² n) (Obω⁻ : ob-sigω ℓ-obω⁻) (Obω⁺ : ob-sigω ℓ-obω⁺)
+            (Homω : hom-sigω ℓ-obω⁻ ℓ-obω⁺ ℓ-homω Obω⁻ Obω⁺)
+            (lxs lys : Levels n)
+            (m : ℕ) (ℓ-obωᵈ⁻ : ℓ-sig (n + m)) (ℓ-obωᵈ⁺ : ℓ-sig (n + m))
+            (Obω[_]⁻ : ob-sigωᵈ ℓ-obω⁻ Obω⁻ ℓ-obωᵈ⁻) (Obω[_]⁺ : ob-sigωᵈ ℓ-obω⁺ Obω⁺ ℓ-obωᵈ⁺)
+            (ℓ-homωᵈ : ℓ-sig² (n + m))
+            (Homω[_] : hom-sigωᵈ ℓ-obω⁻ ℓ-obω⁺ Obω⁻ Obω⁺ ℓ-homω Homω ℓ-obωᵈ⁻ ℓ-obωᵈ⁺ Obω[_]⁻ Obω[_]⁺ ℓ-homωᵈ)
+            (lxsᵈ lysᵈ : Levels m)
+            (x : Ob′ n ℓ-obω⁻ Obω⁻ lxs) (y : Ob′ n ℓ-obω⁺ Obω⁺ lys) (f : Hom′ n ℓ-obω⁻ ℓ-obω⁺ ℓ-homω Obω⁻ Obω⁺ Homω lxs lys x y)
+            (x′ : Ob[_]′ n ℓ-obω⁻ Obω⁻ m ℓ-obωᵈ⁻ Obω[_]⁻ lxs x lxsᵈ) (y′ : Ob[_]′ n ℓ-obω⁺ Obω⁺ m ℓ-obωᵈ⁺ Obω[_]⁺ lys y lysᵈ)
+          → Type (ℓ-homᵈ ℓ-obω⁻ ℓ-obω⁺ ℓ-homω ℓ-obωᵈ⁻ ℓ-obωᵈ⁺ ℓ-homωᵈ lxs lys lxsᵈ lysᵈ)
+  Hom[_]′ 0 ℓo⁻ ℓo⁺ ℓh (liftω Ob⁻) (liftω Ob⁺) (liftω Hom) _ _ 0 ℓoᵈ⁻ ℓoᵈ⁺ Ob[_]⁻ Ob[_]⁺ ℓhᵈ Hom[_] lxsᵈ lysᵈ x y f = Hom[ f ]
+  Hom[_]′ 0 ℓo⁻ ℓo⁺ ℓh Obω⁻ Obω⁺ Homω _ _ (suc m) ℓ-obωᵈ⁻ ℓ-obωᵈ⁺ Obω[_]⁻ Obω[_]⁺ ℓ-homωᵈ Homω[_] (lxᵈ , lxsᵈ) (lyᵈ , lysᵈ) =
+    Hom[_]′ 0 ℓo⁻ ℓo⁺ ℓh Obω⁻ Obω⁺ Homω _ _ m (ℓ-obωᵈ⁻ lxᵈ) (ℓ-obωᵈ⁺ lyᵈ) (λ t ls′ → Obω[ t ]⁻ (lxᵈ , ls′)) (λ t ls′ → Obω[ t ]⁺ (lyᵈ , ls′))
+      (ℓ-homωᵈ lxᵈ lyᵈ) (λ g → Homω[ g ]) lxsᵈ lysᵈ
+  Hom[_]′ (suc n) ℓ-obω⁻ ℓ-obω⁺ ℓ-homω Obω⁻ Obω⁺ Homω (lx , lxs) (ly , lys) m ℓ-obωᵈ⁻ ℓ-obωᵈ⁺ Obω[_]⁻ Obω[_]⁺ ℓ-homωᵈ Homω[_] =
+    Hom[_]′ n (ℓ-obω⁻ lx) (ℓ-obω⁺ ly) (ℓ-homω lx ly) (Obω⁻ lx) (Obω⁺ ly) Homω lxs lys m (ℓ-obωᵈ⁻ lx) (ℓ-obωᵈ⁺ ly) Obω[_]⁻ Obω[_]⁺ (ℓ-homωᵈ lx ly) Homω[_]
 
 -- displayed quiver of arbitrary size
 module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n} (C : Quiverω n ℓ-obω ℓ-homω) (open Quiverω C) where
@@ -124,7 +149,12 @@ module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n} (C : Quiver�
       Obω[_]  : ob-sigωᵈ ℓ-obω Obω ℓ-obωᵈ
       Homω[_] : hom-sigωᵈ ℓ-obω ℓ-obω Obω Obω ℓ-homω Homω ℓ-obωᵈ ℓ-obωᵈ Obω[_] Obω[_] ℓ-homωᵈ
 
-    Ob[_] : {ls : Levels n} (x : Ob′ n ℓ-obω Obω ls) (lsᵈ : Levels m) → Type (ℓ-obᵈ ℓ-obω ℓ-obωᵈ ls lsᵈ)
+    Ob[_] : {ls : Levels n} (x : Ob ls) (lsᵈ : Levels m) → Type (ℓ-obᵈ ℓ-obω ℓ-obωᵈ ls lsᵈ)
     Ob[_] {ls} = Ob[_]′ n ℓ-obω Obω m ℓ-obωᵈ Obω[_] ls
+
+    Hom[_] : {lxs lys : Levels n} {x : Ob lxs} {y : Ob lys} (f : Hom x y)
+           → {lxsᵈ lysᵈ : Levels m} (x′ : Ob[ x ] lxsᵈ) (y′ : Ob[ y ] lysᵈ)
+           → Type (ℓ-homᵈ ℓ-obω ℓ-obω ℓ-homω ℓ-obωᵈ ℓ-obωᵈ ℓ-homωᵈ lxs lys lxsᵈ lysᵈ)
+    Hom[_] {lxs} {lys} {x} {y} f {lxsᵈ} {lysᵈ} =
+      Hom[_]′ n ℓ-obω ℓ-obω ℓ-homω Obω Obω Homω lxs lys m ℓ-obωᵈ ℓ-obωᵈ Obω[_] Obω[_] ℓ-homωᵈ Homω[_] lxsᵈ lysᵈ x y f
   {-# INLINE mk-quiverωᵈ #-}
--- TODO Hom[_]

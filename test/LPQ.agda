@@ -55,7 +55,8 @@ Posetᵈ : Quiverωᵈ Funs 1 (λ ℓ ℓᵈ → ℓ ⊔ lsuc ℓᵈ) (λ ℓ _ 
 Posetᵈ .Quiverωᵈ.Obω[_] T (lh , _) = Poset-on T lh
 Posetᵈ .Quiverωᵈ.Homω[_] f = Monotone f
 
-module DispTest {ℓa ℓb ℓp ℓq} {A : Type ℓa} {B : Type ℓb} (P : Poset-on A ℓp) (Q : Poset-on B ℓq) where private
+module DispTest {ℓa ℓb ℓp ℓq} {A : Type ℓa} {B : Type ℓb} (f : A → B)
+  (P : Poset-on A ℓp) (Q : Poset-on B ℓq) (m : Monotone f P Q) where private
   open Quiverωᵈ Posetᵈ
 
   test₁ : Ob[ A ] _
@@ -63,3 +64,6 @@ module DispTest {ℓa ℓb ℓp ℓq} {A : Type ℓa} {B : Type ℓb} (P : Poset
 
   test₂ : Ob[ B ] _
   test₂ = Q
+
+  test₃ : Hom[ f ] P Q
+  test₃ = m
