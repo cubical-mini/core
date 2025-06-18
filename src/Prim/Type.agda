@@ -30,7 +30,7 @@ open Lift public
 
 record Liftω {ℓ} (A : Type ℓ) : Typeω where
   constructor liftω
-  field lower : A
+  field lowerω : A
 open Liftω public
 
 record Erased {ℓ} (@0 A : Type ℓ) : Type ℓ where

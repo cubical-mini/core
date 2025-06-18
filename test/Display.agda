@@ -145,6 +145,27 @@ Magma-Hom : {ℓx ℓy : Level} → Magma ℓx → Magma ℓy → Type (ℓx ⊔
 Magma-Hom = Magmas .Quiverω.Hom
 {-# DISPLAY ΣHom Funs Magmaᵈ M N = Magma-Hom M N #-}
 
+
+-- Poset structure
+record Poset-on {ℓo} ℓh (A : Type ℓo) : Type (ℓo ⊔ lsuc ℓh) where
+  no-eta-equality
+  field _≤_ : A → A → Type ℓh
+
+instance
+  Poset-Push : Pushω Funs (λ T → {!!})
+  Poset-Push .push f = {!!}
+
+Monotone : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
+         → (ℓha ℓhb : Level) → (A → B) → Poset-on ℓha A → Poset-on ℓhb B → Type (ℓa ⊔ ℓha ⊔ ℓhb)
+Monotone {A} ℓha ℓhb f PA PB = (x y : A) → x A.≤ y → f x B.≤ f y where
+  module A = Poset-on PA
+  module B = Poset-on PB
+
+Posetᵈ : Quiverωᵈ Funs lsuc _⊔_
+Posetᵈ .Quiverωᵈ.Ob[_] {ℓ} = Poset-on ℓ
+Posetᵈ .Quiverωᵈ.Hom[_] {ℓx} {ℓy} = Monotone ℓx ℓy
+
+
 module Display-Structure {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} where
   module _ {a : A} {b : B} {p : f a ＝ b} where private
     test : Fun∙ (A , ∙ a) (B , ∙ b)
