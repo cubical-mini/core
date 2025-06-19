@@ -20,7 +20,7 @@ open import Notation.Base
 
 
 -- total arrow level adjustment
-ℓ-sig∫² : {n : ℕ} (ℓ-obω⁻ ℓ-obω⁺ : ℓ-sig n) (ℓ-homω : ℓ-sig² n) -- FIXME
+ℓ-sig∫² : {n : ℕ} (ℓ-obω⁻ ℓ-obω⁺ : ℓ-sig n) (ℓ-homω : ℓ-sig² n)
           {m : ℕ} (ℓ-obωᵈ⁻ ℓ-obωᵈ⁺ : ℓ-sig (n + m)) (ℓ-homωᵈ : ℓ-sig² (n + m))
         → ℓ-sig² (n + m)
 ℓ-sig∫² {(zero)} _ _ ℓh {0} _ _ ℓhᵈ = ℓh ⊔ ℓhᵈ
@@ -73,6 +73,7 @@ module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n}
   {m : ℕ} {ℓ-obωᵈ : ℓ-sig (n + m)} {ℓ-homωᵈ : ℓ-sig² (n + m)}
   (D : Quiverωᵈ C m ℓ-obωᵈ ℓ-homωᵈ) (open Quiverωᵈ D) where
 
+  -- total quiver of arbitrary size
   ∫ : Quiverω (n + m) (ℓ-sig∫ ℓ-obω ℓ-obωᵈ) (ℓ-sig∫² ℓ-obω ℓ-obω ℓ-homω ℓ-obωᵈ ℓ-obωᵈ ℓ-homωᵈ)
   ∫ .Quiverω.Obω  = ΣObω ℓ-obωᵈ Obω[_]
   ∫ .Quiverω.Homω = ΣHomω Obω Obω Homω ℓ-homωᵈ Obω[_] Obω[_] Homω[_]
