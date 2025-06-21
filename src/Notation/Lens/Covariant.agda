@@ -8,11 +8,13 @@ open import Notation.Lens.Covariant.Base   public
 open import Notation.Lens.Covariant.Lawful public
 open import Notation.Refl.Base
 
-module _ {ℓ-ob : ℓ-sig¹} {ℓ-hom ℓ-obᶠ : ℓ-sig²} {ℓ-homᶠ : ℓ-sig³}
-  {C : Quiverω ℓ-ob ℓ-hom} (open Quiverω C)
-  (F : ∀{ℓt} (t : Ob ℓt) → Quiverω (ℓ-obᶠ ℓt) (ℓ-homᶠ ℓt)) ⦃ _ : Pushω C F ⦄ where
-  private module F {ℓ} x = Quiverω (F {ℓ} x)
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
+  {m : ℕ} {ℓ-obᶠ : Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → ℓ-sig² m}
+  (F : {ls : Levels n} → Ob ls → Quiverω m (ℓ-obᶠ ls) (ℓ-homᶠ ls))
+  where
+  private module F {ls} x = Quiverω (F {ls} x)
 
-  Disp⁺ : Quiverωᵈ C (λ ℓ → ℓ-obᶠ ℓ ℓ) (λ _ ℓy → ℓ-homᶠ ℓy ℓy ℓy)
-  Disp⁺ .Quiverωᵈ.Ob[_] {ℓ} x = F.Ob x ℓ
+  Disp⁺ : ⦃ _ : Pushω C F ⦄ → Quiverωᵈ C m _ _
+  Disp⁺ .Quiverωᵈ.Ob[_] = F.Ob
   Disp⁺ .Quiverωᵈ.Hom[_] {y} p u v = F.Hom y (push p u) v

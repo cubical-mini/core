@@ -1,10 +1,8 @@
 {-# OPTIONS --safe #-}
 module Display where
 
-open import Prim.Data.Sigma
 open import Prim.Interval
 open import Prim.Kan
-open import Prim.Type
 
 open import Notation.Base
 open import Notation.Lens.Bivariant
@@ -13,67 +11,7 @@ open import Notation.Lens.Covariant
 open import Notation.Refl
 open import Notation.Total
 
-Funs : Quiverω lsuc _⊔_
-Funs .Quiverω.Ob ℓ = Type ℓ
-Funs .Quiverω.Hom X Y = X → Y
-
-instance
-  Fun-Refl : Reflω Funs
-  Fun-Refl .refl x = x
-
-Paths : ∀{ℓ} (A : Type ℓ) → Quiverω (λ _ → ℓ) (λ _ _ → ℓ)
-Paths A .Quiverω.Ob _ = A
-Paths A .Quiverω.Hom = _＝_
-
-instance
-  Path-Refl : ∀{ℓ} {A : Type ℓ} → Reflω (Paths A)
-  Path-Refl .refl {x} _ = x
-  {-# INCOHERENT Path-Refl #-}
-
-  Path-Refl0 : ∀{ℓ} {A : Type ℓ} → Refl (Paths A) lzero
-  Path-Refl0 = Path-Refl
-
-Pathsᶠ : ∀ {ℓ-adj : ℓ-sig¹} {ℓa} {A : Type ℓa} (S : ∀ {ℓ}(a : A) → Type (ℓ-adj ℓ))
-       → (a : A) → Quiverω (λ _ → ℓ-adj ℓa) (λ _ _ → ℓ-adj ℓa)
-Pathsᶠ {ℓa} S a = Paths (S {ℓa} a)
-
--- 2-Pathsᶠ′ : {ℓ-ob : ℓ-sig¹} {ℓ-hom : ℓ-sig²} {C : Quiverω ℓ-ob ℓ-hom } (open Quiverω C)
---           → (S : ∀{ℓx ℓy} (a : Ob ℓx) (b : Ob ℓy) (r : Hom a b) → Type (ℓ-hom ℓx ℓy))
---           → ∀{ℓa ℓb} {a : Ob ℓa} {b : Ob ℓb} (r : Hom a b) → Quiverω (λ _ → ℓ-hom ℓa ℓb) (λ _ _ → ℓ-hom ℓa ℓb)
--- 2-Pathsᶠ′ S {a} {b} r = Paths (S a b r)
-
--- Paths have a lot of interesting properties
-
-instance
-  Path-Push : ∀{ℓa ℓb} {A : Type ℓa} {B : A → Type ℓb}
-            → Pushω (Paths A) (Pathsᶠ B)
-  Path-Push {B} .push p = transp (λ i → B (p i)) i0
-
-  Path-Lawful-Push : ∀{ℓa ℓb} {A : Type ℓa} {B : A → Type ℓb}
-                   → Lawful-Pushω (Paths A) (Pathsᶠ B)
-  Path-Lawful-Push {B} .push-refl {x} {u} i = transp (λ i → B x) i u
-
-  Path-Pull : ∀{ℓa ℓb} {A : Type ℓa} {B : A → Type ℓb}
-            → Pullω (Paths A) (Pathsᶠ B)
-  Path-Pull {B} .pull p = transp (λ i → B (p (~ i))) i0
-
-  Path-Lawful-Pull : ∀{ℓa ℓb} {A : Type ℓa} {B : A → Type ℓb}
-                   → Lawful-Pullω (Paths A) (Pathsᶠ B)
-  Path-Lawful-Pull {B} .pull-refl {x} {v} i = transp (λ i → B x) (~ i) v
-
-  Path-Extend : ∀{ℓa ℓb} {A : Type ℓa} {B : {x y : A} → x ＝ y → Type ℓb}
-              → Extendω (Paths A) (Pathsᶠ B)
-  Path-Extend {B} .extend-l p = transp (λ i → B λ j → p (  i ∧ j)) i0
-  Path-Extend {B} .extend-r p = transp (λ i → B λ j → p (~ i ∨ j)) i0
-
-  Path-Lawful-Extend : ∀{ℓa ℓb} {A : Type ℓa} {B : {x y : A} → x ＝ y → Type ℓb}
-                     → Lawful-Extendω (Paths A) (Pathsᶠ B)
-  Path-Lawful-Extend .extend-refl = refl
-  Path-Lawful-Extend {B} .extend-coh {x} {u} i = hcomp (∂ i) λ where
-    j (i = i0) → transp (λ _ → B λ _ → x)    j  u
-    j (i = i1) → transp (λ _ → B λ _ → x) (~ j) u
-    j (j = i0) → transp (λ _ → B λ _ → x)    i  u
-
+open import LPQ
 
 -- Pointed structure
 
@@ -82,20 +20,20 @@ record Pointed {ℓ} (A : Type ℓ) : Type ℓ where
   field pt : A
 
 instance
-  Pointed-Push : Pushω Funs (Pathsᶠ Pointed)
+  Pointed-Push : Pushω Funs (λ T → Paths (Pointed T))
   Pointed-Push .push f (∙ x) = ∙ (f x)
 
-  Pointed-Lawful-Push : Lawful-Pushω Funs (Pathsᶠ Pointed)
+  Pointed-Lawful-Push : Lawful-Pushω Funs (λ T → Paths (Pointed T))
   Pointed-Lawful-Push .push-refl = refl
 
-Pointedᵈ : Quiverωᵈ Funs _ _
-Pointedᵈ = Disp⁺ (Pathsᶠ Pointed)
+Pointedᵈ : Quiverωᵈ Funs 0 _ _
+Pointedᵈ = Disp⁺ (λ T → Paths (Pointed T))
 
-Pointeds : Quiverω _ _
+Pointeds : Quiverω 1 _ _
 Pointeds = ∫ Pointedᵈ
 
 Type∙ : (ℓ : Level) → Type (lsuc ℓ)
-Type∙ = Pointeds .Quiverω.Ob
+Type∙ ℓ = Pointeds .Quiverω.Ob (ℓ , _)
 {-# NOINLINE Type∙ #-}
 
 Fun∙ : {ℓx ℓy : Level} → Type∙ ℓx → Type∙ ℓy → Type (ℓx ⊔ ℓy)
@@ -112,58 +50,37 @@ Magma-on : ∀{ℓ} (A : Type ℓ) → Type ℓ
 Magma-on A = Magma-on′ A A
 
 instance
-  Magma-Extend : Extendω Funs (λ {x = x} {y} _ → Paths (Magma-on′ x y))
+  Magma-Extend : Extendω Funs (λ {x = A} {y = B} _ → Paths (Magma-on′ A B))
   Magma-Extend .extend-l p u .Magma-on′._⋆_ x y = p (x ⋆ y) where open Magma-on′ u
   Magma-Extend .extend-r p v .Magma-on′._⋆_ x y = p x ⋆ p y where open Magma-on′ v
 
-  Magma-Lawful-Extend : Lawful-Extendω Funs (λ {x = x} {y} _ → Paths (Magma-on′ x y))
+  Magma-Lawful-Extend : Lawful-Extendω Funs (λ {x = A} {y = B} _ → Paths (Magma-on′ A B))
   Magma-Lawful-Extend .extend-refl = refl
   Magma-Lawful-Extend .extend-coh = refl
 
 
 module _ where
   private
-    Q : Quiverωᵈ Funs _ _
-    Q = Disp± _
-    -- (λ {x = A} {y = B} _ → Paths (Magma-on′ A B))
+    Q : Quiverωᵈ Funs 0 _ _
+    Q = Disp± (λ {x = A} {y = B} _ → Paths (Magma-on′ A B))
 
-  Magmaᵈ : Quiverωᵈ Funs _ _
+  Magmaᵈ : Quiverωᵈ Funs 0 _ _
   Magmaᵈ .Quiverωᵈ.Ob[_] = Q .Quiverωᵈ.Ob[_]
   Magmaᵈ .Quiverωᵈ.Hom[_] = Q .Quiverωᵈ.Hom[_] -- TODO repack
 
   instance
-    Magma-Reflᵈ : Reflωᵈ Magmaᵈ
-    Magma-Reflᵈ .reflᵈ = Disp±-Reflᵈ .Reflᵈ.reflᵈ
+    Magma-Reflᵈ : Reflωᵈ Funs Magmaᵈ
+    Magma-Reflᵈ .reflᵈ _ = refl
 
-Magmas : Quiverω  _ _
+Magmas : Quiverω 1 _ _
 Magmas = ∫ Magmaᵈ
 
 Magma : (ℓ : Level) → Type (lsuc ℓ)
-Magma = Magmas .Quiverω.Ob
+Magma ℓ = Magmas .Quiverω.Ob (ℓ , tt)
 
 Magma-Hom : {ℓx ℓy : Level} → Magma ℓx → Magma ℓy → Type (ℓx ⊔ ℓy)
 Magma-Hom = Magmas .Quiverω.Hom
 {-# DISPLAY ΣHom Funs Magmaᵈ M N = Magma-Hom M N #-}
-
-
--- Poset structure
-record Poset-on {ℓo} ℓh (A : Type ℓo) : Type (ℓo ⊔ lsuc ℓh) where
-  no-eta-equality
-  field _≤_ : A → A → Type ℓh
-
-instance
-  Poset-Push : Pushω Funs (λ T → {!!})
-  Poset-Push .push f = {!!}
-
-Monotone : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
-         → (ℓha ℓhb : Level) → (A → B) → Poset-on ℓha A → Poset-on ℓhb B → Type (ℓa ⊔ ℓha ⊔ ℓhb)
-Monotone {A} ℓha ℓhb f PA PB = (x y : A) → x A.≤ y → f x B.≤ f y where
-  module A = Poset-on PA
-  module B = Poset-on PB
-
-Posetᵈ : Quiverωᵈ Funs lsuc _⊔_
-Posetᵈ .Quiverωᵈ.Ob[_] {ℓ} = Poset-on ℓ
-Posetᵈ .Quiverωᵈ.Hom[_] {ℓx} {ℓy} = Monotone ℓx ℓy
 
 
 module Display-Structure {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} where
@@ -183,10 +100,10 @@ module Display-Structure {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → 
 module Hom-Induction {ℓa} where
   module _ {A : Type ℓa} where
     _∙₁_ : ∀{x y z : A} → x ＝ y → y ＝ z → x ＝ z
-    _∙₁_ p q = extend-l {ℓx = lzero} {ℓy = lzero} q p
+    _∙₁_ p q = extend-l q p
 
     _∙₂_ : {x y z : A} → x ＝ y → y ＝ z → x ＝ z
-    _∙₂_ = extend-r {ℓx = lzero} {ℓy = lzero}
+    _∙₂_ = extend-r
 
   open Quiverω Magmas
   module Algebraic-Kek {M : Magma ℓa} where

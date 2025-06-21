@@ -6,19 +6,24 @@ open import Prim.Type
 open import Notation.Base
 open import Notation.Refl.Base
 
-module _ {ℓ-ob : ℓ-sig¹} {ℓ-hom : ℓ-sig²} {ℓ-obᶠ : ℓ-sig³} {ℓ-homᶠ : ℓ-sig⁴}
-  (C : Quiverω ℓ-ob ℓ-hom) (open Quiverω C) ⦃ _ : Reflω C ⦄
-  (F : ∀{ℓx ℓy} {x : Ob ℓx} {y : Ob ℓy} (p : Hom x y) → Quiverω (ℓ-obᶠ ℓx ℓy) (ℓ-homᶠ ℓx ℓy)) where
-  private module F {ℓx} {ℓy} x y p = Quiverω (F {ℓx} {ℓy} {x} {y} p)
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
+  {m : ℕ} {ℓ-obᶠ : Levels n → Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → Levels n → ℓ-sig² m}
+  (F : {lxs lys : Levels n} {x : Ob lxs} {y : Ob lys} → Hom x y → Quiverω m (ℓ-obᶠ lxs lys) (ℓ-homᶠ lxs lys))
+  ⦃ _ : Reflω C ⦄
+  where
+  private module F {lxs} {lys} x y p = Quiverω (F {lxs} {lys} {x} {y} p)
 
-  record Extend ℓx ℓy : Type (ℓ-ob ℓx ⊔ ℓ-ob ℓy ⊔ ℓ-hom ℓx ℓy ⊔ ℓ-obᶠ ℓx ℓx ℓx ⊔ ℓ-obᶠ ℓy ℓy ℓy ⊔ ℓ-obᶠ ℓx ℓy ℓx ⊔ ℓ-obᶠ ℓx ℓy ℓy) where
+  record Extend (lxs lys : Levels n) (lsᶠ : Levels m) : Type
+    ( ℓ-ob lxs ⊔ ℓ-hom lxs lxs ⊔ ℓ-ob lys ⊔ ℓ-hom lys lys ⊔ ℓ-hom lxs lys
+    ⊔ ℓ-obᶠ lxs lxs lsᶠ ⊔ ℓ-obᶠ lxs lys lsᶠ ⊔ ℓ-obᶠ lys lys lsᶠ) where
     no-eta-equality
     field
-      extend-l : {x : Ob ℓx} {y : Ob ℓy} (p : Hom x y) (u : F.Ob x x refl ℓx) → F.Ob x y p ℓx
-      extend-r : {x : Ob ℓx} {y : Ob ℓy} (p : Hom x y) (v : F.Ob y y refl ℓy) → F.Ob x y p ℓy
+      extend-l : {x : Ob lxs} {y : Ob lys} (p : Hom x y) (u : F.Ob x x refl lsᶠ) → F.Ob x y p lsᶠ
+      extend-r : {x : Ob lxs} {y : Ob lys} (p : Hom x y) (v : F.Ob y y refl lsᶠ) → F.Ob x y p lsᶠ
 
   Extendω : Typeω
-  Extendω = ∀{ℓx ℓy} → Extend ℓx ℓy
+  Extendω = ∀{lxs lys lsᶠ} → Extend lxs lys lsᶠ
 
 open Extend ⦃ ... ⦄ public
 {-# DISPLAY Extend.extend-l _ p u = extend-l p u #-}

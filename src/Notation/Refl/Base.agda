@@ -3,12 +3,12 @@ module Notation.Refl.Base where
 
 open import Notation.Base
 
-module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n}
-  (C : Quiverω n ℓ-obω ℓ-homω) (open Quiverω C) where
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C) where
 
-  record Refl (ls : Levels n) : Type (ℓ-ob ℓ-obω ls ⊔ ℓ-hom ℓ-obω ℓ-obω ℓ-homω ls ls) where
+  record Refl (ls : Levels n) : Type (ℓ-ob ls ⊔ ℓ-hom ls ls) where
     no-eta-equality
-    field refl : ∀ x → Hom {lys = ls} x x
+    field refl : ∀{x} → Hom {lys = ls} x x
 
   Reflω : Typeω
   Reflω = ∀ {ls} → Refl ls
@@ -17,33 +17,31 @@ open Refl ⦃ ... ⦄ public
 {-# DISPLAY Refl.refl _ = refl #-}
 
 
-module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n}
-  (C : Quiverω n ℓ-obω ℓ-homω) (open Quiverω C)
-  {m : ℕ} {ℓ-obωᵈ : ℓ-sig (n + m)} {ℓ-homωᵈ : ℓ-sig² (n + m)}
-  (D : Quiverωᵈ C m ℓ-obωᵈ ℓ-homωᵈ) (open Quiverωᵈ D)
-  (ls : Levels n) ⦃ _ : Refl C ls ⦄
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
+  {m : ℕ} {ℓ-obᵈ : Levels n → ℓ-sig m} {ℓ-homᵈ : Levels n → Levels n → ℓ-sig² m}
+  (D : Quiverωᵈ C m ℓ-obᵈ ℓ-homᵈ) (open Quiverωᵈ D)
+  ⦃ _ : Reflω C ⦄
   where
 
-  record Reflᵈ (lsᵈ : Levels m) : Type
-    ( ℓ-ob ℓ-obω ls ⊔ ℓ-obᵈ ℓ-obω ℓ-obωᵈ ls lsᵈ
-    ⊔ ℓ-homᵈ ℓ-obω ℓ-obω ℓ-homω ℓ-obωᵈ ℓ-obωᵈ ℓ-homωᵈ ls ls lsᵈ lsᵈ) where
+  record Reflᵈ (ls : Levels n) (lsᵈ : Levels m) : Type (ℓ-obᵈ ls lsᵈ ⊔ ℓ-homᵈ ls ls lsᵈ lsᵈ ⊔ ℓ-ob ls) where
     no-eta-equality
-    field reflᵈ : ∀{x} (x′ : Ob[ x ] lsᵈ) → Hom[ refl x ] x′ x′
+    field reflᵈ : {x : Ob ls} (x′ : Ob[ x ] lsᵈ) → Hom[ refl ] x′ x′
 
-  Reflωᵈ = ∀ {lsᵈ} → Reflᵈ lsᵈ
+  Reflωᵈ = ∀ {ls lsᵈ} → Reflᵈ ls lsᵈ
 
 open Reflᵈ ⦃ ... ⦄ public
 {-# DISPLAY Reflᵈ.reflᵈ _ = reflᵈ #-}
 
 
 -- displayed quiver over a reflexive quiver begets a family of _small_ quivers
-module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n}
-  {C : Quiverω n ℓ-obω ℓ-homω} (open Quiverω C)
-  {m : ℕ} {ℓ-obωᵈ : ℓ-sig (n + m)} {ℓ-homωᵈ : ℓ-sig² (n + m)}
-  (D : Quiverωᵈ C m ℓ-obωᵈ ℓ-homωᵈ) (open Quiverωᵈ D)
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
+  {m : ℕ} {ℓ-obᵈ : Levels n → ℓ-sig m} {ℓ-homᵈ : Levels n → Levels n → ℓ-sig² m}
+  (D : Quiverωᵈ C m ℓ-obᵈ ℓ-homᵈ) (open Quiverωᵈ D)
   where
 
   module _ {ls : Levels n} ⦃ _ : Refl C ls ⦄ (t : Ob ls) (lsᵈ : Levels m) where
-    Component : Quiverω 0 (ℓ-obᵈ ℓ-obω ℓ-obωᵈ ls lsᵈ) (ℓ-homᵈ ℓ-obω ℓ-obω ℓ-homω ℓ-obωᵈ ℓ-obωᵈ ℓ-homωᵈ ls ls lsᵈ lsᵈ) 
-    Component .Quiverω.Obω .lowerω = Ob[ t ] lsᵈ
-    Component .Quiverω.Homω .lowerω = Hom[ refl t ]
+    Component : Quiverω 0 (λ _ → ℓ-obᵈ ls lsᵈ) (λ _ _ → ℓ-homᵈ ls ls lsᵈ lsᵈ)
+    Component .Quiverω.Ob _ = Ob[ t ] lsᵈ
+    Component .Quiverω.Hom = Hom[ refl ]

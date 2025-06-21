@@ -9,40 +9,47 @@ open import Notation.Refl.Base public
 open import Notation.Total
 open import Notation.Wide
 
-module _ {ℓ-ob ℓ-obᵈ : ℓ-sig¹} {ℓ-hom ℓ-homᵈ : ℓ-sig²}
-  {C : Quiverω ℓ-ob ℓ-hom} (open Quiverω C) ⦃ _ : Reflω C ⦄
-  {D : Quiverωᵈ C ℓ-obᵈ ℓ-homᵈ} (open Quiverωᵈ D) ⦃ _ : Reflωᵈ D ⦄ where instance
+module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n}
+  {C : Quiverω n ℓ-obω ℓ-homω} (open Quiverω C)
+  {m : ℕ} {ℓ-obωᵈ : Levels n → ℓ-sig m} {ℓ-homωᵈ : Levels n → Levels n → ℓ-sig² m}
+  {D : Quiverωᵈ C m ℓ-obωᵈ ℓ-homωᵈ} (open Quiverωᵈ D)
+  ⦃ _ : Reflω C ⦄ ⦃ _ : Reflωᵈ C D ⦄
+  where instance
 
   ∫-Refl : Reflω (∫ D)
   ∫-Refl .refl .hom = refl
-  ∫-Refl .refl .preserves = reflᵈ
+  ∫-Refl .refl .preserves = reflᵈ _
 
-  Wide-Refl : {t : ∀{ℓ} {x : Ob ℓ} → Ob[ x ]} → Reflω (Wide D t)
+  Wide-Refl : {lsᵈ : Levels m} {t : ∀{ℓ} {x : Ob ℓ} → Ob[ x ] lsᵈ} → Reflω (Wide D lsᵈ t)
   Wide-Refl .refl .hom = refl
-  Wide-Refl .refl .preserves = reflᵈ
+  Wide-Refl .refl .preserves = reflᵈ _
 
-  Component-Refl : ∀{ℓ} {t : Ob ℓ} → Reflω (D $ωᵈ t) -- canonical way
-  Component-Refl .refl = reflᵈ
+  Component-Refl : {ls : Levels n} {t : Ob ls} {lsᵈ : Levels m} → Reflω (Component D t lsᵈ) -- canonical way
+  Component-Refl .refl = reflᵈ _
 
 {-# INCOHERENT ∫-Refl Wide-Refl Component-Refl #-} -- TODO check if it's necessary
 
 
-module _ {ℓ-ob : ℓ-sig¹} {ℓ-hom ℓ-obᶠ : ℓ-sig²} {ℓ-homᶠ : ℓ-sig³}
-  {C : Quiverω ℓ-ob ℓ-hom} (open Quiverω C) ⦃ _ : Reflω C ⦄
-  {F : ∀{ℓt} (t : Ob ℓt) → Quiverω (ℓ-obᶠ ℓt) (ℓ-homᶠ ℓt)} where instance
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
+  {m : ℕ} {ℓ-obᶠ : Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → ℓ-sig² m}
+  {F : {ls : Levels n} → Ob ls → Quiverω m (ℓ-obᶠ ls) (ℓ-homᶠ ls)}
+  ⦃ _ : Reflω C ⦄
+  where instance
 
-  Disp⁺-Reflᵈ : ⦃ _ : Pushω C F ⦄ ⦃ _ : Lawful-Pushω C F ⦄ → Reflωᵈ (Disp⁺ F)
-  Disp⁺-Reflᵈ .reflᵈ = push-refl
+  Disp⁺-Reflᵈ : ⦃ _ : Pushω C F ⦄ ⦃ _ : Lawful-Pushω C F ⦄ → Reflωᵈ C (Disp⁺ F)
+  Disp⁺-Reflᵈ .reflᵈ _ = push-refl
 
-  Disp⁻-Reflᵈ : ⦃ _ : Pullω C F ⦄ ⦃ _ : Lawful-Pullω C F ⦄ → Reflωᵈ (Disp⁻ F)
-  Disp⁻-Reflᵈ .reflᵈ = pull-refl
+  Disp⁻-Reflᵈ : ⦃ _ : Pullω C F ⦄ ⦃ _ : Lawful-Pullω C F ⦄ → Reflωᵈ C (Disp⁻ F)
+  Disp⁻-Reflᵈ .reflᵈ _ = pull-refl
 
 
-module _ {ℓ-ob : ℓ-sig¹} {ℓ-hom : ℓ-sig²} {ℓ-obᶠ : ℓ-sig³} {ℓ-homᶠ : ℓ-sig⁴}
-  {C : Quiverω ℓ-ob ℓ-hom} (open Quiverω C) ⦃ _ : Reflω C ⦄
-  {F : ∀{ℓx ℓy} {x : Ob ℓx} {y : Ob ℓy} (p : Hom x y) → Quiverω (ℓ-obᶠ ℓx ℓy) (ℓ-homᶠ ℓx ℓy)}
-  ⦃ _ : Extendω C F ⦄ ⦃ _ : Lawful-Extendω C F ⦄ where instance
-  private module F {ℓx} {ℓy} x y p = Quiverω (F {ℓx} {ℓy} {x} {y} p)
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
+  {m : ℕ} {ℓ-obᶠ : Levels n → Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → Levels n → ℓ-sig² m}
+  (F : {lxs lys : Levels n} {x : Ob lxs} {y : Ob lys} → Hom x y → Quiverω m (ℓ-obᶠ lxs lys) (ℓ-homᶠ lxs lys))
+  ⦃ _ : Reflω C ⦄ ⦃ _ : Extendω C F ⦄ ⦃ _ : Lawful-Extendω C F ⦄
+  where instance
 
-  Disp±-Reflᵈ : Reflωᵈ (Disp± F)
-  Disp±-Reflᵈ .reflᵈ = extend-refl
+  Disp±-Reflᵈ : Reflωᵈ C (Disp± F)
+  Disp±-Reflᵈ .reflᵈ _ = extend-refl
