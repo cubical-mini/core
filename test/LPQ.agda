@@ -4,14 +4,19 @@ module LPQ where
 open import Prim.Interval
 open import Prim.Kan
 
-open import Notation.Base
-open import Notation.Comp.Base
+open import Foundations.Quiver.Base
+open import Foundations.Quiver.Component.Base
+open import Foundations.Quiver.Lens.Bivariant
+open import Foundations.Quiver.Lens.Contravariant
+open import Foundations.Quiver.Lens.Covariant
+open import Foundations.Quiver.Total.Base
+
+open import Notation.Comp
 open import Notation.Lens.Bivariant
 open import Notation.Lens.Contravariant
 open import Notation.Lens.Covariant
-open import Notation.Refl.Base
-open import Notation.Sym.Base
-open import Notation.Total
+open import Notation.Refl
+open import Notation.Sym
 
 -- large quivers can depend on arbitrary number of levels
 Funs : Quiverω 1 _ _
@@ -53,18 +58,25 @@ instance
                           → Lawful-Pullω (Paths A) (λ x → Paths (B x))
   Path-Lawful-Pull-Lawful {B} .pull-refl {y} {v} i = transp (λ i → B y) (~ i) v
 
-  Path-Extend : ∀{ℓa ℓb} {A : Type ℓa} {B : {x y : A} → x ＝ y → Type ℓb}
-              → Extendω (Paths A) (λ p → Paths (B p))
-  Path-Extend {B} .extend-l p = transp (λ i → B λ j → p (  i ∧ j)) i0
-  Path-Extend {B} .extend-r p = transp (λ i → B λ j → p (~ i ∨ j)) i0
+  Path-Extend-Path : ∀{ℓa ℓb} {A : Type ℓa} {B : {x y : A} → x ＝ y → Type ℓb}
+                   → Extendω (Paths A) (λ p → Paths (B p))
+  Path-Extend-Path {B} .extend-l p = transp (λ i → B λ j → p (  i ∧ j)) i0
+  Path-Extend-Path {B} .extend-r p = transp (λ i → B λ j → p (~ i ∨ j)) i0
 
-  Path-Extend-Lafwul : ∀{ℓa ℓb} {A : Type ℓa} {B : {x y : A} → x ＝ y → Type ℓb}
-                     → Lawful-Extendω (Paths A) (λ p → Paths (B p))
-  Path-Extend-Lafwul .extend-refl = refl
-  Path-Extend-Lafwul {B} .extend-coh {x} {u} i = hcomp (∂ i) λ where
+  Path-Extend-Path-Lafwul : ∀{ℓa ℓb} {A : Type ℓa} {B : {x y : A} → x ＝ y → Type ℓb}
+                          → Lawful-Extendω (Paths A) (λ p → Paths (B p))
+  Path-Extend-Path-Lafwul .extend-refl = refl
+  Path-Extend-Path-Lafwul {B} .extend-coh {x} {u} i = hcomp (∂ i) λ where
     j (i = i0) → transp (λ _ → B λ _ → x)    j  u
     j (i = i1) → transp (λ _ → B λ _ → x) (~ j) u
     j (j = i0) → transp (λ _ → B λ _ → x)    i  u
+
+{-# OVERLAPPING
+  Path-Push-Path Path-Push-Path-Lawful
+  Path-Pull-Path Path-Lawful-Pull-Lawful
+  Path-Extend-Path Path-Extend-Path-Lafwul
+#-}
+
 
 module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} {g : B → A} where private
   open Quiverω Funs

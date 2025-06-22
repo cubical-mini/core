@@ -1,30 +1,39 @@
 {-# OPTIONS --safe #-}
 module Notation.Sym where
 
-open import Notation.Base
-open import Notation.Sym.Base public
-open import Notation.Total
-open import Notation.Wide
+open import Foundations.Quiver.Base
 
-module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n}
-  {C : Quiverω n ℓ-obω ℓ-homω} (open Quiverω C)
-  {m : ℕ} {ℓ-obωᵈ : Levels n → ℓ-sig m} {ℓ-homωᵈ : Levels n → Levels n → ℓ-sig² m}
-  {D : Quiverωᵈ C m ℓ-obωᵈ ℓ-homωᵈ} (open Quiverωᵈ D)
-  ⦃ _ : Symω C ⦄ ⦃ _ : Symωᵈ C D ⦄
-  where instance
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C) where
 
-  ∫-Sym : Symω (∫ D)
-  ∫-Sym .sym p .hom = sym (p .hom)
-  ∫-Sym .sym p .preserves = symᵈ (p .preserves)
+  record Sym (lxs lys : Levels n) : Type (ℓ-ob lxs ⊔ ℓ-ob lys ⊔ ℓ-hom lxs lys ⊔ ℓ-hom lys lxs) where
+    no-eta-equality
+    field sym : {x : Ob lxs} {y : Ob lys} → Hom x y → Hom y x
 
-  Wide-Sym : {lsᵈ : Levels m} {t : ∀{ℓ} {x : Ob ℓ} → Ob[ x ] lsᵈ} → Symω (Wide D lsᵈ t)
-  Wide-Sym .sym p .hom = sym (p .hom)
-  Wide-Sym .sym p .preserves = symᵈ (p .preserves)
+  Symω : Typeω
+  Symω = ∀ {lxs lys} → Sym lxs lys
 
-  -- TODO need Hom [ sym refl ] x y →  Hom [ refl ] x y
-  -- Component-Sym : {ls : Levels n} {t : Ob ls} {lsᵈ : Levels m} ⦃ _ : Reflω C ⦄ → Symω (Component D t lsᵈ)
-  -- Component-Sym .sym p = {!!}
+open Sym ⦃ ... ⦄ public
+{-# DISPLAY Sym.sym _ p = sym p #-}
 
-{-# INCOHERENT ∫-Sym Wide-Sym #-} -- TODO check if it's necessary
 
--- TODO Disp⁺ Disp⁻ Disp±
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
+  {m : ℕ} {ℓ-obᵈ : Levels n → ℓ-sig m} {ℓ-homᵈ : Levels n → Levels n → ℓ-sig² m}
+  (D : Quiverωᵈ C m ℓ-obᵈ ℓ-homᵈ) (open Quiverωᵈ D)
+  ⦃ _ : Symω C ⦄
+  where
+
+  record Symᵈ (lxs lys : Levels n) (lxsᵈ lysᵈ : Levels m) :
+    Type ( ℓ-ob lxs ⊔ ℓ-ob lys ⊔ ℓ-hom lxs lys ⊔ ℓ-obᵈ lxs lxsᵈ
+         ⊔ ℓ-obᵈ lys lysᵈ ⊔ ℓ-homᵈ lxs lys lxsᵈ lysᵈ ⊔ ℓ-homᵈ lys lxs lysᵈ lxsᵈ) where
+    no-eta-equality
+    field symᵈ : {x : Ob lxs} {y : Ob lys} {f : Hom x y}
+                 {x′ : Ob[ x ] lxsᵈ} {y′ : Ob[ y ] lysᵈ}
+               → Hom[ f ] x′ y′ → Hom[ sym f ] y′ x′
+
+  Symωᵈ : Typeω
+  Symωᵈ = ∀ {lxs lys lxsᵈ lysᵈ} → Symᵈ lxs lys lxsᵈ lysᵈ
+
+open Symᵈ ⦃ ... ⦄ public
+{-# DISPLAY Symᵈ.symᵈ _ p = symᵈ p #-}

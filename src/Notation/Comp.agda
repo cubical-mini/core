@@ -1,32 +1,47 @@
 {-# OPTIONS --safe #-}
 module Notation.Comp where
 
-open import Notation.Base
+open import Foundations.Quiver.Base
 
-open import Notation.Base
-open import Notation.Comp.Base public
-open import Notation.Total
-open import Notation.Wide
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C) where
 
-module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n}
-  {C : Quiverω n ℓ-obω ℓ-homω} (open Quiverω C)
-  {m : ℕ} {ℓ-obωᵈ : Levels n → ℓ-sig m} {ℓ-homωᵈ : Levels n → Levels n → ℓ-sig² m}
-  {D : Quiverωᵈ C m ℓ-obωᵈ ℓ-homωᵈ} (open Quiverωᵈ D)
-  ⦃ _ : Compω C ⦄ ⦃ _ : Compωᵈ C D ⦄
-  where instance
+  record Comp (lxs lys lzs : Levels n) : Type
+    ( ℓ-ob lxs ⊔ ℓ-ob lys ⊔ ℓ-ob lzs ⊔ ℓ-hom lxs lys
+    ⊔ ℓ-hom lxs lzs ⊔ ℓ-hom lys lzs) where
+    no-eta-equality
+    infixl 90 _∙_
+    field _∙_ : {x : Ob lxs} {y : Ob lys} {z : Ob lzs}
+              → Hom x y → Hom y z → Hom x z
 
-  ∫-Comp : Compω (∫ D)
-  ∫-Comp ._∙_ p q .hom = p .hom ∙ q .hom
-  ∫-Comp ._∙_ p q .preserves = p .preserves ∙ᵈ q .preserves
+  Compω : Typeω
+  Compω = ∀{lxs lys lzs} → Comp lxs lys lzs
 
-  Wide-Comp : {lsᵈ : Levels m} {t : ∀{ℓ} {x : Ob ℓ} → Ob[ x ] lsᵈ} → Compω (Wide D lsᵈ t)
-  Wide-Comp ._∙_ p q .hom = p .hom ∙ q .hom
-  Wide-Comp ._∙_ p q .preserves = p .preserves ∙ᵈ q .preserves
+open Comp ⦃ ... ⦄ public
+{-# DISPLAY Comp._∙_ _ f g = f ∙ g #-}
 
-  -- TODO need Hom [ refl ∙ refl ] x y →  Hom [ refl ] x y
-  -- Component-Comp : {ls : Levels n} {t : Ob ls} {lsᵈ : Levels m} ⦃ _ : Reflω C ⦄ → Compω (Component D t lsᵈ)
-  -- Component-Comp ._∙_ p q = ?
 
-{-# INCOHERENT ∫-Comp Wide-Comp #-} -- TODO check if it's necessary
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
+  {m : ℕ} {ℓ-obᵈ : Levels n → ℓ-sig m} {ℓ-homᵈ : Levels n → Levels n → ℓ-sig² m}
+  (D : Quiverωᵈ C m ℓ-obᵈ ℓ-homᵈ) (open Quiverωᵈ D)
+  ⦃ _ : Compω C ⦄
+  where
 
--- TODO Disp⁺ Disp⁻ Disp±
+  record Compᵈ (lxs lys lzs : Levels n) (lxsᵈ lysᵈ lzsᵈ : Levels m) : Type
+    ( ℓ-ob lxs ⊔ ℓ-ob lys ⊔ ℓ-ob lzs ⊔ ℓ-hom lxs lys ⊔ ℓ-hom lys lzs
+    ⊔ ℓ-obᵈ lxs lxsᵈ ⊔ ℓ-obᵈ lys lysᵈ ⊔ ℓ-obᵈ lzs lzsᵈ ⊔ ℓ-homᵈ lxs lys lxsᵈ lysᵈ
+    ⊔ ℓ-homᵈ lxs lzs lxsᵈ lzsᵈ ⊔ ℓ-homᵈ lys lzs lysᵈ lzsᵈ) where
+    no-eta-equality
+    infixl 90 _∙ᵈ_
+    field
+      _∙ᵈ_ : {x : Ob lxs} {y : Ob lys} {z : Ob lzs}
+             {f : Hom x y} {g : Hom y z}
+             {x′ : Ob[ x ] lxsᵈ} {y′ : Ob[ y ] lysᵈ} {z′ : Ob[ z ] lzsᵈ}
+           → Hom[ f ] x′ y′ → Hom[ g ] y′ z′ → Hom[ f ∙ g ] x′ z′
+
+  Compωᵈ : Typeω
+  Compωᵈ = ∀{lxs lys lzs lxsᵈ lysᵈ lzsᵈ} → Compᵈ lxs lys lzs lxsᵈ lysᵈ lzsᵈ
+
+open Compᵈ ⦃ ... ⦄ public
+{-# DISPLAY Compᵈ._∙ᵈ_ _ f g = f ∙ᵈ g #-}

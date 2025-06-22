@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Notation.Base where
+module Foundations.Quiver.Base where
 
 open import Prim.Data.Nat public
 open import Prim.Data.Sigma public
@@ -19,7 +19,7 @@ Levels (suc n) = Σ Level λ _ →  Levels n
 ℓ-sig² : ℕ → Type
 ℓ-sig² n = Levels n → Levels n → Level
 
--- reflexive quiver of arbitrary size
+-- quiver of arbitrary size
 record Quiverω (n : ℕ) (ℓ-ob : ℓ-sig n) (ℓ-hom : ℓ-sig² n) : Typeω where
   constructor mk-quiverω
   no-eta-equality
@@ -29,7 +29,7 @@ record Quiverω (n : ℕ) (ℓ-ob : ℓ-sig n) (ℓ-hom : ℓ-sig² n) : Typeω 
 {-# INLINE mk-quiverω #-}
 
 
--- displayed reflexive quiver of arbitrary size
+-- displayed quiver of arbitrary size
 module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n} (C : Quiverω n ℓ-obω ℓ-homω) (open Quiverω C) where
   record Quiverωᵈ (m : ℕ) (ℓ-obωᵈ : Levels n → ℓ-sig m) (ℓ-homωᵈ : Levels n → Levels n → ℓ-sig² m) : Typeω where
     constructor mk-quiverωᵈ

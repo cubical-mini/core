@@ -1,15 +1,14 @@
 {-# OPTIONS --safe #-}
-module Notation.Wide where
+module Foundations.Quiver.Wide.Base where
 
-open import Notation.Base
-open import Notation.Total
+open import Foundations.Quiver.Base
+open import Foundations.Quiver.Total.Base public
 
 module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
   {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
   {m : ℕ} {ℓ-obᵈ : Levels n → ℓ-sig m} {ℓ-homᵈ : Levels n → Levels n → ℓ-sig² m}
   (D : Quiverωᵈ C m ℓ-obᵈ ℓ-homᵈ) (open Quiverωᵈ D)
-  (lsᵈ : Levels m) (t : {ls : Levels n} {x : Ob ls} → Ob[ x ] lsᵈ)
-  where
+  {lsᵈ : Levels m} (t : {ls : Levels n} {x : Ob ls} → Ob[ x ] lsᵈ) where
 
   Wide : Quiverω n ℓ-ob _
   Wide .Quiverω.Ob = Ob

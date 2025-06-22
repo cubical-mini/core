@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
-module Notation.Total where
+module Foundations.Quiver.Total.Base where
 
-open import Notation.Base
+open import Foundations.Quiver.Base
 
 ℓ-split : ∀ n {m} → Levels (n + m) → Levels n × Levels m
 ℓ-split 0 ls = tt , ls
