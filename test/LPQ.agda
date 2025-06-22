@@ -5,10 +5,12 @@ open import Prim.Interval
 open import Prim.Kan
 
 open import Notation.Base
+open import Notation.Comp.Base
 open import Notation.Lens.Bivariant
 open import Notation.Lens.Contravariant
 open import Notation.Lens.Covariant
 open import Notation.Refl.Base
+open import Notation.Sym.Base
 open import Notation.Total
 
 -- large quivers can depend on arbitrary number of levels
@@ -20,6 +22,9 @@ instance
   Fun-Refl : Reflω Funs
   Fun-Refl .refl x = x
 
+  Fun-Comp : Compω Funs
+  Fun-Comp ._∙_ f g x = g (f x)
+
 -- small quivers depend on 0 levels
 Paths : ∀{ℓ} (A : Type ℓ) → Quiverω 0 _ _
 Paths A .Quiverω.Ob _ = A
@@ -28,6 +33,9 @@ Paths A .Quiverω.Hom = _＝_
 instance
   Path-Refl : ∀{ℓ} {A : Type ℓ} → Reflω (Paths A)
   Path-Refl .refl {x} _ = x
+
+  Path-Sym : ∀{ℓ} {A : Type ℓ} → Symω (Paths A)
+  Path-Sym .sym p i = p (~ i)
 
   Path-Push-Path : ∀{ℓa ℓb} {A : Type ℓa} {B : A → Type ℓb}
                  → Pushω (Paths A) (λ x → Paths (B x))
@@ -58,7 +66,7 @@ instance
     j (i = i1) → transp (λ _ → B λ _ → x) (~ j) u
     j (j = i0) → transp (λ _ → B λ _ → x)    i  u
 
-module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} where private
+module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} {g : B → A} where private
   open Quiverω Funs
 
   test₁ : Ob _
@@ -73,14 +81,18 @@ module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} where private
   test₄ : Hom A A
   test₄ = refl
 
+  test₅ : Hom A A
+  test₅ = f ∙ g
+
+
 module PathTest {ℓ} {A : Type ℓ} {x y : A} {p : x ＝ y} where private
   open Quiverω (Paths A)
 
   test₁ : Ob _
   test₁ = x
 
-  test₂ : Hom x y
-  test₂ = p
+  test₂ : Hom y x
+  test₂ = sym p
 
   test₃ : Hom x x
   test₃ = refl
@@ -154,3 +166,39 @@ module TotalTest where
 
     test₂ : Monotone (f .hom) (P .snd) (Q .snd)
     test₂ = f .preserves
+
+
+-- polynomials and lenses
+
+Lensᵈ : Quiverωᵈ Funs 1 _ _
+Lensᵈ .Quiverωᵈ.Ob[_] A (ℓb , _) = A → Type ℓb
+Lensᵈ .Quiverωᵈ.Hom[_] {x = A} f P Q = (x : A) → Q (f x) → P x
+
+Lenses : Quiverω 2 _ _
+Lenses = ∫ Lensᵈ
+
+Poly : (ℓa ℓb : Level) → Type (lsuc (ℓa ⊔ ℓb))
+Poly ℓa ℓb = Quiverω.Ob Lenses (ℓa , ℓb , _)
+
+Lens : ∀{ℓa ℓb ℓc ℓd} → Poly ℓa ℓb → Poly ℓc ℓd → Type (ℓa ⊔ ℓb ⊔ ℓc ⊔ ℓd)
+Lens = Quiverω.Hom Lenses
+
+
+-- large spans!
+module _ {ℓ-ob : ℓ-sig 1} {ℓ-hom : ℓ-sig² 1}
+  (C : Quiverω 1 ℓ-ob ℓ-hom) (open Quiverω C) ⦃ _ : Compω C ⦄ where
+
+  Spanᵈ : Quiverωᵈ C 2 _ _
+  Spanᵈ .Quiverωᵈ.Ob[_] T (ℓa , ℓb , _) = Σ (Ob (ℓa , _)) λ A → Σ (Ob (ℓb , _)) λ B → Hom T A × Hom T B
+  Spanᵈ .Quiverωᵈ.Hom[_] {x = S} {y = T} f (A₁ , B₁ , sa , sb) (A₂ , B₂ , ta , tb) =
+    Σ (Hom A₁ A₂) λ fa → Σ (Hom B₁ B₂) λ fb → (f ∙ ta  ＝ sa ∙ fa) × (f ∙ tb ＝ sb ∙ fb)
+
+  Spans : Quiverω 3 _ _
+  Spans = ∫ Spanᵈ
+
+-- spans of types
+module FunSpan {ℓa ℓb ℓt} {A : Type ℓa} {B : Type ℓb} {T : Type ℓt} (p₁ : T → A) (p₂ : T → B) where private
+  open Quiverω (Spans Funs)
+
+  test : Ob _
+  test = T , A , B , p₁ , p₂
