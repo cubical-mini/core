@@ -8,25 +8,21 @@ open import Notation.Lens.Contravariant
 open import Notation.Lens.Covariant
 open import Notation.Refl
 
-module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
-  {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
-  {m : ℕ} {ℓ-obᶠ : Levels n → Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → Levels n → ℓ-sig² m}
-  (F : {lxs lys : Levels n} {x : Ob lxs} {y : Ob lys} → Hom x y → Quiverω m (ℓ-obᶠ lxs lys) (ℓ-homᶠ lxs lys))
-  ⦃ _ : Reflω C ⦄
-  where
+module _ {n ℓ-ob ℓ-hom} {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
+  {m} {ℓ-obᶠ : Levels n → Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → Levels n → ℓ-sig² m}
+  (F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → Quiverω m (ℓ-obᶠ lxs lys) (ℓ-homᶠ lxs lys))
+  ⦃ _ : Reflω C ⦄ where
   private module F {lxs} {lys} x y p = Quiverω (F {lxs} {lys} {x} {y} p)
 
   Disp± : ⦃ _ : Extendω C F ⦄ → Quiverωᵈ C m _ _
   Disp± .Quiverωᵈ.Ob[_] t = F.Ob t t refl
-  Disp± .Quiverωᵈ.Hom[_] {x} {y} p u v = F.Hom x y p (extend-l p u) (extend-r p v)
+  Disp± .has-quiver-onωᵈ .Quiver-onωᵈ.Hom[_] {x} {y} p u v = F.Hom x y p (extend-l p u) (extend-r p v)
 
 
-module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
-  {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
-  {m : ℕ} {ℓ-obᶠ : Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → ℓ-sig² m}
-  {F : {ls : Levels n} → Ob ls → Quiverω m (ℓ-obᶠ ls) (ℓ-homᶠ ls)}
-  ⦃ _ : Reflω C ⦄
-  where
+module _ {n ℓ-ob ℓ-hom} {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
+  {m} {ℓ-obᶠ : Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → ℓ-sig² m}
+  {F : ∀{ls} → Ob ls → Quiverω m (ℓ-obᶠ ls) (ℓ-homᶠ ls)}
+  ⦃ _ : Reflω C ⦄ where
   private module F {ls} x = Quiverω (F {ls} x)
 
   module _ ⦃ _ : Pushω C F ⦄ where instance
@@ -54,13 +50,11 @@ module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
 #-}
 
 
-module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
-  {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
-  {m : ℕ} {ℓ-obᶠ : Levels n → Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → Levels n → ℓ-sig² m}
-  (F : {lxs lys : Levels n} {x : Ob lxs} {y : Ob lys} → Hom x y → Quiverω m (ℓ-obᶠ lxs lys) (ℓ-homᶠ lxs lys))
-  ⦃ r : Reflω C ⦄ ⦃ e : Extendω C F ⦄ ⦃ _ : Lawful-Extendω C F ⦄
-  where instance
+module _ {n ℓ-ob ℓ-hom} {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
+  {m} {ℓ-obᶠ : Levels n → Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → Levels n → ℓ-sig² m}
+  (F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → Quiverω m (ℓ-obᶠ lxs lys) (ℓ-homᶠ lxs lys))
+  ⦃ r : Reflω C ⦄ ⦃ e : Extendω C F ⦄ ⦃ _ : Lawful-Extendω C F ⦄ where instance
 
   Disp±-Reflᵈ : Reflωᵈ C (Disp± F)
   Disp±-Reflᵈ .reflᵈ _ = extend-refl ⦃ r ⦄ ⦃ e ⦄
-  {-# OVERLAPS Disp±-Reflᵈ #-} -- TODO check
+  {-# INCOHERENT Disp±-Reflᵈ #-} -- TODO check

@@ -8,22 +8,18 @@ open import Notation.Comp
 open import Notation.Refl
 open import Notation.Sym
 
-module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n}
-  {C : Quiverω n ℓ-obω ℓ-homω} (open Quiverω C)
-  {m : ℕ} {ℓ-obωᵈ : Levels n → ℓ-sig m} {ℓ-homωᵈ : Levels n → Levels n → ℓ-sig² m}
-  {D : Quiverωᵈ C m ℓ-obωᵈ ℓ-homωᵈ} (open Quiverωᵈ D)
-  {lsᵈ : Levels m} {t : ∀{ℓ} {x : Ob ℓ} → Ob[ x ] lsᵈ}
-  where instance
+module _ {n ℓ-ob ℓ-hom} {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
+  {ℓ-homᵈ} {D : Quiver-onωᵈ Ob Hom 0 (λ _ _ → ⊤) ℓ-homᵈ} where instance
 
-  Wide-Refl : ⦃ _ : Reflω C ⦄ ⦃ _ : Reflωᵈ C D ⦄ → Reflω (Wide D t)
+  Wide-Refl : ⦃ _ : Reflω C ⦄ ⦃ _ : Reflωᵈ C (Wideᵈ C D) ⦄ → Reflω (Wide C D)
   Wide-Refl .refl .hom = refl
   Wide-Refl .refl .preserves = reflᵈ _
 
-  Wide-Sym : ⦃ _ : Symω C ⦄ ⦃ _ : Symωᵈ C D ⦄ → Symω (Wide D t)
+  Wide-Sym : ⦃ _ : Symω C ⦄ ⦃ _ : Symωᵈ C (Wideᵈ C D) ⦄ → Symω (Wide C D)
   Wide-Sym .sym p .hom = sym (p .hom)
   Wide-Sym .sym p .preserves = symᵈ (p .preserves)
 
-  Wide-Comp : ⦃ _ : Compω C ⦄ ⦃ _ : Compωᵈ C D ⦄ → Compω (Wide D t)
+  Wide-Comp : ⦃ _ : Compω C ⦄ ⦃ _ : Compωᵈ C (Wideᵈ C D) ⦄ → Compω (Wide C D)
   Wide-Comp ._∙_ p q .hom = p .hom ∙ q .hom
   Wide-Comp ._∙_ p q .preserves = p .preserves ∙ᵈ q .preserves
 

@@ -5,15 +5,13 @@ open import Foundations.Quiver.Base
 
 open import Notation.Refl
 
-module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
-  (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
-  {m : ℕ} {ℓ-obᶠ : Levels n → Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → Levels n → ℓ-sig² m}
-  (F : {lxs lys : Levels n} {x : Ob lxs} {y : Ob lys} → Hom x y → Quiverω m (ℓ-obᶠ lxs lys) (ℓ-homᶠ lxs lys))
-  ⦃ _ : Reflω C ⦄
-  where
+module _ {n ℓ-ob ℓ-hom} (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
+  {m} {ℓ-obᶠ : Levels n → Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → Levels n → ℓ-sig² m}
+  (F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → Quiverω m (ℓ-obᶠ lxs lys) (ℓ-homᶠ lxs lys))
+  ⦃ _ : Reflω C ⦄ where
   private module F {lxs} {lys} x y p = Quiverω (F {lxs} {lys} {x} {y} p)
 
-  record Extend (lxs lys : Levels n) (lsᶠ : Levels m) : Type
+  record Extend lxs lys lsᶠ : Type
     ( ℓ-ob lxs ⊔ ℓ-hom lxs lxs ⊔ ℓ-ob lys ⊔ ℓ-hom lys lys ⊔ ℓ-hom lxs lys
     ⊔ ℓ-obᶠ lxs lxs lsᶠ ⊔ ℓ-obᶠ lxs lys lsᶠ ⊔ ℓ-obᶠ lys lys lsᶠ) where
     no-eta-equality
@@ -29,15 +27,13 @@ open Extend ⦃ ... ⦄ public
 {-# DISPLAY Extend.extend-r _ p v = extend-l p v #-}
 
 
-module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
-  (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
-  {m : ℕ} {ℓ-obᶠ : Levels n → Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → Levels n → ℓ-sig² m}
-  (F : {lxs lys : Levels n} {x : Ob lxs} {y : Ob lys} → Hom x y → Quiverω m (ℓ-obᶠ lxs lys) (ℓ-homᶠ lxs lys))
-  ⦃ _ : Reflω C ⦄ ⦃ _ : Extendω C F ⦄
-  where
+module _ {n ℓ-ob ℓ-hom} (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
+  {m} {ℓ-obᶠ : Levels n → Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → Levels n → ℓ-sig² m}
+  (F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → Quiverω m (ℓ-obᶠ lxs lys) (ℓ-homᶠ lxs lys))
+  ⦃ _ : Reflω C ⦄ ⦃ _ : Extendω C F ⦄ where
   private module F {lxs} {lys} x y p = Quiverω (F {lxs} {lys} {x} {y} p)
 
-  record Lawful-Extend (ls : Levels n) (lsᶠ : Levels m) : Type (ℓ-ob ls ⊔ ℓ-obᶠ ls ls lsᶠ ⊔ ℓ-homᶠ ls ls lsᶠ lsᶠ) where
+  record Lawful-Extend ls lsᶠ : Type (ℓ-ob ls ⊔ ℓ-obᶠ ls ls lsᶠ ⊔ ℓ-homᶠ ls ls lsᶠ lsᶠ) where
     no-eta-equality
     field
       extend-refl : {x : Ob ls} {u : F.Ob x x refl lsᶠ} → F.Hom x x refl (extend-l refl u) (extend-r refl u)

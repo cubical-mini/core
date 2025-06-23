@@ -4,12 +4,14 @@ module Foundations.Quiver.Wide.Base where
 open import Foundations.Quiver.Base
 open import Foundations.Quiver.Total.Base public
 
-module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
-  {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
-  {m : ℕ} {ℓ-obᵈ : Levels n → ℓ-sig m} {ℓ-homᵈ : Levels n → Levels n → ℓ-sig² m}
-  (D : Quiverωᵈ C m ℓ-obᵈ ℓ-homᵈ) (open Quiverωᵈ D)
-  {lsᵈ : Levels m} (t : {ls : Levels n} {x : Ob ls} → Ob[ x ] lsᵈ) where
+module _ {n ℓ-ob ℓ-hom} (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
+  {ℓ-homᵈ} (D : Quiver-onωᵈ Ob Hom 0 (λ _ _ → ⊤) ℓ-homᵈ) where
 
-  Wide : Quiverω n ℓ-ob _
+  Wideᵈ : Quiverωᵈ C 0 _ ℓ-homᵈ
+  Wideᵈ .Quiverωᵈ.Ob[_] _ _ = ⊤
+  Wideᵈ .has-quiver-onωᵈ = D
+
+  Wide : Quiverω n _ _
   Wide .Quiverω.Ob = Ob
-  Wide .Quiverω.Hom x y = ΣHom C D {x = x} {y = y} t t
+  Wide .has-quiver-onω .Quiver-onω.Hom x y =
+    ΣHom (C .has-quiver-onω) D {x = x} {y = y} _ _

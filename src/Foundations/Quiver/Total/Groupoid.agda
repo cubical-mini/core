@@ -8,10 +8,9 @@ open import Notation.Comp
 open import Notation.Refl
 open import Notation.Sym
 
-module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n}
-  {C : Quiverω n ℓ-obω ℓ-homω} (open Quiverω C)
-  {m : ℕ} {ℓ-obωᵈ : Levels n → ℓ-sig m} {ℓ-homωᵈ : Levels n → Levels n → ℓ-sig² m}
-  {D : Quiverωᵈ C m ℓ-obωᵈ ℓ-homωᵈ} (open Quiverωᵈ D) where instance
+module _ {n ℓ-ob ℓ-hom} {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
+  {m ℓ-obᵈ ℓ-homᵈ} {D : Quiverωᵈ C m ℓ-obᵈ ℓ-homᵈ} (open Quiverωᵈ D)
+  where instance
 
   ∫-Refl : ⦃ _ : Reflω C ⦄ ⦃ _ : Reflωᵈ C D ⦄ → Reflω (∫ D)
   ∫-Refl .refl .hom = refl

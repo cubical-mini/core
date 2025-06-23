@@ -11,6 +11,7 @@ open import Foundations.Quiver.Lens.Contravariant
 open import Foundations.Quiver.Lens.Covariant
 open import Foundations.Quiver.Total.Base
 
+open import Notation.Assoc
 open import Notation.Comp
 open import Notation.Lens.Bivariant
 open import Notation.Lens.Contravariant
@@ -21,7 +22,7 @@ open import Notation.Sym
 -- large quivers can depend on arbitrary number of levels
 Funs : Quiverω 1 _ _
 Funs .Quiverω.Ob (ℓ , _) = Type ℓ
-Funs .Quiverω.Hom A B = A → B
+Funs .has-quiver-onω .Quiver-onω.Hom A B = A → B
 
 instance
   Fun-Refl : Reflω Funs
@@ -30,10 +31,13 @@ instance
   Fun-Comp : Compω Funs
   Fun-Comp ._∙_ f g x = g (f x)
 
+Paths-on : ∀{ℓ} (A : Type ℓ) → Quiver-onω 0 (λ _ → A) _
+Paths-on _ = corr²→quiver-onω _＝_
+
 -- small quivers depend on 0 levels
 Paths : ∀{ℓ} (A : Type ℓ) → Quiverω 0 _ _
 Paths A .Quiverω.Ob _ = A
-Paths A .Quiverω.Hom = _＝_
+Paths A .has-quiver-onω = Paths-on A
 
 instance
   Path-Refl : ∀{ℓ} {A : Type ℓ} → Reflω (Paths A)
@@ -72,10 +76,20 @@ instance
     j (j = i0) → transp (λ _ → B λ _ → x)    i  u
 
 {-# OVERLAPPING
+  Path-Refl Path-Sym
+#-}
+
+{-# INCOHERENT
   Path-Push-Path Path-Push-Path-Lawful
   Path-Pull-Path Path-Lawful-Pull-Lawful
   Path-Extend-Path Path-Extend-Path-Lafwul
 #-}
+
+
+-- test assoc
+instance
+  Fun-Assoc : Assocω Funs (λ _ _ → Paths-on _)
+  Fun-Assoc .assoc = refl
 
 
 module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} {g : B → A} where private
@@ -95,6 +109,9 @@ module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} {g : B → A}
 
   test₅ : Hom A A
   test₅ = f ∙ g
+
+  test₆ : f ∙ (g ∙ f) ＝ (f ∙ g) ∙ f
+  test₆ = assoc {f = f} {g = g} {h = f} -- TODO CHECK bad inference for functions or in general?
 
 
 module PathTest {ℓ} {A : Type ℓ} {x y : A} {p : x ＝ y} where private
@@ -127,7 +144,7 @@ Monotone {A} f P Q = (x y : A) → x P.≤ y → f x Q.≤ f y where
 
 Posetᵈ : Quiverωᵈ Funs 1 _ _
 Posetᵈ .Quiverωᵈ.Ob[_] T (lh , _) = Poset-on T lh
-Posetᵈ .Quiverωᵈ.Hom[_] f = Monotone f
+Posetᵈ .has-quiver-onωᵈ .Quiver-onωᵈ.Hom[_] f = Monotone f
 
 instance
   Poset-Reflᵈ : ∀{ℓo ℓh} → Reflᵈ Funs Posetᵈ (ℓo , _) (ℓh , _)
@@ -184,7 +201,7 @@ module TotalTest where
 
 Lensᵈ : Quiverωᵈ Funs 1 _ _
 Lensᵈ .Quiverωᵈ.Ob[_] A (ℓb , _) = A → Type ℓb
-Lensᵈ .Quiverωᵈ.Hom[_] {x = A} f P Q = (x : A) → Q (f x) → P x
+Lensᵈ .has-quiver-onωᵈ .Quiver-onωᵈ.Hom[_] {x = A} f P Q = (x : A) → Q (f x) → P x
 
 Lenses : Quiverω 2 _ _
 Lenses = ∫ Lensᵈ
@@ -196,16 +213,18 @@ Lens : ∀{ℓa ℓb ℓc ℓd} → Poly ℓa ℓb → Poly ℓc ℓd → Type (
 Lens = Quiverω.Hom Lenses
 
 
--- large spans!
-module _ {ℓ-ob : ℓ-sig 1} {ℓ-hom : ℓ-sig² 1}
-  (C : Quiverω 1 ℓ-ob ℓ-hom) (open Quiverω C) ⦃ _ : Compω C ⦄ where
+-- xxtra large spans!
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C) ⦃ _ : Compω C ⦄ where
 
-  Spanᵈ : Quiverωᵈ C 2 _ _
-  Spanᵈ .Quiverωᵈ.Ob[_] T (ℓa , ℓb , _) = Σ (Ob (ℓa , _)) λ A → Σ (Ob (ℓb , _)) λ B → Hom T A × Hom T B
-  Spanᵈ .Quiverωᵈ.Hom[_] {x = S} {y = T} f (A₁ , B₁ , sa , sb) (A₂ , B₂ , ta , tb) =
+  Spanᵈ : Quiverωᵈ C (n + n) _ _
+  Spanᵈ .Quiverωᵈ.Ob[_] T lsᵈ =
+    let las , lbs = ℓ-split n lsᵈ
+    in Σ (Ob las) λ A → Σ (Ob lbs) λ B → Hom T A × Hom T B
+  Spanᵈ .has-quiver-onωᵈ .Quiver-onωᵈ.Hom[_] {x = S} {y = T} f (A₁ , B₁ , sa , sb) (A₂ , B₂ , ta , tb) =
     Σ (Hom A₁ A₂) λ fa → Σ (Hom B₁ B₂) λ fb → (f ∙ ta  ＝ sa ∙ fa) × (f ∙ tb ＝ sb ∙ fb)
 
-  Spans : Quiverω 3 _ _
+  Spans : Quiverω (n + (n + n)) _ _
   Spans = ∫ Spanᵈ
 
 -- spans of types
@@ -214,3 +233,25 @@ module FunSpan {ℓa ℓb ℓt} {A : Type ℓa} {B : Type ℓb} {T : Type ℓt} 
 
   test : Ob _
   test = T , A , B , p₁ , p₂
+
+
+-- deriving composition from pull
+module _ {n : ℕ} {ℓ-ob : ℓ-sig n} {ℓ-hom : ℓ-sig² n}
+  (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
+  ⦃ FP : ∀{lys} {y : Ob lys} → Pullω C λ t → Paths (Hom t y) ⦄
+  ⦃ rc : Reflω C ⦄
+  ⦃ FPL : ∀{lys} {y : Ob lys} → Lawful-Pullω C λ t → Paths (Hom t y) ⦄
+  where private
+
+  instance
+    KEKW : Compω C
+    KEKW ._∙_ = pull
+
+  cmp-refl : ∀{lxs} {x : Ob lxs} → refl {x = x} ＝ refl ∙ refl
+  cmp-refl = pull-refl
+
+  -- -- here we need to commute pull
+  -- ass : ∀{lws lxs lys lzs} {w : Ob lws} {x : Ob lxs} {y : Ob lys} {z : Ob lzs}
+  --       {f : Hom w x} {g : Hom x y} {h : Hom y z}
+  --     → f ∙ (g ∙ h) ＝ (f ∙ g) ∙ h
+  -- ass {f} {g} {h} = {!!}

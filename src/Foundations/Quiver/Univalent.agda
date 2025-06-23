@@ -7,8 +7,8 @@ open import Foundations.Quiver.Base
 
 open import Notation.Refl
 
-module _ {n : ℕ} {ℓ-obω : ℓ-sig n} {ℓ-homω : ℓ-sig² n}
-  (C : Quiverω n ℓ-obω ℓ-homω) (open Quiverω C) ⦃ _ : Reflω C ⦄ where
+module _ {n ℓ-ob ℓ-hom} (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
+  ⦃ _ : Reflω C ⦄ where
 
   record is-univalent ls : Typeω where
     no-eta-equality
