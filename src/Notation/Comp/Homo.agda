@@ -1,11 +1,11 @@
 {-# OPTIONS --safe #-}
-module Notation.Comp where
+module Notation.Comp.Homo where
 
 open import Foundations.Quiver.Base
 
-module _ {n ℓ-ob ℓ-hom} (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C) where
+module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob} (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom)) where
 
-  record Comp lxs lys lzs : Type
+  record HComp lxs lys lzs : Type
     ( ℓ-ob lxs ⊔ ℓ-ob lys ⊔ ℓ-ob lzs ⊔ ℓ-hom lxs lys
     ⊔ ℓ-hom lxs lzs ⊔ ℓ-hom lys lzs) where
     no-eta-equality
@@ -13,18 +13,18 @@ module _ {n ℓ-ob ℓ-hom} (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C) wh
     field _∙_ : {x : Ob lxs} {y : Ob lys} {z : Ob lzs}
               → Hom x y → Hom y z → Hom x z
 
-  Compω : Typeω
-  Compω = ∀{lxs lys lzs} → Comp lxs lys lzs
+  HCompω : Typeω
+  HCompω = ∀{lxs lys lzs} → HComp lxs lys lzs
 
-open Comp ⦃ ... ⦄ public
-{-# DISPLAY Comp._∙_ _ f g = f ∙ g #-}
+open HComp ⦃ ... ⦄ public
+{-# DISPLAY HComp._∙_ _ f g = f ∙ g #-}
 
 
-module _ {n ℓ-ob ℓ-hom} (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
-  {m ℓ-obᵈ ℓ-homᵈ} (D : Quiverωᵈ C m ℓ-obᵈ ℓ-homᵈ) (open Quiverωᵈ D)
-  ⦃ _ : Compω C ⦄ where
+module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob} (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
+  {m′ ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ} (D : HQuiver-onωᵈ Ob Hom m′ Ob[_] ℓ-homᵈ) (open Quiver-onωᵈ D renaming (Het[_] to Hom[_]))
+  ⦃ _ : HCompω C ⦄ where
 
-  record Compᵈ lxs lys lzs lxsᵈ lysᵈ lzsᵈ : Type
+  record HCompᵈ lxs lys lzs lxsᵈ lysᵈ lzsᵈ : Type
     ( ℓ-ob lxs ⊔ ℓ-ob lys ⊔ ℓ-ob lzs ⊔ ℓ-hom lxs lys ⊔ ℓ-hom lys lzs
     ⊔ ℓ-obᵈ lxs lxsᵈ ⊔ ℓ-obᵈ lys lysᵈ ⊔ ℓ-obᵈ lzs lzsᵈ ⊔ ℓ-homᵈ lxs lys lxsᵈ lysᵈ
     ⊔ ℓ-homᵈ lxs lzs lxsᵈ lzsᵈ ⊔ ℓ-homᵈ lys lzs lysᵈ lzsᵈ) where
@@ -36,8 +36,8 @@ module _ {n ℓ-ob ℓ-hom} (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
              {x′ : Ob[ x ] lxsᵈ} {y′ : Ob[ y ] lysᵈ} {z′ : Ob[ z ] lzsᵈ}
            → Hom[ f ] x′ y′ → Hom[ g ] y′ z′ → Hom[ f ∙ g ] x′ z′
 
-  Compωᵈ : Typeω
-  Compωᵈ = ∀{lxs lys lzs lxsᵈ lysᵈ lzsᵈ} → Compᵈ lxs lys lzs lxsᵈ lysᵈ lzsᵈ
+  HCompωᵈ : Typeω
+  HCompωᵈ = ∀{lxs lys lzs lxsᵈ lysᵈ lzsᵈ} → HCompᵈ lxs lys lzs lxsᵈ lysᵈ lzsᵈ
 
-open Compᵈ ⦃ ... ⦄ public
-{-# DISPLAY Compᵈ._∙ᵈ_ _ f g = f ∙ᵈ g #-}
+open HCompᵈ ⦃ ... ⦄ public
+{-# DISPLAY HCompᵈ._∙ᵈ_ _ f g = f ∙ᵈ g #-}

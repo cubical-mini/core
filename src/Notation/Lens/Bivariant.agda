@@ -24,7 +24,7 @@ module _ {n ℓ-ob ℓ-hom} (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
 
 open Extend ⦃ ... ⦄ public
 {-# DISPLAY Extend.extend-l _ p u = extend-l p u #-}
-{-# DISPLAY Extend.extend-r _ p v = extend-l p v #-}
+{-# DISPLAY Extend.extend-r _ p v = extend-r p v #-}
 
 
 module _ {n ℓ-ob ℓ-hom} (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)

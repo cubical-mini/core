@@ -44,7 +44,7 @@ module _ {n ℓ-ob ℓ-hom} {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
     Lawful-Pull→Extend .extend-refl = pull-refl
     Lawful-Pull→Extend .extend-coh = pull-refl
 
-{-# OVERLAPPABLE
+{-# INCOHERENT
   Push→Extend Lawful-Push→Extend
   Pull→Extend Lawful-Pull→Extend
 #-}

@@ -3,7 +3,7 @@ module Notation.Sym where
 
 open import Foundations.Quiver.Base
 
-module _ {n ℓ-ob ℓ-hom} (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C) where
+module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob} (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom)) where
 
   record Sym lxs lys : Type (ℓ-ob lxs ⊔ ℓ-ob lys ⊔ ℓ-hom lxs lys ⊔ ℓ-hom lys lxs) where
     no-eta-equality
@@ -16,8 +16,8 @@ open Sym ⦃ ... ⦄ public
 {-# DISPLAY Sym.sym _ p = sym p #-}
 
 
-module _ {n ℓ-ob ℓ-hom} (C : Quiverω n ℓ-ob ℓ-hom) (open Quiverω C)
-  {m ℓ-obᵈ ℓ-homᵈ} (D : Quiverωᵈ C m ℓ-obᵈ ℓ-homᵈ) (open Quiverωᵈ D)
+module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob} (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
+  {m′ ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ} (D : HQuiver-onωᵈ Ob Hom m′ Ob[_] ℓ-homᵈ) (open Quiver-onωᵈ D renaming (Het[_] to Hom[_]))
   ⦃ _ : Symω C ⦄ where
 
   record Symᵈ lxs lys lxsᵈ lysᵈ : Type
