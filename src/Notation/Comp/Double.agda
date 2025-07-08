@@ -54,7 +54,7 @@ module _ {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-het ℓ-hom⁻ ℓ-hom⁺} {Ob⁻ : ob-sig
                  {f : A.Hom a x} {α : Het x y} {g : B.Hom y b}
                  {a′ : Ob[ a ]⁻ lasᵈ} {x′ : Ob[ x ]⁻ lxsᵈ} {y′ : Ob[ y ]⁺ lysᵈ} {b′ : Ob[ b ]⁺ lbsᵈ}
                → A.Hom[ f ] a′ x′ → Het[ α ] x′ y′ → B.Hom[ g ] y′ b′
-               → Het[ (f ∙∙ α ∙∙ g) ] a′ b′
+               → Het[ f ∙∙ α ∙∙ g ] a′ b′
 
   DCompωᵈ : Typeω
   DCompωᵈ = ∀{las lxs lys lbs lasᵈ lxsᵈ lysᵈ lbsᵈ} → DCompᵈ las lxs lys lbs lasᵈ lxsᵈ lysᵈ lbsᵈ

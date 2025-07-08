@@ -35,4 +35,4 @@ module _ {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-het} {Ob⁻ : ob-sig ℓ-ob⁻} {Ob⁺ : o
   (D : Quiver-onωᵈ Ob⁻ Ob⁺ Het m′ n′ Ob[_]⁻ Ob[_]⁺ ℓ-hetᵈ) (open Quiver-onωᵈ D) where
 
   ∫ : Quiver-onω (m + m′) (n + n′) (∫Ob Ob⁻ Ob[_]⁻) (∫Ob Ob⁺ Ob[_]⁺) _
-  ∫ .Quiver-onω.Het (x , x′) (y , y′) = ΣHet C D x′ y′
+  ∫ .Quiver-onω.Het x y = ΣHet C D (x .snd) (y .snd)

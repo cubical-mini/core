@@ -8,39 +8,46 @@ open import Notation.Lens.Contravariant
 open import Notation.Lens.Covariant
 open import Notation.Refl
 
-module _ {n ℓ-ob ℓ-hom} {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
-  {m} {ℓ-obᶠ : Levels n → Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → Levels n → ℓ-sig² m}
-  (F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → Quiverω m (ℓ-obᶠ lxs lys) (ℓ-homᶠ lxs lys))
+module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
+  (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
+  {n}
+  {ℓ-obᶠ : Levels m → Levels m → ℓ-sig n} {ℓ-homᶠ : Levels m → Levels m → ℓ-sig² n n}
+  {Hom[_] : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → ob-sig (ℓ-obᶠ lxs lys)}
+  (F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} (p : Hom x y) → HQuiver-onω n Hom[ p ] (ℓ-homᶠ lxs lys))
   ⦃ _ : Reflω C ⦄ where
-  private module F {lxs} {lys} x y p = Quiverω (F {lxs} {lys} {x} {y} p)
+  private module F {lxs} {lys} x y p = Quiver-onω (F {lxs} {lys} {x} {y} p)
 
-  Disp± : ⦃ _ : Extendω C F ⦄ → Quiverωᵈ C m _ _
-  Disp± .Quiverωᵈ.Ob[_] t = F.Ob t t refl
-  Disp± .has-quiver-onωᵈ .Quiver-onωᵈ.Hom[_] {x} {y} p u v = F.Hom x y p (extend-l p u) (extend-r p v)
+  Disp± : ⦃ _ : Extendω C n Hom[_] ⦄ → HQuiver-onωᵈ Ob Hom n (λ t → Hom[ (refl {x = t}) ]) _
+  Disp± .Quiver-onωᵈ.Het[_] {x} {y} p u v = F.Het x y p (extend-r p v) (extend-l p u)
 
 
-module _ {n ℓ-ob ℓ-hom} {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
-  {m} {ℓ-obᶠ : Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → ℓ-sig² m}
-  {F : ∀{ls} → Ob ls → Quiverω m (ℓ-obᶠ ls) (ℓ-homᶠ ls)}
+module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
+  {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
+  {n} {ℓ-obᶠ : Levels m → ℓ-sig n}
+  {Ob[_] : ∀{ls} → Ob ls → ob-sig (ℓ-obᶠ ls)}
   ⦃ _ : Reflω C ⦄ where
-  private module F {ls} x = Quiverω (F {ls} x)
 
-  module _ ⦃ _ : Pushω C F ⦄ where instance
-    Push→Extend : Extendω C (λ {y = y} _ → F y)
+  module _ ⦃ _ : Pushω C n Ob[_] Ob[_] ⦄ where instance
+    Push→Extend : Extendω C n (λ {y = y} _ → Ob[ y ])
     Push→Extend .extend-l = push
     Push→Extend .extend-r _ v = v
 
-    Lawful-Push→Extend : ⦃ _ : Lawful-Pushω C F ⦄ ⦃ _ : ∀{ls} {x : Ob ls} → Reflω (F x) ⦄
-                       → Lawful-Extendω C (λ {y = y} _ → F y)
+    Lawful-Push→Extend : {ℓ-homᶠ : Levels m → ℓ-sig² n n}
+                         {F⁺ : ∀{ls} (t : Ob ls) → HQuiver-onω n Ob[ t ] (ℓ-homᶠ ls)}
+                         ⦃ _ : Lawful-Pushω C F⁺ ⦄ ⦃ _ : ∀{ls} {x : Ob ls} → Reflω (F⁺ x)⦄
+                       → Lawful-Extendω C (λ {y = y} _ → F⁺ y)
     Lawful-Push→Extend .extend-refl = push-refl
     Lawful-Push→Extend .extend-coh = refl
 
-  module _ ⦃ _ : Pullω C F ⦄ where instance
-    Pull→Extend : Extendω C (λ {x = x} _ → F x)
+  module _ ⦃ _ : Pullω C n Ob[_] Ob[_] ⦄ where instance
+    Pull→Extend : Extendω C n (λ {x = x} _ → Ob[ x ])
     Pull→Extend .extend-l _ u = u
     Pull→Extend .extend-r = pull
 
-    Lawful-Pull→Extend : ⦃ _ : Lawful-Pullω C F ⦄ → Lawful-Extendω C (λ {x = x} _ → F x)
+    Lawful-Pull→Extend : {ℓ-homᶠ : Levels m → ℓ-sig² n n}
+                         {F⁻ : ∀{ls} (t : Ob ls) → HQuiver-onω n Ob[ t ] (ℓ-homᶠ ls)}
+                         ⦃ _ : Lawful-Pullω C F⁻ ⦄
+                       → Lawful-Extendω C (λ {x = x} _ → F⁻ x)
     Lawful-Pull→Extend .extend-refl = pull-refl
     Lawful-Pull→Extend .extend-coh = pull-refl
 
@@ -50,11 +57,15 @@ module _ {n ℓ-ob ℓ-hom} {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
 #-}
 
 
-module _ {n ℓ-ob ℓ-hom} {C : Quiverω n ℓ-ob ℓ-hom} (open Quiverω C)
-  {m} {ℓ-obᶠ : Levels n → Levels n → ℓ-sig m} {ℓ-homᶠ : Levels n → Levels n → ℓ-sig² m}
-  (F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → Quiverω m (ℓ-obᶠ lxs lys) (ℓ-homᶠ lxs lys))
-  ⦃ r : Reflω C ⦄ ⦃ e : Extendω C F ⦄ ⦃ _ : Lawful-Extendω C F ⦄ where instance
+module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
+  {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
+  {n}
+  {ℓ-obᶠ : Levels m → Levels m → ℓ-sig n} {ℓ-homᶠ : Levels m → Levels m → ℓ-sig² n n}
+  {Hom[_] : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → ob-sig (ℓ-obᶠ lxs lys)}
+  {F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} (p : Hom x y) → HQuiver-onω n Hom[ p ] (ℓ-homᶠ lxs lys)}
+  ⦃ _ : Reflω C ⦄ ⦃ _ : Extendω C n Hom[_] ⦄ ⦃ _ : Lawful-Extendω C F ⦄ where instance
+  private module F {lxs} {lys} x y p = Quiver-onω (F {lxs} {lys} {x} {y} p)
 
-  Disp±-Reflᵈ : Reflωᵈ C (Disp± F)
-  Disp±-Reflᵈ .reflᵈ _ = extend-refl ⦃ r ⦄ ⦃ e ⦄
+  Disp±-Reflᵈ : Reflωᵈ C (Disp± C F)
+  Disp±-Reflᵈ .reflᵈ _ = extend-refl
   {-# INCOHERENT Disp±-Reflᵈ #-} -- TODO check
