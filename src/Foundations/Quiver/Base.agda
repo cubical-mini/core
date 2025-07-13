@@ -44,7 +44,10 @@ HQuiver-onω m Ob = Quiver-onω m m Ob Ob
 
 
 ob-sigᵈ : ∀ {m ℓ-ob} (Ob : ob-sig ℓ-ob) {n} (ℓ-obᵈ : Levels m → ℓ-sig n) → Typeω
-ob-sigᵈ Ob ℓ-obᵈ = ∀{ls} (x : Ob ls) lsᵈ → Type (ℓ-obᵈ ls lsᵈ)
+ob-sigᵈ Ob ℓ-obᵈ = ∀{ls} (x : Ob ls) → ob-sig (ℓ-obᵈ ls)
+
+ob-sigᵈ² : ∀ {m n ℓ-ob⁻ ℓ-ob⁺} (Ob⁻ : ob-sig ℓ-ob⁻) (Ob⁺ : ob-sig ℓ-ob⁺) {k} (ℓ-obᵈ² : Levels m → Levels n → ℓ-sig k) → Typeω
+ob-sigᵈ² Ob⁻ Ob⁺ ℓ-obᵈ² = ∀{lxs lys} (x : Ob⁻ lxs) (y : Ob⁺ lys) → ob-sig (ℓ-obᵈ² lxs lys)
 
 module _ {m n ℓ-ob⁻ ℓ-ob⁺} (Ob⁻ : ob-sig ℓ-ob⁻) (Ob⁺ : ob-sig ℓ-ob⁺) {ℓ-het} (Het : het-sig Ob⁻ Ob⁺ ℓ-het) where
     het-sigᵈ : ∀{m′ n′ ℓ-obᵈ⁻ ℓ-obᵈ⁺} (Ob[_]⁻ : ob-sigᵈ Ob⁻ ℓ-obᵈ⁻) (Ob[_]⁺ : ob-sigᵈ Ob⁺ ℓ-obᵈ⁺) (ℓ-hetᵈ : Levels m → Levels n → ℓ-sig² m′ n′)

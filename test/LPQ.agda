@@ -6,11 +6,11 @@ open import Prim.Kan
 
 open import Foundations.Quiver.Base
 open import Foundations.Quiver.Component.Base
-open import Foundations.Quiver.Lens.Bivariant
-open import Foundations.Quiver.Lens.Contravariant
-open import Foundations.Quiver.Lens.Covariant
+open import Foundations.Quiver.Lens.Extend
+open import Foundations.Quiver.Lens.Pull
+open import Foundations.Quiver.Lens.Push
+open import Foundations.Quiver.Path
 open import Foundations.Quiver.Total.Base
-open import Foundations.Quiver.Univalent
 
 open import Notation.Comp
 open import Notation.Lens.Bivariant

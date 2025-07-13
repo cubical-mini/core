@@ -1,9 +1,9 @@
 {-# OPTIONS --safe #-}
-module Foundations.Quiver.Lens.Covariant where
+module Foundations.Quiver.Lens.Push where
 
 open import Foundations.Quiver.Base
 
-open import Notation.Lens.Covariant
+open import Notation.Lens.Push
 open import Notation.Refl
 
 module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
@@ -23,6 +23,6 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   {F⁺ : ∀{ls} (t : Ob ls) → HQuiver-onω n Ob[ t ] (ℓ-homᶠ ls)}
   ⦃ _ : Reflω C ⦄ where instance
 
-  Disp⁺-Reflᵈ : ⦃ _ : Pushω C n Ob[_] Ob[_] ⦄ ⦃ _ : Lawful-Pushω C F⁺ ⦄ → Reflωᵈ C (Disp⁺ C F⁺)
+  Disp⁺-Reflᵈ : ⦃ _ : HPushω C n Ob[_] ⦄ ⦃ _ : Lawful-Pushω C F⁺ ⦄ → Reflωᵈ C (Disp⁺ C F⁺)
   Disp⁺-Reflᵈ .reflᵈ _ = push-refl
   {-# INCOHERENT Disp⁺-Reflᵈ #-} -- TODO check

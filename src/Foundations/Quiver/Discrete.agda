@@ -1,8 +1,8 @@
 {-# OPTIONS --safe --erased-cubical #-}
 module Foundations.Quiver.Discrete where
 
-open import Prim.Interval
-open import Prim.Kan
+open import Prim.Interval public
+open import Prim.Kan public
 
 open import Foundations.Quiver.Base
 
