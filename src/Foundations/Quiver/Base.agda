@@ -14,6 +14,10 @@ Levels : ℕ → Type
 Levels zero = ⊤
 Levels (suc n) = Level ×ₜ Levels n
 
+ℓ-split : ∀ m {m′} → Levels (m + m′) → Levels m ×ₜ Levels m′
+ℓ-split 0 ls = tt , ls
+ℓ-split (suc m) (l , ls) = let left , right = ℓ-split m ls in (l , left) , right
+
 -- object level adjustment
 ℓ-sig : ℕ → Type
 ℓ-sig n = Levels n → Level
@@ -36,6 +40,10 @@ record Quiver-onω m n {ℓ-ob⁻ ℓ-ob⁺} (Ob⁻ : ob-sig ℓ-ob⁻) (Ob⁺ :
   constructor mk-quiver-onω
   no-eta-equality
   field Het : het-sig Ob⁻ Ob⁺ ℓ-het
+
+  Ob-of⁻ = Ob⁻
+  Ob-of⁺ = Ob⁺
+
 {-# INLINE mk-quiver-onω #-}
 
 HQuiver-onω : ∀ m {ℓ-ob} (Ob : ob-sig ℓ-ob) (ℓ-hom : ℓ-sig² m m) → Typeω

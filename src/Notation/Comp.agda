@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Notation.Comp.Homo where
+module Notation.Comp where
 
 open import Foundations.Quiver.Base
 

@@ -3,7 +3,7 @@ module Foundations.Quiver.Lens.Push where
 
 open import Foundations.Quiver.Base
 
-open import Notation.Lens.Push
+open import Notation.Push
 open import Notation.Refl
 
 module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}

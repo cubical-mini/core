@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Notation.Lens.Profunctor where
+module Notation.Profunctor where
 
 open import Foundations.Quiver.Base
 
@@ -20,6 +20,12 @@ module _ {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-hom⁻ ℓ-hom⁺}
       dimap : {w : Ob⁻ lws} {x : Ob⁻ lxs} {y : Ob⁺ lys} {z : Ob⁺ lzs}
               (p : A.Hom w x) (q : B.Hom y z)
             → F x y lfs → G w z lfs
+
+    infix 300 _◁_▷_
+    _◁_▷_ : {w : Ob⁻ lws} {x : Ob⁻ lxs} {y : Ob⁺ lys} {z : Ob⁺ lzs}
+          → A.Hom w x → F x y lfs → B.Hom y z
+          →             G w z lfs
+    p ◁ α ▷ q = dimap p q α
 
   Profunctorω : Typeω
   Profunctorω = ∀{lws lxs lys lzs lfs} → Profunctor lws lxs lys lzs lfs
@@ -62,34 +68,6 @@ module _ {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-hom⁻ ℓ-hom⁺}
 
   HProfunctor = Profunctor A B k F F
   HProfunctorω = ∀{lws lxs lys lzs lfs} → HProfunctor lws lxs lys lzs lfs
-
-module _ {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-hom⁻ ℓ-hom⁺}
-  {Ob⁻ : ob-sig ℓ-ob⁻} {Ob⁺ : ob-sig ℓ-ob⁺}
-  {A : HQuiver-onω m Ob⁻ ℓ-hom⁻} (let module A = Quiver-onω A renaming (Het to Hom))
-  {B : HQuiver-onω n Ob⁺ ℓ-hom⁺} (let module B = Quiver-onω B renaming (Het to Hom))
-  {k} {ℓ-hetᶠ ℓ-hetᵍ : Levels m → Levels n → ℓ-sig k}
-  {F : ob-sigᵈ² Ob⁻ Ob⁺ ℓ-hetᶠ} {G : ob-sigᵈ² Ob⁻ Ob⁺ ℓ-hetᵍ} where
-
-  module _ {lws lxs lys lzs lfs} ⦃ _ : Profunctor A B k F G lws lxs lys lzs lfs ⦄ where
-    infix 300 _◁_▷_
-    _◁_▷_ : {w : Ob⁻ lws} {x : Ob⁻ lxs} {y : Ob⁺ lys} {z : Ob⁺ lzs}
-          → A.Hom w x → F x y lfs → B.Hom y z
-          →             G w z lfs
-    p ◁ α ▷ q = dimap p q α
-
-  module _ {lws lxs lys lfs} ⦃ _ : Profunctor A B k F G lws lxs lys lys lfs ⦄ ⦃ _ : Reflω B ⦄ where
-    infixr 300 _◁_
-    _◁_ : {w : Ob⁻ lws} {x : Ob⁻ lxs} {y : Ob⁺ lys}
-        → A.Hom w x → F x y lfs
-        →             G w y lfs
-    p ◁ α = p ◁ α ▷ refl
-
-  module _ {lxs lys lzs lfs} ⦃ _ : Profunctor A B k F G lxs lxs lys lzs lfs ⦄ ⦃ _ : Reflω A ⦄ where
-    infixl 300 _▷_
-    _▷_ : {x : Ob⁻ lxs} {y : Ob⁺ lys} {z : Ob⁺ lzs}
-        → F x y lfs → B.Hom y z
-        → G x z lfs
-    α ▷ q = refl ◁ α ▷ q
 
 module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   {C : HQuiver-onω m Ob ℓ-hom} (let module C = Quiver-onω C renaming (Het to Hom))

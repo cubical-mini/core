@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Notation.Lens.Extend where
+module Notation.Extend where
 
 open import Foundations.Quiver.Base
 

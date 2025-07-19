@@ -10,9 +10,8 @@ open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete
 
 open import Notation.Refl
-open import Notation.Lens.Pull
-open import Notation.Lens.Push
--- open import Notation.Lens.Divariant
+open import Notation.Pull
+open import Notation.Push
 
 funs-on : HQuiver-onω 1 (λ (ℓ , tt) → Type ℓ) _
 funs-on .Quiver-onω.Het A B = A → B
@@ -81,10 +80,50 @@ module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} (f : A → B) where
   γ : ∀{ℓw} {W : Type ℓw} → List W → Maybe W
   γ = push ⦃ bad-push ⦄ refl
 
-  γ-is-natural : (xs : List A) → push f (γ xs) ＝ γ (push f xs)
+  γ-is-natural : (xs : List A) → γ xs ▷ f ＝ γ (xs ▷ f)
   γ-is-natural [] = {!!}
   γ-is-natural (x ∷ []) = {!!}
   γ-is-natural (x ∷ x₁ ∷ xs) = {!!}
+
+data Vec {ℓ} (A : Type ℓ) : ℕ → Type ℓ where
+  []  : Vec A 0
+  _∷_ : ∀{n} → A → Vec A n → Vec A (suc n)
+
+vec-cast : ∀{ℓ}{A : Type ℓ} {m n} (p : m ＝ n) → Vec A m → Vec A n
+vec-cast {m = 0}     {n = 0}     _ xs = xs
+vec-cast {m = 0}     {n = suc n} p xs = {!!}
+vec-cast {m = suc m} {n = 0}     p xs = {!!}
+vec-cast {m = suc m} {n = suc n} p (x ∷ xs) = x ∷ vec-cast {!!} xs
+
+vec-map : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {n} (f : A → B) → Vec A n → Vec B n
+vec-map {n = 0}     _ _        = []
+vec-map {n = suc n} f (x ∷ xs) = f x ∷ vec-map f xs
+
+vec-map-lawful : ∀{ℓa} {A : Type ℓa} {n} (xs : Vec A n) → xs ＝ vec-map (λ x → x) xs
+vec-map-lawful [] = refl
+vec-map-lawful (x ∷ xs) i = x ∷ vec-map-lawful xs i
+
+vec-cast-lawful : ∀{ℓa} {A : Type ℓa} {n} (xs : Vec A n) → xs ＝ vec-cast refl xs
+vec-cast-lawful [] = refl
+vec-cast-lawful (x ∷ xs) i = x ∷ vec-cast-lawful xs i
+
+instance
+  push-vec-vec : ∀{n} → HPushω funs-on 0 (λ A _ → Vec A n)
+  push-vec-vec .push = vec-map
+
+  lawful-push-vec-vec : ∀{n} → Lawful-Pushω funs-on λ A → Disc (Vec A n)
+  lawful-push-vec-vec .push-refl = vec-map-lawful _
+
+  push-vec-vec′ : ∀{ℓ}{A : Type ℓ} → HPushω (Disc ℕ) 0 (λ n _ → Vec A n)
+  push-vec-vec′ .push = vec-cast
+
+  lawful-push-vec-vec′ : ∀{ℓ}{A : Type ℓ} → Lawful-Pushω (Disc ℕ) λ n → Disc (Vec A n)
+  lawful-push-vec-vec′ .push-refl = vec-cast-lawful _
+
+ex : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
+     {m n}(p : m ＝ n) (f : A → B)
+   → Vec A m → Vec B n
+ex p f xs = xs ▷ f ▷ p
 
   -- dimap-fun : Profunctorω funs-on funs-on 0 (λ A B _ → A → B) (λ A B _ → A → B)
   -- dimap-fun .dimap = λ z₁ z₂ z₃ z₄ → z₂ (z₃ (z₁ z₄))

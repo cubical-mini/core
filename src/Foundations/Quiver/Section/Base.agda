@@ -1,13 +1,13 @@
 {-# OPTIONS --safe #-}
-module Foundations.Quiver.Total.Base where
+module Foundations.Quiver.Section.Base where
 
 open import Foundations.Quiver.Base
 
 module _ {m ℓ-ob} (Ob : ob-sig ℓ-ob) {m′ ℓ-obᵈ} (Ob[_] : ob-sigᵈ Ob ℓ-obᵈ) where
 
-  ΣOb : (Σls : Levels (m + m′)) → Type _
-  ΣOb Σls = let ls , lsᵈ = ℓ-split m Σls in Σₜ (Ob ls) λ x → Ob[ x ] lsᵈ
-  {-# NOINLINE ΣOb #-}
+  ΠOb : (Πls : Levels (m + m′)) → Type _
+  ΠOb Πls = let ls , lsᵈ = ℓ-split m Πls in (x : Ob ls) → Ob[ x ] lsᵈ
+  {-# NOINLINE ΠOb #-}
 
 
 module _ {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-het} {Ob⁻ : ob-sig ℓ-ob⁻} {Ob⁺ : ob-sig ℓ-ob⁺}
@@ -16,10 +16,10 @@ module _ {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-het} {Ob⁻ : ob-sig ℓ-ob⁻} {Ob⁺ : o
   (D : Quiver-onωᵈ Ob⁻ Ob⁺ Het m′ n′ Ob[_]⁻ Ob[_]⁺ ℓ-hetᵈ) (open Quiver-onωᵈ D)
   {lxs lys} {x : Ob⁻ lxs} {y : Ob⁺ lys} where
 
-  ΣHet : ∀ {lxsᵈ lysᵈ} (x′ : Ob[ x ]⁻ lxsᵈ) (y′ : Ob[ y ]⁺ lysᵈ)
+  ΠHet : ∀ {lxsᵈ lysᵈ} (x′ : Ob[ x ]⁻ lxsᵈ) (y′ : Ob[ y ]⁺ lysᵈ)
        → Type (ℓ-het lxs lys ⊔ ℓ-hetᵈ lxs lys lxsᵈ lysᵈ)
-  ΣHet x′ y′ = Σₜ (Het x y) λ f → Het[ f ] x′ y′
-  {-# NOINLINE ΣHet #-}
+  ΠHet x′ y′ = (f : Het x y) → Het[ f ] x′ y′
+  {-# NOINLINE ΠHet #-}
 
 
 module _ {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-het} {Ob⁻ : ob-sig ℓ-ob⁻} {Ob⁺ : ob-sig ℓ-ob⁺}
@@ -27,5 +27,5 @@ module _ {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-het} {Ob⁻ : ob-sig ℓ-ob⁻} {Ob⁺ : o
   {m′ n′ ℓ-obᵈ⁻ ℓ-obᵈ⁺ ℓ-hetᵈ} {Ob[_]⁻ : ob-sigᵈ Ob⁻ ℓ-obᵈ⁻} {Ob[_]⁺ : ob-sigᵈ Ob⁺ ℓ-obᵈ⁺}
   (D : Quiver-onωᵈ Ob⁻ Ob⁺ Het m′ n′ Ob[_]⁻ Ob[_]⁺ ℓ-hetᵈ) (open Quiver-onωᵈ D) where
 
-  Σ : Quiver-onω (m + m′) (n + n′) (ΣOb Ob⁻ Ob[_]⁻) (ΣOb Ob⁺ Ob[_]⁺) _
-  Σ .Quiver-onω.Het x y = ΣHet C D (x .snd) (y .snd)
+  Π : Quiver-onω (m + m′) (n + n′) (ΠOb Ob⁻ Ob[_]⁻) (ΠOb Ob⁺ Ob[_]⁺) _
+  Π .Quiver-onω.Het f g = (x : Ob⁻ _) (y : Ob⁺ _) → ΠHet C D (f x) (g y)

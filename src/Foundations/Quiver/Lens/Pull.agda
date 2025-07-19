@@ -3,7 +3,7 @@ module Foundations.Quiver.Lens.Pull where
 
 open import Foundations.Quiver.Base
 
-open import Notation.Lens.Pull
+open import Notation.Pull
 open import Notation.Refl
 
 module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}

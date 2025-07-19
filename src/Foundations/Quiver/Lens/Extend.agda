@@ -3,9 +3,9 @@ module Foundations.Quiver.Lens.Extend where
 
 open import Foundations.Quiver.Base
 
-open import Notation.Lens.Extend
-open import Notation.Lens.Pull
-open import Notation.Lens.Push
+open import Notation.Extend
+open import Notation.Pull
+open import Notation.Push
 open import Notation.Refl
 
 module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
