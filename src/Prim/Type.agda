@@ -13,8 +13,7 @@ open import Agda.Primitive public
         ; lzero
         ; lsuc
         ; _⊔_ )
-  renaming ( Prop  to DIProp -- TODO disallow
-           ; Set   to Type
+  renaming ( Set   to Type
            ; Setω  to Typeω )
 
 level-of-type : {ℓ : Level} → Type ℓ → Level

@@ -8,7 +8,7 @@ open import Notation.Comp
 open import Notation.Refl
 open import Notation.Sym
 
-module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
+module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   {C : HQuiver-onω m Ob ℓ-hom} where instance
 
   Dual-Refl : ⦃ r : Reflω C ⦄ → Reflω (Op C)
@@ -21,9 +21,8 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   Dual-HComp ._∙_ p q = q ∙ p
 
 
-module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
-  (C : HQuiver-onω m Ob ℓ-hom)
-  {m′ ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ}
+module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} (C : HQuiver-onω m Ob ℓ-hom)
+  {m′ ℓ-obᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ} {ℓ-homᵈ}
   (D : HQuiver-onωᵈ Ob _ m′ Ob[_] ℓ-homᵈ) where instance
 
   Dual-Reflᵈ : ⦃ _ : Reflω C ⦄ ⦃ r′ : Reflωᵈ C D ⦄ → Reflωᵈ (Op C) (Opᵈ C D)

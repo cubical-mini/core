@@ -3,38 +3,39 @@ module Foundations.Quiver.Product where
 
 open import Foundations.Quiver.Base
 open import Foundations.Quiver.Const.Base
+open import Foundations.Quiver.Section.Base
 open import Foundations.Quiver.Total.Base
 
 -- binary product
-module _ {ma na ℓ-oba⁻ ℓ-oba⁺ ℓ-heta} {Oba⁻ : ob-sig ℓ-oba⁻} {Oba⁺ : ob-sig ℓ-oba⁺}
-  (A : Quiver-onω ma na Oba⁻ Oba⁺ ℓ-heta)
-  {mb nb ℓ-obb⁻ ℓ-obb⁺ ℓ-hetb} {Obb⁻ : ob-sig ℓ-obb⁻} {Obb⁺ : ob-sig ℓ-obb⁺}
-  (B : Quiver-onω mb nb Obb⁻ Obb⁺ ℓ-hetb) where
+module _ {ma ℓ-oba⁻} {Oba⁻ : ob-sig ℓ-oba⁻} {na ℓ-oba⁺} {Oba⁺ : ob-sig ℓ-oba⁺}
+  {ℓ-heta} (A : Quiver-onω ma Oba⁻ na Oba⁺ ℓ-heta)
+  {mb ℓ-obb⁻} {Obb⁻ : ob-sig ℓ-obb⁻} {nb ℓ-obb⁺} {Obb⁺ : ob-sig ℓ-obb⁺}
+  {ℓ-hetb} (B : Quiver-onω mb Obb⁻ nb Obb⁺ ℓ-hetb) where
 
   infixr 80 _×_
-  _×_ : Quiver-onω (ma + mb) (na + nb) (λ ls → Oba⁻ _ ×ₜ Obb⁻ _) (λ ls → Oba⁺ _ ×ₜ Obb⁺ _) _
+  _×_ : Quiver-onω (ma + mb) (λ ls → Oba⁻ _ ×ₜ Obb⁻ _) (na + nb) (λ ls → Oba⁺ _ ×ₜ Obb⁺ _) _
   _×_ = Σ A (Constᵈ A B)
 
 
 -- indexed product
 module _ {ℓa} (A : Type ℓa)
-  {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-het} {Ob⁻ : A → ob-sig ℓ-ob⁻} {Ob⁺ : A → ob-sig ℓ-ob⁺}
-  (B : (x : A) → Quiver-onω m n (Ob⁻ x) (Ob⁺ x) ℓ-het) where
+  {m ℓ-ob⁻} {Ob⁻ : A → ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : A → ob-sig ℓ-ob⁺}
+  {ℓ-het} (B : (x : A) → Quiver-onω m (Ob⁻ x) n (Ob⁺ x) ℓ-het) where
   private module B x = Quiver-onω (B x)
 
   -- take care, it's \prod, not \Pi
-  ∏ : Quiver-onω m n (λ ls → (x : A) → Ob⁻ x ls) (λ ls → (x : A) → Ob⁺ x ls) _
+  ∏ : Quiver-onω m (ΠOb (λ _ → A) Ob⁻) n (ΠOb (λ _ → A) Ob⁺) _
   ∏ .Quiver-onω.Het P Q = (x : A) → B.Het x (P x) (Q x)
 
-  -- TODO what is it?
-  -- mystery : Quiver-onω m n (λ ls → (x : A) → Ob⁻ x ls) (λ ls → (x : A) → Ob⁺ x ls) _
+  -- -- TODO what is it?
+  -- mystery : Quiver-onω m (ΠOb (λ _ → A) Ob⁻) n (ΠOb (λ _ → A) Ob⁺) _
   -- mystery .Quiver-onω.Het P Q = Σₜ A (λ x → B.Het x (P x) (Q x))
 
 -- cotensor
 module _ {ℓa} (A : Type ℓa)
   {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-het} {Ob⁻ : ob-sig ℓ-ob⁻} {Ob⁺ : ob-sig ℓ-ob⁺}
-  (B : Quiver-onω m n Ob⁻ Ob⁺ ℓ-het) (open Quiver-onω B) where
+  (B : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het) (open Quiver-onω B) where
 
   infixr 10 _⋔_
-  _⋔_ : Quiver-onω m n (λ ls → A → Ob⁻ ls) (λ ls → A → Ob⁺ ls) _
+  _⋔_ : Quiver-onω m (λ ls → A → Ob⁻ ls) n (λ ls → A → Ob⁺ ls) _
   _⋔_ = ∏ A (λ _ → B)

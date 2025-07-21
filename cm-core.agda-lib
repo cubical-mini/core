@@ -8,8 +8,9 @@ flags:
   --exact-split
   --guardedness
   --hidden-argument-puns
-  --no-import-sorts
   --postfix-projections
+  --no-prop
+  --no-import-sorts
   --no-qualified-instances
 
   -Werror

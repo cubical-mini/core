@@ -9,8 +9,8 @@ open import Notation.Comp
 open import Notation.Refl
 open import Notation.Sym
 
-module _ {m ℓ-ob ℓ-het} {Ob : ob-sig ℓ-ob} {C : HQuiver-onω m Ob ℓ-het}
-  {ℓ-homᵈ} {D : Quiver-onωᵈ Ob Ob _ 0 0 (λ _ _ → ⊤) (λ _ _ → ⊤) ℓ-homᵈ} where instance
+module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} ℓ-hom {C : HQuiver-onω m Ob ℓ-hom}
+  {ℓ-homᵈ} {D : HQuiver-onωᵈ Ob _ 0 (λ _ _ → ⊤) ℓ-homᵈ} where instance
 
   Wide-Refl : ⦃ _ : Reflω C ⦄ ⦃ _ : Reflωᵈ C D ⦄ → Reflω (Wide C D)
   Wide-Refl .refl .fst = refl

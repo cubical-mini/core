@@ -7,8 +7,7 @@ open import Notation.Refl
 
 module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
-  n
-  {ℓ-obᶠ : Levels m → Levels m → ℓ-sig n}
+  k {ℓ-obᶠ : ℓ-sig 3 (m , m , k , _)}
   (Hom[_] : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → ob-sig (ℓ-obᶠ lxs lys))
   ⦃ _ : Reflω C ⦄ where
 
@@ -30,11 +29,10 @@ open Extend ⦃ ... ⦄ public
 
 module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
-  {n}
-  {ℓ-obᶠ : Levels m → Levels m → ℓ-sig n} {ℓ-homᶠ : Levels m → Levels m → ℓ-sig² n n}
+  {k} {ℓ-obᶠ : ℓ-sig 3 (m , m , k , _)} {ℓ-homᶠ : ℓ-sig 4 (m , m , k , k , _)}
   {Hom[_] : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → ob-sig (ℓ-obᶠ lxs lys)}
-  (F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} (p : Hom x y) → HQuiver-onω n Hom[ p ] (ℓ-homᶠ lxs lys))
-  ⦃ _ : Reflω C ⦄ ⦃ _ : Extendω C n Hom[_] ⦄ where
+  (F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} (p : Hom x y) → HQuiver-onω k Hom[ p ] (ℓ-homᶠ lxs lys))
+  ⦃ _ : Reflω C ⦄ ⦃ _ : Extendω C k Hom[_] ⦄ where
   private module F {lxs} {lys} x y p = Quiver-onω (F {lxs} {lys} {x} {y} p)
 
   record Lawful-Extend ls lfs : Type (ℓ-ob ls ⊔ ℓ-obᶠ ls ls lfs ⊔ ℓ-homᶠ ls ls lfs lfs) where

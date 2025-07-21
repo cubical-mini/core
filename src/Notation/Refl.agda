@@ -23,7 +23,7 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   (D : HQuiver-onωᵈ Ob Hom m′ Ob[_] ℓ-homᵈ) (open Quiver-onωᵈ D renaming (Het[_] to Hom[_]))
   ⦃ _ : Reflω C ⦄ where
 
-  record Reflᵈ ls lsᵈ : Typeω where
+  record Reflᵈ ls lsᵈ : Type (ℓ-ob ls ⊔ ℓ-obᵈ ls lsᵈ ⊔ ℓ-homᵈ ls ls lsᵈ lsᵈ) where
     no-eta-equality
     field reflᵈ : {x : Ob ls} (x′ : Ob[ x ] lsᵈ) → Hom[ refl ] x′ x′
 

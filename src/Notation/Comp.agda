@@ -3,7 +3,8 @@ module Notation.Comp where
 
 open import Foundations.Quiver.Base
 
-module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob} (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom)) where
+module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
+  (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom)) where
 
   record HComp lxs lys lzs : Type
     ( ℓ-ob lxs ⊔ ℓ-ob lys ⊔ ℓ-ob lzs ⊔ ℓ-hom lxs lys
@@ -20,8 +21,10 @@ open HComp ⦃ ... ⦄ public
 {-# DISPLAY HComp._∙_ _ f g = f ∙ g #-}
 
 
-module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob} (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
-  {m′ ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ} (D : HQuiver-onωᵈ Ob Hom m′ Ob[_] ℓ-homᵈ) (open Quiver-onωᵈ D renaming (Het[_] to Hom[_]))
+module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
+  (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
+  {m′ ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ}
+  (D : HQuiver-onωᵈ Ob Hom m′ Ob[_] ℓ-homᵈ) (open Quiver-onωᵈ D renaming (Het[_] to Hom[_]))
   ⦃ _ : HCompω C ⦄ where
 
   record HCompᵈ lxs lys lzs lxsᵈ lysᵈ lzsᵈ : Type
