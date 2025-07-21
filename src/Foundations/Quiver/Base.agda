@@ -36,6 +36,9 @@ record Quiver-onω m {ℓ-ob⁻} (Ob⁻ : ob-sig ℓ-ob⁻) n {ℓ-ob⁺} (Ob⁺
   no-eta-equality
   field Het : het-sig Ob⁻ Ob⁺ ℓ-het
 
+  In  = Ob⁻
+  Out = Ob⁺
+
 {-# INLINE mk-quiver-onω #-}
 
 HQuiver-onω : ∀ m {ℓ-ob} (Ob : ob-sig ℓ-ob) (ℓ-hom : ℓ-sig 2 (m , m , _)) → Typeω

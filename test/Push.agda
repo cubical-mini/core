@@ -1,25 +1,16 @@
-{-# OPTIONS --safe --erased-cubical #-}
+{-# OPTIONS --safe #-}
 module Push where
 
 open import Prim.Data.List
 open import Prim.Data.Maybe
-open import Prim.Interval
-open import Prim.Kan
 
 open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete
+open import Foundations.Quiver.Type
 
-open import Notation.Refl
 open import Notation.Pull
 open import Notation.Push
-
-funs-on : HQuiver-onω 1 (λ (ℓ , tt) → Type ℓ) _
-funs-on .Quiver-onω.Het A B = A → B
-
-
-instance
-  funs-refl : Reflω funs-on
-  funs-refl .refl x = x
+open import Notation.Refl
 
 lmap : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
      → (A → B) → List A → List B
@@ -28,30 +19,30 @@ lmap f (x ∷ xs) = f x ∷ lmap f xs
 
 
 instance
-  push-list-list : HPushω funs-on 0 (λ A _ → List A)
+  push-list-list : HPushω Funs 0 (λ A _ → List A)
   push-list-list .push = lmap
 
-  lawful-push-list-list : Lawful-Pushω funs-on (λ A → Disc (List A))
+  lawful-push-list-list : Lawful-Pushω Funs (λ A → Disc (List A))
   lawful-push-list-list .push-refl {x = A} {u = xs} = {!!}
 
-  push-maybe-maybe : HPushω funs-on 0 (λ A _ → Maybe A)
+  push-maybe-maybe : HPushω Funs 0 (λ A _ → Maybe A)
   push-maybe-maybe .push p (just x) = just (p x)
   push-maybe-maybe .push _ nothing  = nothing
 
-  lawful-push-maybe-maybe : Lawful-Pushω funs-on (λ A → Disc (Maybe A))
+  lawful-push-maybe-maybe : Lawful-Pushω Funs (λ A → Disc (Maybe A))
   lawful-push-maybe-maybe .push-refl {u = just x}  _ = just x
   lawful-push-maybe-maybe .push-refl {u = nothing} _ = nothing
 
-  push-maybe-list : Pushω funs-on 0 (λ A _ → Maybe A) (λ A _ → List A)
+  push-maybe-list : Pushω Funs 0 (λ A _ → Maybe A) (λ A _ → List A)
   push-maybe-list .push f (just x) = f x ∷ []
   push-maybe-list .push _ nothing = []
 
-  push-list-maybe : Pushω funs-on 0 (λ A _ → List A) (λ A _ → Maybe A)
+  push-list-maybe : Pushω Funs 0 (λ A _ → List A) (λ A _ → Maybe A)
   push-list-maybe .push f [] = nothing
   push-list-maybe .push f (x ∷ _) = just (f x)
 
   -- lol it's not really bad
-  bad-push : Pushω funs-on 0 (λ A _ → List A) (λ A _ → Maybe A)
+  bad-push : Pushω Funs 0 (λ A _ → List A) (λ A _ → Maybe A)
   bad-push .push f [] = nothing
   bad-push .push f (x ∷ []) = just (f x)
   bad-push .push f (x ∷ y ∷ xs) = just (f y)
@@ -81,9 +72,9 @@ module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} (f : A → B) where
   γ = push ⦃ bad-push ⦄ refl
 
   γ-is-natural : (xs : List A) → γ xs ▷ f ＝ γ (xs ▷ f)
-  γ-is-natural [] = {!!}
-  γ-is-natural (x ∷ []) = {!!}
-  γ-is-natural (x ∷ x₁ ∷ xs) = {!!}
+  γ-is-natural [] = refl
+  γ-is-natural (x ∷ []) = refl
+  γ-is-natural (x ∷ x₁ ∷ xs) = refl
 
 data Vec {ℓ} (A : Type ℓ) : ℕ → Type ℓ where
   []  : Vec A 0
@@ -108,10 +99,10 @@ vec-cast-lawful [] = refl
 vec-cast-lawful (x ∷ xs) i = x ∷ vec-cast-lawful xs i
 
 instance
-  push-vec-vec : ∀{n} → HPushω funs-on 0 (λ A _ → Vec A n)
+  push-vec-vec : ∀{n} → HPushω Funs 0 (λ A _ → Vec A n)
   push-vec-vec .push = vec-map
 
-  lawful-push-vec-vec : ∀{n} → Lawful-Pushω funs-on λ A → Disc (Vec A n)
+  lawful-push-vec-vec : ∀{n} → Lawful-Pushω Funs λ A → Disc (Vec A n)
   lawful-push-vec-vec .push-refl = vec-map-lawful _
 
   push-vec-vec′ : ∀{ℓ}{A : Type ℓ} → HPushω (Disc ℕ) 0 (λ n _ → Vec A n)
@@ -124,30 +115,3 @@ ex : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
      {m n}(p : m ＝ n) (f : A → B)
    → Vec A m → Vec B n
 ex p f xs = xs ▷ f ▷ p
-
-  -- dimap-fun : Profunctorω funs-on funs-on 0 (λ A B _ → A → B) (λ A B _ → A → B)
-  -- dimap-fun .dimap = λ z₁ z₂ z₃ z₄ → z₂ (z₃ (z₁ z₄))
-
-  -- dimap-lawful : Lawful-Profunctorω funs-on funs-on (λ A B → Disc (A → B))
-  -- dimap-lawful .dimap-refl {u} _ = u
-
--- module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
---   (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
---   n
---   {ℓ-obᶠ⁻ ℓ-obᶠ⁺ : Levels m → ℓ-sig n}
---   {ℓ-hetᶠ : Levels m → ℓ-sig² n n}
---   {Ob[_]⁻ : ∀{ls} → Ob ls → ob-sig (ℓ-obᶠ⁻ ls)}
---   {Ob[_]⁺ : ∀{ls} → Ob ls → ob-sig (ℓ-obᶠ⁺ ls)}
---   (F : ∀{ls} (t : Ob ls) → Quiver-onω n n Ob[ t ]⁻ Ob[ t ]⁺ (ℓ-hetᶠ ls))
---   ⦃ _ : Reflω C ⦄
---   ⦃ _ : Pullω C n Ob[_]⁻ Ob[_]⁺ ⦄ ⦃ _ : Lawful-Pullω C F ⦄
---   ⦃ _ : Pushω C n Ob[_]⁻ Ob[_]⁺ ⦄ ⦃ _ : Lawful-Pushω C F ⦄
---   (φ⁻ : ∀{ls lsᶠ} {x : Ob ls} → Ob[ x ]⁻ lsᶠ → Ob[ x ]⁻ lsᶠ)
---   (φ⁺ : ∀{ls lsᶠ} {x : Ob ls} → Ob[ x ]⁺ lsᶠ → Ob[ x ]⁺ lsᶠ)
---   where
---   private module F {ls} t = Quiver-onω (F {ls} t)
-
---   -- lax paranaturality
---   Paranatural : ∀{ls lsᵈ} {x : Ob ls} (p : Hom x x) (d₀ : Ob[ x ]⁻ lsᵈ) (d₁ : Ob[ x ]⁺ lsᵈ) → Type (ℓ-hetᶠ ls lsᵈ lsᵈ)
---   Paranatural {x} p d₀ d₁ = F.Het x (pull p d₁) (push p d₀)
---                           → F.Het x (pull p (φ⁺ d₁)) (push p (φ⁻ d₀))

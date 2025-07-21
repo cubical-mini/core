@@ -5,8 +5,8 @@ open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete
 open import Foundations.Quiver.Dual
 
-open import Notation.Lens.Covariant
-open import Notation.Lens.Divariant
+open import Notation.Profunctor
+open import Notation.Push
 open import Notation.Refl
 
 data _≤_ : ℕ → ℕ → Type where
@@ -25,7 +25,7 @@ LTE : HQuiver-onω 0 (λ _ → ℕ) λ _ _ → lzero
 LTE .Quiver-onω.Het = _≤_
 
 instance
-  ≤-Profunctor : HProfunctorω LTE LTE LTE
+  ≤-Profunctor : HProfunctorω LTE LTE 0 (λ x y _ → x ≤ y)
   ≤-Profunctor .dimap = ≤-double-trans
 
   ≤-Refl : Reflω LTE
@@ -43,11 +43,11 @@ fin-cast-≤ (s≤ _) fzero = fzero
 fin-cast-≤ (s≤ p) (fsuc k) = fsuc (fin-cast-≤ p k)
 
 instance
-  Fin-Push : HPushω LTE Fin
+  Fin-Push : HPushω LTE 0 (λ n _ → Fin n)
   Fin-Push .push = fin-cast-≤
 
-  Fin-Profunctor : HProfunctorω LTE LTE Fin-Funs-on
+  Fin-Profunctor : HProfunctorω LTE LTE 0 (λ m n _ → Fin m → Fin n)
   Fin-Profunctor .dimap p q f kw = q <$> f (p <$> kw)
 
 test : Fin 2 → Fin 3
-test = s≤ (s≤ z≤) ∙∙ fsuc ∙∙ s≤ (s≤ (s≤ z≤))
+test = s≤ (s≤ z≤) ◁ fsuc ▷ s≤ (s≤ (s≤ z≤))
