@@ -12,5 +12,5 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig 
   ⦃ u : Underlying C ⦄ where instance
 
   Wide-Underlying : Underlying (Wide D)
-  Wide-Underlying = mk-underlying (u .Underlying.⌞_⌟⁻) (u .Underlying.⌞_⌟⁺)
+  Wide-Underlying = mk-underlying (u .Underlying.⌞_⌟⁻) (u .Underlying.⌞_⌟⁺) (λ f → u .Underlying.⌞_⌟₁ (f .fst))
   {-# INCOHERENT Wide-Underlying #-}

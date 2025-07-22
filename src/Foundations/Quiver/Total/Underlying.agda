@@ -13,4 +13,4 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig 
   ⦃ _ : Underlying C ⦄ where instance
 
   Σ-Underlying : Underlying Σ[ D ]
-  Σ-Underlying = mk-underlying (λ x → ⌞ x .fst ⌟⁻) (λ y → ⌞ y .fst ⌟⁺)
+  Σ-Underlying = mk-underlying (λ x → ⌞ x .fst ⌟⁻) (λ y → ⌞ y .fst ⌟⁺) (λ f → ⌞ f .fst ⌟₁)
