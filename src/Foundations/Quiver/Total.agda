@@ -5,3 +5,4 @@ open import Foundations.Quiver.Total.Base public
 
 import Foundations.Quiver.Total.Groupoid
 module Groupoid = Foundations.Quiver.Total.Groupoid
+open import Foundations.Quiver.Total.Underlying public
