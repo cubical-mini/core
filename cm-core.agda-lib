@@ -2,7 +2,7 @@ name: cm-core-0.1
 include: src
 depend:
 flags:
-  --cubical-compatible
+  --erased-cubical
   --erasure
   --erased-matches
   --exact-split

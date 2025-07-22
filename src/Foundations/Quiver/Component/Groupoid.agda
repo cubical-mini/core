@@ -13,7 +13,7 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   ⦃ _ : Reflω C ⦄ ⦃ _ : Reflωᵈ D ⦄ where instance
 
   Component-Refl : ∀{ls} {t : Ob ls} → Reflω (Component D t) -- canonical way
-  Component-Refl .refl = reflᵈ _
+  Component-Refl .refl = reflᵈ
   {-# INCOHERENT Component-Refl #-} -- TODO is it really necessary?
 
   -- TODO Component-Sym, Component-Comp

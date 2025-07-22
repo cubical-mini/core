@@ -24,5 +24,5 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   ⦃ _ : Reflω C ⦄ where instance
 
   Disp⁻-Reflᵈ : ⦃ _ : HPullω C k F ⦄ ⦃ _ : Lawful-Pullω C α⁻ ⦄ → Reflωᵈ (Disp⁻ C α⁻)
-  Disp⁻-Reflᵈ .reflᵈ _ = pull-refl
+  Disp⁻-Reflᵈ .reflᵈ = pull-refl
   {-# INCOHERENT Disp⁻-Reflᵈ #-} -- TODO check

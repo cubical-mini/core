@@ -14,7 +14,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} ℓ-hom {C : HQuiver-onω m Ob ℓ-hom}
 
   Wide-Refl : ⦃ _ : Reflω C ⦄ ⦃ _ : Reflωᵈ D ⦄ → Reflω (Wide D)
   Wide-Refl .refl .fst = refl
-  Wide-Refl .refl .snd = reflᵈ _
+  Wide-Refl .refl .snd = reflᵈ
 
   Wide-Sym : ⦃ _ : Symω C ⦄ ⦃ _ : Symωᵈ D ⦄ → Symω (Wide D)
   Wide-Sym .sym p .fst = sym  (p .fst)

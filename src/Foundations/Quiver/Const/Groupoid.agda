@@ -14,7 +14,7 @@ module _ {ma ℓ-oba ℓ-homa} {Oba : ob-sig ℓ-oba}
   {B : HQuiver-onω mb Obb ℓ-homb} where instance
 
   Const-Reflᵈ : ⦃ _ : Reflω A ⦄ ⦃ _ : Reflω B ⦄ → Reflωᵈ (Const A B)
-  Const-Reflᵈ .reflᵈ _ = refl
+  Const-Reflᵈ .reflᵈ = refl
 
   Const-Symᵈ : ⦃ _ : Symω A ⦄ ⦃ _ : Symω B ⦄ → Symωᵈ (Const A B)
   Const-Symᵈ .symᵈ = sym

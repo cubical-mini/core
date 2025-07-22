@@ -15,7 +15,7 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
 
   Σ-Refl : ⦃ _ : Reflω C ⦄ ⦃ _ : Reflωᵈ D ⦄ → Reflω (Σ C D)
   Σ-Refl .refl .fst = refl
-  Σ-Refl .refl .snd = reflᵈ _
+  Σ-Refl .refl .snd = reflᵈ
 
   Σ-Sym : ⦃ _ : Symω C ⦄ ⦃ _ : Symωᵈ D ⦄ → Symω (Σ C D)
   Σ-Sym .sym p .fst = sym  (p .fst)

@@ -63,5 +63,5 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   ⦃ _ : Reflω C ⦄ ⦃ _ : Extendω C k F ⦄ ⦃ _ : Lawful-Extendω C α ⦄ where instance
 
   Disp±-Reflᵈ : Reflωᵈ (Disp± C α)
-  Disp±-Reflᵈ .reflᵈ _ = extend-refl
+  Disp±-Reflᵈ .reflᵈ = extend-refl
   {-# INCOHERENT Disp±-Reflᵈ #-} -- TODO check

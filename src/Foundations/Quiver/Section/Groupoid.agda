@@ -17,6 +17,6 @@ module _ {ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   Π-Refl : ⦃ _ : Reflω C ⦄ ⦃ _ : Reflωᵈ D ⦄
            ⦃ _ : {f : (x : Ob _) → Ob[ x ] _} → Extendω C 0 λ {x = x} {y = y} p _ → Hom[ p ] (f x) (f y) ⦄
          → Reflω (Π C D)
-  Π-Refl .refl {x = f} u v p = extend-r p (reflᵈ (f v))
+  Π-Refl .refl {x = f} u v p = extend-r p (reflᵈ {x′ = f v})
 
 {-# INCOHERENT Π-Refl #-}

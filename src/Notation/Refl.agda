@@ -25,7 +25,7 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
 
   record Reflᵈ ls lsᵈ : Type (ℓ-ob ls ⊔ ℓ-obᵈ ls lsᵈ ⊔ ℓ-homᵈ ls ls lsᵈ lsᵈ) where
     no-eta-equality
-    field reflᵈ : {x : Ob ls} (x′ : Ob[ x ] lsᵈ) → Hom[ refl ] x′ x′
+    field reflᵈ : {x : Ob ls} {x′ : Ob[ x ] lsᵈ} → Hom[ refl ] x′ x′
 
   Reflωᵈ = ∀{ls lsᵈ} → Reflᵈ ls lsᵈ
 
