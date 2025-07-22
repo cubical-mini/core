@@ -18,12 +18,12 @@ open import Notation.Refl
 open import Notation.Sym
 
 
-instance
-  Path-Sym : ∀{ℓ} {A : Type ℓ} → Symω (Disc A)
-  Path-Sym .sym p i = p (~ i)
+-- instance
+--   Path-Sym : ∀{ℓ} {A : Type ℓ} → Symω (Disc A)
+--   Path-Sym .sym p i = p (~ i)
 
-  Path-Comp : ∀{ℓ} {A : Type ℓ} → HCompω (Disc A)
-  Path-Comp = {!!}
+--   Path-Comp : ∀{ℓ} {A : Type ℓ} → HCompω (Disc A)
+--   Path-Comp = {!!}
 
 --   Path-Push-Path : ∀{ℓa ℓb} {A : Type ℓa} {B : A → Type ℓb}
 --                  → Pushω (Disc A) (λ x → Paths (B x))

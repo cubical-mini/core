@@ -14,7 +14,7 @@ module _ {ma ℓ-oba⁻} {Oba⁻ : ob-sig ℓ-oba⁻} {na ℓ-oba⁺} {Oba⁺ : 
 
   infixr 80 _×_
   _×_ : Quiver-onω (ma + mb) (λ ls → Oba⁻ _ ×ₜ Obb⁻ _) (na + nb) (λ ls → Oba⁺ _ ×ₜ Obb⁺ _) _
-  _×_ = Σ A (Const A B)
+  _×_ = Σ[ Const A B ]
 
 
 -- indexed product

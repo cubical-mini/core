@@ -16,7 +16,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   ⦃ _ : Reflω C ⦄ where
   private module α {lxs} {lys} x y p = Quiver-onω (α {lxs} {lys} {x} {y} p)
 
-  Disp± : ⦃ _ : Extendω C k F ⦄ → HQuiver-onωᵈ Ob Hom k (λ t → F refl) _
+  Disp± : ⦃ _ : Extendω C k F ⦄ → HQuiver-onωᵈ C k (λ t → F refl) _
   Disp± .Quiver-onωᵈ.Het[_] {x} {y} p u v = α.Het x y p (extend-r p v) (extend-l p u)
 
 
@@ -62,6 +62,6 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   {α : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} (p : Hom x y) → HQuiver-onω k (F p) (ℓ-homᶠ lxs lys)}
   ⦃ _ : Reflω C ⦄ ⦃ _ : Extendω C k F ⦄ ⦃ _ : Lawful-Extendω C α ⦄ where instance
 
-  Disp±-Reflᵈ : Reflωᵈ C (Disp± C α)
+  Disp±-Reflᵈ : Reflωᵈ (Disp± C α)
   Disp±-Reflᵈ .reflᵈ _ = extend-refl
   {-# INCOHERENT Disp±-Reflᵈ #-} -- TODO check

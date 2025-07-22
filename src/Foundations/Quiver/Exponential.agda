@@ -12,4 +12,4 @@ module _ {ma ℓ-oba⁻} {Oba⁻ : ob-sig ℓ-oba⁻} {na ℓ-oba⁺} {Oba⁺ : 
 
   infixr 0 _⇒_
   _⇒_ : Quiver-onω (ma + mb) (λ ls → Oba⁻ _ → Obb⁻ _) (na + nb) (λ ls → Oba⁺ _ → Obb⁺ _) _
-  _⇒_ = Π A (Const A B)
+  _⇒_ = Π[ Const A B ]

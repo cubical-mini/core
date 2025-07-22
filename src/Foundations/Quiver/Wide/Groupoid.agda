@@ -10,17 +10,17 @@ open import Notation.Refl
 open import Notation.Sym
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} ℓ-hom {C : HQuiver-onω m Ob ℓ-hom}
-  {ℓ-homᵈ} {D : HQuiver-onωᵈ Ob _ 0 (λ _ _ → ⊤) ℓ-homᵈ} where instance
+  {ℓ-homᵈ} {D : HQuiver-onωᵈ C 0 (λ _ _ → ⊤) ℓ-homᵈ} where instance
 
-  Wide-Refl : ⦃ _ : Reflω C ⦄ ⦃ _ : Reflωᵈ C D ⦄ → Reflω (Wide C D)
+  Wide-Refl : ⦃ _ : Reflω C ⦄ ⦃ _ : Reflωᵈ D ⦄ → Reflω (Wide D)
   Wide-Refl .refl .fst = refl
   Wide-Refl .refl .snd = reflᵈ _
 
-  Wide-Sym : ⦃ _ : Symω C ⦄ ⦃ _ : Symωᵈ C D ⦄ → Symω (Wide C D)
+  Wide-Sym : ⦃ _ : Symω C ⦄ ⦃ _ : Symωᵈ D ⦄ → Symω (Wide D)
   Wide-Sym .sym p .fst = sym  (p .fst)
   Wide-Sym .sym p .snd = symᵈ (p .snd)
 
-  Wide-HComp : ⦃ _ : HCompω C ⦄ ⦃ _ : HCompωᵈ C D ⦄ → HCompω (Wide C D)
+  Wide-HComp : ⦃ _ : HCompω C ⦄ ⦃ _ : HCompωᵈ D ⦄ → HCompω (Wide D)
   Wide-HComp ._∙_ p q .fst = p .fst ∙ q .fst
   Wide-HComp ._∙_ p q .snd = p .snd ∙ᵈ q .snd
 

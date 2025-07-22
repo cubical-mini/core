@@ -8,7 +8,7 @@ open import Notation.Refl
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
   {m′ ℓ-obᵈ⁻} {Ob[_]⁻ : ob-sigᵈ Ob ℓ-obᵈ⁻} {n′ ℓ-obᵈ⁺} {Ob[_]⁺ : ob-sigᵈ Ob ℓ-obᵈ⁺}
-  {ℓ-hetᵈ} (D : SQuiver-onωᵈ Ob Hom m′ Ob[_]⁻ n′ Ob[_]⁺ ℓ-hetᵈ) (open Quiver-onωᵈ D)
+  {ℓ-hetᵈ} (D : SQuiver-onωᵈ C m′ Ob[_]⁻ n′ Ob[_]⁺ ℓ-hetᵈ) (open Quiver-onωᵈ D)
   ⦃ _ : Reflω C ⦄ where
 
   module _ {ls} (t : Ob ls) where

@@ -58,7 +58,8 @@ module _ {m ℓ-ob⁻} (Ob⁻ : ob-sig ℓ-ob⁻) {n ℓ-ob⁺} (Ob⁺ : ob-sig 
     het-sigᵈ Ob[_]⁻ Ob[_]⁺ ℓ-hetᵈ = ∀{lxs lys} {x : Ob⁻ lxs} {y : Ob⁺ lys} (f : Het x y)
                                     {lxsᵈ lysᵈ} (x′ : Ob[ x ]⁻ lxsᵈ) (y′ : Ob[ y ]⁺ lysᵈ) → Type (ℓ-hetᵈ lxs lys lxsᵈ lysᵈ)
 
-module _ {m n ℓ-ob⁻ ℓ-ob⁺} (Ob⁻ : ob-sig ℓ-ob⁻) (Ob⁺ : ob-sig ℓ-ob⁺) {ℓ-het} (Het : het-sig Ob⁻ Ob⁺ ℓ-het) where
+module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-het}
+  (C : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het) (open Quiver-onω C) where
     record Quiver-onωᵈ m′ {ℓ-obᵈ⁻} (Ob[_]⁻ : ob-sigᵈ Ob⁻ ℓ-obᵈ⁻) n′ {ℓ-obᵈ⁺} (Ob[_]⁺ : ob-sigᵈ Ob⁺ ℓ-obᵈ⁺)
       (ℓ-hetᵈ : ℓ-sig 4 (m , n , m′ , n′ , _)) : Typeω where
       constructor mk-quiver-onωᵈ
@@ -66,11 +67,11 @@ module _ {m n ℓ-ob⁻ ℓ-ob⁺} (Ob⁻ : ob-sig ℓ-ob⁻) (Ob⁺ : ob-sig �
       field Het[_] : het-sigᵈ Ob⁻ Ob⁺ Het Ob[_]⁻ Ob[_]⁺ ℓ-hetᵈ
     {-# INLINE mk-quiver-onωᵈ #-}
 
-module _ {m ℓ-ob} (Ob : ob-sig ℓ-ob) {ℓ-hom} (Hom : het-sig Ob Ob ℓ-hom) where
+module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom)) where
   -- base is homogeneous but display is heterogeneous
   SQuiver-onωᵈ : ∀ m′ {ℓ-obᵈ⁻} (Ob[_]⁻ : ob-sigᵈ Ob ℓ-obᵈ⁻) n′ {ℓ-obᵈ⁺} (Ob[_]⁺ : ob-sigᵈ Ob ℓ-obᵈ⁺)
                  (ℓ-homᵈ : ℓ-sig 4 (m , m , m′ , n′ , _)) → Typeω
-  SQuiver-onωᵈ m′ Ob[_]⁻ n′ Ob[_]⁺ = Quiver-onωᵈ Ob Ob Hom m′ Ob[_]⁻ n′ Ob[_]⁺
+  SQuiver-onωᵈ m′ Ob[_]⁻ n′ Ob[_]⁺ = Quiver-onωᵈ C m′ Ob[_]⁻ n′ Ob[_]⁺
   {-# NOINLINE SQuiver-onωᵈ #-}
 
   -- fully homogeneous

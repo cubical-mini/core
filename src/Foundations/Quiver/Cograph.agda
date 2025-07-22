@@ -13,11 +13,11 @@ module _ {m} {ℓ-ob : ℓ-sig 1 (m , _)} (Ob⁻ Ob⁺ : ob-sig ℓ-ob) where
   private module 𝐼 = Quiver-onω 𝐼 renaming (Het to Hom)
 
   Arrows : ∀ ℓ-het → Typeω
-  Arrows ℓ-het = HQuiver-onωᵈ 𝐼.Out 𝐼.Hom m Choose λ _ _ → ℓ-het
+  Arrows ℓ-het = HQuiver-onωᵈ 𝐼 m Choose λ _ _ → ℓ-het
 
 module _ {m} {ℓ-ob : ℓ-sig 1 (m , _)} {Ob⁻ Ob⁺ : ob-sig ℓ-ob} {ℓ-het} (D : Arrows Ob⁻ Ob⁺ ℓ-het) where
   Cograph : HQuiver-onω m _ _
-  Cograph = Σ 𝐼 D
+  Cograph = Σ[ D ]
 
 module _ {m ℓ-ob ℓ-het}
   {Ob⁻ : ob-sig ℓ-ob} (A : HQuiver-onω m Ob⁻ ℓ-het)

@@ -18,9 +18,9 @@ open Sym ⦃ ... ⦄ public
 
 
 module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
-  (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
+  {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
   {m′ ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ}
-  (D : HQuiver-onωᵈ Ob Hom m′ Ob[_] ℓ-homᵈ) (open Quiver-onωᵈ D renaming (Het[_] to Hom[_]))
+  (D : HQuiver-onωᵈ C m′ Ob[_] ℓ-homᵈ) (open Quiver-onωᵈ D renaming (Het[_] to Hom[_]))
   ⦃ _ : Symω C ⦄ where
 
   record Symᵈ lxs lys lxsᵈ lysᵈ : Type

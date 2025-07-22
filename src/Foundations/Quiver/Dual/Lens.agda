@@ -15,10 +15,10 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig 
   {k ℓ-obᶠ ℓ-obᵍ} {F : ob-sigᵈ Ob⁻ ℓ-obᶠ} {G : ob-sigᵈ Ob⁺ ℓ-obᵍ}
   where instance
 
-  Dual-Push : ⦃ _ : Pullω C k F G ⦄ → Pushω (Op C) k G F
+  Dual-Push : ⦃ _ : Pullω C k F G ⦄ → Pushω (C ᵒᵖ) k G F
   Dual-Push .push = pull
 
-  Dual-Pull : ⦃ _ : Pushω C k F G ⦄ → Pullω (Op C) k G F
+  Dual-Pull : ⦃ _ : Pushω C k F G ⦄ → Pullω (C ᵒᵖ) k G F
   Dual-Pull .pull = push
 
 
@@ -29,11 +29,11 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} {C : HQuiver-onω m Ob ℓ-ho
   ⦃ _ : Reflω C ⦄ where instance
 
     Dual-Push-Lawful : ⦃ _ : SPullω C k F G ⦄ ⦃ lp : Lawful-Pullω C α ⦄
-                     → Lawful-Pushω (Op C) (λ t → Op (α t))
+                     → Lawful-Pushω (C ᵒᵖ) (λ t → α t ᵒᵖ)
     Dual-Push-Lawful ⦃ lp ⦄ .push-refl = lp .Lawful-Pull.pull-refl
 
     Dual-Pull-Lawful : ⦃ _ : SPushω C k F G ⦄ ⦃ lp : Lawful-Pushω C α ⦄
-                     → Lawful-Pullω (Op C) (λ t → Op (α t))
+                     → Lawful-Pullω (C ᵒᵖ) (λ t → α t ᵒᵖ)
     Dual-Pull-Lawful ⦃ lp ⦄ .pull-refl = lp .Lawful-Push.push-refl
 
 
@@ -45,7 +45,7 @@ module _ {ma ℓ-oba⁻} {Oba⁻ : ob-sig ℓ-oba⁻} {na ℓ-oba⁺} {Oba⁺ : 
   {F : ob-sigᵈ² Oba⁺ Obb⁻ ℓ-hetᶠ} {G : ob-sigᵈ² Oba⁻ Obb⁺ ℓ-hetᵍ} where instance
 
   Dual-Profunctor : ⦃ pr : Profunctorω A B k F G ⦄
-                  → Profunctorω (Op B) (Op A) k (λ y x → F x y) (λ y x → G x y)
+                  → Profunctorω (B ᵒᵖ) (A ᵒᵖ) k (λ y x → F x y) (λ y x → G x y)
   Dual-Profunctor .dimap p q = dimap q p
 
 
@@ -57,7 +57,7 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig 
   {α : ∀{lxs lys} (x : Ob⁻ lxs) (y : Ob⁺ lys) → Quiver-onω k (F x y) k (G x y) (ℓ-hetʰ lxs lys)}
   ⦃ _ : Reflω A ⦄ ⦃ _ : Reflω B ⦄ ⦃ _ : SProfunctorω A B k F G ⦄ where instance
 
-  Dual-Profunctor-Lawful : ⦃ lp : Lawful-Profunctorω A B α ⦄ → Lawful-Profunctorω (Op B) (Op A) (λ y x → α x y)
+  Dual-Profunctor-Lawful : ⦃ lp : Lawful-Profunctorω A B α ⦄ → Lawful-Profunctorω (B ᵒᵖ) (A ᵒᵖ) (λ y x → α x y)
   Dual-Profunctor-Lawful ⦃ lp ⦄ .dimap-refl = lp .Lawful-Profunctor.dimap-refl
 
 -- TODO check pragmas

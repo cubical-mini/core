@@ -45,7 +45,7 @@ module _ {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-hom⁻ ℓ-hom⁺}
   module _ ⦃ _ : Reflω B ⦄ {lys} {y : Ob⁺ lys} where instance
     Lawful-Profunctor→Pull : {ℓ-hetʰ : ℓ-sig 4 (m , n , k , k , _)}
                              {α : ∀{lxs lys} (x : Ob⁻ lxs) (y : Ob⁺ lys) → Quiver-onω k (G x y) k (F x y) (ℓ-hetʰ lxs lys)}
-                             ⦃ ra : Reflω A ⦄ ⦃ lp : Lawful-Profunctorω A B λ x y → Op (α x y) ⦄
+                             ⦃ ra : Reflω A ⦄ ⦃ lp : Lawful-Profunctorω A B λ x y → α x y ᵒᵖ ⦄
                            → Lawful-Pullω A (λ x → α x y) ⦃ auto ⦄ ⦃ Profunctor→Pull ⦃ sp ⦄ ⦄
     Lawful-Profunctor→Pull .pull-refl = dimap-refl
 

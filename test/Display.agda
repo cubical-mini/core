@@ -2,7 +2,7 @@
 module Display where
 
 open import Foundations.Quiver.Base
-open import Foundations.Quiver.Discrete
+open import Foundations.Quiver.Discrete as Discrete
 open import Foundations.Quiver.Lens.Extend
 open import Foundations.Quiver.Lens.Push
 open import Foundations.Quiver.Total
@@ -18,6 +18,7 @@ record Pointed {ℓ} (A : Type ℓ) : Type ℓ where
   constructor ∙
   field pt : A
 
+open Discrete.Groupoid
 instance
   Pointed-HPush : HPushω Funs 0 (λ T _ → Pointed T)
   Pointed-HPush .push f (∙ x) = ∙ (f x)
@@ -25,11 +26,11 @@ instance
   Pointed-Lawful-Push : Lawful-Pushω Funs (λ T → Disc (Pointed T))
   Pointed-Lawful-Push .push-refl = refl
 
-Pointedᵈ : HQuiver-onωᵈ Types Fun 0 _ _
+Pointedᵈ : HQuiver-onωᵈ Funs 0 _ _
 Pointedᵈ = Disp⁺ Funs λ T → Disc (Pointed T)
 
 Pointeds : HQuiver-onω 1 _ _
-Pointeds = Σ Funs Pointedᵈ
+Pointeds = Σ[ Pointedᵈ ]
 
 Type∙ : (ℓ : Level) → Type (lsuc ℓ)
 Type∙ ℓ = Quiver-onω.Out Pointeds (ℓ , _)
@@ -60,18 +61,18 @@ instance
 
 module _ where
   private
-    Q : HQuiver-onωᵈ Types Fun 0 _ _
+    Q : HQuiver-onωᵈ Funs 0 _ _
     Q = Disp± Funs λ {x = A} {y = B} _ → Disc (Magma-on′ A B)
 
-  Magmaᵈ : HQuiver-onωᵈ Types Fun 0 _ _
+  Magmaᵈ : HQuiver-onωᵈ Funs 0 _ _
   Magmaᵈ .Quiver-onωᵈ.Het[_] = Q .Quiver-onωᵈ.Het[_]
 
   instance
-    Magma-Reflᵈ : Reflωᵈ Funs Magmaᵈ
+    Magma-Reflᵈ : Reflωᵈ Magmaᵈ
     Magma-Reflᵈ .reflᵈ _ = refl
 
 Magmas : HQuiver-onω 1 (ΣOb Types (λ T _ → Magma-on′ T T)) _
-Magmas = Σ Funs Magmaᵈ
+Magmas = Σ[ Magmaᵈ ]
 
 Magma : (ℓ : Level) → Type (lsuc ℓ)
 Magma ℓ = Quiver-onω.Out Magmas (ℓ , _)

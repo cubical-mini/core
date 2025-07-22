@@ -9,11 +9,8 @@ open import Notation.Refl
 Types : ob-sig {m = 1} _
 Types (ℓ , _) = Type ℓ
 
-Fun : ∀{ℓa ℓb} → Type ℓa → Type ℓb → Type (ℓa ⊔ ℓb)
-Fun A B = A → B
-
 Funs : HQuiver-onω 1 Types _
-Funs .Quiver-onω.Het = Fun
+Funs .Quiver-onω.Het A B = A → B
 
 
 id : ∀{ℓ} {A : Type ℓ} → A → A

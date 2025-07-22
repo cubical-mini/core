@@ -22,8 +22,8 @@ module _ {ℓa} {A : Type ℓa} {m′} {ℓ-obᵈ : ℓ-sig 2 (0 , m′ , _)}
 {-# INCOHERENT Disc-Push Disc-Pull #-}
 
 -- FIXME `f` is never inferred
-module _ {ℓa} {A : Type ℓa} {m′} {ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ {m = 0} (λ _ → A) ℓ-obᵈ}
-  {D : HQuiver-onωᵈ {m = 0} (λ _ → A) _＝_ m′ Ob[_] ℓ-homᵈ} (open Quiver-onωᵈ D renaming (Het[_] to Hom[_]))
+module _ {ℓa} {A : Type ℓa} {m′} {ℓ-obᵈ} {Ob[_] : ob-sigᵈ {m = 0} (λ _ → A) ℓ-obᵈ} {ℓ-homᵈ}
+  {D : HQuiver-onωᵈ (Disc A) m′ Ob[_] ℓ-homᵈ} (open Quiver-onωᵈ D renaming (Het[_] to Hom[_]))
   {f : ∀{lsᵈ} (x : A) → Ob[ x ] lsᵈ} where instance
 
   Disc-Extend : Extendω (Disc A) m′ (λ {x = x} {y = y} p lsᵈ → Hom[ p ] (f x) (f y))

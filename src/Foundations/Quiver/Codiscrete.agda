@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --erased-cubical #-}
+{-# OPTIONS --safe #-}
 module Foundations.Quiver.Codiscrete where
 
 open import Foundations.Quiver.Codiscrete.Base public
