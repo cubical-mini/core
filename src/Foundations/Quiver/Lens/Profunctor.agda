@@ -9,6 +9,8 @@ open import Notation.Pull
 open import Notation.Push
 open import Notation.Refl
 
+-- TODO can we just use push instances?
+
 module _ {ma ℓ-oba⁻} {Oba⁻ : ob-sig ℓ-oba⁻} {na ℓ-oba⁺} {Oba⁺ : ob-sig ℓ-oba⁺}
   {ℓ-heta⁻} {A : Quiver-onω ma Oba⁻ na Oba⁺ ℓ-heta⁻}
   {mb ℓ-obb} {Obb : ob-sig ℓ-obb} {ℓ-homb⁻}
@@ -42,16 +44,16 @@ module _ {m n ℓ-ob⁻ ℓ-ob⁺ ℓ-hom⁻ ℓ-hom⁺}
 
   module _ ⦃ _ : Reflω B ⦄ {lys} {y : Ob⁺ lys} where instance
     Lawful-Profunctor→Pull : {ℓ-hetʰ : ℓ-sig 4 (m , n , k , k , _)}
-                             {H : ∀{lxs lys} (x : Ob⁻ lxs) (y : Ob⁺ lys) → Quiver-onω k (G x y) k (F x y) (ℓ-hetʰ lxs lys)}
-                             ⦃ ra : Reflω A ⦄ ⦃ lp : Lawful-Profunctorω A B λ x y → Op (H x y) ⦄
-                           → Lawful-Pullω A (λ x → H x y) ⦃ auto ⦄ ⦃ Profunctor→Pull ⦃ sp ⦄ ⦄
+                             {α : ∀{lxs lys} (x : Ob⁻ lxs) (y : Ob⁺ lys) → Quiver-onω k (G x y) k (F x y) (ℓ-hetʰ lxs lys)}
+                             ⦃ ra : Reflω A ⦄ ⦃ lp : Lawful-Profunctorω A B λ x y → Op (α x y) ⦄
+                           → Lawful-Pullω A (λ x → α x y) ⦃ auto ⦄ ⦃ Profunctor→Pull ⦃ sp ⦄ ⦄
     Lawful-Profunctor→Pull .pull-refl = dimap-refl
 
   module _ ⦃ _ : Reflω A ⦄ {lxs} {x : Ob⁻ lxs} where instance
     Lawful-Profunctor→Push : {ℓ-hetʰ : ℓ-sig 4 (m , n , k , k , _)}
-                             {H : ∀{lxs lys} (x : Ob⁻ lxs) (y : Ob⁺ lys) → Quiver-onω k (F x y) k (G x y) (ℓ-hetʰ lxs lys)}
-                             ⦃ _ : Reflω B ⦄ ⦃ _ : Lawful-Profunctorω A B H ⦄
-                           → Lawful-Pushω B (λ y → H x y) ⦃ auto ⦄ ⦃ Profunctor→Push ⦃ sp ⦄ ⦄
+                             {α : ∀{lxs lys} (x : Ob⁻ lxs) (y : Ob⁺ lys) → Quiver-onω k (F x y) k (G x y) (ℓ-hetʰ lxs lys)}
+                             ⦃ _ : Reflω B ⦄ ⦃ _ : Lawful-Profunctorω A B α ⦄
+                           → Lawful-Pushω B (λ y → α x y) ⦃ auto ⦄ ⦃ Profunctor→Push ⦃ sp ⦄ ⦄
     Lawful-Profunctor→Push .push-refl = dimap-refl
 
 -- TODO check

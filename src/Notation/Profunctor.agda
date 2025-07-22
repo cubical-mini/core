@@ -39,13 +39,12 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-hom⁻}
   (B : HQuiver-onω n Ob⁺ ℓ-hom⁺) (let module B = Quiver-onω B renaming (Het to Hom))
   k where
 
-  module _ {ℓ-hetᶠ ℓ-hetᵍ : ℓ-sig 3 (m , n , k , _)}
-    (F : ob-sigᵈ² Ob⁻ Ob⁺ ℓ-hetᶠ) (G : ob-sigᵈ² Ob⁻ Ob⁺ ℓ-hetᵍ) where
-    SProfunctor = Profunctor A B k F G
-    SProfunctorω = ∀{lws lxs lys lzs lfs} → SProfunctor lws lxs lys lzs lfs
+  module _ {ℓ-hetᶠ} (F : ob-sigᵈ² Ob⁻ Ob⁺ ℓ-hetᶠ) where
+    module _ {ℓ-hetᵍ} (G : ob-sigᵈ² Ob⁻ Ob⁺ ℓ-hetᵍ) where
+      SProfunctor = Profunctor A B k F G
+      SProfunctorω = ∀{lws lxs lys lzs lfs} → SProfunctor lws lxs lys lzs lfs
 
-  module _ {ℓ-hetᶠ : ℓ-sig 3 (m , n , k , _)} (F : ob-sigᵈ² Ob⁻ Ob⁺ ℓ-hetᶠ) where
-    HProfunctor = SProfunctor F F
+    HProfunctor = SProfunctor F
     HProfunctorω = ∀{lws lxs lys lzs lfs} → HProfunctor lws lxs lys lzs lfs
 
 
@@ -53,19 +52,19 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-hom⁻}
   (A : HQuiver-onω m Ob⁻ ℓ-hom⁻) (let module A = Quiver-onω A renaming (Het to Hom))
   {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-hom⁺}
   (B : HQuiver-onω n Ob⁺ ℓ-hom⁺) (let module B = Quiver-onω B renaming (Het to Hom))
-  {k ℓ-hetᶠ ℓ-hetᵍ} {ℓ-hetʰ : ℓ-sig 4 (m , n , k , k , _)}
+  {k ℓ-hetᶠ ℓ-hetᵍ} {ℓ-het : ℓ-sig 4 (m , n , k , k , _)}
   {F : ob-sigᵈ² Ob⁻ Ob⁺ ℓ-hetᶠ} {G : ob-sigᵈ² Ob⁻ Ob⁺ ℓ-hetᵍ}
-  (H : ∀{lxs lys} (x : Ob⁻ lxs) (y : Ob⁺ lys) → Quiver-onω k (F x y) k (G x y) (ℓ-hetʰ lxs lys))
+  (α : ∀{lxs lys} (x : Ob⁻ lxs) (y : Ob⁺ lys) → Quiver-onω k (F x y) k (G x y) (ℓ-het lxs lys))
   ⦃ _ : Reflω A ⦄ ⦃ _ : Reflω B ⦄ ⦃ _ : SProfunctorω A B k F G ⦄ where
-  private module H {lxs} {lys} x y = Quiver-onω (H {lxs} {lys} x y)
+  private module α {lxs} {lys} x y = Quiver-onω (α {lxs} {lys} x y)
 
   record Lawful-Profunctor lxs lys lfs : Type
-    (ℓ-ob⁻ lxs ⊔ ℓ-ob⁺ lys ⊔ ℓ-hetᶠ lxs lys lfs ⊔ ℓ-hetʰ lxs lys lfs lfs) where
+    (ℓ-ob⁻ lxs ⊔ ℓ-ob⁺ lys ⊔ ℓ-hetᶠ lxs lys lfs ⊔ ℓ-het lxs lys lfs lfs) where
     no-eta-equality
     field
       dimap-refl : {x : Ob⁻ lxs} {y : Ob⁺ lys}
                    {u : F x y lfs}
-                 → H.Het x y u (dimap refl refl u)
+                 → α.Het x y u (dimap refl refl u)
 
   Lawful-Profunctorω : Typeω
   Lawful-Profunctorω = ∀{lxs lys lfs} → Lawful-Profunctor lxs lys lfs

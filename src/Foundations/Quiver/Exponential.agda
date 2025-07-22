@@ -5,8 +5,6 @@ open import Foundations.Quiver.Base
 open import Foundations.Quiver.Const.Base
 open import Foundations.Quiver.Section.Base
 
-open import Notation.Refl
-
 module _ {ma ℓ-oba⁻} {Oba⁻ : ob-sig ℓ-oba⁻} {na ℓ-oba⁺} {Oba⁺ : ob-sig ℓ-oba⁺}
   {ℓ-heta} (A : Quiver-onω ma Oba⁻ na Oba⁺ ℓ-heta)
   {mb ℓ-obb⁻} {Obb⁻ : ob-sig ℓ-obb⁻} {nb ℓ-obb⁺} {Obb⁺ : ob-sig ℓ-obb⁺}

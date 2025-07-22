@@ -12,28 +12,28 @@ open import Notation.Refl
 
 module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-het}
   {C : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het}
-  {k ℓ-obᶠ⁻ ℓ-obᶠ⁺} {Ob[_]⁻ : ob-sigᵈ Ob⁻ ℓ-obᶠ⁻} {Ob[_]⁺ : ob-sigᵈ Ob⁺ ℓ-obᶠ⁺}
+  {k ℓ-obᶠ ℓ-obᵍ} {F : ob-sigᵈ Ob⁻ ℓ-obᶠ} {G : ob-sigᵈ Ob⁺ ℓ-obᵍ}
   where instance
 
-  Dual-Push : ⦃ _ : Pullω C k Ob[_]⁻ Ob[_]⁺ ⦄ → Pushω (Op C) k Ob[_]⁺ Ob[_]⁻
+  Dual-Push : ⦃ _ : Pullω C k F G ⦄ → Pushω (Op C) k G F
   Dual-Push .push = pull
 
-  Dual-Pull : ⦃ _ : Pushω C k Ob[_]⁻ Ob[_]⁺ ⦄ → Pullω (Op C) k Ob[_]⁺ Ob[_]⁻
+  Dual-Pull : ⦃ _ : Pushω C k F G ⦄ → Pullω (Op C) k G F
   Dual-Pull .pull = push
 
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} {C : HQuiver-onω m Ob ℓ-hom}
-  {k ℓ-obᶠ⁻ ℓ-obᶠ⁺} {Ob[_]⁻ : ob-sigᵈ Ob ℓ-obᶠ⁻} {Ob[_]⁺ : ob-sigᵈ Ob ℓ-obᶠ⁺}
+  {k ℓ-obᶠ ℓ-obᵍ} {F : ob-sigᵈ Ob ℓ-obᶠ} {G : ob-sigᵈ Ob ℓ-obᵍ}
   {ℓ-hetᶠ : ℓ-sig 3 (m , k , k , _)}
-  {F : ∀{ls} (t : Ob ls) → Quiver-onω k Ob[ t ]⁻ k Ob[ t ]⁺ (ℓ-hetᶠ ls)}
+  {α : ∀{ls} (t : Ob ls) → Quiver-onω k (F t) k (G t) (ℓ-hetᶠ ls)}
   ⦃ _ : Reflω C ⦄ where instance
 
-    Dual-Push-Lawful : ⦃ _ : SPullω C k Ob[_]⁻ Ob[_]⁺ ⦄ ⦃ lp : Lawful-Pullω C F ⦄
-                     → Lawful-Pushω (Op C) (λ t → Op (F t))
+    Dual-Push-Lawful : ⦃ _ : SPullω C k F G ⦄ ⦃ lp : Lawful-Pullω C α ⦄
+                     → Lawful-Pushω (Op C) (λ t → Op (α t))
     Dual-Push-Lawful ⦃ lp ⦄ .push-refl = lp .Lawful-Pull.pull-refl
 
-    Dual-Pull-Lawful : ⦃ _ : SPushω C k Ob[_]⁻ Ob[_]⁺ ⦄ ⦃ lp : Lawful-Pushω C F ⦄
-                     → Lawful-Pullω (Op C) (λ t → Op (F t))
+    Dual-Pull-Lawful : ⦃ _ : SPushω C k F G ⦄ ⦃ lp : Lawful-Pushω C α ⦄
+                     → Lawful-Pullω (Op C) (λ t → Op (α t))
     Dual-Pull-Lawful ⦃ lp ⦄ .pull-refl = lp .Lawful-Push.push-refl
 
 
@@ -54,10 +54,10 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig 
   {k} {ℓ-hetᶠ ℓ-hetᵍ : ℓ-sig 3 (m , n , k , _)}
   {F : ob-sigᵈ² Ob⁻ Ob⁺ ℓ-hetᶠ} {G : ob-sigᵈ² Ob⁻ Ob⁺ ℓ-hetᵍ}
   {ℓ-hetʰ : ℓ-sig 4 (m , n , k , k , _)}
-  {H : ∀{lxs lys} (x : Ob⁻ lxs) (y : Ob⁺ lys) → Quiver-onω k (F x y) k (G x y) (ℓ-hetʰ lxs lys)}
+  {α : ∀{lxs lys} (x : Ob⁻ lxs) (y : Ob⁺ lys) → Quiver-onω k (F x y) k (G x y) (ℓ-hetʰ lxs lys)}
   ⦃ _ : Reflω A ⦄ ⦃ _ : Reflω B ⦄ ⦃ _ : SProfunctorω A B k F G ⦄ where instance
 
-  Dual-Profunctor-Lawful : ⦃ lp : Lawful-Profunctorω A B H ⦄ → Lawful-Profunctorω (Op B) (Op A) (λ y x → H x y)
+  Dual-Profunctor-Lawful : ⦃ lp : Lawful-Profunctorω A B α ⦄ → Lawful-Profunctorω (Op B) (Op A) (λ y x → α x y)
   Dual-Profunctor-Lawful ⦃ lp ⦄ .dimap-refl = lp .Lawful-Profunctor.dimap-refl
 
 -- TODO check pragmas
