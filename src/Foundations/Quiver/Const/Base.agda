@@ -10,5 +10,5 @@ module _ {ma ℓ-oba⁻} {Oba⁻ : ob-sig ℓ-oba⁻} {na ℓ-oba⁺} {Oba⁺ : 
   private module A = Quiver-onω A
   private module B = Quiver-onω B
 
-  Constᵈ : Quiver-onωᵈ Oba⁻ Oba⁺ A.Het mb (λ _ → Obb⁻) nb (λ _ → Obb⁺) (λ _ _ → ℓ-hetb)
-  Constᵈ .Quiver-onωᵈ.Het[_] _ = B.Het
+  Const : Quiver-onωᵈ Oba⁻ Oba⁺ A.Het mb (λ _ → Obb⁻) nb (λ _ → Obb⁺) (λ _ _ → ℓ-hetb)
+  Const .Quiver-onωᵈ.Het[_] _ = B.Het
