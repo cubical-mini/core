@@ -2,7 +2,6 @@
 module Notation.Underlying where
 
 open import Foundations.Quiver.Base
-open import Foundations.Quiver.Type
 
 module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-het}
   (C : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het) (open Quiver-onω C) where
@@ -16,7 +15,7 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig 
       ⌞_⌟⁻     : ∀{lxs} (x : Ob⁻ lxs) → Type (ℓ-und⁻ lxs)
       ⌞_⌟⁺     : ∀{lys} (y : Ob⁺ lys) → Type (ℓ-und⁺ lys)
       ⌞_⌟₁     : ∀{lxs lys} {x : Ob⁻ lxs} {y : Ob⁺ lys}
-               → (p : Het x y) → ⌞ x ⌟⁻ → ⌞ y ⌟⁺
+                 (p : Het x y) → ⌞ x ⌟⁻ → ⌞ y ⌟⁺
 
 open Underlying ⦃ ... ⦄ public
 
@@ -36,8 +35,3 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} where
 {-# DISPLAY Underlying.⌞_⌟⁻ _ = ⌞_⌟ #-}
 {-# DISPLAY Underlying.⌞_⌟⁺ _ = ⌞_⌟ #-}
 {-# DISPLAY Underlying.⌞_⌟₁ _ = ⌞_⌟ #-}
-
-
-instance
-  Funs-Underlying : Underlying Funs
-  Funs-Underlying = mk-hunderlying fst id id

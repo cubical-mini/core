@@ -10,8 +10,7 @@ open import Notation.Refl
 
 open Interval.Category
 module _ {ℓ-obᶠ : ℓ-sig 2 (0 , 0 , _) } {F : ob-sigᵈ _ ℓ-obᶠ}
-  ⦃ _ : HPushω 𝐼 0 F ⦄ ⦃ _ : Lawful-Pushω 𝐼 λ b → Disc (F b _)  ⦄
-  where
+  ⦃ _ : HPush 𝐼 0 (λ b → Disc (F b _)) ⦄ where
 
   -- one and two are identities
 

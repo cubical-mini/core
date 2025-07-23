@@ -9,11 +9,11 @@ open import Notation.Refl
 open import Notation.Sym
 
 instance
-  Codisc-Refl : ∀{ℓ} {A : Type ℓ} → Reflω (Codisc A)
+  Codisc-Refl : ∀{ℓ} {A : Type ℓ} → Refl (Codisc A)
   Codisc-Refl .refl = tt
 
-  Codisc-Sym : ∀{ℓ} {A : Type ℓ} → Symω (Codisc A)
+  Codisc-Sym : ∀{ℓ} {A : Type ℓ} → Sym (Codisc A)
   Codisc-Sym .sym _ = tt
 
-  Codisc-HComp : ∀{ℓ} {A : Type ℓ} → HCompω (Codisc A)
+  Codisc-HComp : ∀{ℓ} {A : Type ℓ} → HComp (Codisc A)
   Codisc-HComp ._∙_ _ _ = tt

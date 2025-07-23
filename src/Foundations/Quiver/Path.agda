@@ -10,7 +10,7 @@ open import Notation.Refl
 
 module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
-  ⦃ _ : Reflω C ⦄ where
+  ⦃ _ : Refl C ⦄ where
 
   record is-path-object ls : Type (ℓ-ob ls ⊔ ℓ-hom ls ls) where
     no-eta-equality
@@ -27,7 +27,7 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   {C : HQuiver-onω m Ob ℓ-hom}
   {m′ ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ}
   (D : HQuiver-onωᵈ C m′ Ob[_] ℓ-homᵈ)
-  ⦃ _ : Reflω C ⦄ ⦃ _ : Reflωᵈ D ⦄ where
+  ⦃ _ : Refl C ⦄ ⦃ _ : Reflᵈ D ⦄ where
   open Component.Groupoid
 
   is-path-objectᵈ : ∀ ls lsᵈ → Type (ℓ-ob ls ⊔ ℓ-obᵈ ls lsᵈ ⊔ ℓ-homᵈ ls ls lsᵈ lsᵈ)

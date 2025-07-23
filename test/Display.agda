@@ -20,14 +20,12 @@ record Pointed {ℓ} (A : Type ℓ) : Type ℓ where
 
 open Discrete.Groupoid
 instance
-  Pointed-HPush : HPushω Funs 0 (λ T _ → Pointed T)
+  Pointed-HPush : HPush Funs 0 (λ T → Disc (Pointed T))
   Pointed-HPush .push f (∙ x) = ∙ (f x)
-
-  Pointed-Lawful-Push : Lawful-Pushω Funs (λ T → Disc (Pointed T))
-  Pointed-Lawful-Push .push-refl = refl
+  Pointed-HPush .push-refl = refl
 
 Pointedᵈ : HQuiver-onωᵈ Funs 0 _ _
-Pointedᵈ = Disp⁺ Funs λ T → Disc (Pointed T)
+Pointedᵈ = Disp⁺ λ T → Disc (Pointed T)
 
 Pointeds : HQuiver-onω 1 _ _
 Pointeds = Σ[ Pointedᵈ ]
@@ -50,26 +48,23 @@ Magma-on : ∀{ℓ} (A : Type ℓ) → Type ℓ
 Magma-on A = Magma-on′ A A
 
 instance
-  Magma-Extend : Extendω Funs 0 (λ {x = A} {y = B} _ _ → Magma-on′ A B)
+  Magma-Extend : Extend Funs 0 (λ {x = A} {y = B} _ → Disc (Magma-on′ A B))
   Magma-Extend .extend-l p u .Magma-on′._⋆_ x y = p (x ⋆ y) where open Magma-on′ u
   Magma-Extend .extend-r p v .Magma-on′._⋆_ x y = p x ⋆ p y where open Magma-on′ v
-
-  Magma-Lawful-Extend : Lawful-Extendω Funs (λ {x = A} {y = B} _ → Disc (Magma-on′ A B))
-  Magma-Lawful-Extend .extend-refl = refl
-  Magma-Lawful-Extend .extend-coh = refl
-
+  Magma-Extend .extend-refl = refl
+  Magma-Extend .extend-coh = refl
 
 module _ where
   private
     Q : HQuiver-onωᵈ Funs 0 _ _
-    Q = Disp± Funs λ {x = A} {y = B} _ → Disc (Magma-on′ A B)
+    Q = Disp± λ {x = A} {y = B} _ → Disc (Magma-on′ A B)
 
   Magmaᵈ : HQuiver-onωᵈ Funs 0 _ _
   Magmaᵈ .Quiver-onωᵈ.Het[_] = Q .Quiver-onωᵈ.Het[_]
 
   instance
-    Magma-Reflᵈ : Reflωᵈ Magmaᵈ
-    Magma-Reflᵈ .reflᵈ _ = refl
+    Magma-Reflᵈ : Reflᵈ Magmaᵈ
+    Magma-Reflᵈ .reflᵈ = refl
 
 Magmas : HQuiver-onω 1 (ΣOb Types (λ T _ → Magma-on′ T T)) _
 Magmas = Σ[ Magmaᵈ ]

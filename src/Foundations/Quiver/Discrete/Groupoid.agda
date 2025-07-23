@@ -9,12 +9,12 @@ open import Notation.Sym
 open import Notation.Refl
 
 instance
-  Disc-Refl : ∀{ℓ} {A : Type ℓ} → Reflω (Disc A)
+  Disc-Refl : ∀{ℓ} {A : Type ℓ} → Refl (Disc A)
   Disc-Refl .refl {x} _ = x
 
-  Disc-Sym : ∀{ℓ} {A : Type ℓ} → Symω (Disc A)
+  Disc-Sym : ∀{ℓ} {A : Type ℓ} → Sym (Disc A)
   Disc-Sym .sym p i = p (~ i)
 
   -- TODO
-  -- Disc-HComp : ∀{ℓ} {A : Type ℓ} → HCompω (Disc A)
+  -- Disc-HComp : ∀{ℓ} {A : Type ℓ} → HComp (Disc A)
   -- Disc-HComp ._∙_ p q = {!!}

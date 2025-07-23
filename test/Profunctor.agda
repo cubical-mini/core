@@ -2,7 +2,8 @@
 module Profunctor where
 
 open import Foundations.Quiver.Base
-open import Foundations.Quiver.Discrete
+open import Foundations.Quiver.Codiscrete
+open import Foundations.Quiver.Discrete as Discrete
 open import Foundations.Quiver.Dual
 
 open import Notation.Profunctor
@@ -25,11 +26,12 @@ LTE : HQuiver-onω 0 (λ _ → ℕ) λ _ _ → lzero
 LTE .Quiver-onω.Het = _≤_
 
 instance
-  ≤-Profunctor : HProfunctorω LTE LTE 0 (λ x y _ → x ≤ y)
-  ≤-Profunctor .dimap = ≤-double-trans
-
-  ≤-Refl : Reflω LTE
+  ≤-Refl : Refl LTE
   ≤-Refl .refl = ≤-refl _
+
+  ≤-Profunctor : HProfunctor LTE LTE 0 (λ x y → Codisc (x ≤ y))
+  ≤-Profunctor .dimap = ≤-double-trans
+  ≤-Profunctor .dimap-refl = tt
 
 data Fin : ℕ → Type where
   fzero : ∀{n} → Fin (suc n)
@@ -42,12 +44,19 @@ fin-cast-≤ : ∀{m n} → m ≤ n → Fin m → Fin n
 fin-cast-≤ (s≤ _) fzero = fzero
 fin-cast-≤ (s≤ p) (fsuc k) = fsuc (fin-cast-≤ p k)
 
-instance
-  Fin-Push : HPushω LTE 0 (λ n _ → Fin n)
-  Fin-Push .push = fin-cast-≤
+open Discrete.Groupoid
+fin-cast-good : ∀{m} (k : Fin m) → k ＝ fin-cast-≤ refl k
+fin-cast-good {suc m} fzero = refl
+fin-cast-good {suc m} (fsuc k) i = fsuc (fin-cast-good k i)
 
-  Fin-Profunctor : HProfunctorω LTE LTE 0 (λ m n _ → Fin m → Fin n)
+instance
+  Fin-Push : HPush LTE 0 (λ n → Disc (Fin n))
+  Fin-Push .push = fin-cast-≤
+  Fin-Push .push-refl = fin-cast-good _
+
+  Fin-Profunctor : HProfunctor LTE LTE 0 (λ m n → Disc (Fin m → Fin n))
   Fin-Profunctor .dimap p q f kw = q <$> f (p <$> kw)
+  Fin-Profunctor .dimap-refl {u} i k = fin-cast-good (u (fin-cast-good k i)) i
 
 test : Fin 2 → Fin 3
 test = s≤ (s≤ z≤) ◁ fsuc ▷ s≤ (s≤ (s≤ z≤))

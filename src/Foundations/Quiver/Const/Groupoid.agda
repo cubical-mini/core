@@ -13,11 +13,11 @@ module _ {ma ℓ-oba ℓ-homa} {Oba : ob-sig ℓ-oba}
   {mb ℓ-obb ℓ-homb} {Obb : ob-sig ℓ-obb}
   {B : HQuiver-onω mb Obb ℓ-homb} where instance
 
-  Const-Reflᵈ : ⦃ _ : Reflω A ⦄ ⦃ _ : Reflω B ⦄ → Reflωᵈ (Const A B)
+  Const-Reflᵈ : ⦃ _ : Refl A ⦄ ⦃ _ : Refl B ⦄ → Reflᵈ (Const A B)
   Const-Reflᵈ .reflᵈ = refl
 
-  Const-Symᵈ : ⦃ _ : Symω A ⦄ ⦃ _ : Symω B ⦄ → Symωᵈ (Const A B)
+  Const-Symᵈ : ⦃ _ : Sym A ⦄ ⦃ _ : Sym B ⦄ → Symᵈ (Const A B)
   Const-Symᵈ .symᵈ = sym
 
-  Const-HCompᵈ : ⦃ _ : HCompω A ⦄ ⦃ _ : HCompω B ⦄ → HCompωᵈ (Const A B)
+  Const-HCompᵈ : ⦃ _ : HComp A ⦄ ⦃ _ : HComp B ⦄ → HCompᵈ (Const A B)
   Const-HCompᵈ ._∙ᵈ_ = _∙_
