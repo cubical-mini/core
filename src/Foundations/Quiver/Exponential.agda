@@ -2,8 +2,8 @@
 module Foundations.Quiver.Exponential where
 
 open import Foundations.Quiver.Base
-open import Foundations.Quiver.Const.Base
-open import Foundations.Quiver.Section.Base
+open import Foundations.Quiver.Const
+open import Foundations.Quiver.Section
 
 module _ {ma ℓ-oba⁻} {Oba⁻ : ob-sig ℓ-oba⁻} {na ℓ-oba⁺} {Oba⁺ : ob-sig ℓ-oba⁺}
   {ℓ-heta} (A : Quiver-onω ma Oba⁻ na Oba⁺ ℓ-heta)

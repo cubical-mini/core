@@ -2,8 +2,8 @@
 module Foundations.Quiver.Product where
 
 open import Foundations.Quiver.Base
-open import Foundations.Quiver.Const.Base
-open import Foundations.Quiver.Section.Base
+open import Foundations.Quiver.Const
+open import Foundations.Quiver.Section
 open import Foundations.Quiver.Total.Base
 
 -- binary product
@@ -27,9 +27,6 @@ module _ {ℓa} (A : Type ℓa)
   ∏ : Quiver-onω m (ΠOb (λ _ → A) Ob⁻) n (ΠOb (λ _ → A) Ob⁺) _
   ∏ .Quiver-onω.Het P Q = (x : A) → B.Het x (P x) (Q x)
 
-  -- -- TODO what is it?
-  -- mystery : Quiver-onω m (ΠOb (λ _ → A) Ob⁻) n (ΠOb (λ _ → A) Ob⁺) _
-  -- mystery .Quiver-onω.Het P Q = Σₜ A (λ x → B.Het x (P x) (Q x))
 
 -- cotensor
 module _ {ℓa} (A : Type ℓa)

@@ -4,13 +4,13 @@ module Foundations.Quiver.Base where
 open import Prim.Data.Nat public
 open import Prim.Data.Sigma public
   renaming ( Σ   to Σₜ
-           ; _×_ to _×ₜ_
-           )
+           ; _×_ to _×ₜ_ )
 open import Prim.Data.Unit public
+  renaming ( ⊤ to ⊤ₜ )
 open import Prim.Type public
 
 TVec : ∀{ℓ} (A : Type ℓ) → ℕ → Type ℓ
-TVec _ 0       = Lift _ ⊤
+TVec _ 0       = Lift _ ⊤ₜ
 TVec A (suc n) = A ×ₜ TVec A n
 
 Levels : ℕ → Type

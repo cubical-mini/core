@@ -3,6 +3,5 @@ module Foundations.Quiver.Total where
 
 open import Foundations.Quiver.Total.Base public
 
-import Foundations.Quiver.Total.Groupoid
-module Groupoid = Foundations.Quiver.Total.Groupoid
-open import Foundations.Quiver.Total.Underlying public
+import Foundations.Quiver.Total.Instances
+module Instances = Foundations.Quiver.Total.Instances

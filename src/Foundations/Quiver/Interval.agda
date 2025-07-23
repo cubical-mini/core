@@ -3,5 +3,5 @@ module Foundations.Quiver.Interval where
 
 open import Foundations.Quiver.Interval.Base public
 
-import Foundations.Quiver.Interval.Category
-module Category = Foundations.Quiver.Interval.Category
+import Foundations.Quiver.Interval.Instances
+module Instances = Foundations.Quiver.Interval.Instances

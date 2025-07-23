@@ -1,10 +1,23 @@
 {-# OPTIONS --safe #-}
-module Foundations.Quiver.Total.Underlying where
+module Foundations.Quiver.Total.Instances where
 
 open import Foundations.Quiver.Base
 open import Foundations.Quiver.Total.Base
 
+open import Notation.Refl
 open import Notation.Underlying
+
+module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
+  {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
+  {m′ ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ}
+  {D : HQuiver-onωᵈ C m′ Ob[_] ℓ-homᵈ} where instance
+
+  Σ-Refl : ⦃ _ : Refl C ⦄ ⦃ _ : Reflᵈ D ⦄ → Refl (Σ C D)
+  Σ-Refl .refl .fst = refl
+  Σ-Refl .refl .snd = reflᵈ
+
+{-# INCOHERENT Σ-Refl #-}
+
 
 module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺}
   {ℓ-het} {C : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het}

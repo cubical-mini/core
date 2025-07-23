@@ -51,14 +51,25 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-hom⁻}
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   {C : HQuiver-onω m Ob ℓ-hom} (let module C = Quiver-onω C renaming (Het to Hom))
-  k {ℓ-homᶠ} {F : ob-sigᵈ² Ob Ob ℓ-homᶠ}
+  {k} {ℓ-homᶠ} {F : ob-sigᵈ² Ob Ob ℓ-homᶠ}
   {ℓ-homα : ℓ-sig 4 (m , m , k , k , _)}
-  (α : ∀{lxs lys} (x : Ob lxs) (y : Ob lys) → HQuiver-onω k (F x y) (ℓ-homα lxs lys))
+  {α : ∀{lxs lys} (x : Ob lxs) (y : Ob lys) → HQuiver-onω k (F x y) (ℓ-homα lxs lys)}
   ⦃ _ : Refl C ⦄ ⦃ _ : HProfunctor C C k α ⦄ where
 
-  infix 300 _∙∙_∙∙_
-  _∙∙_∙∙_ : ∀ {lws lxs lys lzs lfs}
+  infix 280 _∙∙_∙∙_
+  _∙∙_∙∙_ : ∀{lws lxs lys lzs lfs}
             {w : Ob lws} {x : Ob lxs} {y : Ob lys} {z : Ob lzs}
           → C.Hom w x → F x y lfs → C.Hom y z
           →             F w z lfs
-  p ∙∙ α ∙∙ q = p ◁ α ▷ q
+  p ∙∙ h ∙∙ q = p ◁ h ▷ q
+
+
+module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
+  {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
+  {ℓ-homα : ℓ-sig 4 _}
+  {α : ∀{lxs lys} (x : Ob lxs) (y : Ob lys) → HQuiver-onω 0 (λ _ → Hom x y) (ℓ-homα lxs lys)}
+  ⦃ _ : Refl C ⦄ ⦃ _ : HProfunctor C C 0 α ⦄ where
+
+  infixl 290 _∙_
+  _∙_ : ∀{lxs lys lzs} {x : Ob lxs} {y : Ob lys} {z : Ob lzs} → Hom x y → Hom y z → Hom x z
+  p ∙ q = p ◁ refl ▷ q

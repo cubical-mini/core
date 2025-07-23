@@ -1,14 +1,34 @@
 {-# OPTIONS --safe #-}
-module Foundations.Quiver.Dual.Lens where
+module Foundations.Quiver.Dual.Instances where
 
 open import Foundations.Quiver.Base
 open import Foundations.Quiver.Dual.Base
-open import Foundations.Quiver.Dual.Groupoid
 
 open import Notation.Profunctor
 open import Notation.Pull
 open import Notation.Push
 open import Notation.Refl
+open import Notation.Sym
+
+module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
+  {C : HQuiver-onω m Ob ℓ-hom} where instance
+
+  Dual-Refl : ⦃ r : Refl C ⦄ → Refl (C ᵒᵖ)
+  Dual-Refl ⦃ r ⦄ .refl = r .Refl.refl
+
+  Dual-Sym : ∀{ℓf} {F : ∀{lxs lys} (x : Ob lxs) (y : Ob lys) → HQuiver-onω 0 _ ℓf}
+             ⦃ s : Sym C F ⦄ → Sym (C ᵒᵖ) λ x y → F y x
+  Dual-Sym ⦃ s ⦄ .sym = s .Sym.sym
+  Dual-Sym ⦃ s ⦄ .sym-invol = s .Sym.sym-invol
+
+
+module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} {C : HQuiver-onω m Ob ℓ-hom}
+  {m′ ℓ-obᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ} {ℓ-homᵈ}
+  {D : HQuiver-onωᵈ C m′ Ob[_] ℓ-homᵈ} where instance
+
+  Dual-Reflᵈ : ⦃ _ : Refl C ⦄ ⦃ r′ : Reflᵈ D ⦄ → Reflᵈ (D ᵒᵖᵈ)
+  Dual-Reflᵈ ⦃ r′ ⦄ .reflᵈ = r′ .Reflᵈ.reflᵈ
+
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} {C : HQuiver-onω m Ob ℓ-hom}
   {k ℓ-obᶠ ℓ-obᵍ} {F : ob-sigᵈ Ob ℓ-obᶠ} {G : ob-sigᵈ Ob ℓ-obᵍ}

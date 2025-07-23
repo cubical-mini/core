@@ -4,7 +4,7 @@ module Foundations.Quiver.Path where
 open import Prim.Kan
 
 open import Foundations.Quiver.Base
-open import Foundations.Quiver.Component as Component
+open import Foundations.Quiver.Component
 
 open import Notation.Refl
 
@@ -28,7 +28,6 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   {m′ ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ}
   (D : HQuiver-onωᵈ C m′ Ob[_] ℓ-homᵈ)
   ⦃ _ : Refl C ⦄ ⦃ _ : Reflᵈ D ⦄ where
-  open Component.Groupoid
 
   is-path-objectᵈ : ∀ ls lsᵈ → Type (ℓ-ob ls ⊔ ℓ-obᵈ ls lsᵈ ⊔ ℓ-homᵈ ls ls lsᵈ lsᵈ)
   is-path-objectᵈ ls lsᵈ = {t : Ob ls} → is-path-object (Component D t) lsᵈ
