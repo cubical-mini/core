@@ -5,7 +5,8 @@ open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete.Base
 open import Foundations.Pi public
 
-open import Notation.Profunctor
+open import Notation.Pull
+open import Notation.Push
 open import Notation.Refl
 open import Notation.Underlying
 
@@ -19,9 +20,13 @@ instance
   Fun-Refl : Refl Funs
   Fun-Refl .refl = id
 
-  Fun-HProfunctor : HProfunctor Funs Funs 0 (λ A B → Disc (A → B))
-  Fun-HProfunctor .dimap f g h = g ∘ h ∘ f
-  Fun-HProfunctor .dimap-refl {u} _ = u
+  Fun-Push : ∀{ℓa} {A : Type ℓa} → HPush Funs 0 (λ T → Disc (A → T))
+  Fun-Push .push f g = f ∘ g
+  Fun-Push .push-refl {u} _ = u
+
+  Fun-Pull : ∀{ℓb} {B : Type ℓb} → HPull Funs 0 (λ T → Disc (T → B))
+  Fun-Pull .pull f g = g ∘ f
+  Fun-Pull .pull-refl {v} _ = v
 
   Funs-HUnderlying : HUnderlying Funs
   Funs-HUnderlying = mk-hunderlying fst id id

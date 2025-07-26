@@ -24,4 +24,4 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
 
   Component-Refl : ∀{ls} {t : Ob ls} → Refl (Component D t) -- canonical way
   Component-Refl .refl = reflᵈ
-  {-# INCOHERENT Component-Refl #-} -- TODO is it really necessary?
+  {-# INCOHERENT Component-Refl #-}

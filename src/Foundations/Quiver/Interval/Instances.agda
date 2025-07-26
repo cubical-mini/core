@@ -5,7 +5,10 @@ open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete.Base
 open import Foundations.Quiver.Interval.Base
 
-open import Notation.Profunctor
+open import Notation.Assoc.Left
+open import Notation.Assoc.Right
+open import Notation.Pull
+open import Notation.Push
 open import Notation.Refl
 
 instance
@@ -13,8 +16,21 @@ instance
   𝐼-Refl .refl {x = false} = oh
   𝐼-Refl .refl {x = true}  = oh
 
-  𝐼-HProfunctor : HProfunctor 𝐼 𝐼 0 (λ x y → Disc (So (x implies y)))
-  𝐼-HProfunctor .dimap {w = false} _ _ _ = oh
-  𝐼-HProfunctor .dimap {w = true} {(true)} {(true)} _ q _ = q
-  𝐼-HProfunctor .dimap-refl {x = false} {(y)} _ = oh
-  𝐼-HProfunctor .dimap-refl {x = true} {(true)} _ = oh
+  𝐼-Pull : {w : Bool} → HPull 𝐼 0 λ t → Disc (So (t implies w))
+  𝐼-Pull .pull = _∙_
+  𝐼-Pull {(false)} .pull-refl {y = false} _ = oh
+  𝐼-Pull {(true)}  .pull-refl {y = false} _ = oh
+  𝐼-Pull {(true)}  .pull-refl {y = true}  _ = oh
+
+  𝐼-Push : {w : Bool} → HPush 𝐼 0 λ t → Disc (So (w implies t))
+  𝐼-Push .push p q = q ∙ p
+  𝐼-Push {(false)} .push-refl _ = oh
+  𝐼-Push {(true)} .push-refl {x = true} _ = oh
+
+  𝐼-RAssoc : {w : Bool} → RAssoc 𝐼 (λ t → Disc (So (w implies t)))
+  𝐼-RAssoc .assoc-r = assoc
+
+  𝐼-LAssoc : {w : Bool} → LAssoc 𝐼 (λ t → Disc (So (t implies w)))
+  𝐼-LAssoc .assoc-l v p q = assoc p q v
+
+{-# OVERLAPPING 𝐼-Refl 𝐼-Pull 𝐼-Push 𝐼-RAssoc 𝐼-LAssoc #-}

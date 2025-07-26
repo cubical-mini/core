@@ -120,28 +120,29 @@ opaque
 
 
 -- For single homogenous path composition, we take `refl` as the top side:
-infixl 290 _∙_
-_∙_ : ∀{ℓ} {A : Type ℓ} {x y z : A} → x ＝ y → y ＝ z → x ＝ z
-p ∙ q = p ∙∙ refl ∙∙ q
+opaque
+  infixl 290 _∙_
+  _∙_ : ∀{ℓ} {A : Type ℓ} {x y z : A} → x ＝ y → y ＝ z → x ＝ z
+  p ∙ q = p ∙∙ refl ∙∙ q
 
-∙-filler-l : ∀{ℓ} {A : Type ℓ} {x y z : A} (p : x ＝ y) (q : y ＝ z)
-           → Square refl q p (p ∙ q)
-∙-filler-l {A} {y} p q i j = hcomp (~ i ∨ ∂ j) sys
-  module ∙-filler-l-sys where
-  sys : (k : I) → Partial (~ i ∨ ∂ j ∨ ~ k) A
-  sys k (i = i0) = p (j ∨ ~ k)
-  sys k (j = i0) = p (~ k)
-  sys k (j = i1) = q (i ∧ k)
-  sys k (k = i0) = y
-{-# DISPLAY hcomp _ (∙-filler-l-sys.sys {ℓ} {A} {x} {y} {z} p q i j) = ∙-filler-l {ℓ} {A} {x} {y} {z} p q i j #-}
+  ∙-filler-l : ∀{ℓ} {A : Type ℓ} {x y z : A} (p : x ＝ y) (q : y ＝ z)
+             → Square refl q p (p ∙ q)
+  ∙-filler-l {A} {y} p q i j = hcomp (~ i ∨ ∂ j) sys
+    module ∙-filler-l-sys where
+    sys : (k : I) → Partial (~ i ∨ ∂ j ∨ ~ k) A
+    sys k (i = i0) = p (j ∨ ~ k)
+    sys k (j = i0) = p (~ k)
+    sys k (j = i1) = q (i ∧ k)
+    sys k (k = i0) = y
+  {-# DISPLAY hcomp _ (∙-filler-l-sys.sys {ℓ} {A} {x} {y} {z} p q i j) = ∙-filler-l {ℓ} {A} {x} {y} {z} p q i j #-}
 
-∙-filler : ∀{ℓ} {A : Type ℓ} {x y z : A} (p : x ＝ y) (q : y ＝ z)
-         → Square (sym p) q refl (p ∙ q)
-∙-filler p = ∙∙-filler p refl
+  ∙-filler : ∀{ℓ} {A : Type ℓ} {x y z : A} (p : x ＝ y) (q : y ＝ z)
+           → Square (sym p) q refl (p ∙ q)
+  ∙-filler p = ∙∙-filler p refl
 
-∙-filler-r : ∀{ℓ} {A : Type ℓ} {x y z : A} (p : x ＝ y) (q : y ＝ z)
-           → Square (sym p) refl q (p ∙ q)
-∙-filler-r p q i j = ∙-filler-l (sym q) (sym p) i (~ j)
+  ∙-filler-r : ∀{ℓ} {A : Type ℓ} {x y z : A} (p : x ＝ y) (q : y ＝ z)
+             → Square (sym p) refl q (p ∙ q)
+  ∙-filler-r p q i j = ∙-filler-l (sym q) (sym p) i (~ j)
 
 opaque
   ∙-unique : ∀{ℓ} {A : Type ℓ} {x y z : A} {p : x ＝ y} {q : y ＝ z}

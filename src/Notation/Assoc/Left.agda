@@ -19,7 +19,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} (C : HQuiver-onω m Ob ℓ-ho
     no-eta-equality
     field assoc-l : ∀{lxs lys lzs lfs} {x : Ob lxs} {y : Ob lys} {z : Ob lzs}
                     (v : F z lfs) (p : Hom x y) (q : Hom y z)
-                  → α.Hom x ((p ◁ q) ◁ v) (p ◁ q ◁ v)
+                  → α.Hom x (p ◁ q ◁ v) ((p ◁ q) ◁ v)
 
 open LAssoc ⦃ ... ⦄ public
 {-# DISPLAY LAssoc.assoc-l _ v p q = assoc-l v p q #-}

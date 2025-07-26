@@ -19,7 +19,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} (C : HQuiver-onω m Ob ℓ-ho
     no-eta-equality
     field assoc-r : ∀{lxs lys lzs lfs} {x : Ob lxs} {y : Ob lys} {z : Ob lzs}
                     (u : F x lfs) (p : Hom x y) (q : Hom y z)
-                  → α.Hom z (u ▷ p ▷ q) (u ▷ (p ▷ q))
+                  → α.Hom z (u ▷ (p ▷ q)) (u ▷ p ▷ q)
 
 open RAssoc ⦃ ... ⦄ public
 {-# DISPLAY RAssoc.assoc-r _ u p q = assoc-r u p q #-}

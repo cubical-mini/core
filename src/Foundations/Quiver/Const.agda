@@ -23,3 +23,4 @@ module _ {ma ℓ-oba ℓ-homa} {Oba : ob-sig ℓ-oba}
 
   Const-Reflᵈ : ⦃ _ : Refl A ⦄ ⦃ _ : Refl B ⦄ → Reflᵈ (Const A B)
   Const-Reflᵈ .reflᵈ = refl
+  {-# INCOHERENT Const-Reflᵈ #-}
