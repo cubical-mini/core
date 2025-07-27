@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --erased-cubical #-}
+{-# OPTIONS --safe #-}
 module Foundations.Quiver.Discrete.Base where
 
 open import Prim.Interval public

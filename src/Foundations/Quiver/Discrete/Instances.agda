@@ -1,4 +1,4 @@
-{-# OPTIONS --safe --erased-cubical #-}
+{-# OPTIONS --safe #-}
 module Foundations.Quiver.Discrete.Instances where
 
 open import Foundations.Path.Base
@@ -57,10 +57,10 @@ module Default-Extend {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
   private module α x y p = Quiver-onω (α {x} {y} p) renaming (Het to Hom)
 
   Disc-Extend : Extend (Disc A) k α
-  Disc-Extend .extend-l {lfs} p = coe0→1 λ i → F (λ j → p (i ∧ j)) lfs
-  Disc-Extend .extend-r {lfs} p = coe1→0 λ i → F (λ j → p (i ∨ j)) lfs
+  Disc-Extend .extend-l p = coe0→1 λ i → F (λ j → p (i ∧ j)) _
+  Disc-Extend .extend-r p = coe1→0 λ i → F (λ j → p (i ∨ j)) _
   Disc-Extend .extend-refl = refl
-  Disc-Extend .extend-coh {lfs} {x} {u} = coe0→1 (λ i → α.Hom _ _ _ (coe0→i _ i u) u) refl
+  Disc-Extend .extend-coh {u} = coe0→1 (λ i → α.Hom _ _ _ (coe0→i _ i u) u) refl
   {-# INCOHERENT Disc-Extend #-}
 
 module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
@@ -81,7 +81,7 @@ module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
 
   module Default-Pull where instance
     Disc-Pull : HPull (Disc A) k α
-    Disc-Pull .pull {lfs} p = coe1→0 (λ i → F (p i) lfs)
+    Disc-Pull .pull p = coe1→0 (λ i → F (p i) _)
     Disc-Pull .pull-refl {v} = coe0→1 (λ i → α.Hom _ (coe0→i _ i v) v) refl
 
     Disc-LAssoc : LAssoc (Disc A) α
