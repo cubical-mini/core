@@ -5,10 +5,9 @@ open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete.Base
 open import Foundations.Quiver.Dual.Base
 
-open import Notation.Assoc.Left
-open import Notation.Assoc.Right
-open import Notation.Pull
-open import Notation.Push
+open import Foundations.Quiver.Lens.Pull.Base
+open import Foundations.Quiver.Lens.Push.Base
+
 open import Notation.Refl
 open import Notation.Sym
 
@@ -28,22 +27,24 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} {C : HQuiver-onω m Ob ℓ-ho
   {m′ ℓ-obᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ} {ℓ-homᵈ}
   {D : HQuiver-onωᵈ C m′ Ob[_] ℓ-homᵈ} where instance
 
-  Dual-Reflᵈ : ⦃ _ : Refl C ⦄ ⦃ r′ : Reflᵈ D ⦄ → Reflᵈ (D ᵒᵖᵈ)
+  Dual-Reflᵈ : ⦃ r′ : Reflᵈ D ⦄ → Reflᵈ (D ᵒᵖᵈ)
+  Dual-Reflᵈ ⦃ r′ ⦄ .Reflᵈ.rfl = Dual-Refl ⦃ r′ .Reflᵈ.rfl ⦄
   Dual-Reflᵈ ⦃ r′ ⦄ .reflᵈ = r′ .Reflᵈ.reflᵈ
 
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} {C : HQuiver-onω m Ob ℓ-hom}
   {k ℓ-obᶠ ℓ-obᵍ} {F : ob-sigᵈ Ob ℓ-obᶠ} {G : ob-sigᵈ Ob ℓ-obᵍ}
   {ℓ-hetᶠ : ℓ-sig 3 (m , k , k , _)}
-  {α : ∀{ls} (t : Ob ls) → Quiver-onω k (F t) k (G t) (ℓ-hetᶠ ls)}
-  ⦃ _ : Refl C ⦄ where instance
+  {α : ∀{ls} (t : Ob ls) → Quiver-onω k (F t) k (G t) (ℓ-hetᶠ ls)} where instance
 
-  Dual-Push : ⦃ _ : Pull C k α ⦄ → Push (C ᵒᵖ) k (λ t → α t ᵒᵖ)
-  Dual-Push .push = pull
+  Dual-Push : ⦃ hp : Pull C k α ⦄ → Push (C ᵒᵖ) k (λ t → α t ᵒᵖ)
+  Dual-Push ⦃ hp ⦄ .Push.rfl = Dual-Refl ⦃ hp .Pull.rfl ⦄
+  Dual-Push ._▷_ u p = p ◁ u
   Dual-Push .push-refl = pull-refl
 
   Dual-Pull : ⦃ pp : Push C k α ⦄ → Pull (C ᵒᵖ) k (λ t → α t ᵒᵖ)
-  Dual-Pull .pull = push
+  Dual-Pull ⦃ pp ⦄ .Pull.rfl = Dual-Refl ⦃ pp .Push.rfl ⦄
+  Dual-Pull ._◁_ p v = v ▷ p
   Dual-Pull ⦃ pp ⦄ .pull-refl = pp .Push.push-refl
 
 {-# INCOHERENT Dual-Refl Dual-Sym Dual-Reflᵈ Dual-Push Dual-Pull #-}

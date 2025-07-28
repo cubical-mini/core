@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Notation.Extend where
+module Foundations.Quiver.Lens.Extend.Base where
 
 open import Foundations.Quiver.Base
 
@@ -10,13 +10,13 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   k {ℓ-obᶠ : ℓ-sig 3 (m , m , k , _)}
   {F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → ob-sig (ℓ-obᶠ lxs lys)}
   {ℓ-homᶠ : ℓ-sig 4 (m , m , k , k , _)}
-  (α : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} (p : Hom x y) → HQuiver-onω k (F p) (ℓ-homᶠ lxs lys))
-  ⦃ _ : Refl C ⦄ where
+  (α : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} (p : Hom x y) → HQuiver-onω k (F p) (ℓ-homᶠ lxs lys)) where
   private module α {lxs} {lys} x y p = Quiver-onω (α {lxs} {lys} {x} {y} p) renaming (Het to Hom)
 
   record Extend : Typeω where
     no-eta-equality
     field
+      ⦃ rfl ⦄ : Refl C
       extend-l : ∀{lxs lys lfs} {x : Ob lxs} {y : Ob lys}
                  (p : Hom x y) → (u : F (refl {x = x}) lfs) → F p lfs
       extend-r : ∀{lxs lys lfs} {x : Ob lxs} {y : Ob lys}
@@ -27,6 +27,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
                  → α.Hom x x refl (extend-r refl u) u
 
 open Extend ⦃ ... ⦄ public
+  using (extend-l ; extend-r ; extend-refl ; extend-coh)
 {-# DISPLAY Extend.extend-l _ p u = extend-l p u #-}
 {-# DISPLAY Extend.extend-r _ p v = extend-r p v #-}
 {-# DISPLAY Extend.extend-refl _ = extend-refl #-}

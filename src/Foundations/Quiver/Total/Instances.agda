@@ -12,8 +12,8 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   {m′ ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ}
   {D : HQuiver-onωᵈ C m′ Ob[_] ℓ-homᵈ} where instance
 
-  Σ-Refl : ⦃ _ : Refl C ⦄ ⦃ _ : Reflᵈ D ⦄ → Refl (Σ C D)
-  Σ-Refl .refl .fst = refl
+  Σ-Refl : ⦃ rd : Reflᵈ D ⦄ → Refl (Σ C D)
+  Σ-Refl ⦃ rd ⦄ .refl .fst = rd .Reflᵈ.rfl .refl
   Σ-Refl .refl .snd = reflᵈ
 
 {-# INCOHERENT Σ-Refl #-}

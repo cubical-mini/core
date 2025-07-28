@@ -11,8 +11,8 @@ open import Notation.Underlying
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} ℓ-hom {C : HQuiver-onω m Ob ℓ-hom}
   {ℓ-homᵈ} {D : HQuiver-onωᵈ C 0 (λ _ _ → ⊤ₜ) ℓ-homᵈ} where instance
 
-  Wide-Refl : ⦃ _ : Refl C ⦄ ⦃ _ : Reflᵈ D ⦄ → Refl (Wide D)
-  Wide-Refl .refl .fst = refl
+  Wide-Refl : ⦃ rd : Reflᵈ D ⦄ → Refl (Wide D)
+  Wide-Refl ⦃ rd ⦄ .refl .fst = rd .Reflᵈ.rfl .refl
   Wide-Refl .refl .snd = reflᵈ
 
 {-# INCOHERENT Wide-Refl #-}

@@ -78,3 +78,13 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} (C : HQuiver-onω m Ob ℓ-ho
   HQuiver-onωᵈ : ∀ m′ {ℓ-obᵈ} (Ob[_] : ob-sigᵈ Ob ℓ-obᵈ) (ℓ-homᵈ : ℓ-sig 4 (m , m , m′ , m′ , _)) → Typeω
   HQuiver-onωᵈ m′ Ob[_] = SQuiver-onωᵈ m′ Ob[_] m′ Ob[_]
   {-# NOINLINE HQuiver-onωᵈ #-}
+
+
+module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺}
+  {ℓ-het} (C : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het) (open Quiver-onω C) where
+
+  Fan⁻ : ∀{lbs} (b : Ob⁺ lbs) las → Type (ℓ-ob⁻ las ⊔ ℓ-het las lbs)
+  Fan⁻ b las = Σₜ (Ob⁻ las) λ a → Het a b
+
+  Fan⁺ : ∀{las} (a : Ob⁻ las) lbs → Type (ℓ-ob⁺ lbs ⊔ ℓ-het las lbs)
+  Fan⁺ a lbs = Σₜ (Ob⁺ lbs) λ b → Het a b
