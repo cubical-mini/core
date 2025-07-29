@@ -42,6 +42,12 @@ opaque
         → p ∙ (q ∙ r) ＝ (p ∙ q) ∙ r
   assoc p q r i = ∙-filler-l p q i ∙ ∙-filler-r q r (~ i)
 
+opaque
+  unfolding _∙_
+  path-inv : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
+           → sym p ∙ p ＝ refl
+  path-inv p i j = hcomp (i ∨ ∂ j) (λ k _ → p (k ∨ i))
+
 
 -- Square manipulation
 

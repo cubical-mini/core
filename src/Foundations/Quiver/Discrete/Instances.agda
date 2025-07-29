@@ -9,31 +9,27 @@ open import Foundations.Path.Transport
 open import Foundations.Path.Properties
 open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete.Base
+open import Foundations.Quiver.Fibration.Contravariant
+open import Foundations.Quiver.Fibration.Covariant
 open import Foundations.Quiver.Lens.Extend.Base
 open import Foundations.Quiver.Lens.Pull.Assoc
 open import Foundations.Quiver.Lens.Pull.Base
+open import Foundations.Quiver.Lens.Pull.Universal
 open import Foundations.Quiver.Lens.Push.Assoc
 open import Foundations.Quiver.Lens.Push.Base
+open import Foundations.Quiver.Lens.Push.Universal
 
 open import Notation.Refl
 open import Notation.Sym
 
-instance
-  Disc-Refl : ∀{ℓ} {A : Type ℓ} → Refl (Disc A)
-  Disc-Refl .refl = reflₚ
-
-  Disc-Sym : ∀{ℓ} {A : Type ℓ} → Sym (Disc A) λ x y → Disc (x ＝ y)
-  Disc-Sym .sym = symₚ
-  Disc-Sym .sym-invol = refl
-
 module _ {ℓa} {A : Type ℓa} where instance
   Path-Push : {x : A} → HPush (Disc A) 0 λ y → Disc (x ＝ y)
-  Path-Push .Push.rfl .refl = reflₚ
+  Path-Push .Push.rfl = Disc-Refl
   Path-Push ._▷_ = _∙_
   Path-Push .push-refl {u} = id-o u
 
   Path-Pull : {y : A} → HPull (Disc A) 0 λ x → Disc (x ＝ y)
-  Path-Pull .Pull.rfl .refl = reflₚ
+  Path-Pull .Pull.rfl = Disc-Refl
   Path-Pull ._◁_ = _∙_
   Path-Pull .pull-refl {v} = id-i v
 
@@ -47,10 +43,23 @@ module _ {ℓa} {A : Type ℓa} where instance
   Path-LAssoc .LAssoc.hpl    = Path-Pull
   Path-LAssoc .assoc-l v p q = assoc p q v
 
+  Path-Pushforwards : {x : A} → Pushforwards (Disc A) λ y → Disc (x ＝ y)
+  Path-Pushforwards .Pushforwards.hp = Path-Push
+  Path-Pushforwards {x} .push-univ {x = y} {y = z} p q (r , s) (t , u)
+    =  sym s ∙ u
+    ,ₚ to-pathᴾ (subst-path-right s _ ∙ assoc s _ _ ∙ ap (_∙ u) (path-inv (sym s)) ∙ id-i u)
+
+  Path-Pullbacks : {y : A} → Pullbacks (Disc A) λ x → Disc (x ＝ y)
+  Path-Pullbacks .Pullbacks.hp = Path-Pull
+  Path-Pullbacks {y} .pull-univ {x} {y = z} p q (r , s) (t , u)
+    =  s ∙ sym u
+    ,ₚ to-pathᴾ ( subst-path-left s _ ∙ ap (_∙ s) (sym-∙ s _) ∙ sym (assoc u _ s)
+                ∙ ap (u ∙_) (path-inv s) ∙ sym (id-o u))
+
 {-# OVERLAPPING
-  Disc-Refl Disc-Sym
   Path-Push Path-Pull
   Path-RAssoc Path-LAssoc
+  Path-Pushforwards Path-Pullbacks
 #-}
 
 
@@ -87,6 +96,12 @@ module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
     Disc-RAssoc .RAssoc.hpr = Path-Push
     Disc-RAssoc .assoc-r {z} u p q = subst (λ φ → α.Hom z (u ▷ (p ▷ q)) φ)
       (subst-comp (λ ψ → F ψ _) p q u) refl
+
+    -- TODO
+    -- Disc-Pushforwards : Pushforwards (Disc A) α
+    -- Disc-Pushforwards .Pushforwards.hp = Disc-Push
+    -- Disc-Pushforwards .push-univ p u (v₁ , q₁) (v₂ , q₂) = {!!} ,ₚ {!!}
+
     {-# INCOHERENT Disc-Push Disc-RAssoc #-}
 
   module Default-Pull where instance
@@ -102,4 +117,23 @@ module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
       (sym ( ap (λ ψ → transport ψ v) (ap sym (ap-comp-∙ _ p q) ∙ sym-∙ _ _)
            ∙ transport-comp _ _ v))
       refl
+
+    -- TODO
+    -- Disc-Pullbacks : Pullbacks (Disc A) α
+    -- Disc-Pullbacks .Pullbacks.hp = Disc-Pull
+    -- Disc-Pullbacks .pull-univ p v (u₁ , q₁) (u₂ , q₂) = {!!}
+
     {-# INCOHERENT Disc-Pull Disc-LAssoc #-}
+
+
+-- -- TODO
+-- module _ {ℓa ℓb} {A : I → Type ℓa} {B : ∀ i → A i → Type ℓb} where instance
+--   Δᵈ-contravariant : is-contravariant-fibration (Δᵈ B)
+--   Δᵈ-contravariant .lift⁻ p v .fst = coe1→0 (λ i → B i (p i)) v , λ i → coe1→i (λ j → B j (p j)) i v
+--   Δᵈ-contravariant .lift⁻ p v .snd (u , q) = sym (from-pathᴾ⁻ q) ,ₚ {!!}
+
+--   Δᵈ-covariant : is-covariant-fibration (Δᵈ B)
+--   Δᵈ-covariant .lift⁺ p u .fst = coe0→1 (λ i → B i (p i)) u , λ i → coe0→i (λ j → B j (p j)) i u
+--   Δᵈ-covariant .lift⁺ p u .snd (v , q) = sym (from-pathᴾ q) ,ₚ {!!}
+
+-- {-# OVERLAPPING Δᵈ-contravariant Δᵈ-covariant #-}

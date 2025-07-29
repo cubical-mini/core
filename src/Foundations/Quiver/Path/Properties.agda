@@ -2,7 +2,7 @@
 module Foundations.Quiver.Path.Properties where
 
 open import Foundations.Quiver.Base
-open import Foundations.Quiver.Discrete
+open import Foundations.Quiver.Discrete.Base
 open import Foundations.Quiver.Path.Base
 
 discrete-path-object : ∀{ℓ} (A : Type ℓ) → is-path-object (Disc A)

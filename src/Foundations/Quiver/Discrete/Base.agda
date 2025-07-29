@@ -6,6 +6,9 @@ open import Prim.Kan public
 
 open import Foundations.Quiver.Base
 
+open import Notation.Refl
+open import Notation.Sym
+
 module _ {ℓ} (A : I → Type ℓ) where
   Δ : Quiver-onω 0 (λ _ → A i0) 0 (λ _ → A i1) (λ _ _ → ℓ)
   Δ .Quiver-onω.Het = Pathᴾ A
@@ -20,3 +23,13 @@ module _ {ℓa ℓb} {A : I → Type ℓa} (B : (i : I) → A i → Type ℓb) w
 module _ {ℓa ℓb} {A : Type ℓa} (B : A → Type ℓb) where
   Discᵈ : HQuiver-onωᵈ (Disc A) 0 (λ a _ → B a) (λ _ _ _ _ → ℓb)
   Discᵈ = Δᵈ λ _ → B
+
+instance
+  Disc-Refl : ∀{ℓ} {A : Type ℓ} → Refl (Disc A)
+  Disc-Refl .refl {x} _ = x
+
+  Disc-Sym : ∀{ℓ} {A : Type ℓ} → Sym (Disc A) λ x y → Disc (x ＝ y)
+  Disc-Sym .sym p i = p (~ i)
+  Disc-Sym .sym-invol = refl
+
+{-# OVERLAPPING Disc-Refl Disc-Sym #-}

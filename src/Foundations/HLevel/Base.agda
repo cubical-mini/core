@@ -2,7 +2,7 @@
 module Foundations.HLevel.Base where
 
 open import Foundations.Quiver.Base
-open import Foundations.Quiver.Discrete
+open import Foundations.Quiver.Discrete.Base
 open import Foundations.Quiver.Path
 
 is-contr⁻ is-contr⁺ is-prop : ∀{ℓa} (A : Type ℓa) → Type ℓa

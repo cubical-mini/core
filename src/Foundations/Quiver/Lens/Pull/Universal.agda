@@ -6,7 +6,7 @@ open import Foundations.Quiver.Base
 open import Foundations.Quiver.Lens.Pull.Base
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
-  {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
+  (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
   {k} {ℓ-obᶠ} {F : ob-sigᵈ Ob ℓ-obᶠ}
   {ℓ-homᶠ : ℓ-sig 3 (m , k , k , _)}
   (α : ∀{ls} (t : Ob ls) → HQuiver-onω k (F t) (ℓ-homᶠ ls)) where
