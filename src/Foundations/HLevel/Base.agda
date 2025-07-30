@@ -5,10 +5,16 @@ open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete.Base
 open import Foundations.Quiver.Path
 
+is-central⁻ is-central⁺ : ∀{ℓa} (A : Type ℓa) → A → Type ℓa
+is-central⁻ A = is-central~⁻ (discrete-path-object A)
+is-central⁺ A = is-central~⁺ (discrete-path-object A)
+
 is-contr⁻ is-contr⁺ is-prop : ∀{ℓa} (A : Type ℓa) → Type ℓa
 is-contr⁻ A = is-contr~⁻ (discrete-path-object A)
 is-contr⁺ A = is-contr~⁺ (discrete-path-object A)
 is-prop   A = is-prop~ (discrete-path-object A)
+{-# NOINLINE is-central~⁻ #-}
+{-# NOINLINE is-central~⁺ #-}
 {-# NOINLINE is-contr⁻ #-}
 {-# NOINLINE is-contr⁺ #-}
 {-# NOINLINE is-prop #-}

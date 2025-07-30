@@ -14,10 +14,10 @@ open import Foundations.Quiver.Fibration.Covariant
 open import Foundations.Quiver.Lens.Extend.Base
 open import Foundations.Quiver.Lens.Pull.Assoc
 open import Foundations.Quiver.Lens.Pull.Base
-open import Foundations.Quiver.Lens.Pull.Universal
+open import Foundations.Quiver.Lens.Pull.Universal.Pullback
 open import Foundations.Quiver.Lens.Push.Assoc
 open import Foundations.Quiver.Lens.Push.Base
-open import Foundations.Quiver.Lens.Push.Universal
+open import Foundations.Quiver.Lens.Push.Universal.Pushforward
 
 open import Notation.Refl
 open import Notation.Sym
@@ -43,14 +43,12 @@ module _ {ℓa} {A : Type ℓa} where instance
   Path-LAssoc .LAssoc.hpl    = Path-Pull
   Path-LAssoc .assoc-l v p q = assoc p q v
 
-  Path-Pushforwards : {x : A} → Pushforwards (Disc A) λ y → Disc (x ＝ y)
-  Path-Pushforwards .Pushforwards.hp = Path-Push
+  Path-Pushforwards : {x : A} → Pushforwards (Path-Push {x = x})
   Path-Pushforwards {x} .push-univ {x = y} {y = z} p q (r , s) (t , u)
     =  sym s ∙ u
     ,ₚ to-pathᴾ (subst-path-right s _ ∙ assoc s _ _ ∙ ap (_∙ u) (path-inv (sym s)) ∙ id-i u)
 
-  Path-Pullbacks : {y : A} → Pullbacks (Disc A) λ x → Disc (x ＝ y)
-  Path-Pullbacks .Pullbacks.hp = Path-Pull
+  Path-Pullbacks : {y : A} → Pullbacks (Path-Pull {y = y})
   Path-Pullbacks {y} .pull-univ {x} {y = z} p q (r , s) (t , u)
     =  s ∙ sym u
     ,ₚ to-pathᴾ ( subst-path-left s _ ∙ ap (_∙ s) (sym-∙ s _) ∙ sym (assoc u _ s)

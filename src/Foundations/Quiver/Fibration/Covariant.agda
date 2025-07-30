@@ -12,8 +12,14 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig 
   record is-covariant-fibration : Typeω where
     no-eta-equality
     field
-      lift⁺ : ∀{lxs lys lfs} {x : Ob⁻ lxs} {y : Ob⁺ lys} (p : Het x y) (u : Ob[ x ]⁻ lfs)
-            → is-contr⁺ (Σₜ (Ob[ y ]⁺ lfs) (λ v → Het[ p ] u v))
+      lift-ob⁺ : ∀{lxs lys lfs} {x : Ob⁻ lxs} {y : Ob⁺ lys} (p : Het x y) (u : Ob[ x ]⁻ lfs)
+               → Ob[ y ]⁺ lfs
+      lift-het⁺ : ∀{lxs lys lfs} {x : Ob⁻ lxs} {y : Ob⁺ lys} (p : Het x y) (u : Ob[ x ]⁻ lfs)
+                → Het[ p ] u (lift-ob⁺ p u)
+      lift-unique⁺ : ∀{lxs lys lfs} {x : Ob⁻ lxs} {y : Ob⁺ lys} (p : Het x y) (u : Ob[ x ]⁻ lfs)
+                   → is-central⁺ (Σₜ (Ob[ y ]⁺ lfs) (λ v → Het[ p ] u v)) (lift-ob⁺ p u , lift-het⁺ p u)
 
 open is-covariant-fibration ⦃ ... ⦄ public
-{-# DISPLAY is-covariant-fibration.lift⁺ _ p u = lift⁺ p u #-}
+{-# DISPLAY is-covariant-fibration.lift-ob⁺ _ p u = lift-ob⁺ p u #-}
+{-# DISPLAY is-covariant-fibration.lift-het⁺ _ p u = lift-het⁺ p u #-}
+{-# DISPLAY is-covariant-fibration.lift-unique⁺ _ p u = lift-het⁺ p u #-}

@@ -18,14 +18,6 @@ module _ {ℓo ℓh} {Ob : Type ℓo}
       to-path-over : {x y : Ob} (p : Hom x y)
                    → Pathᴾ (λ i → Hom x (to-path p i)) refl p
 
-    is-contr~⁻ is-contr~⁺ is-prop~ : Type (ℓo ⊔ ℓh)
-    is-contr~⁻ = Σₜ Ob λ centre → (x : Ob) → Hom centre x
-    is-contr~⁺ = Σₜ Ob λ centre → (x : Ob) → Hom x centre
-    is-prop~   = (x y : Ob) → Hom x y
-    {-# NOINLINE is-contr~⁻ #-}
-    {-# NOINLINE is-contr~⁺ #-}
-    {-# NOINLINE is-prop~   #-}
-
     -- FIXME
     -- fan⁺-is-contr⁺ : {t : Ob} → is-contr~⁺ (Fan⁺ C t _)
     -- fan⁺-is-contr⁺ {t} .fst = t , refl
@@ -46,3 +38,23 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
 
   is-path-objectωᵈ : Typeω
   is-path-objectωᵈ = ∀{ls} → is-path-objectᵈ ls
+
+
+module _ {ℓo ℓh} {Ob : Type ℓo}
+  {C : HQuiver-onω 0 (λ _ → Ob) (λ _ _ → ℓh)} (open Quiver-onω C renaming (Het to Hom))
+  ⦃ _ : Refl C ⦄ (@0 po : is-path-object C) where
+
+  is-central~⁻ is-central~⁺ : Ob → Type (ℓo ⊔ ℓh)
+  is-central~⁻ c = (x : Ob) → Hom c x
+  is-central~⁺ c = (x : Ob) → Hom x c
+
+  is-contr~⁻ is-contr~⁺ is-prop~ : Type (ℓo ⊔ ℓh)
+  is-contr~⁻ = Σₜ Ob is-central~⁻
+  is-contr~⁺ = Σₜ Ob is-central~⁺
+  is-prop~   = (x y : Ob) → Hom x y
+
+{-# NOINLINE is-central~⁻ #-}
+{-# NOINLINE is-central~⁺ #-}
+{-# NOINLINE is-contr~⁻ #-}
+{-# NOINLINE is-contr~⁺ #-}
+{-# NOINLINE is-prop~   #-}
