@@ -22,6 +22,73 @@ open import Foundations.Quiver.Lens.Push.Universal.Pushforward
 open import Notation.Refl
 open import Notation.Sym
 
+-- Structural
+module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
+  {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
+  ⦃ _ : Refl C ⦄ where
+
+  module Variadic-Extend where instance
+    Disc-Extend-Const : ∀{ℓa} {A : Type ℓa} → Extend C 0 λ _ → Disc A
+    Disc-Extend-Const .extend-l = _
+    Disc-Extend-Const .extend-r = _
+    Disc-Extend-Const .extend-refl = refl
+    Disc-Extend-Const .extend-coh = refl
+    {-# INCOHERENT Disc-Extend-Const #-}
+
+    module _ {ℓf ℓg : ℓ-sig 2 (m , m , _)}
+      {F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → Type (ℓf lxs lys)}
+      {G : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → Type (ℓg lxs lys)}
+      ⦃ _ : Extend C 0 λ p → Disc (F p) ⦄ ⦃ _ : Extend C 0 λ p → Disc (G p) ⦄
+      where instance
+      Disc-Extend-× : Extend C 0 (λ p → Disc (F p ×ₜ G p))
+      Disc-Extend-× .extend-l p (u , v) = extend-l p u , extend-l p v
+      Disc-Extend-× .extend-r p (u , v) = extend-r p u , extend-r p v
+      Disc-Extend-× .extend-refl {u = u , v} i = extend-refl {u = u} i , extend-refl {u = v} i
+      Disc-Extend-× .extend-coh {u = u , v} i = extend-coh {u = u} i , extend-coh {u = v} i
+    {-# OVERLAPS Disc-Extend-× #-}
+
+  module Variadic-Push where instance
+    Disc-Push-Const : ∀{ℓa} {A : Type ℓa} → Push C 0 (λ _ → Disc A)
+    Disc-Push-Const ._▷_ = _
+    Disc-Push-Const .push-refl = refl
+    {-# INCOHERENT Disc-Push-Const #-}
+
+    module _ {ℓf ℓg : ℓ-sig 1 (m , _)}
+      {F : ∀{ls} → Ob ls → Type (ℓf ls)} {G : ∀{ls} → Ob ls → Type (ℓg ls)} where instance
+      Disc-Push-× : ⦃ _ : HPush C 0 λ t → Disc (F t) ⦄ ⦃ _ : HPush C 0 λ t → Disc (G t) ⦄
+                  → Push C 0 λ t → Disc (F t ×ₜ G t)
+      Disc-Push-× ._▷_ (u , v) p = u ▷ p , v ▷ p
+      Disc-Push-× .push-refl {u = u , v} i = push-refl {u = u} i , push-refl {u = v} i
+
+      Disc-Push-→ : ⦃ _ : HPull C 0 λ t → Disc (F t) ⦄ ⦃ _ : HPush C 0 λ t → Disc (G t) ⦄
+                  → Push C 0 λ t → Disc (F t → G t)
+      Disc-Push-→ ._▷_ α p fy = α (p ◁ fy) ▷ p
+      Disc-Push-→ .push-refl {u = α} i fx = push-refl {u = α (pull-refl {v = fx} (~ i))} i
+    {-# OVERLAPS Disc-Push-× Disc-Push-→ #-}
+
+
+  module Variadic-Pull where instance
+    Disc-Pull-Const : ∀{ℓa} {A : Type ℓa} → Pull C 0 (λ _ → Disc A)
+    Disc-Pull-Const ._◁_ = _
+    Disc-Pull-Const .pull-refl = refl
+    {-# INCOHERENT Disc-Pull-Const #-}
+
+    module _ {ℓf ℓg : ℓ-sig 1 (m , _)}
+      {F : ∀{ls} → Ob ls → Type (ℓf ls)} {G : ∀{ls} → Ob ls → Type (ℓg ls)} where instance
+      Disc-Pull-× : ⦃ _ : HPull C 0 λ t → Disc (F t) ⦄ ⦃ _ : HPull C 0 λ t → Disc (G t) ⦄
+                  → Pull C 0 λ t → Disc (F t ×ₜ G t)
+      Disc-Pull-× ._◁_ p (u , v) = p ◁ u , p ◁ v
+      Disc-Pull-× .pull-refl {v = u , v} i = pull-refl {v = u} i , pull-refl {v = v} i
+
+      Disc-Pull-→ : ⦃ _ : HPush C 0 λ t → Disc (F t) ⦄ ⦃ _ : HPull C 0 λ t → Disc (G t) ⦄
+                  → Pull C 0 λ t → Disc (F t → G t)
+      Disc-Pull-→ ._◁_ p α fx = p ◁ α (fx ▷ p)
+      Disc-Pull-→ .pull-refl {v = α} i fy = pull-refl {v = α (push-refl {u = fy} (~ i))} i
+    {-# OVERLAPS Disc-Pull-× Disc-Pull-→ #-}
+
+
+-- Path specific
+
 module _ {ℓa} {A : Type ℓa} where instance
   Path-Push : {x : A} → HPush (Disc A) 0 λ y → Disc (x ＝ y)
   Path-Push ._▷_ = _∙_
@@ -55,6 +122,7 @@ module _ {ℓa} {A : Type ℓa} where instance
 #-}
 
 
+-- Subst specific
 -- these are bad, use as a last resort
 
 module Default-Extend {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}

@@ -24,6 +24,10 @@ instance
   Fun-Push ._▷_ f g = g ∘ f
   Fun-Push .push-refl {u} _ = u
 
+  Fun-Apply : HPush Funs 0 Disc
+  Fun-Apply ._▷_ x f = f x
+  Fun-Apply .push-refl = refl
+
   Fun-Pull : ∀{ℓb} {B : Type ℓb} → HPull Funs 0 (λ T → Disc (T → B))
   Fun-Pull ._◁_ f g = g ∘ f
   Fun-Pull .pull-refl {v} _ = v
