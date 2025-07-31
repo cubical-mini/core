@@ -25,14 +25,10 @@ instance
   𝐼-Push {(false)} .push-refl _ = oh
   𝐼-Push {(true)} .push-refl {x = true} _ = oh
 
-  𝐼-RAssoc : {w : Bool} → RAssoc 𝐼 (λ t → Disc (So (w implies t)))
-  𝐼-RAssoc .RAssoc.hp  = 𝐼-Push
-  𝐼-RAssoc .RAssoc.hpr = 𝐼-Push
+  𝐼-RAssoc : {w : Bool} → RAssoc (𝐼-Push {w = w}) 𝐼-Push
   𝐼-RAssoc .assoc-r = assoc
 
-  𝐼-LAssoc : {w : Bool} → LAssoc 𝐼 (λ t → Disc (So (t implies w)))
-  𝐼-LAssoc .LAssoc.hp  = 𝐼-Pull
-  𝐼-LAssoc .LAssoc.hpl = 𝐼-Pull
+  𝐼-LAssoc : {w : Bool} → LAssoc (𝐼-Pull {w = w}) 𝐼-Pull
   𝐼-LAssoc .assoc-l v p q = assoc p q v
 
 {-# OVERLAPPING 𝐼-Refl 𝐼-Pull 𝐼-Push 𝐼-RAssoc 𝐼-LAssoc #-}

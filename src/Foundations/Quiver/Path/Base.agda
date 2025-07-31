@@ -31,10 +31,10 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   {C : HQuiver-onω m Ob ℓ-hom}
   {ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ}
   (D : HQuiver-onωᵈ C 0 Ob[_] ℓ-homᵈ)
-  ⦃ rd : Reflᵈ D ⦄ where
+  ⦃ _ : Refl C ⦄ ⦃ rd : Reflᵈ D ⦄ where
 
   is-path-objectᵈ : ∀ ls → Type (ℓ-ob ls ⊔ ℓ-obᵈ ls _ ⊔ ℓ-homᵈ ls ls _ _)
-  is-path-objectᵈ ls = {t : Ob ls} → is-path-object (Component D ⦃ rd .Reflᵈ.rfl ⦄ t)
+  is-path-objectᵈ ls = {t : Ob ls} → is-path-object (Component D t)
 
   is-path-objectωᵈ : Typeω
   is-path-objectωᵈ = ∀{ls} → is-path-objectᵈ ls

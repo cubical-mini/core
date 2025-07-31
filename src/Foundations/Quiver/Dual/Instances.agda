@@ -27,8 +27,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} {C : HQuiver-onω m Ob ℓ-ho
   {m′ ℓ-obᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ} {ℓ-homᵈ}
   {D : HQuiver-onωᵈ C m′ Ob[_] ℓ-homᵈ} where instance
 
-  Dual-Reflᵈ : ⦃ r′ : Reflᵈ D ⦄ → Reflᵈ (D ᵒᵖᵈ)
-  Dual-Reflᵈ ⦃ r′ ⦄ .Reflᵈ.rfl = Dual-Refl ⦃ r′ .Reflᵈ.rfl ⦄
+  Dual-Reflᵈ : ⦃ _ : Refl C ⦄ ⦃ r′ : Reflᵈ D ⦄ → Reflᵈ (D ᵒᵖᵈ)
   Dual-Reflᵈ ⦃ r′ ⦄ .reflᵈ = r′ .Reflᵈ.reflᵈ
 
 
@@ -37,13 +36,11 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} {C : HQuiver-onω m Ob ℓ-ho
   {ℓ-hetᶠ : ℓ-sig 3 (m , k , k , _)}
   {α : ∀{ls} (t : Ob ls) → Quiver-onω k (F t) k (G t) (ℓ-hetᶠ ls)} where instance
 
-  Dual-Push : ⦃ hp : Pull C k α ⦄ → Push (C ᵒᵖ) k (λ t → α t ᵒᵖ)
-  Dual-Push ⦃ hp ⦄ .Push.rfl = Dual-Refl ⦃ hp .Pull.rfl ⦄
+  Dual-Push : ⦃ _ : Refl C ⦄ ⦃ hp : Pull C k α ⦄ → Push (C ᵒᵖ) k (λ t → α t ᵒᵖ)
   Dual-Push ._▷_ u p = p ◁ u
   Dual-Push .push-refl = pull-refl
 
-  Dual-Pull : ⦃ pp : Push C k α ⦄ → Pull (C ᵒᵖ) k (λ t → α t ᵒᵖ)
-  Dual-Pull ⦃ pp ⦄ .Pull.rfl = Dual-Refl ⦃ pp .Push.rfl ⦄
+  Dual-Pull : ⦃ _ : Refl C ⦄ ⦃ pp : Push C k α ⦄ → Pull (C ᵒᵖ) k (λ t → α t ᵒᵖ)
   Dual-Pull ._◁_ p v = v ▷ p
   Dual-Pull ⦃ pp ⦄ .pull-refl = pp .Push.push-refl
 

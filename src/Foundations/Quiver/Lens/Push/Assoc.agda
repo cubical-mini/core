@@ -5,17 +5,24 @@ open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete.Base
 open import Foundations.Quiver.Lens.Push.Base
 
-module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} (C : HQuiver-onω m Ob ℓ-hom)
+open import Notation.Refl
+
+module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} {C : HQuiver-onω m Ob ℓ-hom}
   (open Quiver-onω C renaming (Het to Hom))
   {k} {ℓ-obᶠ} {F : ob-sigᵈ Ob ℓ-obᶠ} {ℓ-homᶠ : ℓ-sig 3 (m , k , k , _)}
-  (α : ∀{ls} (t : Ob ls) → HQuiver-onω k (F t) (ℓ-homᶠ ls)) where
-  private module α {ls} t = Quiver-onω (α {ls} t) renaming (Het to Hom)
+  {α : ∀{ls} (t : Ob ls) → HQuiver-onω k (F t) (ℓ-homᶠ ls)}
+  ⦃ _ : Refl C ⦄ (hp : HPush C k α)
+  (hpr : ∀{lxs} {x : Ob lxs} → HPush C 0 λ t → Disc (Hom x t)) where
+  private
+    module α {ls} t = Quiver-onω (α {ls} t) renaming (Het to Hom)
+    instance
+      _ = hp
+      _ : ∀{lxs} {x : Ob lxs} → HPush C 0 λ t → Disc (Hom x t)
+      _ = hpr
 
   record RAssoc : Typeω where
     no-eta-equality
     field
-      ⦃ hp ⦄  : HPush C k α
-      ⦃ hpr ⦄ : ∀{lxs} {x : Ob lxs} → HPush C 0 λ t → Disc (Hom x t)
       assoc-r : ∀{lxs lys lzs lfs} {x : Ob lxs} {y : Ob lys} {z : Ob lzs}
                 (u : F x lfs) (p : Hom x y) (q : Hom y z)
               → α.Hom z (u ▷ (p ▷ q)) (u ▷ p ▷ q)

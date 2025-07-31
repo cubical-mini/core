@@ -13,7 +13,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   (α⁺ : ∀{ls} (t : Ob ls) → HQuiver-onω k (F t) (ℓ-homᶠ ls)) where
   private module α⁺ {ls} t = Quiver-onω (α⁺ {ls} t) renaming (Het to Hom)
 
-  Disp⁺ : ⦃ _ : HPush C k α⁺ ⦄ → HQuiver-onωᵈ C k F _
+  Disp⁺ : ⦃ _ : Refl C ⦄ ⦃ _ : HPush C k α⁺ ⦄ → HQuiver-onωᵈ C k F _
   Disp⁺ .Quiver-onωᵈ.Het[_] {y} p u v = α⁺.Hom y v (u ▷ p)
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
@@ -22,7 +22,6 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   {F : ∀{ls} → Ob ls → ob-sig (ℓ-obᶠ ls)}
   {α⁺ : ∀{ls} (t : Ob ls) → HQuiver-onω k (F t) (ℓ-homᶠ ls)} where instance
 
-  Disp⁺-Reflᵈ : ⦃ hp : HPush C k α⁺ ⦄ → Reflᵈ (Disp⁺ α⁺)
-  Disp⁺-Reflᵈ ⦃ hp ⦄ .Reflᵈ.rfl = hp .Push.rfl
+  Disp⁺-Reflᵈ : ⦃ _ : Refl C ⦄ ⦃ hp : HPush C k α⁺ ⦄ → Reflᵈ (Disp⁺ α⁺)
   Disp⁺-Reflᵈ .reflᵈ = push-refl
   {-# INCOHERENT Disp⁺-Reflᵈ #-} -- TODO check

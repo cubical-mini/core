@@ -24,23 +24,17 @@ open import Notation.Sym
 
 module _ {ℓa} {A : Type ℓa} where instance
   Path-Push : {x : A} → HPush (Disc A) 0 λ y → Disc (x ＝ y)
-  Path-Push .Push.rfl = Disc-Refl
   Path-Push ._▷_ = _∙_
   Path-Push .push-refl {u} = id-o u
 
   Path-Pull : {y : A} → HPull (Disc A) 0 λ x → Disc (x ＝ y)
-  Path-Pull .Pull.rfl = Disc-Refl
   Path-Pull ._◁_ = _∙_
   Path-Pull .pull-refl {v} = id-i v
 
-  Path-RAssoc : {x : A} → RAssoc (Disc A) λ y → Disc (x ＝ y)
-  Path-RAssoc .RAssoc.hp  = Path-Push
-  Path-RAssoc .RAssoc.hpr = Path-Push
-  Path-RAssoc .assoc-r    = assoc
+  Path-RAssoc : {x : A} → RAssoc (Path-Push {x = x}) Path-Push
+  Path-RAssoc .RAssoc.assoc-r = assoc
 
-  Path-LAssoc : {y : A} → LAssoc (Disc A) λ x → Disc (x ＝ y)
-  Path-LAssoc .LAssoc.hp     = Path-Pull
-  Path-LAssoc .LAssoc.hpl    = Path-Pull
+  Path-LAssoc : {y : A} → LAssoc (Path-Pull {y = y}) Path-Pull
   Path-LAssoc .assoc-l v p q = assoc p q v
 
   Path-Pushforwards : {x : A} → Pushforwards (Path-Push {x = x})
@@ -70,7 +64,6 @@ module Default-Extend {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
   private module α x y p = Quiver-onω (α {x} {y} p) renaming (Het to Hom)
 
   Disc-Extend : Extend (Disc A) k α
-  Disc-Extend .Extend.rfl = Disc-Refl
   Disc-Extend .extend-l p = coe0→1 λ i → F (λ j → p (i ∧ j)) _
   Disc-Extend .extend-r p = coe1→0 λ i → F (λ j → p (i ∨ j)) _
   Disc-Extend .extend-refl = refl
@@ -85,13 +78,10 @@ module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
 
   module Default-Push where instance
     Disc-Push : HPush (Disc A) k α
-    Disc-Push .Push.rfl = Disc-Refl
     Disc-Push ._▷_ {lfs} u p = coe0→1 (λ i → F (p i) lfs) u
     Disc-Push .push-refl {u} = coe0→1 (λ i → α.Hom _ u (coe0→i _ i u)) refl
 
-    Disc-RAssoc : RAssoc (Disc A) α
-    Disc-RAssoc .RAssoc.hp  = Disc-Push
-    Disc-RAssoc .RAssoc.hpr = Path-Push
+    Disc-RAssoc : RAssoc Disc-Push Path-Push
     Disc-RAssoc .assoc-r {z} u p q = subst (λ φ → α.Hom z (u ▷ (p ▷ q)) φ)
       (subst-comp (λ ψ → F ψ _) p q u) refl
 
@@ -104,13 +94,10 @@ module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
 
   module Default-Pull where instance
     Disc-Pull : HPull (Disc A) k α
-    Disc-Pull .Pull.rfl = Disc-Refl
     Disc-Pull ._◁_ p = coe1→0 (λ i → F (p i) _)
     Disc-Pull .pull-refl {v} = coe0→1 (λ i → α.Hom _ (coe0→i _ i v) v) refl
 
-    Disc-LAssoc : LAssoc (Disc A) α
-    Disc-LAssoc .LAssoc.hp  = Disc-Pull
-    Disc-LAssoc .LAssoc.hpl = Path-Pull
+    Disc-LAssoc : LAssoc Disc-Pull Path-Pull
     Disc-LAssoc .assoc-l {x} v p q = subst (λ φ → α.Hom x (p ◁ q ◁ v) φ)
       (sym ( ap (λ ψ → transport ψ v) (ap sym (ap-comp-∙ _ p q) ∙ sym-∙ _ _)
            ∙ transport-comp _ _ v))

@@ -20,8 +20,8 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
   {m′ ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ}
   {D : HQuiver-onωᵈ C m′ Ob[_] ℓ-homᵈ}
-  ⦃ rd : Reflᵈ D ⦄ where instance
+  ⦃ _ : Refl C ⦄ ⦃ _ : Reflᵈ D ⦄ where instance
 
-  Component-Refl : ∀{ls} {t : Ob ls} → Refl (Component D ⦃ rd .Reflᵈ.rfl ⦄ t) -- canonical way
+  Component-Refl : ∀{ls} {t : Ob ls} → Refl (Component D t) -- canonical way
   Component-Refl .refl = reflᵈ
   {-# INCOHERENT Component-Refl #-}
