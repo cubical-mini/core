@@ -6,10 +6,10 @@ open import Prim.Data.Maybe
 
 open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete as Discrete
-open import Foundations.Quiver.Type
+open import Foundations.Quiver.Functions
+open import Foundations.Quiver.Lens.Pull
+open import Foundations.Quiver.Lens.Push
 
-open import Notation.Pull
-open import Notation.Push
 open import Notation.Refl
 
 lmap : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
@@ -17,7 +17,7 @@ lmap : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
 lmap _ [] = []
 lmap f (x ∷ xs) = f x ∷ lmap f xs
 
-open Discrete.Groupoid
+-- open Discrete.Groupoid
 
 lmap-id : ∀{ℓ} {A : Type ℓ} (xs : List A)
         → xs ＝ lmap id xs
@@ -26,7 +26,7 @@ lmap-id (x ∷ xs) i = x ∷ lmap-id xs i
 
 instance
   List-HPush : HPush Funs 0 (λ T → Disc (List T))
-  List-HPush .push = lmap
+  List-HPush ._▷_ xs f = lmap f xs
   List-HPush .push-refl = lmap-id _
 
 module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} where private
@@ -40,14 +40,14 @@ data MLR {ℓ} {A : Type ℓ} : Maybe A → List A → Type ℓ where
 
 instance
   Maybe-HPush : HPush Funs 0 (λ T → Disc (Maybe T))
-  Maybe-HPush .push p (just x) = just (p x)
-  Maybe-HPush .push _ nothing = nothing
+  Maybe-HPush ._▷_ (just x) p = just (p x)
+  Maybe-HPush ._▷_ nothing _ = nothing
   Maybe-HPush .push-refl {u = just _} = refl
   Maybe-HPush .push-refl {u = nothing} = refl
 
   Maybe-List-Push : Push Funs 0 (λ _ → mk-quiver-onω MLR)
-  Maybe-List-Push .push f (just x) = f x ∷ []
-  Maybe-List-Push .push _ nothing = []
+  Maybe-List-Push ._▷_ (just x) f = f x ∷ []
+  Maybe-List-Push ._▷_ nothing _ = []
   Maybe-List-Push .push-refl {u = just x} = just~singleton
   Maybe-List-Push .push-refl {u = nothing} = nothing~[]
 
@@ -61,14 +61,14 @@ instance
 
 module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} (f : A → B) where
   α : ∀{ℓw} {W : Type ℓw} → Maybe W → List W
-  α = push refl
+  α = _▷ refl
 
-  α-is-natural : (mx : Maybe A) → push f (α mx) ＝ α (push f mx)
+  α-is-natural : (mx : Maybe A) → (α mx) ▷ f ＝ α (mx ▷ f)
   α-is-natural (just x) _ = f x ∷ []
   α-is-natural nothing _ = []
 
   -- β : ∀{ℓw} {W : Type ℓw} → List W → Maybe W
-  -- β = push refl
+  -- β = _▷ refl
 
   -- β-is-natural : (xs : List A) → push f (β xs) ＝ β (push f xs)
   -- β-is-natural [] _ = nothing
@@ -100,11 +100,11 @@ vec-cast-lawful (x ∷ xs) i = x ∷ vec-cast-lawful xs i
 
 instance
   Vec-HPush : ∀{n} → HPush Funs 0 (λ A → Disc (Vec A n))
-  Vec-HPush .push = vec-map
+  Vec-HPush ._▷_ xs f = vec-map f xs
   Vec-HPush .push-refl = vec-map-lawful _
 
   Vec-HPush′ : ∀{ℓ}{A : Type ℓ} → HPush (Disc ℕ) 0 (λ n → Disc (Vec A n))
-  Vec-HPush′ .push = vec-cast
+  Vec-HPush′ ._▷_ xs f = vec-cast f xs
   Vec-HPush′ .push-refl = vec-cast-lawful _
 
 ex : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}

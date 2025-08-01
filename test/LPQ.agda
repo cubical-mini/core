@@ -2,7 +2,7 @@
 module LPQ where
 
 open import Foundations.Quiver.Base
-open import Foundations.Quiver.Component.Base
+open import Foundations.Quiver.Component
 open import Foundations.Quiver.Discrete
 open import Foundations.Quiver.Lens.Extend
 open import Foundations.Quiver.Lens.Pull
@@ -10,10 +10,6 @@ open import Foundations.Quiver.Lens.Push
 open import Foundations.Quiver.Path
 open import Foundations.Quiver.Total.Base
 
-open import Notation.Comp
-open import Notation.Extend
-open import Notation.Pull
-open import Notation.Push
 open import Notation.Refl
 open import Notation.Sym
 

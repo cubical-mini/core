@@ -27,6 +27,7 @@ instance
   Fun-Apply : HPush Funs 0 Disc
   Fun-Apply ._▷_ x f = f x
   Fun-Apply .push-refl = refl
+  {-# INCOHERENT Fun-Apply #-}
 
   Fun-Pull : ∀{ℓb} {B : Type ℓb} → HPull Funs 0 (λ T → Disc (T → B))
   Fun-Pull ._◁_ f g = g ∘ f
