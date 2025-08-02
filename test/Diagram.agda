@@ -19,7 +19,7 @@ module Terminal where
   TERMINAL : Quiver-onω 1 Types 0 (λ _ → ⊤ₜ) λ _ _ → lzero
   TERMINAL .Quiver-onω.Het _ _ = ⊤ₜ
 
-  terminal : ∀{ls} → Limit Funs TERMINAL tt (lzero , _) ls
+  terminal : Limit Funs TERMINAL tt (lzero , _)
   terminal .apex = ⊤ₜ
   terminal .ψ = tt
   terminal .lim-univ .unpull _ = λ _ → tt
@@ -37,7 +37,7 @@ module Product where
   PRODUCT : Quiver-onω 1 Types 2 (λ (lx , ly , _) → Type lx ×ₜ Type ly ) _
   PRODUCT .Quiver-onω.Het P (A , B) = (P → A) ×ₜ (P → B)
 
-  product : ∀{las lbs ls} (A : Type las) (B : Type lbs) → Limit Funs PRODUCT (A , B) ((las ⊔ lbs) , _) ls
+  product : ∀{las lbs} (A : Type las) (B : Type lbs) → Limit Funs PRODUCT (A , B) ((las ⊔ lbs) , _)
   product A B .apex = A ×ₜ B
   product A B .ψ = fst , snd
   product A B .lim-univ .unpull (f , g) z = f z , g z
@@ -69,7 +69,7 @@ module Exponential where
   EXP : Quiver-onω 1 Types 2 (λ (lx , ly , _) → Type lx ×ₜ Type ly) _
   EXP .Quiver-onω.Het P (A , B) = P ×ₜ A → B
 
-  exponential : ∀{las lbs ls} (A : Type las) (B : Type lbs) → Limit Funs EXP (A , B) ((las ⊔ lbs) , _) (ls , _)
+  exponential : ∀{las lbs} (A : Type las) (B : Type lbs) → Limit Funs EXP (A , B) ((las ⊔ lbs) , _)
   exponential A B .apex = A → B
   exponential A B .ψ (f , a) = f a
   exponential A B .lim-univ .unpull {x = P} w p a = w (p , a)
@@ -80,7 +80,7 @@ module Exponential where
 
   ev : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
      → ((A → B) ×ₜ A) → B
-  ev {ℓa} {ℓb} = exponential {ls = ℓa ⊔ ℓb} _ _ .ψ
+  ev {ℓa} {ℓb} = exponential _ _ .ψ
 
   ƛ : ∀{ℓa ℓb ℓg} {A : Type ℓa} {B : Type ℓb} {Γ : Type ℓg}
       (m : Γ ×ₜ A → B) → (Γ → (A → B))

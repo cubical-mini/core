@@ -13,10 +13,9 @@ module _ {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-hom⁺}
   (H : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het) (open Quiver-onω H)
   ⦃ _ : Refl B ⦄ ⦃ hp : ∀{lxs} {x : Ob⁻ lxs} → Push B 0 (λ y → Disc (Het x y)) ⦄ where
 
-  record Colimit {lds} (d : Ob⁻ lds) ℓ-col ls : Type
-    (ℓ-ob⁺ ℓ-col ⊔ ℓ-het lds ℓ-col ⊔ ℓ-ob⁺ ls ⊔ ℓ-hom⁺ ℓ-col ls ⊔ ℓ-het lds ls) where
+  record Colimit {lds} (d : Ob⁻ lds) ℓ-col : Typeω where
     no-eta-equality
     field
       coapex     : Ob⁺ ℓ-col
       ψ          : Het d coapex
-      colim-univ : is-universal⁺ hp ψ ls
+      colim-univ : is-universalω⁺ hp ψ
