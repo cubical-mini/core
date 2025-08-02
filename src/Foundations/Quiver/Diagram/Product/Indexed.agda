@@ -49,7 +49,7 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-hom⁻}
        → (Ix → Ob⁺ ls) → Ob⁻ (ℓ-Π ls)
   ∏[_] = Π
 
-  infixr 60 Π-syntax
+  infixr 600 Π-syntax
   Π-syntax : ∀{lix ls} ⦃ u : Underlying H ⦄ {ℓ-Π} (X : Ob⁺ lix) ⦃ _ : Indexed-products A H ⌞ X ⌟⁺ ℓ-Π ⦄
            → (⌞ X ⌟⁺ → Ob⁺ ls) → Ob⁻ (ℓ-Π ls)
   Π-syntax _ = Π
