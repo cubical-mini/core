@@ -2,7 +2,9 @@
 module Diagram where
 
 open import Foundations.Quiver.Base
+open import Foundations.Quiver.Diagram.Colimit
 open import Foundations.Quiver.Diagram.Limit
+open import Foundations.Quiver.Dual.Base
 open import Foundations.Quiver.Lens.Pull
 open import Foundations.Quiver.Lens.Push
 open import Foundations.Quiver.Functions
@@ -12,8 +14,48 @@ open import Notation.Refl
 
 open Variadic-Pull
 open Variadic-Push
+open Colimit
 open Limit
 open is-universal⁻
+open is-universal⁺
+
+module Pi {lix} {Ix : Type lix} where
+  PI : Quiver-onω 1 Types 1 (λ ls → Ix → Type (ls .fst)) _
+  PI .Quiver-onω.Het P F = ∀ i → P → F i
+
+  hmm : ∀{ls} {F : Ix → Type ls} → Pull Funs 0 λ X → Disc ((i : Ix) → X → F i)
+  hmm ._◁_ {x = X} {y = Y} f α i x = α i (f x)
+  hmm .pull-refl = refl
+
+  pi : ∀{ls} (F : Ix → Type ls) → Limit Funs PI ⦃ Fun-Refl ⦄ ⦃ hmm ⦄ F ((lix ⊔ ls) , _)
+  pi F .apex = (i : Ix) → F i
+  pi F .ψ i f = f i
+  pi F .lim-univ .unpull = λ u z i → u i z
+  pi F .lim-univ .θ⁻ _ = refl
+  pi F .lim-univ .unpull-unique u (w , z) j
+    = (λ x i → z (~ j) i x)
+    , λ k i x → z (~ j ∨ k) i x
+
+  Preds : HQuiver-onω 1 (λ ls → Ix → 𝒰 (ls .fst)) _
+  Preds .Quiver-onω.Het F G = (i : Ix) → F i → G i
+
+  instance
+    Pred-Refl : Refl Preds
+    Pred-Refl .refl _ = id
+
+  mmh : ∀{lys} {Y : Type lys} → Push Preds 0 λ F → Disc ((i : Ix) → Y → F i)
+  mmh ._▷_ α f i y = f i (α i y)
+  mmh .push-refl = refl
+
+  copi : ∀{lys} (Y : Type lys) → Colimit Preds PI ⦃ Pred-Refl ⦄ ⦃ mmh ⦄ Y (lys , _)
+  copi Y .coapex _ = Y
+  copi Y .ψ _ = id
+  copi Y .colim-univ .unpush = id
+  copi Y .colim-univ .θ⁺ _ = refl
+  copi Y .colim-univ .unpush-unique u (w , z) j
+    = (λ i y → z (~ j) i y)
+    , λ k i y → z (~ j ∧ k) i y
+
 
 module Terminal where
   TERMINAL : Quiver-onω 1 Types 0 (λ _ → ⊤ₜ) λ _ _ → lzero
