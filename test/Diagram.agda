@@ -95,5 +95,4 @@ module Exponential where
              (m : Γ ×ₜ A → B) (m′ : Γ → (A → B))
            → ev ∘ (λ ga → m′ (ga .fst) , ga .snd) ＝ m
            → m′ ＝ ƛ m
-  ƛ-unique m m′ p =
-    ap fst (exponential _ _ .lim-univ .unpull-unique (λ z → m′ (z .fst) (z .snd)) (ƛ m , λ i → p (~ i)))
+  ƛ-unique {A} {B} m m′ p = ap fst (exponential _ _ .lim-univ .unpull-unique (λ z → m′ (z .fst) (z .snd)) (ƛ m , λ i → p (~ i)))

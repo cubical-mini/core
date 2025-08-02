@@ -1,6 +1,7 @@
 {-# OPTIONS --safe #-}
 module Foundations.Quiver.Diagram.Coproduct.Binary where
 
+open import Foundations.HLevel.Base
 open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete.Base
 open import Foundations.Quiver.Lens.Push
@@ -21,10 +22,8 @@ module _ {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-hom⁺}
       ⁅_,_⁆ : ∀{ls} {Q : Ob⁺ ls} (f : Het X Q) (g : Het Y Q) → Hom S Q
       ι₁▷⁅⁆ : ∀{ls} {Q : Ob⁺ ls} {f : Het X Q} {g : Het Y Q} → ι₁ ▷ ⁅ f , g ⁆ ＝ f
       ι₂▷⁅⁆ : ∀{ls} {Q : Ob⁺ ls} {f : Het X Q} {g : Het Y Q} → ι₂ ▷ ⁅ f , g ⁆ ＝ g
-      ⁅⁆-unique : ∀{ls} {Q : Ob⁺ ls} {f : Het X Q} {g : Het Y Q} {h : Hom S Q}
-                  (fs : ι₁ ▷ h ＝ f) (sn : ι₂ ▷ h ＝ g)
-                → Path (Σₜ (Hom S Q) (λ hh → (ι₁ ▷ hh ＝ f) ×ₜ (ι₂ ▷ hh ＝ g)))
-                    (h , fs , sn)
+      ⁅⁆-unique : ∀{ls} {Q : Ob⁺ ls} {f : Het X Q} {g : Het Y Q}
+                → is-central⁺ (Σₜ (Hom S Q) (λ h → (ι₁ ▷ h ＝ f) ×ₜ (ι₂ ▷ h ＝ g)))
                     (⁅ f , g ⁆ , ι₁▷⁅⁆ , ι₂▷⁅⁆)
 
   record Binary-coproducts (ℓ-⊎ : Levels m → Levels m → Levels n) : Typeω where
@@ -43,8 +42,8 @@ module _ {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-hom⁺}
 {-# DISPLAY Coproduct.⁅_,_⁆ _ f g = ⁅ f , g ⁆ #-}
 {-# DISPLAY Coproduct.ι₁▷⁅⁆ _ = ι₁▷⁅⁆ #-}
 {-# DISPLAY Coproduct.ι₂▷⁅⁆ _ = ι₂▷⁅⁆ #-}
-{-# DISPLAY Coproduct.⁅⁆-unique _ fs sn = ⁅⁆-unique fs sn #-}
-{-# DISPLAY Binary-coproducts._⊎_ _ A B = A ⊎ B #-}
+{-# DISPLAY Coproduct.⁅⁆-unique _ = ⁅⁆-unique #-}
+{-# DISPLAY Binary-coproducts._⊎_ _ X Y = X ⊎ Y #-}
 
 module _ {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-hom⁺}
   {B : HQuiver-onω n Ob⁺ ℓ-hom⁺} (open Quiver-onω B renaming (Het to Hom))
@@ -52,10 +51,10 @@ module _ {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-hom⁺}
   {H : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het} (open Quiver-onω H)
   ⦃ _ : Refl B ⦄ ⦃ hp : ∀{lxs} {x : Ob⁻ lxs} → Push B 0 (λ y → Disc (Het x y)) ⦄ where instance
 
-  Binary-coproducts→Coproduct : ∀{ℓ-⊎ lxs lys} ⦃ bp : Binary-coproducts B H ℓ-⊎ ⦄
+  Binary-coproducts→Coproduct : ∀{ℓ-⊎ lxs lys} ⦃ bc : Binary-coproducts B H ℓ-⊎ ⦄
                                 {X : Ob⁻ lxs} {Y : Ob⁻ lys}
                               → Coproduct B H X Y (X ⊎ Y)
-  Binary-coproducts→Coproduct ⦃ bp ⦄ = bp .Binary-coproducts.has-coproduct
+  Binary-coproducts→Coproduct ⦃ bc ⦄ = bc .Binary-coproducts.has-coproduct
   {-# OVERLAPPABLE Binary-coproducts→Coproduct #-}
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}

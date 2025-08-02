@@ -1,6 +1,7 @@
 {-# OPTIONS --safe #-}
 module Foundations.Quiver.Diagram.Product.Binary where
 
+open import Foundations.HLevel.Base
 open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete.Base
 open import Foundations.Quiver.Lens.Pull
@@ -21,17 +22,15 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-hom⁻}
       ⟨_,_⟩ : ∀{ls} {Q : Ob⁻ ls} (f : Het Q X) (g : Het Q Y) → Hom Q P
       ⟨⟩◁π₁ : ∀{ls} {Q : Ob⁻ ls} {f : Het Q X} {g : Het Q Y} → ⟨ f , g ⟩ ◁ π₁ ＝ f
       ⟨⟩◁π₂ : ∀{ls} {Q : Ob⁻ ls} {f : Het Q X} {g : Het Q Y} → ⟨ f , g ⟩ ◁ π₂ ＝ g
-      ⟨⟩-unique : ∀{ls} {Q : Ob⁻ ls} {f : Het Q X} {g : Het Q Y} {h : Hom Q P}
-                  (fs : h ◁ π₁ ＝ f) (sn : h ◁ π₂ ＝ g)
-                → Path (Σₜ (Hom Q P) λ hh → (hh ◁ π₁ ＝ f) ×ₜ (hh ◁ π₂ ＝ g))
+      ⟨⟩-unique : ∀{ls} {Q : Ob⁻ ls} {f : Het Q X} {g : Het Q Y}
+                → is-central⁻ (Σₜ (Hom Q P) (λ h → (h ◁ π₁ ＝ f) ×ₜ (h ◁ π₂ ＝ g)))
                     (⟨ f , g ⟩ , ⟨⟩◁π₁ , ⟨⟩◁π₂)
-                    (h         , fs    , sn   )
 
   record Binary-products (ℓ-× : Levels n → Levels n → Levels m) : Typeω where
     no-eta-equality
     infixr 80 _×_
     field
-      _×_         : ∀{lxs lys} (X : Ob⁺ lxs) (Y : Ob⁺ lys) → Ob⁻ (ℓ-× lxs lys)
+      _×_ : ∀{lxs lys} (X : Ob⁺ lxs) (Y : Ob⁺ lys) → Ob⁻ (ℓ-× lxs lys)
       has-product : ∀{lxs lys} {X : Ob⁺ lxs} {Y : Ob⁺ lys} → Product X Y (X × Y)
 
   open Product ⦃ ... ⦄ public
@@ -43,8 +42,8 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-hom⁻}
 {-# DISPLAY Product.⟨_,_⟩ _ f g = ⟨ f , g ⟩ #-}
 {-# DISPLAY Product.⟨⟩◁π₁ _ = ⟨⟩◁π₁ #-}
 {-# DISPLAY Product.⟨⟩◁π₂ _ = ⟨⟩◁π₂ #-}
-{-# DISPLAY Product.⟨⟩-unique _ fs sn = ⟨⟩-unique fs sn #-}
-{-# DISPLAY Binary-products._×_ _ A B = A × B #-}
+{-# DISPLAY Product.⟨⟩-unique _ = ⟨⟩-unique #-}
+{-# DISPLAY Binary-products._×_ _ X Y = X × Y #-}
 
 module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-hom⁻}
   {A : HQuiver-onω m Ob⁻ ℓ-hom⁻} (open Quiver-onω A renaming (Het to Hom))
