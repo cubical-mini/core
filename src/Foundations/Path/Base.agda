@@ -6,8 +6,6 @@ open import Prim.Interval
 open import Prim.Kan
 open import Prim.Type
 
-open import Foundations.Pi.Base
-
 -- Path space of dependent functions
 
 ap : ∀{ℓa ℓb} {A : Type ℓa} {B : A → Type ℓb}
@@ -28,6 +26,7 @@ apᴾ : ∀{ℓa ℓb} {A : I → Type ℓa} {B : (i : I) → A i → Type ℓb}
       {x : A i0} {y : A i1} (p : Pathᴾ A x y)
     → Pathᴾ (λ i → B i (p i)) (f i0 x) (f i1 y)
 apᴾ f p i = f i (p i)
+
 
 fun-ext : ∀{ℓa ℓb} {A : Type ℓa} {B : A → I → Type ℓb}
           {f : (a : A) → B a i0} {g : (a : A) → B a i1}
@@ -80,7 +79,7 @@ sym : ∀{ℓ} {A : Type ℓ} {x y : A} → x ＝ y → y ＝ x
 sym p i = p (~ i)
 
 -- double whiskering
-infix 60 _∙∙_∙∙_
+infix 280 _∙∙_∙∙_
 _∙∙_∙∙_ : ∀{ℓ} {A : I → Type ℓ}
           {w x : A i0} (p : x ＝ w) {y z : A i1} (q : Pathᴾ A w y) (r : y ＝ z)
         → Pathᴾ A x z
@@ -121,8 +120,8 @@ opaque
 
 
 -- For single homogenous path composition, we take `refl` as the top side:
-infixl 90 _∙_
 opaque
+  infixl 290 _∙_
   _∙_ : ∀{ℓ} {A : Type ℓ} {x y z : A} → x ＝ y → y ＝ z → x ＝ z
   p ∙ q = p ∙∙ refl ∙∙ q
 
@@ -164,16 +163,3 @@ opaque
   sys k (j = i1) = ∙-filler p (q ∙ r) k i
   sys k (k = i0) = q (~ j ∧ i)
 {-# DISPLAY hcomp _ (∙∙=∙-sys.sys {ℓ} {A} {w} {x} p {y} {z} r q i) = ∙∙=∙ {ℓ} {A} {w} {x} p {y} {z} r q i #-}
-
-
--- Useful gadget
-
-record Recall {ℓ ℓ′} {A : Type ℓ} {B : A → Type ℓ′}
-  (f : (x : A) → B x) (x : A) (y : B x) : Type (ℓ l⊔ ℓ′) where
-  constructor mk-recall
-  field recall-eq : f x ＝ y
-
-recall : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′}
-         (f : (x : A) → B x) (x : A)
-       → Recall f x (f x)
-recall f x = mk-recall (λ _ → f x)

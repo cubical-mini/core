@@ -9,6 +9,7 @@ flags:
   --hidden-argument-puns
   --no-import-sorts
   --postfix-projections
+  --no-prop
   --no-qualified-instances
 
   -Werror

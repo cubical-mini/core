@@ -7,7 +7,6 @@ open import Prim.Kan
 open import Prim.Type
 
 open import Foundations.Path.Base
-open import Foundations.Path.Transport
 
 opaque
   ap-comp-∙ : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
@@ -21,26 +20,20 @@ opaque
 
 opaque
   unfolding _∙_
-  refl-idem : ∀{ℓ} {A : Type ℓ}
-              {x : A} → refl ∙ refl ＝ refl {x = x}
-  refl-idem {x} i j = hcomp (i ∨ ∂ j) λ _ _ → x
-
-opaque
-  unfolding _∙_
   sym-∙ : ∀{ℓ} {A : Type ℓ}
           {x y z : A} (p : x ＝ y) (q : y ＝ z)
         → sym (p ∙ q) ＝ sym q ∙ sym p
   sym-∙ p q _ j = (p ∙ q) (~ j)
 
 opaque
+  id-o : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
+       → p ＝ p ∙ refl
+  id-o p = ∙-filler-l p refl
+
+opaque
   id-i : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
        → refl ∙ p ＝ p
   id-i p = sym (∙-filler-r refl p)
-
-opaque
-  id-o : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
-       → p ∙ refl ＝ p
-  id-o p = sym (∙-filler-l p refl)
 
 opaque
   unfolding _∙_
@@ -51,17 +44,21 @@ opaque
 
 opaque
   unfolding _∙_
-  inv-i : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
-        → sym p ∙ p ＝ refl
-  inv-i p i j = hcomp (i ∨ ∂ j) (λ k _ → p (k ∨ i))
-
-opaque
-  inv-o : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
-        → p ∙ sym p ＝ refl
-  inv-o p = inv-i (sym p)
+  path-inv : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
+           → sym p ∙ p ＝ refl
+  path-inv p i j = hcomp (i ∨ ∂ j) (λ k _ → p (k ∨ i))
 
 
 -- Square manipulation
+
+magic-square : ∀{ℓ} {A : Type ℓ} {x y z : A} (p : x ＝ y) (q : y ＝ z) → Square p q p q
+magic-square p q j i = hcomp (∂ i ∨ ∂ j) λ where
+  k (i = i0) → p j
+  k (i = i1) → q (j ∧ k)
+  k (j = i0) → p i
+  k (j = i1) → q (i ∧ k)
+  k (k = i0) → p (i ∨ j)
+
 
 commutes→square : ∀{ℓ} {A : Type ℓ} {w x y z : A}
                   {p : w ＝ x} {q : w ＝ y} {r : y ＝ z} {s : x ＝ z}
@@ -101,13 +98,14 @@ opaque
     → s ＝ sym p ∙ (q ∙ r)
   square→conjugate {p} {q} {r} {s} θ = sym (ap fst (∙∙-contract (sym p) r q (s , θ))) ∙ ∙∙=∙ (sym p) r q
 
-opaque
-  conjugate→square
-    : ∀{ℓ} {A : Type ℓ} {w x y z : A}
-      {p : x ＝ y} {q : x ＝ z} {r : z ＝ w} {s : y ＝ w}
-    → s ＝ sym p ∙ (q ∙ r)
-    → Square p r q s
-  conjugate→square {p} {q} {r} {s} u = to-pathᴾ (transport-path q p r ∙ sym u)
+-- TODO
+-- opaque
+--   conjugate→square
+--     : ∀{ℓ} {A : Type ℓ} {w x y z : A}
+--       {p : x ＝ y} {q : x ＝ z} {r : z ＝ w} {s : y ＝ w}
+--     → s ＝ sym p ∙ (q ∙ r)
+--     → Square p r q s
+--   conjugate→square {p} {q} {r} {s} u = to-pathᴾ (transport-path q p r ∙ sym u)
 
 
 -- Homotopy

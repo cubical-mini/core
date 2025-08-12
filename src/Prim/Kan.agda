@@ -1,8 +1,8 @@
-{-# OPTIONS --safe #-}
+{-# OPTIONS --safe --erased-cubical #-}
 module Prim.Kan where
 
-open import Prim.Type
 open import Prim.Interval
+open import Prim.Type
 
 open import Agda.Builtin.Sigma
 open import Agda.Builtin.Cubical.Sub public
@@ -54,7 +54,7 @@ fill A φ i u = comp (λ j → A (i ∧ j)) (φ ∨ ~ i) sys
 hfill : {ℓ : Level} {A : Type ℓ} (φ : I) → I
       → ((i : I) → Partial (φ ∨ ~ i) A)
       → A
-hfill {A} φ i u =  hcomp (φ ∨ ~ i) (fill-sys.sys (λ _ → A) φ i u)
+hfill {A} φ i u = hcomp (φ ∨ ~ i) (fill-sys.sys (λ _ → A) φ i u)
 
 open import Agda.Builtin.Cubical.Path public
   renaming ( _≡_   to _＝_

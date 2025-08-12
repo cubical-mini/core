@@ -1,4 +1,4 @@
-{-# OPTIONS --safe #-}
+{-# OPTIONS --safe --erased-cubical #-}
 module Prim.Data.PropTruncation where
 
 open import Prim.Kan

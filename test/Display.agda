@@ -1,0 +1,103 @@
+{-# OPTIONS --safe #-}
+module Display where
+
+open import Foundations.Quiver.Base
+open import Foundations.Quiver.Discrete as Discrete
+open import Foundations.Quiver.Lens.Extend
+open import Foundations.Quiver.Lens.Push
+open import Foundations.Quiver.Total
+open import Foundations.Quiver.Functions
+
+open import Notation.Refl
+
+-- Pointed structure
+
+record Pointed {ℓ} (A : Type ℓ) : Type ℓ where
+  constructor ∙
+  field pt : A
+
+-- open Discrete.Groupoid
+instance
+  Pointed-HPush : HPush Funs 0 (λ T → Disc (Pointed T))
+  Pointed-HPush ._▷_ (∙ x) f = ∙ (f x)
+  Pointed-HPush .push-refl = refl
+
+Pointedᵈ : HQuiver-onωᵈ Funs 0 _ _
+Pointedᵈ = Disp⁺ λ T → Disc (Pointed T)
+
+Pointeds : HQuiver-onω 1 _ _
+Pointeds = Σ[ Pointedᵈ ]
+
+Type∙ : (ℓ : Level) → Type (lsuc ℓ)
+Type∙ ℓ = Quiver-onω.Out Pointeds (ℓ , _)
+{-# NOINLINE Type∙ #-}
+
+Fun∙ : ∀{ℓa ℓb} → Type∙ ℓa → Type∙ ℓb → Type (ℓa ⊔ ℓb)
+Fun∙ = Pointeds .Quiver-onω.Het
+
+
+-- Magma structure
+
+record Magma-on± {ℓa ℓb} (A : Type ℓa) (B : Type ℓb) : Type (ℓa ⊔ ℓb) where
+  constructor mk-magma-on
+  field _⋆_ : A → A → B
+
+Magma-on : ∀{ℓ} (A : Type ℓ) → Type ℓ
+Magma-on A = Magma-on± A A
+
+instance
+  Magma-Extend : Extend Funs 0 (λ {x = A} {y = B} _ → Disc (Magma-on± A B))
+  Magma-Extend .extend-l p u .Magma-on±._⋆_ x y = p (x ⋆ y) where open Magma-on± u
+  Magma-Extend .extend-r p v .Magma-on±._⋆_ x y = p x ⋆ p y where open Magma-on± v
+  Magma-Extend .extend-refl = refl
+  Magma-Extend .extend-coh = refl
+
+module _ where
+  Magmaᵈ : HQuiver-onωᵈ Funs 0 _ _
+  Magmaᵈ = Disp± (λ {x = A} {y = B} _ → Disc (Magma-on± A B))
+
+  instance
+    Magma-Reflᵈ : Reflᵈ Magmaᵈ
+    Magma-Reflᵈ .reflᵈ = refl
+
+Magmas : HQuiver-onω 1 (ΣOb Types (λ T _ → Magma-on T)) _
+Magmas = Σ[ Magmaᵈ ]
+
+Magma : (ℓ : Level) → Type (lsuc ℓ)
+Magma ℓ = Quiver-onω.Out Magmas (ℓ , _)
+
+Magma-Hom : ∀{ℓa ℓb} → Magma ℓa → Magma ℓb → Type (ℓa ⊔ ℓb)
+Magma-Hom = Magmas .Quiver-onω.Het
+
+
+module Display-Structure {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {f : A → B} where
+  module _ {a : A} {b : B} {p : f a ＝ b} where private
+    test : Fun∙ (A , ∙ a) (B , ∙ b)
+    test .fst = f
+    test .snd i = ∙ (p (~ i))
+
+  module _ {_⊕_ : A → A → A} {_⊗_ : B → B → B} {p : (x y : A) → f (x ⊕ y) ＝ (f x ⊗ f y)} where private
+    test : Magma-Hom (A , mk-magma-on _⊕_) (B , mk-magma-on _⊗_)
+    test .fst = f
+    test .snd i .Magma-on±._⋆_ x y = p x y (~ i)
+
+    -- ads : (t : Magma-Hom (A , mk-magma-on _⊕_) (B , mk-magma-on _⊗_)) → {!!}
+    -- ads t = {!!}
+
+-- module Hom-Induction {ℓa} where
+--   module _ {A : Type ℓa} where
+--     _∙₁_ : ∀{x y z : A} → x ＝ y → y ＝ z → x ＝ z
+--     _∙₁_ p q = extend-l q p
+
+--     _∙₂_ : {x y z : A} → x ＝ y → y ＝ z → x ＝ z
+--     _∙₂_ = extend-r
+
+  open Quiver-onω Magmas
+  module Algebraic-Kek {M : Magma ℓa} where
+     very-funny : (X : Magma ℓa) (h : X .fst → M .fst) (x y : X .fst) → M .fst
+     very-funny X h = extend-l h (X .snd) .Magma-on±._⋆_
+
+     -- if `to` and `from` are actual inverses you get something coherent
+     transfer-structure : (X : Type ℓa) (to : X → M .fst) (from : M .fst → X)
+                        → Magma-on X
+     transfer-structure X to from .Magma-on±._⋆_ w z = from (extend-r to (M .snd) .Magma-on±._⋆_ w z)

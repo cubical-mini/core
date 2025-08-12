@@ -8,10 +8,10 @@ open import Prim.Type
 
 open import Foundations.Path.Base
 open import Foundations.Path.Coe
-open import Foundations.Pi.Base
+open import Foundations.Pi
 
 transport : ∀{ℓ} {A B : Type ℓ} → A ＝ B → A → B
-transport p = transp (λ i → p i) i0
+transport p = coe0→1 λ i → p i
 {-# DISPLAY transp {ℓ} A i0 = transport {ℓ} {A i0} {A i1} A #-}
 
 transport-refl : ∀{ℓ} {A : Type ℓ} (x : A) → transport refl x ＝ x
@@ -191,10 +191,11 @@ opaque
                   → subst (λ x → x ＝ x) adj p ＝ sym adj ∙ (p ∙ adj)
   subst-path-both p adj = transport-path p adj adj
 
-subst² : ∀{ℓa ℓb ℓc} {A : Type ℓa} {B : Type ℓb} (C : A → B → Type ℓc)
-         {x y : A} (p : x ＝ y) {z w : B} (q : z ＝ w)
-       → C x z → C y w
-subst² B p q = transport (λ i → B (p i) (q i))
+
+subst² : ∀{ℓa ℓb ℓc} {A : Type ℓa} {B : A → Type ℓb} (C : (a : A) → B a → Type ℓc)
+          {x y : A} (p : x ＝ y) {z : B x} {w : B y} (q : Pathᴾ (λ i → B (p i)) z w)
+        → C x z → C y w
+subst² C p q = transport (λ i → C (p i) (q i))
 
 subst²-filler : ∀{ℓa ℓb ℓc} {A : Type ℓa} {B : Type ℓb} (C : A → B → Type ℓc)
                 {x y : A} (p : x ＝ y) {z w : B} (q : z ＝ w) (c : C x z)

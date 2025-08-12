@@ -1,4 +1,4 @@
-{-# OPTIONS --safe #-}
+{-# OPTIONS --safe --erased-cubical #-}
 module Prim.Equiv where
 
 -- {-# WARNING_ON_IMPORT "DO NOT USE builtin equivalences" #-}

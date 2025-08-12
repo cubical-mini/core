@@ -1,51 +1,113 @@
 {-# OPTIONS --safe #-}
 module Push where
 
-open import Prim.Interval
-open import Prim.Type
+open import Prim.Data.List
+open import Prim.Data.Maybe
 
-open import Notation.Base
-open import Notation.Composition
-open import Notation.Displayed.Base
-open import Notation.Displayed.Push
-open import Notation.Displayed.Reflexivity
-open import Notation.Reflexivity
-open import Notation.Symmetry
-open import Notation.Unitality.Outer
+open import Foundations.Quiver.Base
+open import Foundations.Quiver.Discrete as Discrete
+open import Foundations.Quiver.Functions
+open import Foundations.Quiver.Lens.Pull
+open import Foundations.Quiver.Lens.Push
 
-open import Foundations.Path.Groupoid
-open import Foundations.Path.Transport
-open import Foundations.Pi.Category
+open import Notation.Refl
 
-Pointed : ∀{ℓ} → Type ℓ → Type ℓ
-Pointed A = A
+lmap : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
+     → (A → B) → List A → List B
+lmap _ [] = []
+lmap f (x ∷ xs) = f x ∷ lmap f xs
 
-open Fun-cat
-open Path-gpd0
+-- open Discrete.Groupoid
+
+lmap-id : ∀{ℓ} {A : Type ℓ} (xs : List A)
+        → xs ＝ lmap id xs
+lmap-id [] = refl
+lmap-id (x ∷ xs) i = x ∷ lmap-id xs i
+
 instance
-  Pointed-Push : Pushω Funs Pointed
-  Pointed-Push .push f x = f x
+  List-HPush : HPush Funs 0 (λ T → Disc (List T))
+  List-HPush ._▷_ xs f = lmap f xs
+  List-HPush .push-refl = lmap-id _
 
-  Pointed-Push-Id : Push-Idω Funs Pointed {ℓ-homᵈ = λ ℓ _ → ℓ} Pathsω
-  Pointed-Push-Id .push-id = refl
+module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} where private
+  test₁ test₂ : (f : A → B) → List A → List B
+  test₁ f xs = xs ▷ f
+  test₂ f xs = f <$> xs
 
-manual automatic : Quiver-onᵈ Funs Pointed λ _ z → z
-manual .Quiver-onᵈ.Hom[_] f x y = f x ＝ y
-automatic = Disp⁺ Funs Pointed {ℓ-homᵈ = λ ℓ _ → ℓ} Pathsω
+data MLR {ℓ} {A : Type ℓ} : Maybe A → List A → Type ℓ where
+  nothing~[]     : MLR nothing []
+  just~singleton : ∀{x} → MLR (just x) (x ∷ [])
 
-what1 : ∀{ℓa}{A : Type ℓa} {A∙ : Pointed A} → A∙ ＝ A∙
-what1 {A} {A∙} = reflᵈ
+instance
+  Maybe-HPush : HPush Funs 0 (λ T → Disc (Maybe T))
+  Maybe-HPush ._▷_ (just x) p = just (p x)
+  Maybe-HPush ._▷_ nothing _ = nothing
+  Maybe-HPush .push-refl {u = just _} = refl
+  Maybe-HPush .push-refl {u = nothing} = refl
 
-module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} (f : A → B) (a : A) (b : B) where
-  _ : automatic .Quiver-onᵈ.Hom[_] f a b ＝ Quiver-onᵈ.Hom[_] manual f a b
-  _ = refl
+  Maybe-List-Push : Push Funs 0 (λ _ → mk-quiver-onω MLR)
+  Maybe-List-Push ._▷_ (just x) f = f x ∷ []
+  Maybe-List-Push ._▷_ nothing _ = []
+  Maybe-List-Push .push-refl {u = just x} = just~singleton
+  Maybe-List-Push .push-refl {u = nothing} = nothing~[]
+
+  -- -- now this one is bad for MLR
+  -- List-Maybe-Push : Push Funs 0 λ _ → mk-quiver-onω (λ y x → MLR x y)
+  -- List-Maybe-Push .push _ [] = nothing
+  -- List-Maybe-Push .push f (x ∷ _) = just (f x)
+  -- List-Maybe-Push .push-refl {u = []} = nothing~[]
+  -- List-Maybe-Push .push-refl {u = x ∷ []} = just~singleton
+  -- List-Maybe-Push .push-refl {u = x ∷ y ∷ u} = {!!} -- no no no
+
+module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} (f : A → B) where
+  α : ∀{ℓw} {W : Type ℓw} → Maybe W → List W
+  α = _▷ refl
+
+  α-is-natural : (mx : Maybe A) → (α mx) ▷ f ＝ α (mx ▷ f)
+  α-is-natural (just x) _ = f x ∷ []
+  α-is-natural nothing _ = []
+
+  -- β : ∀{ℓw} {W : Type ℓw} → List W → Maybe W
+  -- β = _▷ refl
+
+  -- β-is-natural : (xs : List A) → push f (β xs) ＝ β (push f xs)
+  -- β-is-natural [] _ = nothing
+  -- β-is-natural (x ∷ _) _ = just (f x)
 
 
-module Pa {ℓ} {A : Type ℓ} {c : A} where
-  open Path-gpd
-  instance
-    Path-Push : Pushω (Pathsω A) (c ＝_)
-    Path-Push .push {x} {y} p q = q ∙ p
 
-    Path-Push-Id : Push-Idω (Pathsω A) (c ＝_) {ℓ-homᵈ = λ ℓ _ → _} (λ t → Pathsω (c ＝ t))
-    Path-Push-Id .push-id = id-o _
+data Vec {ℓ} (A : Type ℓ) : ℕ → Type ℓ where
+  []  : Vec A 0
+  _∷_ : ∀{n} → A → Vec A n → Vec A (suc n)
+
+vec-cast : ∀{ℓ}{A : Type ℓ} {m n} (p : m ＝ n) → Vec A m → Vec A n
+vec-cast {m = 0}     {n = 0}     _ xs = xs
+vec-cast {m = 0}     {n = suc n} p xs = {!!}
+vec-cast {m = suc m} {n = 0}     p xs = {!!}
+vec-cast {m = suc m} {n = suc n} p (x ∷ xs) = x ∷ vec-cast {!!} xs
+
+vec-map : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {n} (f : A → B) → Vec A n → Vec B n
+vec-map {n = 0}     _ _        = []
+vec-map {n = suc n} f (x ∷ xs) = f x ∷ vec-map f xs
+
+vec-map-lawful : ∀{ℓa} {A : Type ℓa} {n} (xs : Vec A n) → xs ＝ vec-map (λ x → x) xs
+vec-map-lawful [] = refl
+vec-map-lawful (x ∷ xs) i = x ∷ vec-map-lawful xs i
+
+vec-cast-lawful : ∀{ℓa} {A : Type ℓa} {n} (xs : Vec A n) → xs ＝ vec-cast refl xs
+vec-cast-lawful [] = refl
+vec-cast-lawful (x ∷ xs) i = x ∷ vec-cast-lawful xs i
+
+instance
+  Vec-HPush : ∀{n} → HPush Funs 0 (λ A → Disc (Vec A n))
+  Vec-HPush ._▷_ xs f = vec-map f xs
+  Vec-HPush .push-refl = vec-map-lawful _
+
+  Vec-HPush′ : ∀{ℓ}{A : Type ℓ} → HPush (Disc ℕ) 0 (λ n → Disc (Vec A n))
+  Vec-HPush′ ._▷_ xs f = vec-cast f xs
+  Vec-HPush′ .push-refl = vec-cast-lawful _
+
+ex : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
+     {m n}(p : m ＝ n) (f : A → B)
+   → Vec A m → Vec B n
+ex p f xs = xs ▷ f ▷ p
