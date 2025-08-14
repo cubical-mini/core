@@ -12,11 +12,11 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   {m′ ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ}
   {D : HQuiver-onωᵈ C m′ Ob[_] ℓ-homᵈ} where instance
 
-  Σ-Refl : ⦃ _ : Refl C ⦄ ⦃ _ : Reflᵈ D ⦄ → Refl (Σ C D)
-  Σ-Refl .refl .fst = refl
-  Σ-Refl .refl .snd = reflᵈ
+  Σ̫-Refl : ⦃ _ : Refl C ⦄ ⦃ _ : Reflᵈ D ⦄ → Refl (Σ̫ C D)
+  Σ̫-Refl .refl .fst = refl
+  Σ̫-Refl .refl .snd = reflᵈ
 
-{-# INCOHERENT Σ-Refl #-}
+{-# INCOHERENT Σ̫-Refl #-}
 
 
 module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺}
@@ -25,5 +25,5 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig 
   {ℓ-hetᵈ} {D : Quiver-onωᵈ C m′ Ob[_]⁻ n′ Ob[_]⁺ ℓ-hetᵈ}
   ⦃ _ : Underlying C ⦄ where instance
 
-  Σ-Underlying : Underlying Σ[ D ]
-  Σ-Underlying = mk-underlying (λ x → ⌞ x .fst ⌟⁻) (λ y → ⌞ y .fst ⌟⁺) (λ f → ⌞ f .fst ⌟₁)
+  Σ̫-Underlying : Underlying Σ̫[ D ]
+  Σ̫-Underlying = mk-underlying (λ x → ⌞ x .fst ⌟⁻) (λ y → ⌞ y .fst ⌟⁺) (λ f → ⌞ f .fst ⌟₁)

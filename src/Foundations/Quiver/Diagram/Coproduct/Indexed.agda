@@ -49,7 +49,7 @@ module _ {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-hom⁺}
        → (Ix → Ob⁻ ls) → Ob⁺ (ℓ-Σ ls)
   Σ[_] = Σ
 
-  infixr 600 Σ-syntax
+  infixr 60 Σ-syntax
   Σ-syntax : ∀{lix ls} ⦃ u : Underlying H ⦄ {ℓ-Σ} (X : Ob⁻ lix) ⦃ _ : Indexed-coproducts B H ⌞ X ⌟⁻ ℓ-Σ ⦄
            → (⌞ X ⌟⁻ → Ob⁻ ls) → Ob⁺ (ℓ-Σ ls)
   Σ-syntax _ = Σ

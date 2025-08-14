@@ -16,7 +16,7 @@ module _ {m} {ℓ-ob⁻ ℓ-ob⁺ : ℓ-sig 1 (m , _)} (Ob⁻ : ob-sig ℓ-ob⁻
 module _ {m} {ℓ-ob⁻ ℓ-ob⁺ : ℓ-sig 1 (m , _)} {Ob⁻ : ob-sig ℓ-ob⁻} {Ob⁺ : ob-sig ℓ-ob⁺}
   {ℓ-het} (D : Arrows Ob⁻ Ob⁺ ℓ-het) where
   Cograph : HQuiver-onω m _ _
-  Cograph = Σ[ D ]
+  Cograph = Σ̫[ D ]
 
 module _ {m ℓ-ob⁻ ℓ-ob⁺ ℓ-hom⁻ ℓ-hom⁺}
   {Ob⁻ : ob-sig ℓ-ob⁻} (A : HQuiver-onω m Ob⁻ ℓ-hom⁻)

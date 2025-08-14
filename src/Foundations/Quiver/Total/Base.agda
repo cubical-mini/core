@@ -21,8 +21,8 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig 
     ΣHet x′ y′ = Σₜ (Het x y) λ f → Het[ f ] x′ y′
     {-# NOINLINE ΣHet #-}
 
-  Σ : Quiver-onω (m + m′) (ΣOb Ob⁻ Ob[_]⁻) (n + n′) (ΣOb Ob⁺ Ob[_]⁺) _
-  Σ .Quiver-onω.Het x y = ΣHet (x .snd) (y .snd)
+  Σ̫ : Quiver-onω (m + m′) (ΣOb Ob⁻ Ob[_]⁻) (n + n′) (ΣOb Ob⁺ Ob[_]⁺) _
+  Σ̫ .Quiver-onω.Het x y = ΣHet (x .snd) (y .snd)
 
 
 module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺}
@@ -30,4 +30,4 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig 
   {m′ ℓ-obᵈ⁻} {Ob[_]⁻ : ob-sigᵈ Ob⁻ ℓ-obᵈ⁻} {n′ ℓ-obᵈ⁺} {Ob[_]⁺ : ob-sigᵈ Ob⁺ ℓ-obᵈ⁺}
   {ℓ-hetᵈ} (D : Quiver-onωᵈ C m′ Ob[_]⁻ n′ Ob[_]⁺ ℓ-hetᵈ) where
 
-  Σ[_] = Σ C D
+  Σ̫[_] = Σ̫ C D
