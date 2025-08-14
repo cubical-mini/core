@@ -1,14 +1,14 @@
 {-# OPTIONS --safe #-}
 module Diagram where
 
-open import Foundations.Quiver.Base
-open import Foundations.Quiver.Diagram.Colimit
-open import Foundations.Quiver.Diagram.Limit
-open import Foundations.Quiver.Dual.Base
-open import Foundations.Quiver.Lens.Pull
-open import Foundations.Quiver.Lens.Push
-open import Foundations.Quiver.Functions
-open import Foundations.Quiver.Discrete
+open import Foundations.Base
+open import Foundations.Diagram.Colimit
+open import Foundations.Diagram.Limit
+open import Foundations.Dual.Base
+open import Foundations.Lens.Pull
+open import Foundations.Lens.Push
+open import Foundations.Functions
+open import Foundations.Discrete
 
 open import Notation.Refl
 

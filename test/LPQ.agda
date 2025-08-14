@@ -1,14 +1,14 @@
 {-# OPTIONS --safe #-}
 module LPQ where
 
-open import Foundations.Quiver.Base
-open import Foundations.Quiver.Component
-open import Foundations.Quiver.Discrete
-open import Foundations.Quiver.Lens.Extend
-open import Foundations.Quiver.Lens.Pull
-open import Foundations.Quiver.Lens.Push
-open import Foundations.Quiver.Path
-open import Foundations.Quiver.Total.Base
+open import Foundations.Base
+open import Foundations.Component
+open import Foundations.Discrete
+open import Foundations.Lens.Extend
+open import Foundations.Lens.Pull
+open import Foundations.Lens.Push
+open import Foundations.Path
+open import Foundations.Total.Base
 
 open import Notation.Refl
 open import Notation.Sym

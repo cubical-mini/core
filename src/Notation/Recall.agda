@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 module Notation.Recall where
 
-open import Foundations.Quiver.Base
+open import Foundations.Base
 
 open import Notation.Refl
 

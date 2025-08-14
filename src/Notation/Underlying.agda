@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 module Notation.Underlying where
 
-open import Foundations.Quiver.Base
+open import Foundations.Base
 
 module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-het}
   (C : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het) (open Quiver-onω C) where

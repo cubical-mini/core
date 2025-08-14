@@ -1,19 +1,20 @@
 {-# OPTIONS --safe #-}
 module Graph where
 
-open import Foundations.Quiver.Base
-open import Foundations.Quiver.Discrete
-open import Foundations.Quiver.Functions
-open import Foundations.Quiver.Lens.Extend
-open import Foundations.Quiver.Lens.Pull
-open import Foundations.Quiver.Product
-open import Foundations.Quiver.Total as Total
+open import Foundations.Base
+open import Foundations.Discrete
+open import Foundations.Functions
+open import Foundations.Lens.Extend
+open import Foundations.Lens.Pull
+open import Foundations.Product
+open import Foundations.Total as Total
 
 open import Notation.Refl
+open import Notation.Underlying
 
 private variable ℓo ℓoa ℓob ℓh ℓha ℓhb : Level
 
-Graph-on : (A : Type ℓo) → HQuiver-onω 1 (λ _ → A → A → Type _) _
+Graph-on : (A : Type ℓo) → HQuiver-onω 1 _ _
 Graph-on A = A ⋔̫ₜ A ⋔̫ₜ Funs
 
 instance
@@ -25,13 +26,13 @@ Graphs : HQuiver-onω 2 _ _
 Graphs = Σ̫[ Disp⁻ Graph-on ]
 
 Graph : (ℓo ℓh : Level) → Type (lsuc (ℓo ⊔ ℓh))
-Graph ℓo ℓh = Quiver-onω.Out Graphs (ℓo , ℓh , _)
+Graph ℓo ℓh = Quiver-onω.Out Graphs (ℓo , ℓh , _) ; {-# NOINLINE Graph #-}
 
 Graph-Hom : Graph ℓoa ℓha → Graph ℓob ℓhb → Type (ℓoa ⊔ ℓha ⊔ ℓob ⊔ ℓhb)
-Graph-Hom = Graphs .Quiver-onω.Het
+Graph-Hom = Graphs .Quiver-onω.Het ; {-# NOINLINE Graph-Hom #-}
 
 Refl-on : (A : Graph ℓoa ℓha) (B : Graph ℓob ℓhb) (p : Graph-Hom A B) → HQuiver-onω 0 _ _
-Refl-on (A , R) (B , S) (f₀ , f₁) = ∀̫ₜ[ a ꞉ A ] Disc (S (f₀ a) (f₀ a))
+Refl-on (A , R) (B , S) (f₀ , _) = ∀̫ₜ[ a ꞉ A ] Disc (S (f₀ a) (f₀ a))
 
 open Total.Instances
 instance
@@ -45,36 +46,34 @@ RxGraphs : HQuiver-onω 2 _ _
 RxGraphs = Σ̫[ Disp± Refl-on ]
 
 RxGraph : (ℓo ℓh : Level) → Type (lsuc (ℓo ⊔ ℓh))
-RxGraph ℓo ℓh = Quiver-onω.Out RxGraphs (ℓo , ℓh , _)
+RxGraph ℓo ℓh = Quiver-onω.Out RxGraphs (ℓo , ℓh , _) ; {-# NOINLINE RxGraph #-}
 
 RxGraph-Hom : RxGraph ℓoa ℓha → RxGraph ℓob ℓhb → Type (ℓoa ⊔ ℓha ⊔ ℓob ⊔ ℓhb)
-RxGraph-Hom = RxGraphs .Quiver-onω.Het
+RxGraph-Hom = RxGraphs .Quiver-onω.Het ; {-# NOINLINE RxGraph-Hom #-}
 
 Trans-on : (A : RxGraph ℓoa ℓha) (B : RxGraph ℓob ℓhb) (p : RxGraph-Hom A B) → HQuiver-onω 0 _ _
 Trans-on ((A , R) , rflᵃ) ((B , S) , rflᵇ) ((f₀ , f₁) , pres-rfl)
   = ∀̫ₜ[ x ꞉ A ] ∀̫ₜ[ y ꞉ A ] ∀̫ₜ[ z ꞉ A ] Π̫ₜ[ p ꞉ R x y ] Π̫ₜ[ q ꞉ R y z ] Disc (S (f₀ x) (f₀ z))
 
 instance
-  Cat-Extend : Extend RxGraphs 0 Trans-on
-  Cat-Extend .extend-l {x = (A , R) , rflᵃ} {y = (B , S) , rflᵇ} ((f₀ , f₁) , pres-rfl) comp p q =
+  RawCat-Extend : Extend RxGraphs 0 Trans-on
+  RawCat-Extend .extend-l {x = (A , R) , rflᵃ} {y = (B , S) , rflᵇ} ((f₀ , f₁) , pres-rfl) comp p q =
     f₁ _ _ (comp p q)
-  Cat-Extend .extend-r {x = (A , R) , rflᵃ} {y = (B , S) , rflᵇ} ((f₀ , f₁) , pres-rfl) comp p q =
+  RawCat-Extend .extend-r {x = (A , R) , rflᵃ} {y = (B , S) , rflᵇ} ((f₀ , f₁) , pres-rfl) comp p q =
     comp (f₁ _ _ p) (f₁ _ _ q)
-  Cat-Extend .extend-refl _ _ = refl
-  Cat-Extend .extend-coh _ _ = refl
+  RawCat-Extend .extend-refl _ _ = refl
+  RawCat-Extend .extend-coh _ _ = refl
 
-Cats : HQuiver-onω 2 _ _
-Cats = Σ̫[ Disp± Trans-on ]
+RawCats : HQuiver-onω 2 _ _
+RawCats = Σ̫[ Disp± Trans-on ]
 
-Cat : (ℓo ℓh : Level) → Type (lsuc (ℓo ⊔ ℓh))
-Cat ℓo ℓh = Quiver-onω.Out Cats (ℓo , ℓh , _)
+RawCat : (ℓo ℓh : Level) → Type (lsuc (ℓo ⊔ ℓh))
+RawCat ℓo ℓh = Quiver-onω.Out RawCats (ℓo , ℓh , _) ; {-# NOINLINE RawCat #-}
 
-Functor : Cat ℓoa ℓha → Cat ℓob ℓhb → Type (ℓoa ⊔ ℓha ⊔ ℓob ⊔ ℓhb)
-Functor = Cats .Quiver-onω.Het
+RawFunctor : RawCat ℓoa ℓha → RawCat ℓob ℓhb → Type (ℓoa ⊔ ℓha ⊔ ℓob ⊔ ℓhb)
+RawFunctor = RawCats .Quiver-onω.Het ; {-# NOINLINE RawFunctor #-}
 
-
-open import Notation.Underlying
-module Test (C : Cat ℓoa ℓha) (D : Cat ℓob ℓhb) (F : Functor C D) where
+module Test (C : RawCat ℓoa ℓha) (D : RawCat ℓob ℓhb) (F : RawFunctor C D) where
 
   C₀ : Type ℓoa
   C₀ = C .fst .fst .fst

@@ -1,14 +1,15 @@
 {-# OPTIONS --safe #-}
 module Profunctor where
 
-open import Foundations.Quiver.Base
-open import Foundations.Quiver.Codiscrete
-open import Foundations.Quiver.Discrete as Discrete
-open import Foundations.Quiver.Dual
-open import Foundations.Quiver.Lens.Pull
-open import Foundations.Quiver.Lens.Push
+open import Foundations.Base
+open import Foundations.Codiscrete
+open import Foundations.Discrete as Discrete
+open import Foundations.Dual
+open import Foundations.Lens.Pull
+open import Foundations.Lens.Push
 
 open import Notation.Refl
+open import Notation.Sym
 
 data _≤_ : ℕ → ℕ → Type where
   z≤ : ∀{n} → 0 ≤ n
@@ -60,7 +61,7 @@ fin-cast-good {suc m} (fsuc k) i = fsuc (fin-cast-good k i)
 instance
   Fin-Push : HPush LTE 0 (λ n → Disc (Fin n))
   Fin-Push ._▷_ k p = fin-cast-≤ p k
-  Fin-Push .push-refl = fin-cast-good _
+  Fin-Push .push-refl = sym (fin-cast-good _)
 
 test : Fin 2 → Fin 3
-test = _▷ s≤ (s≤ z≤)
+test k = k ▷ s≤ (s≤ z≤)

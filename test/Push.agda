@@ -4,13 +4,14 @@ module Push where
 open import Prim.Data.List
 open import Prim.Data.Maybe
 
-open import Foundations.Quiver.Base
-open import Foundations.Quiver.Discrete as Discrete
-open import Foundations.Quiver.Functions
-open import Foundations.Quiver.Lens.Pull
-open import Foundations.Quiver.Lens.Push
+open import Foundations.Base
+open import Foundations.Discrete as Discrete
+open import Foundations.Functions
+open import Foundations.Lens.Pull
+open import Foundations.Lens.Push
 
 open import Notation.Refl
+open import Notation.Sym
 
 lmap : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
      → (A → B) → List A → List B
@@ -27,16 +28,16 @@ lmap-id (x ∷ xs) i = x ∷ lmap-id xs i
 instance
   List-HPush : HPush Funs 0 (λ T → Disc (List T))
   List-HPush ._▷_ xs f = lmap f xs
-  List-HPush .push-refl = lmap-id _
+  List-HPush .push-refl = sym (lmap-id _)
 
 module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} where private
   test₁ test₂ : (f : A → B) → List A → List B
   test₁ f xs = xs ▷ f
   test₂ f xs = f <$> xs
 
-data MLR {ℓ} {A : Type ℓ} : Maybe A → List A → Type ℓ where
-  nothing~[]     : MLR nothing []
-  just~singleton : ∀{x} → MLR (just x) (x ∷ [])
+data MLR {ℓ} {A : Type ℓ} : List A → Maybe A → Type ℓ where
+  []~nothing     : MLR [] nothing
+  singleton~just : ∀{x} → MLR (x ∷ []) (just x)
 
 instance
   Maybe-HPush : HPush Funs 0 (λ T → Disc (Maybe T))
@@ -45,11 +46,11 @@ instance
   Maybe-HPush .push-refl {u = just _} = refl
   Maybe-HPush .push-refl {u = nothing} = refl
 
-  Maybe-List-Push : Push Funs 0 (λ _ → mk-quiver-onω MLR)
+  Maybe-List-Push : Push Funs 0 (λ T → mk-quiver-onω (MLR {A = T}))
   Maybe-List-Push ._▷_ (just x) f = f x ∷ []
   Maybe-List-Push ._▷_ nothing _ = []
-  Maybe-List-Push .push-refl {u = just x} = just~singleton
-  Maybe-List-Push .push-refl {u = nothing} = nothing~[]
+  Maybe-List-Push .push-refl {u = just x} = singleton~just
+  Maybe-List-Push .push-refl {u = nothing} = []~nothing
 
   -- -- now this one is bad for MLR
   -- List-Maybe-Push : Push Funs 0 λ _ → mk-quiver-onω (λ y x → MLR x y)
@@ -101,11 +102,11 @@ vec-cast-lawful (x ∷ xs) i = x ∷ vec-cast-lawful xs i
 instance
   Vec-HPush : ∀{n} → HPush Funs 0 (λ A → Disc (Vec A n))
   Vec-HPush ._▷_ xs f = vec-map f xs
-  Vec-HPush .push-refl = vec-map-lawful _
+  Vec-HPush .push-refl = sym (vec-map-lawful _)
 
   Vec-HPush′ : ∀{ℓ}{A : Type ℓ} → HPush (Disc ℕ) 0 (λ n → Disc (Vec A n))
   Vec-HPush′ ._▷_ xs f = vec-cast f xs
-  Vec-HPush′ .push-refl = vec-cast-lawful _
+  Vec-HPush′ .push-refl = sym (vec-cast-lawful _)
 
 ex : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
      {m n}(p : m ＝ n) (f : A → B)

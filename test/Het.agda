@@ -1,8 +1,8 @@
 {-# OPTIONS --safe #-}
 module Het where
 
-open import Foundations.Quiver.Base
-open import Foundations.Quiver.Discrete
+open import Foundations.Base
+open import Foundations.Discrete
 
 module _ {ℓa ℓb ℓc} {A : Type ℓa} {B : Type ℓb} {C : Type ℓc} (f : A → C) (g : B → C) where
   Pullback-on : Quiver-onω 0 (λ _ → A) 0 (λ _ → B) (λ _ _ → ℓc)

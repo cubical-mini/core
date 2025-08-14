@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 module Notation.Sym where
 
-open import Foundations.Quiver.Base
+open import Foundations.Base
 
 module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
