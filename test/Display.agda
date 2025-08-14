@@ -46,7 +46,7 @@ Magma-on : ∀{ℓ} (A : Type ℓ) → Type ℓ
 Magma-on A = Magma-on± A A
 
 instance
-  Magma-Extend : Extend Funs 0 (λ {x = A} {y = B} _ → Disc (Magma-on± A B))
+  Magma-Extend : Extend Funs 0 (λ A B _ → Disc (Magma-on± A B))
   Magma-Extend .extend-l p u .Magma-on±._⋆_ x y = p (x ⋆ y) where open Magma-on± u
   Magma-Extend .extend-r p v .Magma-on±._⋆_ x y = p x ⋆ p y where open Magma-on± v
   Magma-Extend .extend-refl = refl
@@ -54,7 +54,7 @@ instance
 
 module _ where
   Magmaᵈ : HQuiver-onωᵈ Funs 0 _ _
-  Magmaᵈ = Disp± (λ {x = A} {y = B} _ → Disc (Magma-on± A B))
+  Magmaᵈ = Disp± (λ A B _ → Disc (Magma-on± A B))
 
   instance
     Magma-Reflᵈ : Reflᵈ Magmaᵈ

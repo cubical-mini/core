@@ -26,7 +26,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   ⦃ _ : Refl C ⦄ where
 
   module Variadic-Extend where instance
-    Disc-Extend-Const : ∀{ℓa} {A : Type ℓa} → Extend C 0 λ _ → Disc A
+    Disc-Extend-Const : ∀{ℓa} {A : Type ℓa} → Extend C 0 λ _ _ _ → Disc A
     Disc-Extend-Const .extend-l = _
     Disc-Extend-Const .extend-r = _
     Disc-Extend-Const .extend-refl = refl
@@ -36,9 +36,9 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
     module _ {ℓf ℓg : ℓ-sig 2 (m , m , _)}
       {F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → Type (ℓf lxs lys)}
       {G : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → Type (ℓg lxs lys)}
-      ⦃ _ : Extend C 0 λ p → Disc (F p) ⦄ ⦃ _ : Extend C 0 λ p → Disc (G p) ⦄
+      ⦃ _ : Extend C 0 λ _ _ p → Disc (F p) ⦄ ⦃ _ : Extend C 0 λ _ _ p → Disc (G p) ⦄
       where instance
-      Disc-Extend-× : Extend C 0 (λ p → Disc (F p ×ₜ G p))
+      Disc-Extend-× : Extend C 0 (λ _ _ p → Disc (F p ×ₜ G p))
       Disc-Extend-× .extend-l p (u , v) = extend-l p u , extend-l p v
       Disc-Extend-× .extend-r p (u , v) = extend-r p u , extend-r p v
       Disc-Extend-× .extend-refl {u = u , v} i = extend-refl {u = u} i , extend-refl {u = v} i
@@ -125,9 +125,9 @@ module _ {ℓa} {A : Type ℓa} where instance
 
 module Default-Extend {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
   {F : {x y : A} → x ＝ y → ob-sig ℓ-obᶠ}
-  (α : {x y : A} (p : x ＝ y) → HQuiver-onω k (F p) ℓ-homᶠ)
-  ⦃ _ : ∀{x y} {p : x ＝ y} → Refl (α p) ⦄ where instance
-  private module α x y p = Quiver-onω (α {x} {y} p) renaming (Het to Hom)
+  (α : (x y : A) (p : x ＝ y) → HQuiver-onω k (F p) ℓ-homᶠ)
+  ⦃ _ : ∀{x y} {p : x ＝ y} → Refl (α x y p) ⦄ where instance
+  private module α x y p = Quiver-onω (α x y p) renaming (Het to Hom)
 
   Disc-Extend : Extend (Disc A) k α
   Disc-Extend .extend-l p = coe0→1 λ i → F (λ j → p (i ∧ j)) _

@@ -10,9 +10,9 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   k {ℓ-obᶠ : ℓ-sig 3 (m , m , k , _)}
   {F : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → ob-sig (ℓ-obᶠ lxs lys)}
   {ℓ-homᶠ : ℓ-sig 4 (m , m , k , k , _)}
-  (α : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} (p : Hom x y) → HQuiver-onω k (F p) (ℓ-homᶠ lxs lys))
+  (α : ∀{lxs lys} (x : Ob lxs) (y : Ob lys) (p : Hom x y) → HQuiver-onω k (F p) (ℓ-homᶠ lxs lys))
   ⦃ _ : Refl C ⦄ where
-  private module α {lxs} {lys} x y p = Quiver-onω (α {lxs} {lys} {x} {y} p) renaming (Het to Hom)
+  private module α {lxs} {lys} x y p = Quiver-onω (α {lxs} {lys} x y p) renaming (Het to Hom)
 
   record Extend : Typeω where
     no-eta-equality
