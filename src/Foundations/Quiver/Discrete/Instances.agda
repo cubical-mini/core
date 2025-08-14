@@ -9,8 +9,6 @@ open import Foundations.Path.Transport
 open import Foundations.Path.Properties
 open import Foundations.Quiver.Base
 open import Foundations.Quiver.Discrete.Base
-open import Foundations.Quiver.Fibration.Contravariant
-open import Foundations.Quiver.Fibration.Covariant
 open import Foundations.Quiver.Lens.Extend.Base
 open import Foundations.Quiver.Lens.Pull.Assoc
 open import Foundations.Quiver.Lens.Pull.Base
@@ -177,16 +175,3 @@ module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
     -- Disc-Pullbacks .pull-univ p v (u₁ , q₁) (u₂ , q₂) = {!!}
 
     {-# INCOHERENT Disc-Pull Disc-LAssoc #-}
-
-
--- -- TODO
--- module _ {ℓa ℓb} {A : I → Type ℓa} {B : ∀ i → A i → Type ℓb} where instance
---   Δᵈ-contravariant : is-contravariant-fibration (Δᵈ B)
---   Δᵈ-contravariant .lift⁻ p v .fst = coe1→0 (λ i → B i (p i)) v , λ i → coe1→i (λ j → B j (p j)) i v
---   Δᵈ-contravariant .lift⁻ p v .snd (u , q) = sym (from-pathᴾ⁻ q) ,ₚ {!!}
-
---   Δᵈ-covariant : is-covariant-fibration (Δᵈ B)
---   Δᵈ-covariant .lift⁺ p u .fst = coe0→1 (λ i → B i (p i)) u , λ i → coe0→i (λ j → B j (p j)) i u
---   Δᵈ-covariant .lift⁺ p u .snd (v , q) = sym (from-pathᴾ q) ,ₚ {!!}
-
--- {-# OVERLAPPING Δᵈ-contravariant Δᵈ-covariant #-}

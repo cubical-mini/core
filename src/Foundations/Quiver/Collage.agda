@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Foundations.Quiver.Cograph where
+module Foundations.Quiver.Collage where
 
 open import Foundations.Quiver.Base
 open import Foundations.Quiver.Interval.Base
@@ -9,8 +9,6 @@ module _ {m} {ℓ-ob⁻ ℓ-ob⁺ : ℓ-sig 1 (m , _)} (Ob⁻ : ob-sig ℓ-ob⁻
   Choose : Bool → ob-sig (λ ls → ℓ-ob⁻ ls ⊔ ℓ-ob⁺ ls)
   Choose false ls = Lift (ℓ-ob⁺ ls) (Ob⁻ ls)
   Choose true  ls = Lift (ℓ-ob⁻ ls) (Ob⁺ ls)
-
-  private module 𝐼 = Quiver-onω 𝐼 renaming (Het to Hom)
 
   Arrows : ∀ ℓ-het → Typeω
   Arrows ℓ-het = HQuiver-onωᵈ 𝐼 m Choose λ _ _ → ℓ-het
