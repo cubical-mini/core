@@ -18,7 +18,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   private module α {lxs} {lys} x y p = Quiver-onω (α {lxs} {lys} x y p)
 
   Disp± : ⦃ ex : Extend C k α ⦄ → HQuiver-onωᵈ C k (λ t → F refl) _
-  Disp± .Quiver-onωᵈ.Het[_] {x} {y} p u v = α.Het x y p (extend-r p v) (extend-l p u)
+  Disp± .Quiver-onωᵈ.Het[_] {x} {y} p u v = α.Het x y p (extend-l p u) (extend-r p v)
 
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}

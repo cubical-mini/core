@@ -17,8 +17,8 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
     no-eta-equality
     infixr 300 _◁_
     field
-      _◁_ : ∀{lxs lys lfs} {x : Ob lxs} {y : Ob lys} → Hom x y → G y lfs → F x lfs
-      pull-refl : ∀{ls lfs} {y : Ob ls} {v : G y lfs} → α.Het y (refl ◁ v) v
+      _◁_ : ∀{lxs lys lfs} {x : Ob lxs} {y : Ob lys} → Hom x y → F y lfs → G x lfs
+      pull-refl : ∀{ls lfs} {y : Ob ls} {v : F y lfs} → α.Het y v (refl ◁ v)
 
 open Pull ⦃ ... ⦄ public
 {-# DISPLAY Pull._◁_ _ p u = p ◁ u #-}

@@ -22,9 +22,9 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
       extend-r : ∀{lxs lys lfs} {x : Ob lxs} {y : Ob lys}
                  (p : Hom x y) (u : F (refl {x = y}) lfs) → F p lfs
       extend-refl : ∀{ls lfs} {x : Ob ls} {u : F (refl {x = x}) lfs}
-                  → α.Hom x x refl (extend-r refl u) (extend-l refl u)
+                  → α.Hom x x refl (extend-l refl u) (extend-r refl u)
       extend-coh : ∀{ls lfs} {x : Ob ls} {u : F (refl {x = x}) lfs}
-                 → α.Hom x x refl (extend-r refl u) u
+                 → α.Hom x x refl u (extend-r refl u)
 
 open Extend ⦃ ... ⦄ public
 {-# DISPLAY Extend.extend-l _ p u = extend-l p u #-}

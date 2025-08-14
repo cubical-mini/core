@@ -27,13 +27,13 @@ opaque
 
 opaque
   id-o : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
-       → p ＝ p ∙ refl
-  id-o p = ∙-filler-l p refl
+       → p ∙ refl ＝ p
+  id-o p = sym (∙-filler-l p refl)
 
 opaque
   id-i : ∀{ℓ} {A : Type ℓ} {x y : A} (p : x ＝ y)
-       → refl ∙ p ＝ p
-  id-i p = sym (∙-filler-r refl p)
+       → p ＝ refl ∙ p
+  id-i p = ∙-filler-r refl p
 
 opaque
   unfolding _∙_

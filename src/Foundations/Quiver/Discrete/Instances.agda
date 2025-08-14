@@ -105,13 +105,13 @@ module _ {ℓa} {A : Type ℓa} where instance
   Path-Pushforwards : {x : A} → Pushforwards (Path-Push {x = x})
   Path-Pushforwards {x} .push-univ {x = y} {y = z} p q (r , s) (t , u)
     =  sym s ∙ u
-    ,ₚ to-pathᴾ (subst-path-right s _ ∙ assoc s _ _ ∙ ap (_∙ u) (path-inv (sym s)) ∙ id-i u)
+    ,ₚ to-pathᴾ (subst-path-right s _ ∙ assoc s _ _ ∙ ap (_∙ u) (path-inv (sym s)) ∙ sym (id-i u))
 
   Path-Pullbacks : {y : A} → Pullbacks (Path-Pull {y = y})
   Path-Pullbacks {y} .pull-univ {x} {y = z} p q (r , s) (t , u)
     =  s ∙ sym u
     ,ₚ to-pathᴾ ( subst-path-left s _ ∙ ap (_∙ s) (sym-∙ s _) ∙ sym (assoc u _ s)
-                ∙ ap (u ∙_) (path-inv s) ∙ sym (id-o u))
+                ∙ ap (u ∙_) (path-inv s) ∙ id-o u)
 
 {-# OVERLAPPING
   Path-Push Path-Pull
@@ -133,7 +133,7 @@ module Default-Extend {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
   Disc-Extend .extend-l p = coe0→1 λ i → F (λ j → p (i ∧ j)) _
   Disc-Extend .extend-r p = coe1→0 λ i → F (λ j → p (i ∨ j)) _
   Disc-Extend .extend-refl = refl
-  Disc-Extend .extend-coh {u} = coe0→1 (λ i → α.Hom _ _ _ (coe0→i _ i u) u) refl
+  Disc-Extend .extend-coh {u} = coe0→1 (λ i → α.Hom _ _ _ u (coe0→i _ i u)) refl
   {-# INCOHERENT Disc-Extend #-}
 
 module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
@@ -145,7 +145,7 @@ module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
   module Default-Push where instance
     Disc-Push : HPush (Disc A) k α
     Disc-Push ._▷_ {lfs} u p = coe0→1 (λ i → F (p i) lfs) u
-    Disc-Push .push-refl {u} = coe0→1 (λ i → α.Hom _ u (coe0→i _ i u)) refl
+    Disc-Push .push-refl {u} = coe0→1 (λ i → α.Hom _ (coe0→i _ i u) u) refl
 
     Disc-RAssoc : RAssoc Disc-Push Path-Push
     Disc-RAssoc .assoc-r {z} u p q = subst (λ φ → α.Hom z (u ▷ (p ▷ q)) φ)
@@ -161,7 +161,7 @@ module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
   module Default-Pull where instance
     Disc-Pull : HPull (Disc A) k α
     Disc-Pull ._◁_ p = coe1→0 (λ i → F (p i) _)
-    Disc-Pull .pull-refl {v} = coe0→1 (λ i → α.Hom _ (coe0→i _ i v) v) refl
+    Disc-Pull .pull-refl {v} = coe0→1 (λ i → α.Hom _ v (coe0→i _ i v)) refl
 
     Disc-LAssoc : LAssoc Disc-Pull Path-Pull
     Disc-LAssoc .assoc-l {x} v p q = subst (λ φ → α.Hom x (p ◁ q ◁ v) φ)

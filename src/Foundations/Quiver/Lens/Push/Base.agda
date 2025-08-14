@@ -17,8 +17,8 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
     no-eta-equality
     infixl 300 _▷_
     field
-      _▷_ : ∀{lxs lys lfs}{x : Ob lxs} {y : Ob lys} → F x lfs → Hom x y → G y lfs
-      push-refl : ∀{ls lfs}{x : Ob ls} {u : F x lfs} → α.Het x u (u ▷ refl)
+      _▷_ : ∀{lxs lys lfs}{x : Ob lxs} {y : Ob lys} → G x lfs → Hom x y → F y lfs
+      push-refl : ∀{ls lfs}{x : Ob ls} {u : G x lfs} → α.Het x (u ▷ refl) u
 
 open Push ⦃ ... ⦄ public
 {-# DISPLAY Push._▷_ _ u p = u ▷ p #-}
