@@ -15,7 +15,7 @@ open import Agda.Builtin.Nat public
     ( Nat to ℕ
     ; _-_ to _∸_
     ; _*_ to _·_
-    ; _<_ to infix 3 _<?_ )
+    ; _<_ to infix 30 _<?_ )
 
 elim : {ℓ : Level} (P : ℕ → Type ℓ)
      → P 0

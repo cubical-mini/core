@@ -1,23 +1,9 @@
 {-# OPTIONS --safe #-}
 module Foundations.Cubical.HLevel.Base where
 
+open import Prim.Kan
+
 open import Foundations.Base
-open import Foundations.Discrete.Base
-open import Foundations.Path
-
-is-central⁻ is-central⁺ : ∀{ℓa} (A : Type ℓa) → A → Type ℓa
-is-central⁻ A = is-central~⁻ (discrete-path-object A)
-is-central⁺ A = is-central~⁺ (discrete-path-object A)
-
-is-contr⁻ is-contr⁺ is-prop : ∀{ℓa} (A : Type ℓa) → Type ℓa
-is-contr⁻ A = is-contr~⁻ (discrete-path-object A)
-is-contr⁺ A = is-contr~⁺ (discrete-path-object A)
-is-prop   A = is-prop~ (discrete-path-object A)
-{-# NOINLINE is-central~⁻ #-}
-{-# NOINLINE is-central~⁺ #-}
-{-# NOINLINE is-contr⁻ #-}
-{-# NOINLINE is-contr⁺ #-}
-{-# NOINLINE is-prop #-}
 
 HLevel : Type₀
 HLevel = ℕ
@@ -26,12 +12,31 @@ HLevel = ℕ
 _on-paths-of_ : ∀{ℓ ℓ′} (S : Type ℓ → Type ℓ′) → Type ℓ → Type (ℓ ⊔ ℓ′)
 S on-paths-of A = (a a′ : A) → S (a ＝ a′)
 
-is-of-hlevel : ∀{ℓ} → HLevel → Type ℓ → Type ℓ
-is-of-hlevel 0 A = is-contr⁻ A
-is-of-hlevel 1 A = is-prop A
-is-of-hlevel (suc (suc h)) A = is-of-hlevel (suc h) on-paths-of A
+is-central : ∀{ℓ} {A : Type ℓ} → A → Type ℓ
+is-central {A} c = (x : A) → c ＝ x ; {-# NOINLINE is-central #-}
 
-is-set is-groupoid is-2-groupoid : ∀{ℓ} → Type ℓ → Type ℓ
-is-set = is-of-hlevel 2
-is-groupoid = is-of-hlevel 3
-is-2-groupoid = is-of-hlevel 4
+is-contr is-prop is-set is-groupoid : ∀{ℓ} → Type ℓ → Type ℓ
+is-contr    A = Σₜ A is-central ; {-# NOINLINE is-contr #-}
+is-prop     A = (x y : A) → x ＝ y ; {-# NOINLINE is-prop #-}
+is-set      A = (x y : A) (p q : x ＝ y) → p ＝ q ; {-# NOINLINE is-set #-}
+is-groupoid A = (x y : A) (p q : x ＝ y) (r s : p ＝ q) → r ＝ s ; {-# NOINLINE is-groupoid #-}
+
+is-of-hlevel : ∀{ℓ} → HLevel → Type ℓ → Type ℓ
+is-of-hlevel 0       A = is-contr A
+is-of-hlevel (suc h) A = is-of-hlevel h on-paths-of A
+{-# NOINLINE is-of-hlevel #-}
+
+
+-- Automation
+
+record H-Level {ℓ} (n : ℕ) (T : Type ℓ) : Type ℓ where
+  no-eta-equality
+  constructor hlevel-instance
+  field has-hlevel : is-of-hlevel n T
+{-# INLINE hlevel-instance #-}
+
+hlevel : ∀{ℓ} {A : Type ℓ} (n : HLevel) ⦃ hl : H-Level n A ⦄ → is-of-hlevel n A
+hlevel n ⦃ hl ⦄ = hl .H-Level.has-hlevel
+
+hlevel! : ∀{ℓ} {A : Type ℓ} ⦃ hl : H-Level 0 A ⦄ → A
+hlevel! ⦃ hl ⦄ = hlevel 0 .fst

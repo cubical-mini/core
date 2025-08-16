@@ -1,8 +1,8 @@
 {-# OPTIONS --safe #-}
 module Foundations.Diagram.Exponential where
 
-open import Foundations.Cubical.HLevel.Base
 open import Foundations.Base
+open import Foundations.Cubical.HLevel.Base
 open import Foundations.Diagram.Product.Binary
 open import Foundations.Discrete.Base
 open import Foundations.Lens.Pull
@@ -21,7 +21,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
       ƛ  : ∀{lgs} {Γ : Ob lgs} → Hom (Γ × X) Y → Hom Γ Y^X
       ƛ-commutes : ∀{lgs} {Γ : Ob lgs} (m : Hom (Γ × X) Y) → (ƛ m ×→ refl) ◁ ev ＝ m
       ƛ-unique   : ∀{lgs} {Γ : Ob lgs} (m : Hom (Γ × X) Y)
-                 → is-central⁻ (Σₜ (Hom Γ Y^X) λ m′ →  (m′ ×→ refl) ◁ ev ＝ m) (ƛ m , ƛ-commutes m)
+                 → is-central {A = Σₜ (Hom Γ Y^X) λ m′ →  (m′ ×→ refl) ◁ ev ＝ m} (ƛ m , ƛ-commutes m)
 
   record Cartesian-closed (ℓ-⇒ : Levels m → Levels m → Levels m) : Typeω where
     no-eta-equality

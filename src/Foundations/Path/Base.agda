@@ -31,30 +31,12 @@ module _ {m ℓ-ob ℓ-hom} {Ob : ob-sig ℓ-ob}
   {C : HQuiver-onω m Ob ℓ-hom}
   {ℓ-obᵈ ℓ-homᵈ} {Ob[_] : ob-sigᵈ Ob ℓ-obᵈ}
   (D : HQuiver-onωᵈ C 0 Ob[_] ℓ-homᵈ)
-  ⦃ _ : Refl C ⦄ ⦃ rd : Reflᵈ D ⦄ where
+  ⦃ _ : Refl C ⦄ ⦃ _ : Reflᵈ D ⦄ where
 
-  is-path-objectᵈ : ∀ ls → Type (ℓ-ob ls ⊔ ℓ-obᵈ ls _ ⊔ ℓ-homᵈ ls ls _ _)
-  is-path-objectᵈ ls = {t : Ob ls} → is-path-object (Component D t)
-
-  is-path-objectωᵈ : Typeω
-  is-path-objectωᵈ = ∀{ls} → is-path-objectᵈ ls
+  is-path-objectᵈ : Typeω
+  is-path-objectᵈ = ∀{ls} {t : Ob ls} → is-path-object (Component D t)
 
 
-module _ {ℓo ℓh} {Ob : Type ℓo}
-  {C : HQuiver-onω 0 (λ _ → Ob) (λ _ _ → ℓh)} (open Quiver-onω C renaming (Het to Hom))
-  ⦃ _ : Refl C ⦄ (@0 po : is-path-object C) where
-
-  is-central~⁻ is-central~⁺ : Ob → Type (ℓo ⊔ ℓh)
-  is-central~⁻ c = (x : Ob) → Hom c x
-  is-central~⁺ c = (x : Ob) → Hom x c
-
-  is-contr~⁻ is-contr~⁺ is-prop~ : Type (ℓo ⊔ ℓh)
-  is-contr~⁻ = Σₜ Ob is-central~⁻
-  is-contr~⁺ = Σₜ Ob is-central~⁺
-  is-prop~   = (x y : Ob) → Hom x y
-
-{-# NOINLINE is-central~⁻ #-}
-{-# NOINLINE is-central~⁺ #-}
-{-# NOINLINE is-contr~⁻ #-}
-{-# NOINLINE is-contr~⁺ #-}
-{-# NOINLINE is-prop~   #-}
+discrete-path-object : ∀{ℓ} (A : Type ℓ) → is-path-object (Disc A)
+discrete-path-object _ .to-path p = p
+discrete-path-object _ .to-path-over p i j = p (i ∧ j)

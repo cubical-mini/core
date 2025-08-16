@@ -15,8 +15,8 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   ⦃ _ : Refl C ⦄ ⦃ hp : ∀{lys} {y : Ob lys} → Pull C 0 (λ x → Disc (Hom x y)) ⦄
   {ℓ-×} ⦃ _ : Binary-products C C ℓ-× ⦄
   {ℓ-⇒} ⦃ _ : Cartesian-closed C ℓ-⇒ ⦄
-  {ℓ-ini} {ls} ⦃ _ : Initial C ℓ-ini ls ⦄ where
+  {ℓ-ini} ⦃ _ : Initial C ℓ-ini ⦄ where
 
   infixr 0 ¬_
-  ¬_ : Ob ls → Ob (ℓ-⇒ ls ℓ-ini)
+  ¬_ : ∀{ls} → Ob ls → Ob (ℓ-⇒ ls ℓ-ini)
   ¬ X = X ⇒ ⊥

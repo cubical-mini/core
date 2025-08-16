@@ -4,6 +4,7 @@ module Foundations.Base where
 open import Prim.Data.Nat public
 open import Prim.Data.Sigma public
   renaming ( Σ   to Σₜ
+           ; _,_ to infixr 40 _,_
            ; _×_ to _×ₜ_ )
 open import Prim.Data.Unit public
   renaming ( ⊤ to ⊤ₜ )

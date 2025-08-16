@@ -7,16 +7,12 @@ open import Foundations.Cubical.HLevel.Base
 module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-het}
   (C : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het) (open Quiver-onω C) where
 
-  record Initial ℓ-ini ls : Type
-    (ℓ-ob⁻ ℓ-ini ⊔ ℓ-ob⁺ ls ⊔ ℓ-het ℓ-ini ls) where
+  record Initial ℓ-ini : Typeω where
     no-eta-equality
     field
       ⊥        : Ob⁻ ℓ-ini
-      ¡        : {x : Ob⁺ ls} → Het ⊥ x
-      ¡-unique : (x : Ob⁺ ls) → is-central⁻ (Het ⊥ x) ¡
-
-  Initialω : ∀ ℓ-ini → Typeω
-  Initialω ℓ-ini = ∀{ls} → Initial ℓ-ini ls
+      ¡        : ∀{ls} {x : Ob⁺ ls} → Het ⊥ x
+      ¡-unique : ∀{ls} (x : Ob⁺ ls) → is-central {A = Het ⊥ x} ¡
 
 open Initial ⦃ ... ⦄ public
   using (⊥ ; ¡ ; ¡-unique)

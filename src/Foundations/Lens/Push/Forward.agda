@@ -21,7 +21,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
     no-eta-equality
     field
       push-univ : ∀{lxs lys lfs} {x : Ob lxs} {y : Ob lys} (p : Hom x y) (u : F x lfs)
-                → is-central⁻ (Fan⁺ (α y) (u ▷ p) lfs) (u ▷ p , refl)
+                → is-central {A = Fan⁺ (α y) (u ▷ p) lfs} (u ▷ p , refl)
 
 open UPush ⦃ ... ⦄ public
   using (push-univ)

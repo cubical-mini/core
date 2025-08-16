@@ -22,7 +22,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
     field
       unpush        : {y : Ob lys} (v : F y lfs) → Hom x y
       θ⁺            : {y : Ob lys} (v : F y lfs) → α.Hom y v (u ▷ unpush v)
-      unpush-unique : {y : Ob lys} (v : F y lfs) → is-central⁺ (Σₜ (Hom x y) (λ f → α.Hom y v (u ▷ f))) (unpush v , θ⁺ v)
+      unpush-unique : {y : Ob lys} (v : F y lfs) → is-central {A = Σₜ (Hom x y) (λ f → α.Hom y v (u ▷ f))} (unpush v , θ⁺ v)
 
   is-universalω⁺ : ∀{lxs lfs} {x : Ob lxs} (u : F x lfs) → Typeω
   is-universalω⁺ u = ∀{lys} → is-universal⁺ u lys

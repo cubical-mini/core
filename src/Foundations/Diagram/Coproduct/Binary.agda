@@ -23,7 +23,7 @@ module _ {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-hom⁺}
       ι₁▷⁅⁆ : ∀{ls} {Q : Ob⁺ ls} {f : Het X Q} {g : Het Y Q} → ι₁ ▷ ⁅ f , g ⁆ ＝ f
       ι₂▷⁅⁆ : ∀{ls} {Q : Ob⁺ ls} {f : Het X Q} {g : Het Y Q} → ι₂ ▷ ⁅ f , g ⁆ ＝ g
       ⁅⁆-unique : ∀{ls} {Q : Ob⁺ ls} {f : Het X Q} {g : Het Y Q}
-                → is-central⁺ (Σₜ (Hom S Q) (λ h → (ι₁ ▷ h ＝ f) ×ₜ (ι₂ ▷ h ＝ g)))
+                → is-central {A = Σₜ (Hom S Q) (λ h → (ι₁ ▷ h ＝ f) ×ₜ (ι₂ ▷ h ＝ g))}
                     (⁅ f , g ⁆ , ι₁▷⁅⁆ , ι₂▷⁅⁆)
 
   record Binary-coproducts (ℓ-⊎ : Levels m → Levels m → Levels n) : Typeω where

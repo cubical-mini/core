@@ -23,7 +23,7 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-hom⁻}
       ⟨⟩◁π₁ : ∀{ls} {Q : Ob⁻ ls} {f : Het Q X} {g : Het Q Y} → ⟨ f , g ⟩ ◁ π₁ ＝ f
       ⟨⟩◁π₂ : ∀{ls} {Q : Ob⁻ ls} {f : Het Q X} {g : Het Q Y} → ⟨ f , g ⟩ ◁ π₂ ＝ g
       ⟨⟩-unique : ∀{ls} {Q : Ob⁻ ls} {f : Het Q X} {g : Het Q Y}
-                → is-central⁻ (Σₜ (Hom Q P) (λ h → (h ◁ π₁ ＝ f) ×ₜ (h ◁ π₂ ＝ g)))
+                → is-central {A = Σₜ (Hom Q P) (λ h → (h ◁ π₁ ＝ f) ×ₜ (h ◁ π₂ ＝ g))}
                     (⟨ f , g ⟩ , ⟨⟩◁π₁ , ⟨⟩◁π₂)
 
   record Binary-products (ℓ-× : Levels n → Levels n → Levels m) : Typeω where

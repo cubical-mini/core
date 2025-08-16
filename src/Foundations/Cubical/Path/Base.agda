@@ -66,8 +66,8 @@ Square p r q s = Pathᴾ (λ i → p i ＝ r i) q s
 
 Squareᴾ
   : ∀{ℓ} (A : I → I → Type ℓ)
-    {w : A i0 i0} {x : A i0 i1} (p : Pathᴾ (λ j → A i0 j) w x)
-    {y : A i1 i0} {z : A i1 i1} (r : Pathᴾ (λ j → A i1 j) y z)
+    {w x} (p : Pathᴾ (λ j → A i0 j) w x)
+    {y z} (r : Pathᴾ (λ j → A i1 j) y z)
     (q : Pathᴾ (λ i → A i i0) w y) (s : Pathᴾ (λ i → A i i1) x z)
   → Type ℓ
 Squareᴾ A p r q s = Pathᴾ (λ i → Pathᴾ (λ j → A j i) (p i) (r i)) q s

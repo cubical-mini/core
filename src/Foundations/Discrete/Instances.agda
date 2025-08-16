@@ -117,8 +117,8 @@ module _ {ℓa} {A : Type ℓa} where instance
 
   Path-Pullbacks : {y : A} → UPull (Path-Pull {y = y})
   Path-Pullbacks {y} .pull-univ {x} {y = z} p q (r , s)
-    =  s
-    ,ₚ to-pathᴾ⁻ (sym (subst-path-left _ _ ∙ id-o _))
+    =  sym s
+    ,ₚ to-pathᴾ (subst-path-left _ _ ∙ id-o _)
 
 {-# OVERLAPPING
   Path-Push Path-Pull

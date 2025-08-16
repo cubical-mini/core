@@ -5,10 +5,6 @@ open import Foundations.Base
 open import Foundations.Discrete.Base
 open import Foundations.Path.Base
 
-discrete-path-object : ∀{ℓ} (A : Type ℓ) → is-path-object (Disc A)
-discrete-path-object _ .to-path p = p
-discrete-path-object _ .to-path-over p i j = p (i ∧ j)
-
 -- module _ {ℓo ℓh} {Ob : Type ℓo}
 --   (C : HQuiver-onω 0 (λ _ → Ob) (λ _ _ → ℓh))
 --   {k ℓ-obᶠ ℓ-homᶠ}

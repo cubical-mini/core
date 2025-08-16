@@ -3,8 +3,8 @@ module Foundations.Diagram.Coproduct.Indexed where
 
 open import Foundations.Base
 open import Foundations.Cubical.HLevel.Base
-open import Foundations.Discrete.Base
 open import Foundations.Lens.Push
+open import Foundations.Path
 
 open import Notation.Refl
 open import Notation.Underlying
@@ -22,7 +22,7 @@ module _ {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-hom⁺}
       ι-match   : ∀{lys} {Y : Ob⁺ lys} → (∀ i → Het (F i) Y) → Hom S Y
       ι-commute : ∀{lys} {Y : Ob⁺ lys} {f : ∀ i → Het (F i) Y} {i} → ι i ▷ ι-match f ＝ f i
       ι-unique : ∀{lys} {Y : Ob⁺ lys} {f : ∀ i → Het (F i) Y}
-               → is-central⁺ (Σₜ (Hom S Y) (λ h → (i : Ix) → ι i ▷ h ＝ f i)) (ι-match f , λ _ → ι-commute)
+               → is-central {A = Σₜ (Hom S Y) (λ h → (i : Ix) → ι i ▷ h ＝ f i)} (ι-match f , λ _ → ι-commute)
 
   record Indexed-coproducts {lix} (Ix : Type lix) (ℓ-Σ : Levels m → Levels n) : Typeω where
     no-eta-equality

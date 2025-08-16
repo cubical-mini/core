@@ -21,7 +21,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
     no-eta-equality
     field
       pull-univ : ∀{lxs lys lfs} {x : Ob lxs} {y : Ob lys} (p : Hom x y) (v : F y lfs)
-                → is-central⁺ (Fan⁻ (α x) (p ◁ v) lfs) (p ◁ v , refl)
+                → is-central {A = Fan⁻ (α x) (p ◁ v) lfs} (p ◁ v , refl)
 
 
 open UPull ⦃ ... ⦄ public

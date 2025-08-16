@@ -22,7 +22,7 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-hom⁻}
       π-tuple   : ∀{lys} {Y : Ob⁻ lys} → (∀ i → Het Y (F i)) → Hom Y P
       π-commute : ∀{lys} {Y : Ob⁻ lys} {f : ∀ i → Het Y (F i)} {i} → π-tuple f ◁ π i ＝ f i
       π-unique : ∀{lys} {Y : Ob⁻ lys} {f : ∀ i → Het Y (F i)}
-               → is-central⁻ (Σₜ (Hom Y P) (λ h → (i : Ix) → h ◁ π i ＝ f i)) (π-tuple f , λ _ → π-commute)
+               → is-central {A = Σₜ (Hom Y P) (λ h → (i : Ix) → h ◁ π i ＝ f i)} (π-tuple f , λ _ → π-commute)
 
   record Indexed-products {lix} (Ix : Type lix) (ℓ-Π : Levels n → Levels m) : Typeω where
     no-eta-equality
