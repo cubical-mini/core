@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Diagram where
+module TEST.Diagram where
 
 open import Foundations.Base
 open import Foundations.Diagram.Colimit
@@ -53,8 +53,8 @@ module Pi {lix} {Ix : Type lix} where
   copi Y .colim-univ .unpush = id
   copi Y .colim-univ .θ⁺ _ = refl
   copi Y .colim-univ .unpush-unique u (w , z) j
-    = (λ i y → z (~ j) i y)
-    , λ k i y → z (~ j ∧ k) i y
+    = (λ i y → z j i y)
+    , λ k i y → z (j ∧ k) i y
 
 
 module Terminal where

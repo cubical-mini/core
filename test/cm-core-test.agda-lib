@@ -1,15 +1,19 @@
-name: cm-core-test-0.1
-include: ../src .
+name: cm-core-test-0.1.0
+include: .
+depend: cm-core cm-core-doc
 flags:
-  --erased-cubical
-  --erasure
+  --cubical=erased
   --erased-matches
+  --erasure
   --exact-split
+  --experimental-lazy-instances
   --guardedness
   --hidden-argument-puns
   --postfix-projections
-  --no-prop
+  --safe
+
   --no-import-sorts
+  --no-prop
   --no-qualified-instances
 
   -Werror

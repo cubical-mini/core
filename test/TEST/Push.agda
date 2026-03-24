@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Push where
+module TEST.Push where
 
 open import Prim.Data.List
 open import Prim.Data.Maybe
@@ -77,38 +77,42 @@ module _ {ℓa ℓb} {A : Type ℓa} {B : Type ℓb} (f : A → B) where
 
 
 
-data Vec {ℓ} (A : Type ℓ) : ℕ → Type ℓ where
-  []  : Vec A 0
-  _∷_ : ∀{n} → A → Vec A n → Vec A (suc n)
+-- data Vec {ℓ} (A : Type ℓ) : ℕ → Type ℓ where
+--   []  : Vec A 0
+--   _∷_ : ∀{n} → A → Vec A n → Vec A (suc n)
 
-vec-cast : ∀{ℓ}{A : Type ℓ} {m n} (p : m ＝ n) → Vec A m → Vec A n
-vec-cast {m = 0}     {n = 0}     _ xs = xs
-vec-cast {m = 0}     {n = suc n} p xs = {!!}
-vec-cast {m = suc m} {n = 0}     p xs = {!!}
-vec-cast {m = suc m} {n = suc n} p (x ∷ xs) = x ∷ vec-cast {!!} xs
+-- vec-cast : ∀{ℓ}{A : Type ℓ} {m n} (p : m ＝ n) → Vec A m → Vec A n
+-- vec-cast {m = 0}     {n = 0}     _ xs = xs
+-- vec-cast {m = 0}     {n = suc n} p xs = z≠s p where
+--   z≠s : ∀{ℓ} {A : Type ℓ} {n} → 0 ＝ suc n → A
+--   z≠s q = {!subst!}
+-- vec-cast {m = suc m} {n = 0}     p xs = []
+-- vec-cast {m = suc m} {n = suc n} p (x ∷ xs) = x ∷ vec-cast (suc-inj p) xs where
+--   suc-inj : ∀ {m n} → suc m ＝ suc n → m ＝ n
+--   suc-inj {m} {n} p = {!subst!}
 
-vec-map : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {n} (f : A → B) → Vec A n → Vec B n
-vec-map {n = 0}     _ _        = []
-vec-map {n = suc n} f (x ∷ xs) = f x ∷ vec-map f xs
+-- vec-map : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb} {n} (f : A → B) → Vec A n → Vec B n
+-- vec-map {n = 0}     _ _        = []
+-- vec-map {n = suc n} f (x ∷ xs) = f x ∷ vec-map f xs
 
-vec-map-lawful : ∀{ℓa} {A : Type ℓa} {n} (xs : Vec A n) → xs ＝ vec-map (λ x → x) xs
-vec-map-lawful [] = refl
-vec-map-lawful (x ∷ xs) i = x ∷ vec-map-lawful xs i
+-- vec-map-lawful : ∀{ℓa} {A : Type ℓa} {n} (xs : Vec A n) → xs ＝ vec-map (λ x → x) xs
+-- vec-map-lawful [] = refl
+-- vec-map-lawful (x ∷ xs) i = x ∷ vec-map-lawful xs i
 
-vec-cast-lawful : ∀{ℓa} {A : Type ℓa} {n} (xs : Vec A n) → xs ＝ vec-cast refl xs
-vec-cast-lawful [] = refl
-vec-cast-lawful (x ∷ xs) i = x ∷ vec-cast-lawful xs i
+-- vec-cast-lawful : ∀{ℓa} {A : Type ℓa} {n} (xs : Vec A n) → xs ＝ vec-cast refl xs
+-- vec-cast-lawful [] = refl
+-- vec-cast-lawful (x ∷ xs) i = x ∷ vec-cast-lawful xs i
 
-instance
-  Vec-HPush : ∀{n} → HPush Funs 0 (λ A → Disc (Vec A n))
-  Vec-HPush ._▷_ xs f = vec-map f xs
-  Vec-HPush .push-refl = sym (vec-map-lawful _)
+-- instance
+--   Vec-HPush : ∀{n} → HPush Funs 0 (λ A → Disc (Vec A n))
+--   Vec-HPush ._▷_ xs f = vec-map f xs
+--   Vec-HPush .push-refl = sym (vec-map-lawful _)
 
-  Vec-HPush′ : ∀{ℓ}{A : Type ℓ} → HPush (Disc ℕ) 0 (λ n → Disc (Vec A n))
-  Vec-HPush′ ._▷_ xs f = vec-cast f xs
-  Vec-HPush′ .push-refl = sym (vec-cast-lawful _)
+--   Vec-HPush′ : ∀{ℓ}{A : Type ℓ} → HPush (Disc ℕ) 0 (λ n → Disc (Vec A n))
+--   Vec-HPush′ ._▷_ xs f = vec-cast f xs
+--   Vec-HPush′ .push-refl = sym (vec-cast-lawful _)
 
-ex : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
-     {m n}(p : m ＝ n) (f : A → B)
-   → Vec A m → Vec B n
-ex p f xs = xs ▷ f ▷ p
+-- ex : ∀{ℓa ℓb} {A : Type ℓa} {B : Type ℓb}
+--      {m n}(p : m ＝ n) (f : A → B)
+--    → Vec A m → Vec B n
+-- ex p f xs = xs ▷ f ▷ p

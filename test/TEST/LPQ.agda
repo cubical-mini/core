@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module LPQ where
+module TEST.LPQ where
 
 open import Foundations.Base
 open import Foundations.Component
