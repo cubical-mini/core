@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Diagram where
+module TEST.Diagram where
 
 open import Foundations.Base
 open import Foundations.Diagram.Colimit

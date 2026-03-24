@@ -1,10 +1,10 @@
 {-# OPTIONS --safe #-}
-module Cont where
+module TEST.Cont where
 
-open import Foundations.Quiver.Base
-open import Foundations.Quiver.Discrete.Base
-open import Foundations.Quiver.Lens.Pull.Base
-open import Foundations.Quiver.Lens.Push.Base
+open import Foundations.Base
+open import Foundations.Discrete.Base
+open import Foundations.Lens.Pull.Base
+open import Foundations.Lens.Push.Base
 
 open import Notation.Refl
 

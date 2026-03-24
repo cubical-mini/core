@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Display where
+module TEST.Display where
 
 open import Foundations.Base
 open import Foundations.Discrete as Discrete

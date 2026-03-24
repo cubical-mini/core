@@ -5,3 +5,5 @@
 dist-newstyle/
 _build/
 MAlonzo/**
+result
+result-*

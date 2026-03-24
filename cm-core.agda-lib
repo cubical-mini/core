@@ -1,16 +1,19 @@
-name: cm-core-0.1
+name: cm-core-0.1.0
 include: src
 depend:
 flags:
-  --erased-cubical
-  --erasure
+  --cubical=erased
   --erased-matches
+  --erasure
   --exact-split
+  --experimental-lazy-instances
   --guardedness
   --hidden-argument-puns
   --postfix-projections
-  --no-prop
+  --safe
+
   --no-import-sorts
+  --no-prop
   --no-qualified-instances
 
   -Werror

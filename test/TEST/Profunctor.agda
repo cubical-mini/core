@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Profunctor where
+module TEST.Profunctor where
 
 open import Foundations.Base
 open import Foundations.Codiscrete

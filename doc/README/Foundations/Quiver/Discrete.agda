@@ -1,11 +1,11 @@
 {-# OPTIONS --safe #-}
 module README.Foundations.Quiver.Discrete where
 
-open import Foundations.Quiver.Base
-open import Foundations.Quiver.Discrete
-open import Foundations.Quiver.Lens.Extend
-open import Foundations.Quiver.Lens.Pull
-open import Foundations.Quiver.Lens.Push
+open import Foundations.Base
+open import Foundations.Discrete
+open import Foundations.Lens.Extend
+open import Foundations.Lens.Pull
+open import Foundations.Lens.Push
 
 open import Notation.Refl
 open import Notation.Sym
@@ -41,7 +41,7 @@ module _ {ℓa ℓb} {A : Type ℓa} {B : A → Type ℓb} {x y z : A} (p : x �
 
 
 module Test-Extend {ℓa ℓb} {A : Type ℓa} {B : (x y : A) (p : x ＝ y) → Type ℓb} {x y z : A} (p : x ＝ y) (q : y ＝ z) where private
-  open Default-Extend (λ r → Disc (B _ _ r))
+  open Default-Extend (λ r s t → Disc (B r s t))
 
   ex₁ : B x x refl → B x z (p ▷ q)
   ex₁ = extend-l (p ▷ q)

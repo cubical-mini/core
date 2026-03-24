@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module CC where
+module TEST.CC where
 
 open import Foundations.Base
 open import Foundations.Discrete

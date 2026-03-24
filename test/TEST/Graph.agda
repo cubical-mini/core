@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Graph where
+module TEST.Graph where
 
 open import Foundations.Base
 open import Foundations.Discrete

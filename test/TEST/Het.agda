@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Het where
+module TEST.Het where
 
 open import Foundations.Base
 open import Foundations.Discrete
