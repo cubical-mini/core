@@ -12,7 +12,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   {k} {ℓ-obᶠ} {F : ob-sigᵈ Ob ℓ-obᶠ}
   {ℓ-homᶠ : ℓ-sig 3 (m , k , k , _)}
   {α : ∀{ls} (t : Ob ls) → HQuiver-onω k (F t) (ℓ-homᶠ ls)}
-  ⦃ _ : Refl C ⦄ (hp : Pull C k α)
+  ⦃ _ : Refl C ⦄ (hp : HPull C k α)
   ⦃ _ : ∀ {ls} {t : Ob ls} → Refl (α t) ⦄ where
   private module α {ls} t = Quiver-onω (α {ls} t) renaming (Het to Hom)
   private instance _ = hp

@@ -12,7 +12,7 @@ module _ {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-hom⁺}
   (B : HQuiver-onω n Ob⁺ ℓ-hom⁺) (open Quiver-onω B renaming (Het to Hom))
   {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-het}
   (H : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het) (open Quiver-onω H)
-  ⦃ _ : Refl B ⦄ ⦃ hp : ∀{lxs} {x : Ob⁻ lxs} → Push B 0 (λ y → Disc (Het x y)) ⦄ where
+  ⦃ _ : Refl B ⦄ ⦃ hp : ∀{lxs} {x : Ob⁻ lxs} → HPush B 0 (λ y → Disc (Het x y)) ⦄ where
 
   record Coproduct {lxs lys lss} (X : Ob⁻ lxs) (Y : Ob⁻ lys) (S : Ob⁺ lss) : Typeω where
     no-eta-equality
@@ -49,7 +49,7 @@ module _ {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-hom⁺}
   {B : HQuiver-onω n Ob⁺ ℓ-hom⁺} (open Quiver-onω B renaming (Het to Hom))
   {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-het}
   {H : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het} (open Quiver-onω H)
-  ⦃ _ : Refl B ⦄ ⦃ hp : ∀{lxs} {x : Ob⁻ lxs} → Push B 0 (λ y → Disc (Het x y)) ⦄ where instance
+  ⦃ _ : Refl B ⦄ ⦃ hp : ∀{lxs} {x : Ob⁻ lxs} → HPush B 0 (λ y → Disc (Het x y)) ⦄ where instance
 
   Binary-coproducts→Coproduct : ∀{ℓ-⊎ lxs lys} ⦃ bc : Binary-coproducts B H ℓ-⊎ ⦄
                                 {X : Ob⁻ lxs} {Y : Ob⁻ lys}
@@ -59,7 +59,7 @@ module _ {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺} {ℓ-hom⁺}
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
-  ⦃ _ : Refl C ⦄ ⦃ hp : ∀{lxs} {x : Ob lxs} → Push C 0 (λ y → Disc (Hom x y)) ⦄ where
+  ⦃ _ : Refl C ⦄ ⦃ hp : ∀{lxs} {x : Ob lxs} → HPush C 0 (λ y → Disc (Hom x y)) ⦄ where
 
   infixr 71 _⊎→_
   _⊎→_ : ∀{ℓ-⊎ lxs lys lss lqs} ⦃ _ : Binary-coproducts C C ℓ-⊎ ⦄

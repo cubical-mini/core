@@ -11,7 +11,7 @@ open import Notation.Refl
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   (C : HQuiver-onω m Ob ℓ-hom) (open Quiver-onω C renaming (Het to Hom))
-  ⦃ _ : Refl C ⦄ ⦃ hp : ∀{lys} {y : Ob lys} → Pull C 0 (λ x → Disc (Hom x y)) ⦄
+  ⦃ _ : Refl C ⦄ ⦃ hp : ∀{lys} {y : Ob lys} → HPull C 0 (λ x → Disc (Hom x y)) ⦄
   {ℓ-×} ⦃ _ : Binary-products C C ℓ-× ⦄ where
 
   record Exponential {lxs lys les} (X : Ob lxs) (Y : Ob lys) (Y^X : Ob les) : Typeω where
@@ -42,7 +42,7 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
-  ⦃ _ : Refl C ⦄ ⦃ hp : ∀{lys} {y : Ob lys} → Pull C 0 (λ x → Disc (Hom x y)) ⦄
+  ⦃ _ : Refl C ⦄ ⦃ hp : ∀{lys} {y : Ob lys} → HPull C 0 (λ x → Disc (Hom x y)) ⦄
   {ℓ-×} ⦃ _ : Binary-products C C ℓ-× ⦄ where instance
 
   Cartesian-closed→Exponential : ∀ {ℓ-⇒ lxs lys} ⦃ cc : Cartesian-closed C ℓ-⇒ ⦄

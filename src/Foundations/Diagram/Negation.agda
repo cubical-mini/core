@@ -12,7 +12,7 @@ open import Notation.Refl
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
-  ⦃ _ : Refl C ⦄ ⦃ hp : ∀{lys} {y : Ob lys} → Pull C 0 (λ x → Disc (Hom x y)) ⦄
+  ⦃ _ : Refl C ⦄ ⦃ hp : ∀{lys} {y : Ob lys} → HPull C 0 (λ x → Disc (Hom x y)) ⦄
   {ℓ-×} ⦃ _ : Binary-products C C ℓ-× ⦄
   {ℓ-⇒} ⦃ _ : Cartesian-closed C ℓ-⇒ ⦄
   {ℓ-ini} ⦃ _ : Initial C ℓ-ini ⦄ where

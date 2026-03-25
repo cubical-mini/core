@@ -54,74 +54,74 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
     {-# OVERLAPS Disc-Extend-× #-}
 
   module Variadic-Push where instance
-    Disc-Push-Const : ∀{ℓa} {A : Type ℓa} → Push C 0 (λ _ → Disc A)
-    Disc-Push-Const ._▷_ = _
-    Disc-Push-Const .push-refl = refl
-    {-# INCOHERENT Disc-Push-Const #-}
+    Disc-HPush-Const : ∀{ℓa} {A : Type ℓa} → HPush C 0 (λ _ → Disc A)
+    Disc-HPush-Const ._▷_ = _
+    Disc-HPush-Const .push-refl = refl
+    {-# INCOHERENT Disc-HPush-Const #-}
 
     module _ {ℓf ℓg : ℓ-sig 1 (m , _)}
       {F : ∀{ls} → Ob ls → Type (ℓf ls)} {G : ∀{ls} → Ob ls → Type (ℓg ls)} where instance
-      Disc-Push-× : ⦃ _ : HPush C 0 λ t → Disc (F t) ⦄ ⦃ _ : HPush C 0 λ t → Disc (G t) ⦄
-                  → Push C 0 λ t → Disc (F t ×ₜ G t)
-      Disc-Push-× ._▷_ (u , v) p = u ▷ p , v ▷ p
-      Disc-Push-× .push-refl {u = u , v} i = push-refl {u = u} i , push-refl {u = v} i
+      Disc-HPush-× : ⦃ _ : HPush C 0 λ t → Disc (F t) ⦄ ⦃ _ : HPush C 0 λ t → Disc (G t) ⦄
+                   → HPush C 0 λ t → Disc (F t ×ₜ G t)
+      Disc-HPush-× ._▷_ (u , v) p = u ▷ p , v ▷ p
+      Disc-HPush-× .push-refl {u = u , v} i = push-refl {u = u} i , push-refl {u = v} i
 
-      Disc-Push-→ : ⦃ _ : HPull C 0 λ t → Disc (F t) ⦄ ⦃ _ : HPush C 0 λ t → Disc (G t) ⦄
-                  → Push C 0 λ t → Disc (F t → G t)
-      Disc-Push-→ ._▷_ α p fy = α (p ◁ fy) ▷ p
-      Disc-Push-→ .push-refl {u = α} i fx = push-refl {u = α (pull-refl {v = fx} (~ i))} i
-    {-# OVERLAPS Disc-Push-× Disc-Push-→ #-}
+      Disc-HPush-→ : ⦃ _ : HPull C 0 λ t → Disc (F t) ⦄ ⦃ _ : HPush C 0 λ t → Disc (G t) ⦄
+                   → HPush C 0 λ t → Disc (F t → G t)
+      Disc-HPush-→ ._▷_ α p fy = α (p ◁ fy) ▷ p
+      Disc-HPush-→ .push-refl {u = α} i fx = push-refl {u = α (pull-refl {v = fx} (~ i))} i
+    {-# OVERLAPS Disc-HPush-× Disc-HPush-→ #-}
 
 
   module Variadic-Pull where instance
-    Disc-Pull-Const : ∀{ℓa} {A : Type ℓa} → Pull C 0 (λ _ → Disc A)
-    Disc-Pull-Const ._◁_ = _
-    Disc-Pull-Const .pull-refl = refl
-    {-# INCOHERENT Disc-Pull-Const #-}
+    Disc-HPull-Const : ∀{ℓa} {A : Type ℓa} → HPull C 0 (λ _ → Disc A)
+    Disc-HPull-Const ._◁_ = _
+    Disc-HPull-Const .pull-refl = refl
+    {-# INCOHERENT Disc-HPull-Const #-}
 
     module _ {ℓf ℓg : ℓ-sig 1 (m , _)}
       {F : ∀{ls} → Ob ls → Type (ℓf ls)} {G : ∀{ls} → Ob ls → Type (ℓg ls)} where instance
-      Disc-Pull-× : ⦃ _ : HPull C 0 λ t → Disc (F t) ⦄ ⦃ _ : HPull C 0 λ t → Disc (G t) ⦄
-                  → Pull C 0 λ t → Disc (F t ×ₜ G t)
-      Disc-Pull-× ._◁_ p (u , v) = p ◁ u , p ◁ v
-      Disc-Pull-× .pull-refl {v = u , v} i = pull-refl {v = u} i , pull-refl {v = v} i
+      Disc-HPull-× : ⦃ _ : HPull C 0 λ t → Disc (F t) ⦄ ⦃ _ : HPull C 0 λ t → Disc (G t) ⦄
+                   → HPull C 0 λ t → Disc (F t ×ₜ G t)
+      Disc-HPull-× ._◁_ p (u , v) = p ◁ u , p ◁ v
+      Disc-HPull-× .pull-refl {v = u , v} i = pull-refl {v = u} i , pull-refl {v = v} i
 
-      Disc-Pull-→ : ⦃ _ : HPush C 0 λ t → Disc (F t) ⦄ ⦃ _ : HPull C 0 λ t → Disc (G t) ⦄
-                  → Pull C 0 λ t → Disc (F t → G t)
-      Disc-Pull-→ ._◁_ p α fx = p ◁ α (fx ▷ p)
-      Disc-Pull-→ .pull-refl {v = α} i fy = pull-refl {v = α (push-refl {u = fy} (~ i))} i
-    {-# OVERLAPS Disc-Pull-× Disc-Pull-→ #-}
+      Disc-HPull-→ : ⦃ _ : HPush C 0 λ t → Disc (F t) ⦄ ⦃ _ : HPull C 0 λ t → Disc (G t) ⦄
+                   → HPull C 0 λ t → Disc (F t → G t)
+      Disc-HPull-→ ._◁_ p α fx = p ◁ α (fx ▷ p)
+      Disc-HPull-→ .pull-refl {v = α} i fy = pull-refl {v = α (push-refl {u = fy} (~ i))} i
+    {-# OVERLAPS Disc-HPull-× Disc-HPull-→ #-}
 
 
 -- Path specific
 
 module _ {ℓa} {A : Type ℓa} where instance
-  Path-Push : {x : A} → HPush (Disc A) 0 λ y → Disc (x ＝ y)
-  Path-Push ._▷_ = _∙_
-  Path-Push .push-refl {u} = id-o u
+  Path-HPush : {x : A} → HPush (Disc A) 0 λ y → Disc (x ＝ y)
+  Path-HPush ._▷_ = _∙_
+  Path-HPush .push-refl {u} = id-o u
 
-  Path-Pull : {y : A} → HPull (Disc A) 0 λ x → Disc (x ＝ y)
-  Path-Pull ._◁_ = _∙_
-  Path-Pull .pull-refl {v} = sym (id-i v)
+  Path-HPull : {y : A} → HPull (Disc A) 0 λ x → Disc (x ＝ y)
+  Path-HPull ._◁_ = _∙_
+  Path-HPull .pull-refl {v} = sym (id-i v)
 
-  Path-RAssoc : {x : A} → RAssoc (Path-Push {x = x}) Path-Push
+  Path-RAssoc : {x : A} → RAssoc (Path-HPush {x = x}) Path-HPush
   Path-RAssoc .RAssoc.assoc-r = assoc
 
-  Path-LAssoc : {y : A} → LAssoc (Path-Pull {y = y}) Path-Pull
+  Path-LAssoc : {y : A} → LAssoc (Path-HPull {y = y}) Path-HPull
   Path-LAssoc .assoc-l v p q = assoc p q v
 
-  Path-Pushforwards : {x : A} → UPush (Path-Push {x = x})
+  Path-Pushforwards : {x : A} → UPush (Path-HPush {x = x})
   Path-Pushforwards {x} .push-univ {x = y} {y = z} p q (r , s)
     =  s
     ,ₚ to-pathᴾ (subst-path-right _ _ ∙ id-i _)
 
-  Path-Pullbacks : {y : A} → UPull (Path-Pull {y = y})
+  Path-Pullbacks : {y : A} → UPull (Path-HPull {y = y})
   Path-Pullbacks {y} .pull-univ {x} {y = z} p q (r , s)
     =  sym s
     ,ₚ to-pathᴾ (subst-path-left _ _ ∙ id-o _)
 
 {-# OVERLAPPING
-  Path-Push Path-Pull
+  Path-HPush Path-HPull
   Path-RAssoc Path-LAssoc
   Path-Pushforwards Path-Pullbacks
 #-}
@@ -150,11 +150,11 @@ module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
   private module α t = Quiver-onω (α t) renaming (Het to Hom)
 
   module Default-Push where instance
-    Disc-Push : HPush (Disc A) k α
-    Disc-Push ._▷_ {lfs} u p = coe0→1 (λ i → F (p i) lfs) u
-    Disc-Push .push-refl {u} = coe0→1 (λ i → α.Hom _ (coe0→i _ i u) u) refl
+    Disc-HPush : HPush (Disc A) k α
+    Disc-HPush ._▷_ {lfs} u p = coe0→1 (λ i → F (p i) lfs) u
+    Disc-HPush .push-refl {u} = coe0→1 (λ i → α.Hom _ (coe0→i _ i u) u) refl
 
-    Disc-RAssoc : RAssoc Disc-Push Path-Push
+    Disc-RAssoc : RAssoc Disc-HPush Path-HPush
     Disc-RAssoc .assoc-r {z} u p q = subst (λ φ → α.Hom z (u ▷ (p ▷ q)) φ)
       (subst-comp (λ ψ → F ψ _) p q u) refl
 
@@ -162,14 +162,14 @@ module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
     -- Disc-Pushforwards : UPush (Disc-Push)
     -- Disc-Pushforwards .push-univ p u (v , q) =  {!!} ,ₚ {!!}
 
-    {-# INCOHERENT Disc-Push Disc-RAssoc #-}
+    {-# INCOHERENT Disc-HPush Disc-RAssoc #-}
 
   module Default-Pull where instance
-    Disc-Pull : HPull (Disc A) k α
-    Disc-Pull ._◁_ p = coe1→0 (λ i → F (p i) _)
-    Disc-Pull .pull-refl {v} = coe0→1 (λ i → α.Hom _ v (coe0→i _ i v)) refl
+    Disc-HPull : HPull (Disc A) k α
+    Disc-HPull ._◁_ p = coe1→0 (λ i → F (p i) _)
+    Disc-HPull .pull-refl {v} = coe0→1 (λ i → α.Hom _ v (coe0→i _ i v)) refl
 
-    Disc-LAssoc : LAssoc Disc-Pull Path-Pull
+    Disc-LAssoc : LAssoc Disc-HPull Path-HPull
     Disc-LAssoc .assoc-l {x} v p q = subst (λ φ → α.Hom x (p ◁ q ◁ v) φ)
       (sym ( ap (λ ψ → transport ψ v) (ap sym (ap-comp-∙ _ p q) ∙ sym-∙ _ _)
            ∙ transport-comp _ _ v))
@@ -179,4 +179,4 @@ module _ {ℓa} {A : Type ℓa} {k ℓ-obᶠ ℓ-homᶠ}
     -- Disc-Pullbacks : UPull Disc-Pull
     -- Disc-Pullbacks .pull-univ p v (u , q) = {!!}
 
-    {-# INCOHERENT Disc-Pull Disc-LAssoc #-}
+    {-# INCOHERENT Disc-HPull Disc-LAssoc #-}

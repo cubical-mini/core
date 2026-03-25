@@ -12,7 +12,7 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-hom⁻}
   (A : HQuiver-onω m Ob⁻ ℓ-hom⁻) (open Quiver-onω A renaming (Het to Hom))
   {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺}
   {ℓ-het} (H : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het) (open Quiver-onω H)
-  ⦃ _ : Refl A ⦄ ⦃ hp : ∀{lys} {y : Ob⁺ lys} → Pull A 0 (λ x → Disc (Het x y)) ⦄ where
+  ⦃ _ : Refl A ⦄ ⦃ hp : ∀{lys} {y : Ob⁺ lys} → HPull A 0 (λ x → Disc (Het x y)) ⦄ where
 
   record Product {lxs lys lps} (X : Ob⁺ lxs) (Y : Ob⁺ lys) (P : Ob⁻ lps) : Typeω where
     no-eta-equality
@@ -49,7 +49,7 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-hom⁻}
   {A : HQuiver-onω m Ob⁻ ℓ-hom⁻} (open Quiver-onω A renaming (Het to Hom))
   {n ℓ-ob⁺} {Ob⁺ : ob-sig ℓ-ob⁺}
   {ℓ-het} {H : Quiver-onω m Ob⁻ n Ob⁺ ℓ-het} (open Quiver-onω H)
-  ⦃ _ : Refl A ⦄ ⦃ hp : ∀{lys} {y : Ob⁺ lys} → Pull A 0 (λ x → Disc (Het x y)) ⦄ where instance
+  ⦃ _ : Refl A ⦄ ⦃ hp : ∀{lys} {y : Ob⁺ lys} → HPull A 0 (λ x → Disc (Het x y)) ⦄ where instance
 
   Binary-products→Product : ∀{ℓ-× lxs lys} ⦃ bp : Binary-products A H ℓ-× ⦄
                             {X : Ob⁺ lxs} {Y : Ob⁺ lys}
@@ -59,7 +59,7 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {ℓ-hom⁻}
 
 module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom}
   {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom))
-  ⦃ _ : Refl C ⦄ ⦃ hp : ∀{lys} {y : Ob lys} → Pull C 0 (λ x → Disc (Hom x y)) ⦄ where
+  ⦃ _ : Refl C ⦄ ⦃ hp : ∀{lys} {y : Ob lys} → HPull C 0 (λ x → Disc (Hom x y)) ⦄ where
 
   infixr 81 _×→_
   _×→_ : ∀{ℓ-× lxs lys lps lqs} ⦃ _ : Binary-products C C ℓ-× ⦄
