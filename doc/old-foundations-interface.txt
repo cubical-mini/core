@@ -1,0 +1,2998 @@
+PROGRESS
+  _#_       : {m : Modality′} {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ}
+              {Arg : Type ℓ′} {F : MFun m (Σₜ A (λ _ → Arg)) (Type ℓ″)}
+              ⦃ r : Funlike m A Arg F ⦄ (a : A) →
+              MPi m Arg (Foundations.Notation.Underlying.mapply′ a F)
+  _#ₚ_      : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {F : Type ℓ′}
+              {B : Σₜ F (λ _ → A) → Type ℓ″} ⦃ _ = z : Funlike ur F A B ⦄
+              {f g : F} (p : f ＝ g) (x : A) →
+              Pathᴾ-syntax (λ i → B (p i , x)) (f # x) (g # x)
+  _$_       : {m : Modality′} {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ}
+              {Arg : Type ℓ′} {F : MFun m (Σₜ A (λ _ → Arg)) (Type ℓ″)}
+              ⦃ r : Funlike m A Arg F ⦄ (a : A) →
+              MPi m Arg (Foundations.Notation.Underlying.mapply′ a F)
+  _$²_      : {ℓᵃ ℓᵇ ℓᶜ : Level} {A : Type ℓᵃ} {B : A → Type ℓᵇ}
+              {C : (a : A) → B a → Type ℓᶜ} →
+              ((a : A) (b : B a) → C a b) → (p : Σₜ A B) → C (fst p) (snd p)
+  _$³_      : {ℓᵃ ℓᵇ ℓᶜ : Level} {A : Type ℓᵃ} {B : A → Type ℓᵇ}
+              {C : (a : A) → B a → Type ℓᶜ} {ℓᵈ : Level}
+              {D : (a : A) (b : B a) → C a b → Type ℓᵈ} →
+              ((a : A) (b : B a) (c : C a b) → D a b c) →
+              (p : Σₜ A (λ x → Σₜ (B x) (C x))) →
+              D (p .fst) (p .snd .fst) (p .snd .snd)
+  _$⁴_      : {ℓᵃ ℓᵇ ℓᶜ : Level} {A : Type ℓᵃ} {B : A → Type ℓᵇ}
+              {C : (a : A) → B a → Type ℓᶜ} {ℓᵈ : Level}
+              {D : (a : A) (b : B a) → C a b → Type ℓᵈ} {ℓᵉ : Level}
+              {E : (a : A) (b : B a) (c : C a b) → D a b c → Type ℓᵉ} →
+              ((a : A) (b : B a) (c : C a b) (d : D a b c) → E a b c d) →
+              (p : Σₜ A (λ x → Σₜ (B x) (λ y → Σₜ (C x y) (D x y)))) →
+              E (p .fst) (p .snd .fst) (p .snd .snd .fst) (p .snd .snd .snd)
+  _$ₚ_      : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {F : Type ℓ′}
+              {B : Σₜ F (λ _ → A) → Type ℓ″} ⦃ _ = z : Funlike ur F A B ⦄
+              {f g : F} (p : f ＝ g) (x : A) →
+              Pathᴾ-syntax (λ i → B (p i , x)) (f # x) (g # x)
+  _$ₛ_      : {A.ℓᵃ : Level} {A : Type A.ℓᵃ} {ℓᵇ : Level}
+              {B : A → SSet ℓᵇ} →
+              ((a : A) → B a) → (x : A) → B x
+  _$ₜ_      : {B..1 : Level} {A : Type B..1} {B.ℓᵇ : Level}
+              {B : A → Type B.ℓᵇ} →
+              ((a : A) → B a) → (x : A) → B x
+  _&_       : {B..1 : Level} {A : Type B..1} {B.ℓᵇ : Level}
+              {B : A → Type B.ℓᵇ} (x : A) →
+              ((a : A) → B a) → B x
+  _+_       : ℕ → ℕ → ℕ
+  _,_       : {a b : Level} {A : Type a} {B : A → Type b} (fst₁ : A)
+              (snd₁ : B fst₁) →
+              Σₜ A B
+  _,ₚ_      : {ℓ ℓ′ : Level} {A : I → Type ℓ}
+              {B : (i : I) → A i → Type ℓ′} {x : Σₜ (A i0) (B i0)}
+              {y : Σₜ (A i1) (B i1)} (p : Pathᴾ-syntax A (x .fst) (y .fst)) →
+              Pathᴾ-syntax (λ i → B i (p i)) (x .snd) (y .snd) →
+              Pathᴾ-syntax (λ i → Σₜ (A i) (B i)) x y
+  _<>_      : {ℓ : Level} {A : Type ℓ} ⦃ r : Has-binary-op A ⦄ →
+              A → A → A
+  _=⟨_⟨_    : {ℓᵃ ℓᵇ ℓ ℓ′ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ}
+              {_~L_ : A → A → Type ℓ} {_~R_ _~O_ : A → B → Type ℓ′}
+              ⦃ rfl : Refl _~L_ ⦄ ⦃ tra : Comp _~L_ _~R_ _~O_ ⦄ (x : A) {y : A}
+              {z : B} →
+              y ＝ x → y ~R z → x ~O z
+  _=⟨_⟩_    : {ℓᵃ ℓᵇ ℓ ℓ′ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ}
+              {_~L_ : A → A → Type ℓ} {_~R_ _~O_ : A → B → Type ℓ′}
+              ⦃ rfl : Refl _~L_ ⦄ ⦃ tra : Comp _~L_ _~R_ _~O_ ⦄ (x : A) {y : A}
+              {z : B} →
+              x ＝ y → y ~R z → x ~O z
+  _=⟨_⟩=⟨_⟩_
+            : {w..1 : Level} {A : Type w..1} {y z w : A} (x : A) →
+              x ＝ y → y ＝ z → z ＝ w → x ＝ w
+  _=⟨⟩_     : {ℓᵃ : Level} {A : Type ℓᵃ} (x : A) {y : A} →
+              x ＝ y → x ＝ y
+  _[_↦_]    : {a : Level} (A : Type a) (φ : I) → Partial φ A → SSet a
+  _inner-inverse-of_
+            : {ℓa ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : B → A → Type ℓh} {O : A → B → Type ℓh}
+              {B∙ : B → B → Type ℓb∙} ⦃ _ : Refl B∙ ⦄ ⦃ _ : Comp I₁ O B∙ ⦄
+              {x : A} {y : B} →
+              I₁ y x → O x y → Type ℓb∙
+  _on-paths-of_
+            : {ℓ ℓ′ : Level} → (Type ℓ → Type ℓ′) → Type ℓ → Type (ℓ ⊔ ℓ′)
+  _outer-inverse-of_
+            : {ℓa ℓa∙ ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : A → B → Type ℓh} {O : B → A → Type ℓh}
+              {A∙ : A → A → Type ℓa∙} ⦃ r : Refl A∙ ⦄ ⦃ t : Comp I₁ O A∙ ⦄
+              {x : A} {y : B} →
+              O y x → I₁ x y → Type ℓa∙
+  _retraction-of_
+            : {ℓa ℓa∙ ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : A → B → Type ℓh} {O : B → A → Type ℓh}
+              {A∙ : A → A → Type ℓa∙} ⦃ r : Refl A∙ ⦄ ⦃ t : Comp I₁ O A∙ ⦄
+              {x : A} {y : B} →
+              O y x → I₁ x y → Type ℓa∙
+  _retraction-of′_
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : Type ℓ′} →
+              (B → A) → (A → B) → Type ℓ
+  _section-of_
+            : {ℓa ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : B → A → Type ℓh} {O : A → B → Type ℓh}
+              {B∙ : B → B → Type ℓb∙} ⦃ _ : Refl B∙ ⦄ ⦃ _ : Comp I₁ O B∙ ⦄
+              {x : A} {y : B} →
+              I₁ y x → O x y → Type ℓb∙
+  _section-of′_
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : Type ℓ′} →
+              (B → A) → (A → B) → Type ℓ′
+  _separated_
+            : {ℓ ℓ′ : Level} → (Type ℓ → Type ℓ′) → Type ℓ → Type (ℓ ⊔ ℓ′)
+  _stable_  : {ℓ ℓ′ : Level} →
+              (Type ℓ → Type ℓ′) → Type ℓ → Type (ℓ ⊔ ℓ′)
+  _weakly-stable_
+            : {ℓ ℓ′ : Level} → (Type ℓ → Type ℓ′) → Type ℓ → Type (ℓ ⊔ ℓ′)
+  _~⟨_⟨_    : {ℓᵃ ℓᵇ ℓᶜ ℓ ℓ′ ℓ″ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ}
+              {C : Type ℓᶜ} {_~L_ : A → B → Type ℓ} {_~L′_ : B → A → Type ℓ}
+              {_~R_ : B → C → Type ℓ′} {_~O_ : A → C → Type ℓ″}
+              ⦃ tra : Comp _~L_ _~R_ _~O_ ⦄ ⦃ sy : Dual _~L′_ _~L_ ⦄ (x : A)
+              {y : B} {z : C} →
+              y ~L′ x → y ~R z → x ~O z
+  _~⟨_⟩_    : {ℓᵃ ℓᵇ ℓᶜ ℓ ℓ′ ℓ″ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ}
+              {C : Type ℓᶜ} {_~L_ : A → B → Type ℓ} {_~R_ : B → C → Type ℓ′}
+              {_~O_ : A → C → Type ℓ″} ⦃ tra : Comp _~L_ _~R_ _~O_ ⦄ (x : A)
+              {y : B} {z : C} →
+              x ~L y → y ~R z → x ~O z
+  _~⟨⟩_     : {ℓᵃ ℓᵇ ℓ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ}
+              {_~I_ : A → B → Type ℓ} {_~O_ : B → A → Type ℓ}
+              ⦃ sy : Dual _~I_ _~O_ ⦄ (x : B) {y : A} →
+              x ~O y → x ~O y
+  _×_       : {ℓa ℓb ℓ ℓ′ : Level} {A : Type ℓa} {B : Type ℓb}
+              {R : Type ℓ} ⦃ r : ×-notation A B R ⦄ (a : A) (b : B)
+              ⦃ _ : r .×-notation.Constraint a b ⦄ →
+              R
+  _×ₜ_      : {ℓ ℓ′ : Level} → Type ℓ → Type ℓ′ → Type (ℓ ⊔ ℓ′)
+  _ʻ_       : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {F : Type ℓ′}
+              {B : Σₜ F (λ _ → A) → Type ℓ″} ⦃ _ : Funlike ur F A B ⦄ (f : F)
+              (x : A) ⦃ ub : Underlying (B (f , x)) ⦄ →
+              Type (ub .Underlying.ℓ-underlying)
+  _ᵒᵖ       : {ℓa ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : A → B → Type ℓh} {O : B → A → Type ℓh} ⦃ r : Dual I₁ O ⦄
+              {x : A} {y : B} (i : I₁ x y) →
+              Duality I₁ O i
+  _⁻¹       : {ℓa ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : A → B → Type ℓh} {O : B → A → Type ℓh} ⦃ r : Dual I₁ O ⦄
+              {x : A} {y : B} (i : I₁ x y) →
+              Duality I₁ O i
+  _⇒_       : {ℓa ℓb ℓ ℓ′ : Level} {A : Type ℓa} {B : Type ℓb}
+              {R : Type ℓ} ⦃ r : ⇒-notation A B R ⦄ (a : A) (b : B)
+              ⦃ _ : r .⇒-notation.Constraint a b ⦄ →
+              R
+  _∈_       : {ℓ ℓe : Level} {A : Type ℓe} {ℙA : Type ℓ} {ℓm : Level}
+              ⦃ r : Membership A ℙA ℓm ⦄ →
+              A → ℙA → Type ℓm
+  _∈!_      : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {ℙA : Type ℓ′}
+              ⦃ m : Membership A ℙA ℓ″ ⦄ →
+              A → ℙA → Type ℓ″
+  _∎        : {ℓᵃ ℓ : Level} {A : Type ℓᵃ} {_~_ : A → A → Type ℓ}
+              ⦃ rfl : Refl _~_ ⦄ (x : A) →
+              x ~ x
+  _∘_       : {C..1 : Level} {A : Type C..1} {C..1 = C..2 : Level}
+              {B : A → Type C..2} {C.ℓᶜ : Level}
+              {C : (a : A) → B a → Type C.ℓᶜ} →
+              ({a : A} (b : B a) → C a b) →
+              (f : (a : A) → B a) (x : A) → C x (f x)
+  _∘ˢ_      : {ℓa ℓb ℓc ℓi ℓo ℓ∙ : Level} {A : Type ℓa} {B : Type ℓb}
+              {C : Type ℓc} {I = I₁ : A → B → Type ℓi} {O : B → C → Type ℓo}
+              {I∙O : A → C → Type ℓ∙} ⦃ r : Comp I₁ O I∙O ⦄ {x : A} {y : B}
+              {z : C} (o : O y z) (i : I₁ x y) →
+              Composition I₁ O I∙O i o
+  _∘ₜˢ_     : {B.ℓᵇ : Level} {B : Type B.ℓᵇ} {C.ℓᶜ : Level}
+              {C : Type C.ℓᶜ} {A.ℓᵃ : Level} {A : Type A.ℓᵃ} →
+              (B → C) → (A → B) → A → C
+  _∙_       : {ℓa ℓb ℓc ℓi ℓo ℓ∙ : Level} {A : Type ℓa} {B : Type ℓb}
+              {C : Type ℓc} {I = I₁ : A → B → Type ℓi} {O : B → C → Type ℓo}
+              {I∙O : A → C → Type ℓ∙} ⦃ r : Comp I₁ O I∙O ⦄ {x : A} {y : B}
+              {z : C} (i : I₁ x y) (o : O y z) →
+              Composition I₁ O I∙O i o
+  _∙ᴱₑ_     : {ℓᵃ ℓᵇ ℓᶜ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ}
+              {C : Type ℓᶜ} →
+              A ≃ᴱ B → B ≃ᴱ C → A ≃ᴱ C
+  _∙ᴾ_      : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              {x y z : A} {x′ : B x} {y′ : B y} {z′ : B z} {p : x ＝ y}
+              {q : y ＝ z} →
+              Pathᴾ-syntax (λ i → B (p i)) x′ y′ →
+              Pathᴾ-syntax (λ i → B (q i)) y′ z′ →
+              Pathᴾ-syntax (λ i → B ((p ∙ₚ q) i)) x′ z′
+  _∙ᵥ_      : {A.ℓ : Level} {A : Type A.ℓ} {a₀₀ a₁₀ a₀₁ a₁₁ : A}
+              {p : a₀₀ ＝ a₀₁} {q : a₀₀ ＝ a₁₀} {r : a₁₀ ＝ a₁₁} {s : a₀₁ ＝ a₁₁}
+              {a₀₂ a₁₂ : A} {t : a₀₁ ＝ a₀₂} {u : a₁₁ ＝ a₁₂} {v : a₀₂ ＝ a₁₂} →
+              Square p q r s → Square t s u v → Square (p ∙ₚ t) q (r ∙ₚ u) v
+  _∙ₑ_      : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level}
+              {B : Type B.ℓ′} {C.ℓ″ : Level} {C : Type C.ℓ″} →
+              A ≃ B → B ≃ C → A ≃ C
+  _∙ₕ_      : {A.ℓ : Level} {A : Type A.ℓ} {a₀₀ a₁₀ a₀₁ a₁₁ : A}
+              {p : a₀₀ ＝ a₀₁} {q : a₀₀ ＝ a₁₀} {r : a₁₀ ＝ a₁₁} {s : a₀₁ ＝ a₁₁}
+              {a₂₀ a₂₁ : A} {t : a₁₀ ＝ a₂₀} {u : a₁₁ ＝ a₂₁} {v : a₂₀ ＝ a₂₁} →
+              Square p q r s → Square r t v u → Square p (q ∙ₚ t) v (s ∙ₚ u)
+  _∙ₚ_      : {z..1 : Level} {z.A : Type z..1} {x y z : z.A} →
+              x ＝ y → y ＝ z → x ＝ z
+  _∙∙_∙∙_   : {ℓ : Level} {A : I → Type ℓ} {a₀ a₀′ : A i0}
+              {a₁ a₁′ : A i1} →
+              a₀ ＝ a₀′ → Pathᴾ-syntax A a₀′ a₁ → a₁ ＝ a₁′ → Pathᴾ-syntax A a₀ a₁′
+  _∧_       : I → I → I
+  _∨_       : I → I → I
+  _∩_       : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : Type ℓ′}
+              {R : Type ℓ″} ⦃ r : Intersection A B R ⦄ →
+              A → B → R
+  _∪_       : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : Type ℓ′}
+              {R : Type ℓ″} ⦃ r : Union A B R ⦄ →
+              A → B → R
+  _≃_       : {ℓ ℓ' : Level} → Type ℓ → Type ℓ' → Type (ℓ ⊔ ℓ')
+  _≃[_]_    : {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb}
+              {ℓp ℓq : Level} (P : A → Type ℓp) (e : A ≃ B) (Q : B → Type ℓq) →
+              Type (ℓa ⊔ ℓb ⊔ ℓp ⊔ ℓq)
+  _≃ᴱ_      : {ℓ ℓ′ : Level} (A : Type ℓ) (B : Type ℓ′) →
+              Type (ℓ ⊔ ℓ′)
+  _≅_       : {ℓa ℓb ℓ : Level} {A : Type ℓa} {B : Type ℓb}
+              {R : Type ℓ} ⦃ r : ≅-notation A B R ⦄ →
+              A → B → R
+  _≈_       : {A.ℓa : Level} {A : Type A.ℓa} {ℙA₁.ℓ₁ : Level}
+              {ℙA₁ : Type ℙA₁.ℓ₁} {ℓ′ ℙA₂.ℓ₂ : Level} {ℙA₂ : Type ℙA₂.ℓ₂}
+              {ℓ″ : Level} ⦃ m₁ : Membership A ℙA₁ ℓ′ ⦄
+              ⦃ m₂ : Membership A ℙA₂ ℓ″ ⦄ →
+              ℙA₁ → ℙA₂ → Type (A.ℓa ⊔ ℓ′ ⊔ ℓ″)
+  _≈↔_      : {A.ℓa : Level} {A : Type A.ℓa} {ℙA₁.ℓ₁ : Level}
+              {ℙA₁ : Type ℙA₁.ℓ₁} {ℓ′ ℙA₂.ℓ₂ : Level} {ℙA₂ : Type ℙA₂.ℓ₂}
+              {ℓ″ : Level} ⦃ m₁ : Membership A ℙA₁ ℓ′ ⦄
+              ⦃ m₂ : Membership A ℙA₂ ℓ″ ⦄ →
+              ℙA₁ → ℙA₂ → Type (A.ℓa ⊔ ℓ′ ⊔ ℓ″)
+  _≊_       : {ℓa ℓb ℓ : Level} {A : Type ℓa} {B : Type ℓb}
+              {R : Type ℓ} ⦃ r : ≊-notation A B R ⦄ →
+              A → B → R
+  _≬_       : {A.ℓa : Level} {A : Type A.ℓa} {ℙA₁.ℓ₁ : Level}
+              {ℙA₁ : Type ℙA₁.ℓ₁} {ℓ′ ℙA₂.ℓ₂ : Level} {ℙA₂ : Type ℙA₂.ℓ₂}
+              {ℓ″ : Level} ⦃ m₁ : Membership A ℙA₁ ℓ′ ⦄
+              ⦃ m₂ : Membership A ℙA₂ ℓ″ ⦄ →
+              ℙA₁ → ℙA₂ → Type (A.ℓa ⊔ ℓ′ ⊔ ℓ″)
+  _⊆_       : {A.ℓa : Level} {A : Type A.ℓa} {ℙA₁.ℓ₁ : Level}
+              {ℙA₁ : Type ℙA₁.ℓ₁} {ℓ′ ℙA₂.ℓ₂ : Level} {ℙA₂ : Type ℙA₂.ℓ₂}
+              {ℓ″ : Level} ⦃ m₁ : Membership A ℙA₁ ℓ′ ⦄
+              ⦃ m₂ : Membership A ℙA₂ ℓ″ ⦄ →
+              ℙA₁ → ℙA₂ → Type (A.ℓa ⊔ ℓ′ ⊔ ℓ″)
+  _⊎_       : {ℓa ℓb ℓ ℓ′ : Level} {A : Type ℓa} {B : Type ℓb}
+              {R : Type ℓ} ⦃ r : ⊎-notation A B R ⦄ (a : A) (b : B)
+              ⦃ _ : r .⊎-notation.Constraint a b ⦄ →
+              R
+  _⊎₁_      : {ℓa ℓb ℓ ℓ′ : Level} {A : Type ℓa} {B : Type ℓb}
+              {R : Type ℓ} ⦃ r : ⊎₁-notation A B R ⦄ (a : A) (b : B)
+              ⦃ _ : r .⊎₁-notation.Constraint a b ⦄ →
+              R
+  _⊔_       : Level → Level → Level
+  _⊕_       : {ℓa ℓb ℓ ℓ′ : Level} {A : Type ℓa} {B : Type ℓb}
+              {R : Type ℓ} ⦃ r : ⊕-notation A B R ⦄ (a : A) (b : B)
+              ⦃ _ : r .⊕-notation.Constraint a b ⦄ →
+              R
+  _⊗_       : {ℓa ℓb ℓ ℓ′ : Level} {A : Type ℓa} {B : Type ℓb}
+              {R : Type ℓ} ⦃ r : ⊗-notation A B R ⦄ (a : A) (b : B)
+              ⦃ _ : r .⊗-notation.Constraint a b ⦄ →
+              R
+  _⊣_       : {ℓᵃ ℓᵇ ℓ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ}
+              {R : Type ℓ} ⦃ r : ⊣-notation A B R ⦄ →
+              A → B → R
+  _⊻_       : {ℓa ℓb ℓ ℓ′ : Level} {A : Type ℓa} {B : Type ℓb}
+              {R : Type ℓ} ⦃ r : ⊻-notation A B R ⦄ (a : A) (b : B)
+              ⦃ _ : r .⊻-notation.Constraint a b ⦄ →
+              R
+  _▷_       : {ℓx ℓa ℓb ℓc ℓf ℓg ℓk ℓfk ℓgk ℓh ℓis ℓos : Level}
+              {X : Type ℓx} {A : Type ℓa} {B : Type ℓb} {C : Type ℓc}
+              {F : A → C → Type ℓf} {G : B → C → Type ℓg} {H : A → B → Type ℓh}
+              {K : C → X → Type ℓk} {F∙K : A → X → Type ℓfk}
+              ⦃ _ = x : Comp F K F∙K ⦄ {G∙K : B → X → Type ℓgk}
+              ⦃ _ = x₁ : Comp G K G∙K ⦄ {a : A} {b : B} {c : C} {x = x₂ : X}
+              {IS : H a b → F a c → G b c → Type ℓis}
+              {OS : H a b → F∙K a x₂ → G∙K b x₂ → Type ℓos}
+              ⦃ r : Whisker-o F G H K F∙K G∙K a b c x₂ IS OS ⦄ {f : F a c}
+              {g : G b c} ⦃ h : H a b ⦄ →
+              IS h f g → (k : K c x₂) → OS h (f ∙ k) (g ∙ k)
+  _◁_       : {ℓx ℓa ℓb ℓc ℓf ℓg ℓh ℓhf ℓhg ℓk ℓis ℓos : Level}
+              {X : Type ℓx} {A : Type ℓa} {B : Type ℓb} {C : Type ℓc}
+              {H : X → A → Type ℓh} {F : A → B → Type ℓf} {G : A → C → Type ℓg}
+              {K : B → C → Type ℓk} {H∙F : X → B → Type ℓhf}
+              ⦃ _ = x : Comp H F H∙F ⦄ {H∙G : X → C → Type ℓhg}
+              ⦃ _ = x₁ : Comp H G H∙G ⦄ {x = x₂ : X} {a : A} {b : B} {c : C}
+              {IS : K b c → F a b → G a c → Type ℓis}
+              {OS : K b c → H∙F x₂ b → H∙G x₂ c → Type ℓos}
+              ⦃ r : Whisker-i H F G K H∙F H∙G x₂ a b c IS OS ⦄ (h : H x₂ a)
+              {f : F a b} {g : G a c} ⦃ k : K b c ⦄ →
+              IS k f g → OS k (h ∙ f) (h ∙ g)
+  _＝_       : {ℓ : Level} {A : Type ℓ} → A → A → Type ℓ
+  0ℓ        : Level
+  1=1       : IsOne i1
+  <_,_>     : {A.ℓᵃ : Level} {A : Type A.ℓᵃ} {ℓᵇ ℓᶜ : Level}
+              {B : A → Type ℓᵇ} {C : {a : A} → B a → Type ℓᶜ}
+              (f : (x : A) → B x) →
+              ((x : A) → C (f x)) → (x : A) → Σₜ (B x) C
+  <>-assoc  : {ℓ : Level} {A : Type ℓ} ⦃ t : Has-binary-op A ⦄
+              ⦃ r : Assoc A ⦄ (x y z : A) →
+              Associativity A (Has-binary-op._<>_ t) x y z
+  <>-comm   : {ℓ : Level} {A : Type ℓ} ⦃ t : Has-binary-op A ⦄
+              ⦃ r : Comm A ⦄ (x y : A) →
+              Commutativity A (Has-binary-op._<>_ t) x y
+  <>-id-l   : {ℓ : Level} {A : Type ℓ} ⦃ r : Pointed A ⦄
+              ⦃ t : Has-binary-op A ⦄ ⦃ r = r₁ : Unit-l A ⦄ (x : A) →
+              Unitality-l A mempty (Has-binary-op._<>_ t) x
+  <>-id-r   : {ℓ : Level} {A : Type ℓ} ⦃ r : Pointed A ⦄
+              ⦃ t : Has-binary-op A ⦄ ⦃ r = r₁ : Unit-r A ⦄ (x : A) →
+              Unitality-r A mempty (Has-binary-op._<>_ t) x
+  <>-inv-l  : {ℓ : Level} {A : Type ℓ} ⦃ r : Pointed A ⦄
+              ⦃ s : Has-unary-op A ⦄ ⦃ t : Has-binary-op A ⦄ ⦃ r = r₁ : Inv-l A ⦄
+              (x : A) →
+              x retraction-of minv x
+  <>-inv-r  : {ℓ : Level} {A : Type ℓ} ⦃ r : Pointed A ⦄
+              ⦃ s : Has-unary-op A ⦄ ⦃ t : Has-binary-op A ⦄ ⦃ r = r₁ : Inv-r A ⦄
+              (x : A) →
+              x section-of minv x
+  =-is-of-hlevel
+            : {B.ℓ : Level} {A B : Type B.ℓ} (n : ℕ) →
+              is-of-hlevel n A → is-of-hlevel n B → is-of-hlevel n (A ＝ B)
+  =→ua-pathᴾ
+            : {B.ℓ : Level} {A B : Type B.ℓ} (e : A ≃ B) {x : A} {y : B} →
+              e .fst x ＝ y → Pathᴾ-syntax (λ i → ua e i) x y
+  =→~       : {ℓᵃ ℓ : Level} {A : Type ℓᵃ} {_~_ : A → A → Type ℓ}
+              ⦃ rfl : Refl _~_ ⦄ {x y : A} →
+              x ＝ y → x ~ y
+  =→~⁻      : {ℓᵃ ℓ : Level} {A : Type ℓᵃ} {_~_ : A → A → Type ℓ}
+              ⦃ rfl : Refl _~_ ⦄ {x y : A} →
+              x ＝ y → y ~ x
+  =→≃       : {B.ℓ : Level} {A B : Type B.ℓ} → A ＝ B → A ≃ B
+  =→≃-refl  : {A.ℓ : Level} {A : Type A.ℓ} →
+              =→≃ (λ _ → A) ＝ ((λ x → x) , id-is-equiv)
+  =⟨⟩-syntax
+            : {ℓᵃ : Level} {A : Type ℓᵃ} (x : A) {y z : A} →
+              x ＝ y → y ＝ z → x ＝ z
+  =⟨⟩⟨⟩-syntax
+            : {w..1 : Level} {A : Type w..1} {z w : A} (x y : A) →
+              x ＝ y → y ＝ z → z ＝ w → x ＝ w
+  Adjoint   : {ℓa ℓa∙ ℓb ℓb∙ ℓah ℓbh ℓh ℓiη ℓiε : Level}
+              {A : Type ℓa} ⦃ ua = ua₁ : Underlying A ⦄ {B : Type ℓb}
+              ⦃ ub : Underlying B ⦄ (A∙ : A → A → Type ℓa∙) ⦃ _ = z : Refl A∙ ⦄
+              (B∙ : B → B → Type ℓb∙) ⦃ _ = z₁ : Refl B∙ ⦄ (F : A → B → Type ℓh)
+              (G : B → A → Type ℓh) ⦃ _ = z₂ : Comp F G A∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ (C : A) (CHom : ⌞ C ⌟ → ⌞ C ⌟ → Type ℓah)
+              ⦃ _ : Refl CHom ⦄ ⦃ _ : Trans CHom ⦄ (D : B)
+              (DHom : ⌞ D ⌟ → ⌞ D ⌟ → Type ℓbh) ⦃ _ : Refl DHom ⦄
+              ⦃ _ : Trans DHom ⦄ (L : F C D)
+              ⦃ _ = z₄ : Funlike ur (F C D) ⌞ C ⌟ (λ _ → ⌞ D ⌟) ⦄
+              ⦃ _
+                : {x y : ⌞ C ⌟} →
+                  Funlike ur (F C D) (CHom x y)
+                  (λ .patternInTele0 →
+                     DHom (fst .patternInTele0 # x) (fst .patternInTele0 # y)) ⦄
+              (R : G D C) ⦃ _ = z₅ : Funlike ur (G D C) ⌞ D ⌟ (λ _ → ⌞ C ⌟) ⦄
+              ⦃ _
+                : {x y : ⌞ D ⌟} →
+                  Funlike ur (G D C) (DHom x y)
+                  (λ .patternInTele0 →
+                     CHom (fst .patternInTele0 # x) (fst .patternInTele0 # y)) ⦄
+              (Iη : A∙ C C → A∙ C C → Type ℓiη)
+              ⦃ _
+                : Funlike ur (Iη refl (L ∙ R)) ⌞ C ⌟
+                  (λ .patternInTele0 →
+                     CHom (.patternInTele0 .snd) (R # (L # snd .patternInTele0))) ⦄
+              (Iε : B∙ D D → B∙ D D → Type ℓiε)
+              ⦃ _
+                : Funlike ur (Iε (R ∙ L) refl) ⌞ D ⌟
+                  (λ .patternInTele0 →
+                     DHom (L # (R # snd .patternInTele0)) (.patternInTele0 .snd)) ⦄ →
+              Type
+              (ℓah ⊔ ℓbh ⊔ ℓiη ⊔ ℓiε ⊔ ua₁ .Underlying.ℓ-underlying ⊔
+               ub .Underlying.ℓ-underlying)
+  Adjᶠ      : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level}
+              {B : Type B.ℓ′} (f : A → B) (g : B → A) →
+              Type (A.ℓ ⊔ B.ℓ′)
+  Assoc     : {ℓ : Level} (A : Type ℓ) ⦃ t : Has-binary-op A ⦄ →
+              Type ℓ
+  Associativity
+            : {ℓ : Level} (A : Type ℓ) → (A → A → A) → A → A → A → Type ℓ
+  Assoc→HAssoc
+            : {A.ℓ : Level} {A : Type A.ℓ} ⦃ _ = z : Has-binary-op A ⦄
+              ⦃ _ : Assoc A ⦄ →
+              HAssoc (λ _ _ → A)
+  Biinv     : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              (F : A → B → Type ℓh) (G : B → A → Type ℓh) ⦃ _ : Refl A∙ ⦄
+              ⦃ _ : Comp F G A∙ ⦄ ⦃ _ : Refl B∙ ⦄ ⦃ _ : Comp G F B∙ ⦄ (x : A)
+              (y : B) →
+              Type (ℓa∙ ⊔ ℓb∙ ⊔ ℓh)
+  Biinvₜ    : {ℓ ℓ′ : Level} → Type ℓ → Type ℓ′ → Type (ℓ ⊔ ℓ′)
+  Closure-Π : {ℓ : Level} (A : Type ℓ) → Typeω
+  Closure-Π-Type
+            : {ℓ : Level} → Closure-Π (Type ℓ)
+  Closure-Π-Underlying
+            : {ℓ : Level} {A : Type ℓ} ⦃ u : Underlying A ⦄ → Closure-Π A
+  Closure-Π-Variadic
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {X : Type ℓ′} ⦃ tp : Closure-Π A ⦄ →
+              Closure-Π (X → A)
+  Closure-∀ : {ℓ : Level} (A : Type ℓ) → Typeω
+  Closure-∀-Type
+            : {ℓ : Level} → Closure-∀ (Type ℓ)
+  Closure-∀-Underlying
+            : {A.ℓ : Level} {A : Type A.ℓ} ⦃ u : Underlying A ⦄ → Closure-∀ A
+  Closure-∀-Variadic
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {X : Type ℓ′} ⦃ tp : Closure-∀ A ⦄ →
+              Closure-∀ (X → A)
+  Closure-∀ᴱ
+            : {ℓ : Level} (A : Type ℓ) → Typeω
+  Closure-∀ᴱ-Type
+            : {ℓ : Level} → Closure-∀ᴱ (Type ℓ)
+  Closure-∀ᴱ-Underlying
+            : {A.ℓ : Level} {A : Type A.ℓ} ⦃ u : Underlying A ⦄ → Closure-∀ᴱ A
+  Closure-∀ᴱ-Variadic
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {X : Type ℓ′} ⦃ tp : Closure-∀ᴱ A ⦄ →
+              Closure-∀ᴱ (X → A)
+  Comm      : {ℓ : Level} (A : Type ℓ) ⦃ t : Has-binary-op A ⦄ →
+              Type ℓ
+  Commutativity
+            : {ℓ : Level} (A : Type ℓ) → (A → A → A) → A → A → Type ℓ
+  Comp      : {ℓa ℓb ℓc ℓi ℓo ℓ∙ : Level} {A : Type ℓa} {B : Type ℓb}
+              {C : Type ℓc} (I₁ : A → B → Type ℓi) (O : B → C → Type ℓo)
+              (I∙O : A → C → Type ℓ∙) →
+              Type (ℓa ⊔ ℓb ⊔ ℓc ⊔ ℓi ⊔ ℓo ⊔ ℓ∙)
+  Comp-Erased-Iso
+            : {ℓ ℓ′ ℓ″ : Level} → Comp Isoᴱ Isoᴱ Isoᴱ
+  Comp-Erased-≃
+            : {ℓᵃ ℓᵇ ℓᶜ : Level} → Comp _≃ᴱ_ _≃ᴱ_ _≃ᴱ_
+  Comp-Fun  : {ℓᵃ ℓᵇ ℓᶜ : Level} → Comp Fun Fun Fun
+  Comp-Retract
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓc ℓab ℓac ℓbc : Level} {A : Type ℓa}
+              {B : Type ℓb} {C : Type ℓc} {A∙ : A → A → Type ℓa∙}
+              {B∙ : B → B → Type ℓb∙} ⦃ _ = z : Refl A∙ ⦄ ⦃ _ = z₁ : Refl B∙ ⦄
+              {F : A → B → Type ℓab} {F⁻ : B → A → Type ℓab}
+              {G : B → C → Type ℓbc} {G⁻ : C → B → Type ℓbc}
+              {F∙G : A → C → Type ℓac} {G⁻∙F⁻ : C → A → Type ℓac}
+              ⦃ _ = z₂ : Comp F F⁻ A∙ ⦄ ⦃ _ = z₃ : Comp G G⁻ B∙ ⦄
+              ⦃ _ = z₄ : Comp F G F∙G ⦄ ⦃ _ = z₅ : Comp G⁻ F⁻ G⁻∙F⁻ ⦄
+              ⦃ _ = z₆ : Comp F∙G G⁻∙F⁻ A∙ ⦄ ⦃ _ = z₇ : Comp B∙ F⁻ F⁻ ⦄
+              ⦃ _ = z₈ : Comp G G⁻∙F⁻ F⁻ ⦄ ⦃ _ : GAssoc G G⁻ F⁻ B∙ G⁻∙F⁻ F⁻ ⦄
+              ⦃ _ : GAssoc F G G⁻∙F⁻ F∙G F⁻ A∙ ⦄ ⦃ _ : GUnit-o B∙ F⁻ ⦄ →
+              Comp (Retract F⁻) (Retract G⁻) (Retract G⁻∙F⁻)
+  Comp-≃    : {ℓ ℓ′ ℓ″ : Level} → Comp _≃_ _≃_ _≃_
+  Comp-≅    : {ℓa ℓa∙ ℓb ℓb∙ ℓc ℓc∙ ℓab ℓac ℓbc : Level}
+              {A : Type ℓa} {B : Type ℓb} {C : Type ℓc} {F : A → B → Type ℓab}
+              {F⁻ : B → A → Type ℓab} {G : B → C → Type ℓbc}
+              {G⁻ : C → B → Type ℓbc} {F∙G : A → C → Type ℓac}
+              {G⁻∙F⁻ : C → A → Type ℓac} {A∙ : A → A → Type ℓa∙}
+              {B∙ : B → B → Type ℓb∙} {C∙ : C → C → Type ℓc∙}
+              ⦃ _ = z : Comp F F⁻ A∙ ⦄ ⦃ _ = z₁ : Comp F⁻ F B∙ ⦄
+              ⦃ _ = z₂ : Comp G G⁻ B∙ ⦄ ⦃ _ = z₃ : Comp G⁻ G C∙ ⦄
+              ⦃ _ = z₄ : Comp F∙G G⁻∙F⁻ A∙ ⦄ ⦃ _ = z₅ : Comp G⁻∙F⁻ F∙G C∙ ⦄
+              ⦃ _ = z₆ : Comp F G F∙G ⦄ ⦃ _ = z₇ : Comp G⁻ F⁻ G⁻∙F⁻ ⦄
+              ⦃ _ = z₈ : Comp B∙ G G ⦄ ⦃ _ = z₉ : Comp F⁻ F∙G G ⦄
+              ⦃ _ : GAssoc F⁻ F G B∙ F∙G G ⦄ ⦃ _ : GAssoc G⁻ F⁻ F∙G G⁻∙F⁻ G C∙ ⦄
+              ⦃ _ = z₁₀ : Comp G G⁻∙F⁻ F⁻ ⦄ ⦃ _ = z₁₁ : Comp B∙ F⁻ F⁻ ⦄
+              ⦃ _ : GAssoc F G G⁻∙F⁻ F∙G F⁻ A∙ ⦄
+              ⦃ _ : GAssoc G G⁻ F⁻ B∙ G⁻∙F⁻ F⁻ ⦄ ⦃ _ = z₁₂ : Refl A∙ ⦄
+              ⦃ _ = z₁₃ : Refl B∙ ⦄ ⦃ _ = z₁₄ : Refl C∙ ⦄ ⦃ _ : GUnit-o B∙ G ⦄
+              ⦃ _ : GUnit-o B∙ F⁻ ⦄ →
+              Comp (Iso F F⁻) (Iso G G⁻) (Iso F∙G G⁻∙F⁻)
+  Comp-≈    : {A.ℓa : Level} {A : Type A.ℓa} {ℙA₁.ℓ₁ : Level}
+              {ℙA₁ : Type ℙA₁.ℓ₁} {ℓ′ ℙA₂.ℓ₂ : Level} {ℙA₂ : Type ℙA₂.ℓ₂}
+              {ℓ″ ℙA₃.ℓ₃ : Level} {ℙA₃ : Type ℙA₃.ℓ₃} {ℓ‴ : Level}
+              ⦃ m₁ : Membership A ℙA₁ ℓ′ ⦄ ⦃ m₂ : Membership A ℙA₂ ℓ″ ⦄
+              ⦃ m₃ : Membership A ℙA₃ ℓ‴ ⦄ →
+              Comp _≈_ _≈_ _≈_
+  Composition
+            : {ℓa ℓb ℓc ℓi ℓo ℓ∙ : Level} {A : Type ℓa} {B : Type ℓb}
+              {C : Type ℓc} (I₁ : A → B → Type ℓi) (O : B → C → Type ℓo) →
+              (A → C → Type ℓ∙) →
+              {x : A} {y : B} {z : C} → I₁ x y → O y z → Type ℓ∙
+  Constraint
+            : {ℓa ℓ ℓ′ : Level} {A : Type ℓa} {R : Type ℓ}
+              ⦃ r : ¬-notation A R ⦄ →
+              A → Type ℓ′
+  Cube      : {A.ℓ : Level} {A : Type A.ℓ} {a₀₀₀ a₀₀₁ : A}
+              {a₀₀₋ : a₀₀₀ ＝ a₀₀₁} {a₀₁₀ : A} {a₀₋₀ : a₀₀₀ ＝ a₀₁₀} {a₀₁₁ : A}
+              {a₀₁₋ : a₀₁₀ ＝ a₀₁₁} {a₀₋₁ : a₀₀₁ ＝ a₀₁₁} →
+              Square a₀₀₋ a₀₋₀ a₀₁₋ a₀₋₁ →
+              {a₁₀₀ : A} {a₋₀₀ : a₀₀₀ ＝ a₁₀₀} {a₁₀₁ : A} {a₁₀₋ : a₁₀₀ ＝ a₁₀₁}
+              {a₋₀₁ : a₀₀₁ ＝ a₁₀₁} →
+              Square a₀₀₋ a₋₀₀ a₁₀₋ a₋₀₁ →
+              {a₁₁₀ : A} {a₁₋₀ : a₁₀₀ ＝ a₁₁₀} {a₋₁₀ : a₀₁₀ ＝ a₁₁₀} →
+              Square a₀₋₀ a₋₀₀ a₁₋₀ a₋₁₀ →
+              {a₁₁₁ : A} {a₁₋₁ : a₁₀₁ ＝ a₁₁₁} {a₁₁₋ : a₁₁₀ ＝ a₁₁₁} →
+              Square a₁₀₋ a₁₋₀ a₁₁₋ a₁₋₁ →
+              {a₋₁₁ : a₀₁₁ ＝ a₁₁₁} →
+              Square a₀₁₋ a₋₁₀ a₁₁₋ a₋₁₁ → Square a₀₋₁ a₋₀₁ a₁₋₁ a₋₁₁ → Type A.ℓ
+  DIProp    : Type₁
+  Decidability
+            : {ℓ : Level} (A : Type ℓ) → Typeω
+  Decidable : {ℓ : Level} {A : Type ℓ} ⦃ r : Decidability A ⦄ →
+              A → Type (r .Decidability.ℓ-decidability)
+  Dual      : {ℓa ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              (I₁ : A → B → Type ℓh) (O : B → A → Type ℓh) →
+              Type (ℓa ⊔ ℓb ⊔ ℓh)
+  Dual-Erased-Iso
+            : {ℓ ℓ′ : Level} → Dual Isoᴱ Isoᴱ
+  Dual-Erased-≃
+            : {ℓᵃ ℓᵇ : Level} → Dual _≃ᴱ_ _≃ᴱ_
+  Dual-Inverses
+            : {ℓa ℓb ℓa∙ ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Comp F G A∙ ⦄
+              ⦃ _ = z₁ : Comp G F B∙ ⦄ ⦃ _ = z₂ : Refl A∙ ⦄ ⦃ _ = z₃ : Refl B∙ ⦄
+              {x : A} {y : B} →
+              Dual Inverses Inverses
+  Dual-Pathᴾ
+            : {ℓ : Level} {A : I → Type ℓ} →
+              Dual (Pathᴾ-syntax A) (Pathᴾ-syntax (λ i → A (~ i)))
+  Dual-≃    : {ℓ ℓ′ : Level} → Dual _≃_ _≃_
+  Dual-≅    : {ℓa ℓb ℓa∙ ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Comp F G A∙ ⦄
+              ⦃ _ = z₁ : Comp G F B∙ ⦄ ⦃ _ = z₂ : Refl A∙ ⦄
+              ⦃ _ = z₃ : Refl B∙ ⦄ →
+              Dual (Iso F G) (Iso G F)
+  Dual-≈    : {ℓ ℙA₁.ℓ₁ : Level} {ℙA₁ : Type ℙA₁.ℓ₁}
+              {ℓ′ ℙA₂.ℓ₂ : Level} {ℙA₂ : Type ℙA₂.ℓ₂} {ℓ″ : Level} {A : Type ℓ}
+              ⦃ m₁ : Membership A ℙA₁ ℓ′ ⦄ ⦃ m₂ : Membership A ℙA₂ ℓ″ ⦄ →
+              Dual _≈_ _≈_
+  Dual-≊    : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {F⁻ : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Refl B∙ ⦄ ⦃ _ = z₂ : Comp F F⁻ A∙ ⦄
+              ⦃ _ = z₃ : Comp F⁻ F B∙ ⦄ ⦃ _ = z₄ : Comp B∙ F⁻ F⁻ ⦄
+              ⦃ _ = z₅ : Comp F⁻ A∙ F⁻ ⦄ ⦃ _ : GUnit-o B∙ F⁻ ⦄
+              ⦃ _ : GUnit-i F⁻ A∙ ⦄ ⦃ _ : GAssoc F⁻ F F⁻ B∙ A∙ F⁻ ⦄ →
+              Dual (Biinv F F⁻) (Biinv F⁻ F)
+  Duality   : {ℓa ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              (I₁ : A → B → Type ℓh) →
+              (B → A → Type ℓh) → {x : A} {y : B} → I₁ x y → Type ℓh
+  Erased    : {ℓ : Level} (@0 A : Type ℓ) → Type ℓ
+  Erased-default
+            : {ℓ : Level} {A : Type ℓ} ⦃ _ : A ⦄ → Erased A
+  Fun       : {ℓᵃ ℓᵇ : Level} → Type ℓᵃ → Type ℓᵇ → Type (ℓᵃ ⊔ ℓᵇ)
+  Funlike   : (m : Modality′) {ℓ ℓ′ ℓ″ : Level} (A : Type ℓ)
+              (Arg : Type ℓ′) (F : MFun m (Σₜ A (λ _ → Arg)) (Type ℓ″)) →
+              Type (ℓ ⊔ ℓ′ ⊔ ℓ″)
+  Funlike-Erased-Π₀
+            : {ℓ ℓ′ : Level} {@0 A : Type ℓ} {B : @0 A → Type ℓ′} →
+              Funlike rirr ((@0 a : A) → B a) A (λ (@0 z) → B (z .snd))
+  Funlike-Erased-Π₁
+            : {ℓ ℓ′ : Level} {@0 A : Type ℓ} {B : @0 A → Type ℓ′} {x y : A} →
+              Funlike rirr ((@0 x₁ : A) → B x₁) (x ＝ y)
+              (λ (@0 .patternInTele0) →
+                 Pathᴾ-syntax (λ i → B (.patternInTele0 .snd i))
+                 (.patternInTele0 .fst x) (.patternInTele0 .fst y))
+  Funlike-Homotopy
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              {f g : (x : A) → B x} →
+              Funlike ur (f ＝ g) A (λ z → f (z .snd) ＝ g (z .snd))
+  Funlike-Irr-Π₀
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : .A → Type ℓ′} →
+              Funlike cirr (@irr (a : A) → B _) A (λ @irr z → B _)
+  Funlike-Π₀
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′} →
+              Funlike ur ((a : A) → B a) A (λ z → B (z .snd))
+  Funlike-Π₁
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′} {x y : A} →
+              Funlike ur ((x₁ : A) → B x₁) (x ＝ y)
+              (λ .patternInTele0 →
+                 Pathᴾ-syntax (λ i → B (.patternInTele0 .snd i))
+                 (.patternInTele0 .fst x) (.patternInTele0 .fst y))
+  Funlike-Σ : {ℓ A.ℓ : Level} {A : Type A.ℓ} {ℓ′ ℓ″ : Level}
+              {X : Type ℓ} {B : Σₜ X (λ _ → A) → Type ℓ′} {P : X → Type ℓ″}
+              ⦃ _ : Funlike ur X A B ⦄ →
+              Funlike ur (Σₜ X P) A
+              (λ .patternInTele0 →
+                 B (.patternInTele0 .fst .fst , .patternInTele0 .snd))
+  Funlike-≅ : {ℓa ℓa∙ ℓb ℓb∙ ℓc ℓh : Level} {A : Type ℓa}
+              {B : Type ℓb} ⦃ ua = ua₁ : Underlying A ⦄ {A∙ : A → A → Type ℓa∙}
+              {B∙ : B → B → Type ℓb∙} {F : A → B → Type ℓh} {G : B → A → Type ℓh}
+              {x : A} {y : B} {C : Σₜ (F x y) (λ _ → ⌞ x ⌟) → Type ℓc}
+              ⦃ _ = z : Refl A∙ ⦄ ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ ⦃ f : Funlike ur (F x y) ⌞ x ⌟ C ⦄ →
+              Funlike ur (Iso F G x y) ⌞ x ⌟
+              (λ .patternInTele0 →
+                 C (.patternInTele0 .fst .Iso.to , .patternInTele0 .snd))
+  Funlike-≊ : {ℓa ℓa∙ ℓb ℓb∙ ℓc ℓh : Level} {A : Type ℓa}
+              {B : Type ℓb} ⦃ ua = ua₁ : Underlying A ⦄ {F : A → B → Type ℓh}
+              {G : B → A → Type ℓh} {F∙G : A → A → Type ℓa∙}
+              {G∙F : B → B → Type ℓb∙} {x : A} {y : B}
+              {C : Σₜ (F x y) (λ _ → ⌞ x ⌟) → Type ℓc} ⦃ _ = z : Refl F∙G ⦄
+              ⦃ _ = z₁ : Comp F G F∙G ⦄ ⦃ _ = z₂ : Refl G∙F ⦄
+              ⦃ _ = z₃ : Comp G F G∙F ⦄ ⦃ f : Funlike ur (F x y) ⌞ x ⌟ C ⦄ →
+              Funlike ur (Biinv F G x y) ⌞ x ⌟
+              (λ .patternInTele0 →
+                 C (.patternInTele0 .fst .Biinv.to , .patternInTele0 .snd))
+  GAssoc    : {ℓa ℓb ℓc ℓd ℓx ℓy ℓz ℓu ℓv ℓw : Level} {A : Type ℓa}
+              {B : Type ℓb} {C : Type ℓc} {D : Type ℓd} (X : A → B → Type ℓx)
+              (Y : B → C → Type ℓy) (Z : C → D → Type ℓz) (U : A → C → Type ℓu)
+              (V : B → D → Type ℓv) (W : A → D → Type ℓw) ⦃ tu : Comp X Y U ⦄
+              ⦃ tv : Comp Y Z V ⦄ ⦃ tw₁ : Comp X V W ⦄ ⦃ tw₂ : Comp U Z W ⦄ →
+              Type (ℓa ⊔ ℓb ⊔ ℓc ⊔ ℓd ⊔ ℓx ⊔ ℓy ⊔ ℓz ⊔ ℓw)
+  GAssoc-Fun
+            : {ℓᵃ ℓᵇ ℓᶜ ℓᵈ : Level} → GAssoc Fun Fun Fun Fun Fun Fun
+  GAssoc-≃  : {ℓ ℓ′ ℓ″ ℓ‴ : Level} → GAssoc _≃_ _≃_ _≃_ _≃_ _≃_ _≃_
+  GAssociativity
+            : {ℓa ℓb ℓc ℓd ℓx ℓy ℓz ℓu ℓv ℓw : Level} {A : Type ℓa}
+              {B : Type ℓb} {C : Type ℓc} {D : Type ℓd} (X : A → B → Type ℓx)
+              (Y : B → C → Type ℓy) (Z : C → D → Type ℓz) (U : A → C → Type ℓu)
+              (V : B → D → Type ℓv) (W : A → D → Type ℓw) {a : A} {b : B} {c : C}
+              {d : D} (p : X a b) (q : Y b c) (r : Z c d)
+              (tu : Composition X Y U p q) (tv : Composition Y Z V q r) →
+              Composition X V W p tv → Composition U Z W tu r → Type ℓw
+  GInv-i    : {ℓa ℓb ℓh ℓa∙ : Level} {A : Type ℓa} {B : Type ℓb}
+              (I₁ : A → B → Type ℓh) (O : B → A → Type ℓh)
+              (A∙ : A → A → Type ℓa∙) ⦃ r : Refl A∙ ⦄ ⦃ s : Dual I₁ O ⦄
+              ⦃ t : Comp I₁ O A∙ ⦄ →
+              Type (ℓa ⊔ ℓb ⊔ ℓh ⊔ ℓa∙)
+  GInv-i-≃  : {ℓ ℓ′ : Level} → GInv-i _≃_ _≃_ _≃_
+  GInv-o    : {ℓa ℓa∙ ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              (I₁ : A → B → Type ℓh) (O : B → A → Type ℓh)
+              (A∙ : A → A → Type ℓa∙) ⦃ r : Refl A∙ ⦄ ⦃ s : Dual O I₁ ⦄
+              ⦃ t : Comp I₁ O A∙ ⦄ →
+              Type (ℓa ⊔ ℓa∙ ⊔ ℓb ⊔ ℓh)
+  GInv-o-≃  : {ℓ ℓ′ : Level} → GInv-o _≃_ _≃_ _≃_
+  GInvol    : {ℓa ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              (I₁ : A → B → Type ℓh) (O : B → A → Type ℓh) ⦃ s₁ : Dual I₁ O ⦄
+              ⦃ s₂ : Dual O I₁ ⦄ →
+              Type (ℓa ⊔ ℓb ⊔ ℓh)
+  GInvol-Pathᴾ
+            : {ℓ : Level} {A : I → Type ℓ} →
+              GInvol (Pathᴾ-syntax A) (Pathᴾ-syntax (λ i → A (~ i)))
+  GInvol-≃  : {ℓ ℓ′ : Level} → GInvol _≃_ _≃_
+  GInvolutivity
+            : {ℓa ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              (I₁ : A → B → Type ℓh) (O : B → A → Type ℓh) {x : A} {y : B}
+              (i : I₁ x y) (s₁ : Duality I₁ O i) →
+              Duality O I₁ s₁ → Type ℓh
+  GUnit-i   : {ℓa ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              (L : A → B → Type ℓh) (R : B → B → Type ℓb∙) ⦃ r : Refl R ⦄
+              ⦃ t : Comp L R L ⦄ →
+              Type (ℓa ⊔ ℓb ⊔ ℓb∙ ⊔ ℓh)
+  GUnit-i-Fun
+            : {ℓᵃ ℓᵇ : Level} → GUnit-i Fun Fun
+  GUnit-i-≃ : {ℓ ℓ′ : Level} → GUnit-i _≃_ _≃_
+  GUnit-o   : {ℓa ℓa∙ ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              (L : A → A → Type ℓa∙) (R : A → B → Type ℓh) ⦃ r : Refl L ⦄
+              ⦃ t : Comp L R R ⦄ →
+              Type (ℓa ⊔ ℓa∙ ⊔ ℓb ⊔ ℓh)
+  GUnit-o-Fun
+            : {ℓᵃ ℓᵇ : Level} → GUnit-o Fun Fun
+  GUnit-o-≃ : {ℓ ℓ′ : Level} → GUnit-o _≃_ _≃_
+  GUnitality-i
+            : {ℓa ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              (L : A → B → Type ℓh) (R : B → B → Type ℓb∙) {x : A} {y : B}
+              (p : L x y) (r : Reflexivity R) →
+              Composition L R L p r → Type ℓh
+  GUnitality-o
+            : {ℓa ℓa∙ ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              (L : A → A → Type ℓa∙) (R : A → B → Type ℓh) {x : A} {y : B}
+              (q : R x y) (r : Reflexivity L) →
+              Composition L R R r q → Type ℓh
+  Glue      : {ℓ ℓ′ : Level} (A : Type ℓ) {φ : I} →
+              Partial φ (Σₜ (Type ℓ′) (λ T → T ≃ A)) → Type ℓ′
+  H-Level   : {ℓ : Level} (n : ℕ) (T : Type ℓ) → Type ℓ
+  H-Level-Erased
+            : {A.ℓᵃ : Level} {@0 A : Type A.ℓᵃ} {h : ℕ}
+              ⦃ @0 A-hl : H-Level h A ⦄ →
+              H-Level h (Erased A)
+  H-Level-H-Level
+            : {h h₁ : HLevel} {A.ℓ : Level} {A : Type A.ℓ} →
+              H-Level (suc h) (H-Level h₁ A)
+  H-Level-Lift
+            : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ : Level} {h : ℕ}
+              ⦃ hl : H-Level h A ⦄ →
+              H-Level h (Lift ℓ′ A)
+  H-Level-Pathᴾ
+            : {ℓ : Level} {h : ℕ} {P : I → Type ℓ}
+              ⦃ _ : H-Level (suc h) (P i1) ⦄ {x : P i0} {y : P i1} →
+              H-Level h (Pathᴾ-syntax P x y)
+  H-Level-contr
+            : {h : HLevel} {A.ℓ : Level} {A : Type A.ℓ} →
+              H-Level (suc h) (is-contr A)
+  H-Level-identity-system
+            : {R..1 : Level} {R.A : Type R..1} {R.ℓ′ : Level}
+              {R : R.A → R.A → Type R.ℓ′} {n : ℕ} {r : (a : R.A) → R a a} →
+              H-Level (suc n) (is-identity-system R r)
+  H-Level-is-equiv
+            : {f..1 : Level} {f.A : Type f..1} {f..1 = f..2 : Level}
+              {f.B : Type f..2} {f : f.A → f.B} {n : ℕ} →
+              H-Level (suc n) (is-equiv f)
+  H-Level-is-prop
+            : {h : HLevel} {A.ℓ : Level} {A : Type A.ℓ} → is-prop (H-Level h A)
+  H-Level-of-hlevel
+            : {h h₁ : HLevel} {A.ℓ : Level} {A : Type A.ℓ} →
+              H-Level (suc h) (is-of-hlevel h₁ A)
+  H-Level-prop
+            : {h : HLevel} {A.ℓ : Level} {A : Type A.ℓ} →
+              H-Level (suc h) (is-prop A)
+  H-Level-set
+            : {h : HLevel} {A.ℓ : Level} {A : Type A.ℓ} →
+              H-Level (suc h) (is-set A)
+  H-Level-singleton
+            : {A.ℓ : Level} {A : Type A.ℓ} {h : HLevel} {a : A} →
+              H-Level h (Singletonₚ a)
+  H-Level-univalence
+            : {ℓ : Level} {h : ℕ} {A B : Type ℓ} ⦃ A-hl : H-Level h A ⦄
+              ⦃ B-hl : H-Level h B ⦄ →
+              H-Level h (A ＝ B)
+  H-Level-Π : {ℓ ℓ′ : Level} {h : ℕ} {A : Type ℓ} {B : A → Type ℓ′}
+              ⦃ _ : {a : A} → H-Level h (B a) ⦄ →
+              H-Level h ((x : A) → B x)
+  H-Level-Σ : {ℓ ℓ′ : Level} {h : ℕ} {A : Type ℓ} {B : A → Type ℓ′}
+              ⦃ _ : H-Level h A ⦄ ⦃ _ : {a : A} → H-Level h (B a) ⦄ →
+              H-Level h (Σₜ A B)
+  H-Level-∀ : {ℓ ℓ′ : Level} {h : ℕ} {A : Type ℓ} {B : A → Type ℓ′}
+              ⦃ _ : {a : A} → H-Level h (B a) ⦄ →
+              H-Level h ({x : A} → B x)
+  H-Level-≃ : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ : Level}
+              {B : Type B.ℓ} {h : ℕ} ⦃ A-hl : H-Level h A ⦄
+              ⦃ B-hl : H-Level h B ⦄ →
+              H-Level h (A ≃ B)
+  H-Level-≃-l
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ : Level} {B : Type B.ℓ} {h : ℕ}
+              ⦃ hl : H-Level (suc h) A ⦄ →
+              H-Level (suc h) (A ≃ B)
+  H-Level-≃-r
+            : {B.ℓ : Level} {B : Type B.ℓ} {A.ℓ : Level} {A : Type A.ℓ} {h : ℕ}
+              ⦃ hl : H-Level (suc h) B ⦄ →
+              H-Level (suc h) (A ≃ B)
+  HAssoc    : {A.ℓ : Level} {A : Type A.ℓ} {ℓ : Level}
+              (R : A → A → Type ℓ) ⦃ t : Trans R ⦄ →
+              Type (A.ℓ ⊔ ℓ)
+  HAssoc-Path
+            : {ℓ : Level} {A : Type ℓ} → HAssoc (Path A)
+  HBiinv    : {ℓᵃ ℓ : Level} {A : Type ℓᵃ} (R : A → A → Type ℓ)
+              ⦃ _ : Refl R ⦄ ⦃ _ : Trans R ⦄ →
+              A → A → Type ℓ
+  HInv-i    : {A.ℓ : Level} {A : Type A.ℓ} {ℓ : Level}
+              (R : A → A → Type ℓ) ⦃ _ : Refl R ⦄ ⦃ _ : Sym R ⦄ ⦃ _ : Trans R ⦄ →
+              Type (A.ℓ ⊔ ℓ)
+  HInv-i-Path
+            : {ℓ : Level} {A : Type ℓ} → HInv-i (Path A)
+  HInv-o    : {A.ℓ : Level} {A : Type A.ℓ} {ℓ : Level}
+              (R : A → A → Type ℓ) ⦃ _ : Refl R ⦄ ⦃ _ : Sym R ⦄ ⦃ _ : Trans R ⦄ →
+              Type (A.ℓ ⊔ ℓ)
+  HInv-o-Path
+            : {ℓ : Level} {A : Type ℓ} → HInv-o (Path A)
+  HInvol    : {A.ℓ : Level} {A : Type A.ℓ} {ℓ : Level}
+              (R : A → A → Type ℓ) ⦃ s : Sym R ⦄ →
+              Type (A.ℓ ⊔ ℓ)
+  HIso      : {ℓᵃ ℓ : Level} {A : Type ℓᵃ} (R : A → A → Type ℓ)
+              ⦃ _ : Refl R ⦄ ⦃ _ : Trans R ⦄ →
+              A → A → Type ℓ
+  HLevel    : Type
+  HUnit-i   : {A.ℓ : Level} {A : Type A.ℓ} {ℓ : Level}
+              (R : A → A → Type ℓ) ⦃ r : Refl R ⦄ ⦃ t : Trans R ⦄ →
+              Type (A.ℓ ⊔ ℓ)
+  HUnit-i-Path
+            : {ℓ : Level} {A : Type ℓ} → HUnit-i (Path A)
+  HUnit-o   : {A.ℓ : Level} {A : Type A.ℓ} {ℓ : Level}
+              (R : A → A → Type ℓ) ⦃ r : Refl R ⦄ ⦃ t : Trans R ⦄ →
+              Type (A.ℓ ⊔ ℓ)
+  HUnit-o-Path
+            : {ℓ : Level} {A : Type ℓ} → HUnit-o (Path A)
+  Has-binary-op
+            : {ℓ : Level} (A : Type ℓ) → Type ℓ
+  Has-binary-op→Trans
+            : {A.ℓ : Level} {A : Type A.ℓ} ⦃ _ : Has-binary-op A ⦄ →
+              Trans (λ _ _ → A)
+  Has-unary-op
+            : {ℓ : Level} (A : Type ℓ) → Type ℓ
+  Has-unary-op→Sym
+            : {A.ℓ : Level} {A : Type A.ℓ} ⦃ _ : Has-unary-op A ⦄ →
+              Sym (λ _ _ → A)
+  I         : IUniv
+  I-eq      : I → I → I
+  I-interp  : I → I → I → I
+  IUniv     : SSet₁
+  Intersection
+            : {ℓ ℓ′ ℓ″ : Level} (A : Type ℓ) (B : Type ℓ′) (R : Type ℓ″) →
+              Typeω
+  Intersection-pow
+            : {ℓa ℓb ℓp ℓ ℓ″ : Level} {A : Type ℓa} ⦃ ua = ua₁ : Underlying A ⦄
+              {B : Type ℓb} ⦃ ub : Underlying B ⦄ {P : Type ℓp} {X : Type ℓ}
+              ⦃ un
+                : ×-notation (Type (ua₁ .Underlying.ℓ-underlying))
+                  (Type (ub .Underlying.ℓ-underlying)) P ⦄
+              ⦃ _
+                : {x : Type (ua₁ .Underlying.ℓ-underlying)}
+                  {y : Type (ub .Underlying.ℓ-underlying)} →
+                  un .×-notation.Constraint x y ⦄ →
+              Intersection (X → A) (X → B) (X → P)
+  Inv-l     : {ℓ : Level} (A : Type ℓ) ⦃ r : Pointed A ⦄
+              ⦃ s : Has-unary-op A ⦄ ⦃ t : Has-binary-op A ⦄ →
+              Type ℓ
+  Inv-l→HInv-o
+            : {A.ℓ : Level} {A : Type A.ℓ} ⦃ _ = z : Pointed A ⦄
+              ⦃ _ = z₁ : Has-unary-op A ⦄ ⦃ _ = z₂ : Has-binary-op A ⦄
+              ⦃ _ : Inv-l A ⦄ →
+              HInv-o (λ _ _ → A)
+  Inv-r     : {ℓ : Level} (A : Type ℓ) ⦃ r : Pointed A ⦄
+              ⦃ s : Has-unary-op A ⦄ ⦃ t : Has-binary-op A ⦄ →
+              Type ℓ
+  Inv-r→HInv-i
+            : {A.ℓ : Level} {A : Type A.ℓ} ⦃ _ = z : Pointed A ⦄
+              ⦃ _ = z₁ : Has-unary-op A ⦄ ⦃ _ = z₂ : Has-binary-op A ⦄
+              ⦃ _ : Inv-r A ⦄ →
+              HInv-i (λ _ _ → A)
+  Inverses  : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ : Refl A∙ ⦄
+              ⦃ _ : Comp F G A∙ ⦄ ⦃ _ : Refl B∙ ⦄ ⦃ _ : Comp G F B∙ ⦄ {x : A}
+              {y : B} (f : F x y) (g : G y x) →
+              Type (ℓa∙ ⊔ ℓb∙)
+  Invol     : {ℓᵃ : Level} (A : Type ℓᵃ) ⦃ s : Has-unary-op A ⦄ →
+              Type ℓᵃ
+  Involutivity
+            : {ℓᵃ : Level} (A : Type ℓᵃ) → (A → A) → A → Type ℓᵃ
+  Invol→HInvol
+            : {A.ℓ : Level} {A : Type A.ℓ} ⦃ s : Has-unary-op A ⦄
+              ⦃ _ : Invol A ⦄ →
+              HInvol (λ _ _ → A)
+  IsOne     : I → SSet
+  Iso       : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              (F : A → B → Type ℓh) (G : B → A → Type ℓh) ⦃ _ : Refl A∙ ⦄
+              ⦃ _ : Comp F G A∙ ⦄ ⦃ _ : Refl B∙ ⦄ ⦃ _ : Comp G F B∙ ⦄ (x : A)
+              (y : B) →
+              Type (ℓa∙ ⊔ ℓb∙ ⊔ ℓh)
+  Isoᴱ      : {ℓ ℓ′ : Level} → Type ℓ → Type ℓ′ → Type (ℓ ⊔ ℓ′)
+  Isoₜ      : {ℓ ℓ′ : Level} → Type ℓ → Type ℓ′ → Type (ℓ ⊔ ℓ′)
+  Jₑ        : {ℓ : Level} {A : Type ℓ} {ℓ′ : Level}
+              (P : (B : Type ℓ) → A ≃ B → Type ℓ′) →
+              P A ((λ x → x) , id-is-equiv) → {B : Type ℓ} (e : A ≃ B) → P B e
+  Jₚ        : {ℓ ℓ′ : Level} {A : Type ℓ} {x : A}
+              (P : (y : A) → x ＝ y → Type ℓ′) →
+              P x (λ _ → x) → {y : A} (p : x ＝ y) → P y p
+  Jₚ-refl   : {ℓ ℓ′ : Level} {A : Type ℓ} {x : A}
+              (P : (y : A) → x ＝ y → Type ℓ′) (d : P x (λ _ → x)) →
+              Jₚ P d (λ _ → x) ＝ d
+  Jₚ-∙      : {ℓ ℓ′ : Level} {A : Type ℓ} {x : A}
+              (P : (y : A) → x ＝ y → Type ℓ′) (d : P x (λ _ → x)) {y z : A}
+              (p : x ＝ y) (q : y ＝ z) →
+              Jₚ P d (λ j → (p ∙ₚ q) j) ＝
+              transport (λ i → P (q i) (λ j → ∙-filler-l p q i j)) (Jₚ P d p)
+  Jₚ>_      : {x..1 : Level} {x.A : Type x..1} {x : x.A} {ℓ′ : Level}
+              {P : (y : x.A) → x ＝ y → Type ℓ′} →
+              P x reflₚ → (y : x.A) (p : x ＝ y) → P y p
+  Jₚ²       : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {x : A}
+              {P : (y : A) → x ＝ y → Type ℓ′} {d : (y : A) (p : x ＝ y) → P y p}
+              (Q : (y : A) (p : x ＝ y) (z : P y p) → d y p ＝ z → Type ℓ″) →
+              Q x (λ _ → x) (d x (λ _ → x)) (λ _ → d x (λ _ → x)) →
+              {y : A} (p : x ＝ y) {z : P y p} (q : d y p ＝ z) → Q y p z q
+  Jₚ²-refl  : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {x : A}
+              {P : (y : A) → x ＝ y → Type ℓ′} {d : (y : A) (p : x ＝ y) → P y p}
+              (Q : (y : A) (p : x ＝ y) (z : P y p) → d y p ＝ z → Type ℓ″)
+              (r : Q x (λ _ → x) (d x (λ _ → x)) (λ _ → d x (λ _ → x))) →
+              Jₚ² Q r reflₚ reflₚ ＝ r
+  Jₚᵈ       : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              {x : A} {b : B x}
+              (P
+               : (y : A) (p : x ＝ y) (z : B y) →
+                 Pathᴾ-syntax (λ i → B (p i)) b z → Type ℓ″) →
+              P x (λ _ → x) b (λ _ → b) →
+              {y : A} (p : x ＝ y) {z : B y}
+              (q : Pathᴾ-syntax (λ i → B (p i)) b z) →
+              P y p z q
+  Jₚᵈ-refl  : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              {x : A} {b : B x}
+              (P
+               : (y : A) (p : x ＝ y) (z : B y) →
+                 Pathᴾ-syntax (λ i → B (p i)) b z → Type ℓ″)
+              (d : P x (λ _ → x) b (λ _ → b)) →
+              Jₚᵈ P d (λ _ → x) (λ _ → b) ＝ d
+  Level     : LevelUniv
+  LevelUniv : Type₁
+  Lift      : {ℓ : Level} (ℓ′ : Level) (A : Type ℓ) → Type (ℓ ⊔ ℓ′)
+  Lift-is-of-hlevel
+            : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ : Level} (n : HLevel) →
+              is-of-hlevel n A → is-of-hlevel n (Lift ℓ′ A)
+  Liftω     : {ℓ : Level} (A : Type ℓ) → Typeω
+  MFun      : Modality′ →
+              {ℓ ℓ′ : Level} → Type ℓ → Type ℓ′ → Type (ℓ ⊔ ℓ′)
+  MPi       : (m : Modality′) {ℓ ℓ′ : Level} (A : Type ℓ) →
+              MFun m A (Type ℓ′) → Type (ℓ ⊔ ℓ′)
+  Membership
+            : {ℓ ℓe : Level} (A : Type ℓe) (ℙA : Type ℓ) (ℓm : Level) →
+              Type (ℓ ⊔ ℓsuc ℓe ⊔ ℓsuc ℓm)
+  Membership-pow
+            : {ℓa ℓp : Level} {A : Type ℓa} {P : Type ℓp}
+              ⦃ u : Underlying P ⦄ →
+              Membership A (A → P) (u .Underlying.ℓ-underlying)
+  Modality′ : Type
+  Partial   : {a : Level} (φ : I) (A : Type a) → SSet a
+  PartialP  : {a : Level} (φ : I) (A : Partial φ (Type a)) → SSet a
+  Path      : {ℓ : Level} (A : Type ℓ) → A → A → Type ℓ
+  Pathᴾ     : {ℓ : Level} (A : I → Type ℓ) → A i0 → A i1 → Type ℓ
+  Pathᴾ-syntax
+            : {ℓ : Level} (A : I → Type ℓ) → A i0 → A i1 → Type ℓ
+  Pathᴾ-syntax′
+            : {ℓ : Level} {A B : Type ℓ} → A ＝ B → A → B → Type ℓ
+  Pointed   : {ℓ : Level} (A : Type ℓ) → Type ℓ
+  Pointed→Refl
+            : {A.ℓ : Level} {A : Type A.ℓ} ⦃ _ : Pointed A ⦄ → Refl (λ _ _ → A)
+  Recall    : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              (f : (x : A) → B x) (x : A) (y : B x) →
+              Type (ℓ ⊔ ℓ′)
+  Recomputable
+            : {ℓ : Level} (A : Type ℓ) → Type ℓ
+  Recomputable-Erased
+            : {ℓᵃ : Level} {A : Type ℓᵃ} → Recomputable (Erased A)
+  Recomputable-×
+            : {ℓᵃ ℓᵇ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ} →
+              Recomputable A → Recomputable B → Recomputable (A ×ₜ B)
+  Recomputable-≃
+            : {ℓᵃ ℓᵇ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ} →
+              A ≃ B → Recomputable A → Recomputable B
+  Refl      : {ℓa ℓ : Level} {A : Type ℓa} (_~_ : A → A → Type ℓ) →
+              Type (ℓa ⊔ ℓ)
+  Refl-Erased-Iso
+            : {ℓ : Level} → Refl Isoᴱ
+  Refl-Erased-≃
+            : {ℓ : Level} → Refl _≃ᴱ_
+  Refl-Fun  : {ℓ : Level} → Refl Fun
+  Refl-Pathᴾ
+            : {A.ℓ : Level} {A : Type A.ℓ} → Refl (Pathᴾ-syntax (λ _ → A))
+  Refl-Retract
+            : {ℓa ℓ : Level} {A : Type ℓa} {R : A → A → Type ℓ}
+              ⦃ _ = z : Refl R ⦄ ⦃ _ = z₁ : Trans R ⦄ ⦃ _ : HUnit-o R ⦄ →
+              Refl (Retract R)
+  Refl-≃    : {ℓ : Level} → Refl _≃_
+  Refl-≅    : {ℓa ℓ : Level} {A : Type ℓa} {R : A → A → Type ℓ}
+              ⦃ _ = z : Refl R ⦄ ⦃ _ = z₁ : Trans R ⦄ ⦃ _ : HUnit-o R ⦄ →
+              Refl (Iso R R)
+  Refl-≈    : {A.ℓa : Level} {A : Type A.ℓa} {ℙA₁.ℓ₁ : Level}
+              {ℙA₁ : Type ℙA₁.ℓ₁} {ℓ′ : Level} ⦃ m₁ : Membership A ℙA₁ ℓ′ ⦄ →
+              Refl _≈_
+  Refl-≊    : {ℓa ℓ : Level} {A : Type ℓa} {R : A → A → Type ℓ}
+              ⦃ _ = z : Refl R ⦄ ⦃ _ = z₁ : Trans R ⦄ ⦃ _ : HUnit-o R ⦄ →
+              Refl (Biinv R R)
+  Refl-⊆    : {A.ℓa : Level} {A : Type A.ℓa} {ℙA₁.ℓ₁ : Level}
+              {ℙA₁ : Type ℙA₁.ℓ₁} {ℓ‴ : Level} ⦃ m₁ : Membership A ℙA₁ ℓ‴ ⦄ →
+              Refl _⊆_
+  Reflectance
+            : {ℓa ℓb : Level} (A : Type ℓa) (B : Type ℓb) → Typeω
+  Reflects  : {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb}
+              ⦃ r : Reflectance A B ⦄ →
+              A → B → Type (r .Reflectance.ℓ-reflectance)
+  Reflexivity
+            : {ℓa ℓ : Level} {A : Type ℓa} → (A → A → Type ℓ) → Type (ℓa ⊔ ℓ)
+  Retract   : {ℓa ℓa∙ ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              (F : B → A → Type ℓh) {G : A → B → Type ℓh} {A∙ : A → A → Type ℓa∙}
+              ⦃ _ : Refl A∙ ⦄ ⦃ _ : Comp G F A∙ ⦄ →
+              A → B → Type (ℓa∙ ⊔ ℓh)
+  Retractₜ  : {ℓ ℓ′ : Level} → Type ℓ → Type ℓ′ → Type (ℓ ⊔ ℓ′)
+  SSet      : SSet₁
+  SSetω     : SSetω₁
+  Singletonᴾ
+            : {ℓ : Level} (A : I → Type ℓ) (a : A i0) → Type ℓ
+  Singletonₚ
+            : {ℓ : Level} {A : Type ℓ} → A → Type ℓ
+  Size      : {ℓ : Level} (ℓ′ : Level) (T : Type ℓ) →
+              Type (ℓ ⊔ ℓsuc ℓ′)
+  Size-Lift : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} ⦃ hl : Size ℓ′ A ⦄ →
+              Size ℓ′ (Lift ℓ″ A)
+  Size-big  : {ℓ ℓ′ : Level} {A : Type ℓ} → Size (ℓ ⊔ ℓ′) A
+  Size-default
+            : {ℓ : Level} {A : Type ℓ} → Size ℓ A
+  Size-Π    : {ℓ ℓ′ ℓ″ ℓ‴ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              ⦃ sa : Size ℓ″ A ⦄ ⦃ sb : {a : A} → Size ℓ‴ (B a) ⦄ →
+              Size (ℓ″ ⊔ ℓ‴) ((x : A) → B x)
+  Size-Σ    : {ℓ ℓ′ ℓ″ ℓ‴ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              ⦃ sa : Size ℓ″ A ⦄ ⦃ sb : {a : A} → Size ℓ‴ (B a) ⦄ →
+              Size (ℓ″ ⊔ ℓ‴) (Σₜ A B)
+  Square    : {A.ℓ : Level} {A : Type A.ℓ} {a₀₀ a₀₁ : A} →
+              a₀₀ ＝ a₀₁ →
+              {a₁₀ : A} →
+              a₀₀ ＝ a₁₀ → {a₁₁ : A} → a₁₀ ＝ a₁₁ → a₀₁ ＝ a₁₁ → Type A.ℓ
+  Square-syntax
+            : {A.ℓ : Level} {A : Type A.ℓ} →
+              ⊤ₜ →
+              (a₀₀ a₀₁ a₁₀ a₁₁ : A) →
+              a₀₀ ＝ a₀₁ → a₀₀ ＝ a₁₀ → a₁₀ ＝ a₁₁ → a₀₁ ＝ a₁₁ → Type A.ℓ
+  Squareᴾ   : {ℓ : Level} (A : I → I → Type ℓ) {a₀₀ : A i0 i0}
+              {a₀₁ : A i0 i1} →
+              Pathᴾ-syntax (A i0) a₀₀ a₀₁ →
+              {a₁₀ : A i1 i0} →
+              Pathᴾ-syntax (λ i → A i i0) a₀₀ a₁₀ →
+              {a₁₁ : A i1 i1} →
+              Pathᴾ-syntax (A i1) a₁₀ a₁₁ →
+              Pathᴾ-syntax (λ i → A i i1) a₀₁ a₁₁ → Type ℓ
+  Sym       : {A.ℓ : Level} {A : Type A.ℓ} {ℓ : Level} →
+              (A → A → Type ℓ) → Type (A.ℓ ⊔ ℓ)
+  Total-Σ   : {ℓ : Level} (A : Type ℓ) → Typeω
+  Total-Σ-Type
+            : {ℓ : Level} → Total-Σ (Type ℓ)
+  Total-Σ-Underlying
+            : {A.ℓ : Level} {A : Type A.ℓ} ⦃ u : Underlying A ⦄ → Total-Σ A
+  Total-Σ-Variadic
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {X : Type ℓ′} ⦃ tp : Total-Σ A ⦄ →
+              Total-Σ (X → A)
+  Trans     : {A.ℓ : Level} {A : Type A.ℓ} {ℓ : Level} →
+              (A → A → Type ℓ) → Type (A.ℓ ⊔ ℓ)
+  Trans-Path
+            : {A.ℓ : Level} {A : Type A.ℓ} → Trans (Path A)
+  Trans-≈   : {A.ℓa : Level} {A : Type A.ℓa} {ℙA₁.ℓ₁ : Level}
+              {ℙA₁ : Type ℙA₁.ℓ₁} {ℓ‴ : Level} ⦃ m₁ : Membership A ℙA₁ ℓ‴ ⦄ →
+              Trans _≈_
+  Trans-⊆   : {A.ℓa : Level} {A : Type A.ℓa} {ℙA₁.ℓ₁ : Level}
+              {ℙA₁ : Type ℙA₁.ℓ₁} {ℓ‴ : Level} ⦃ m₁ : Membership A ℙA₁ ℓ‴ ⦄ →
+              Trans _⊆_
+  Type      : Type₁
+  Typeω     : Typeω₁
+  Underlying
+            : {ℓ : Level} (T : Type ℓ) → Typeω
+  Underlying-Lift
+            : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ : Level}
+              ⦃ ua = ua₁ : Underlying A ⦄ →
+              Underlying (Lift ℓ′ A)
+  Underlying-Type
+            : {ℓ : Level} → Underlying (Type ℓ)
+  Underlying-Σ
+            : {B.A.1 : Level} {A : Type B.A.1} {B.ℓᵇ : Level}
+              {B : A → Type B.ℓᵇ} ⦃ ua = ua₁ : Underlying A ⦄ →
+              Underlying (Σₜ A B)
+  Union     : {ℓ ℓ′ ℓ″ : Level} (A : Type ℓ) (B : Type ℓ′)
+              (R : Type ℓ″) →
+              Typeω
+  Unit-l    : {ℓ : Level} (A : Type ℓ) ⦃ r : Pointed A ⦄
+              ⦃ t : Has-binary-op A ⦄ →
+              Type ℓ
+  Unit-l→HUnit-o
+            : {A.ℓ : Level} {A : Type A.ℓ} ⦃ _ = z : Pointed A ⦄
+              ⦃ _ = z₁ : Has-binary-op A ⦄ ⦃ _ : Unit-l A ⦄ →
+              HUnit-o (λ _ _ → A)
+  Unit-r    : {ℓ : Level} (A : Type ℓ) ⦃ r : Pointed A ⦄
+              ⦃ t : Has-binary-op A ⦄ →
+              Type ℓ
+  Unit-r→HUnit-i
+            : {A.ℓ : Level} {A : Type A.ℓ} ⦃ _ = z : Pointed A ⦄
+              ⦃ _ = z₁ : Has-binary-op A ⦄ ⦃ _ : Unit-r A ⦄ →
+              HUnit-i (λ _ _ → A)
+  Unitality-l
+            : {ℓ : Level} (A : Type ℓ) → A → (A → A → A) → A → Type ℓ
+  Unitality-r
+            : {ℓ : Level} (A : Type ℓ) → A → (A → A → A) → A → Type ℓ
+  Variadics : Typeω
+  Whisker-i : {ℓx ℓa ℓb ℓc ℓf ℓg ℓh ℓhf ℓhg ℓk ℓis ℓos : Level}
+              {X : Type ℓx} {A : Type ℓa} {B : Type ℓb} {C : Type ℓc}
+              (H : X → A → Type ℓh) (F : A → B → Type ℓf) (G : A → C → Type ℓg)
+              (K : B → C → Type ℓk) (H∙F : X → B → Type ℓhf) ⦃ _ : Comp H F H∙F ⦄
+              (H∙G : X → C → Type ℓhg) ⦃ _ : Comp H G H∙G ⦄ (x : X) (a : A)
+              (b : B) (c : C) (IS : K b c → F a b → G a c → Type ℓis)
+              (OS : K b c → H∙F x b → H∙G x c → Type ℓos) →
+              Type (ℓx ⊔ ℓa ⊔ ℓb ⊔ ℓc ⊔ ℓf ⊔ ℓg ⊔ ℓh ⊔ ℓk ⊔ ℓis ⊔ ℓos)
+  Whisker-i-Pathᴾ
+            : {ℓx ℓa ℓb ℓh ℓf ℓhf : Level} {X : Type ℓx} {A : Type ℓa}
+              {B : Type ℓb} {H : X → A → Type ℓh} {F : A → B → Type ℓf}
+              {H∙F : X → B → Type ℓhf} ⦃ _ = z : Comp H F H∙F ⦄ {x : X} {a : A}
+              {b b′ : B} →
+              Whisker-i H F F _＝_ H∙F H∙F x a b b′
+              (λ p → Pathᴾ (λ i → F a (p i))) (λ p → Pathᴾ (λ i → H∙F x (p i)))
+  Whisker-o : {ℓx ℓa ℓb ℓc ℓf ℓg ℓk ℓfk ℓgk ℓh ℓis ℓos : Level}
+              {X : Type ℓx} {A : Type ℓa} {B : Type ℓb} {C : Type ℓc}
+              (F : A → C → Type ℓf) (G : B → C → Type ℓg) (H : A → B → Type ℓh)
+              (K : C → X → Type ℓk) (F∙K : A → X → Type ℓfk) ⦃ _ : Comp F K F∙K ⦄
+              (G∙K : B → X → Type ℓgk) ⦃ _ : Comp G K G∙K ⦄ (a : A) (b : B)
+              (c : C) (x : X) (IS : H a b → F a c → G b c → Type ℓis)
+              (OS : H a b → F∙K a x → G∙K b x → Type ℓos) →
+              Type (ℓx ⊔ ℓa ⊔ ℓb ⊔ ℓc ⊔ ℓf ⊔ ℓg ⊔ ℓk ⊔ ℓh ⊔ ℓis ⊔ ℓos)
+  Whisker-o-Pathᴾ
+            : {ℓx ℓa ℓb ℓk ℓf ℓfk : Level} {X : Type ℓx} {A : Type ℓa}
+              {B : Type ℓb} {K : B → X → Type ℓk} {F : A → B → Type ℓf}
+              {F∙K : A → X → Type ℓfk} ⦃ _ = z : Comp F K F∙K ⦄ {a a′ : A}
+              {b : B} {x : X} →
+              Whisker-o F F _＝_ K F∙K F∙K a a′ b x
+              (λ p → Pathᴾ (λ i → F (p i) b)) (λ p → Pathᴾ (λ i → F∙K (p i) x))
+  and-square
+            : {ℓ : Level} {A : Type ℓ} {x y : A} (p : x ＝ y) →
+              Square (λ _ → x) (λ _ → x) p p
+  ap        : {B..1 : Level} {A : Type B..1} {B.ℓ′ : Level}
+              {B : A → Type B.ℓ′} {x y : A} (f : (a : A) → B a) (p : x ＝ y) →
+              Pathᴾ-syntax (λ i → B (p i)) (f x) (f y)
+  ap$       : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {F : Type ℓ′}
+              {B : Σₜ F (λ _ → A) → Type ℓ″} ⦃ _ = z : Funlike ur F A B ⦄ (f : F)
+              {x y : A} (p : x ＝ y) →
+              Pathᴾ-syntax (λ i → B (f , p i)) (f # x) (f # y)
+  ap-comp-∙ : {ℓ ℓ′ : Level} {A : Type ℓ} {B : Type ℓ′}
+              {x y : A} {z : A} (f : A → B) (p : x ＝ y) (q : y ＝ z) →
+              ap f (p ∙ₚ q) ＝ ap f p ∙ₚ ap f q
+  ap-is-equiv
+            : {ℓ : Level} {A B : Type ℓ} (f : A → B) →
+              is-equiv f → {x y : A} → is-equiv (ap f)
+  ap-≃      : {ℓ : Level} {A B : Type ℓ} {x y : A} (e : A ≃ B) →
+              x ＝ y ≃ e .fst x ＝ e .fst y
+  ap²       : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              {C : (x : A) (x₁ : B x) → Type ℓ″}
+              (f : (x : A) (x₁ : B x) → C x x₁) {x y : A} (p : x ＝ y) {u : B x}
+              {v : B y} (q : Pathᴾ-syntax (λ i → B (p i)) u v) →
+              Pathᴾ-syntax (λ i → C (p i) (q i)) (f x u) (f y v)
+  apˢ       : {ℓ′ y..1 : Level} {A : Type y..1} {x y : A}
+              {B : Type ℓ′} (f : A → B) →
+              x ＝ y → f x ＝ f y
+  apᴾ       : {ℓ ℓ′ : Level} {A : I → Type ℓ}
+              {B : (i : I) → A i → Type ℓ′} (f : (i : I) (x : A i) → B i x)
+              {x : A i0} {y : A i1} (p : Pathᴾ-syntax A x y) →
+              Pathᴾ-syntax (λ i → B i (p i)) (f i0 x) (f i1 y)
+  apᴾ²      : {ℓ ℓ′ ℓ″ : Level} {A : I → Type ℓ}
+              {B : (i : I) → A i → Type ℓ′}
+              {C : (i : I) (x : A i) → B i x → Type ℓ″}
+              (f : (i : I) (x : A i) (x₁ : B i x) → C i x x₁) {x : A i0}
+              {y : A i1} {u : B i0 x} {v : B i1 y} (p : Pathᴾ-syntax A x y)
+              (q : Pathᴾ-syntax (λ i → B i (p i)) u v) →
+              Pathᴾ-syntax (λ i → C i (p i) (q i)) (f i0 x u) (f i1 y v)
+  auto      : {ℓ : Level} {A : Type ℓ} ⦃ _ : A ⦄ → A
+  autoω     : {A : Typeω} ⦃ _ : A ⦄ → A
+  base-is-contr+total-is-contr→fibres-are-contr
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′} →
+              is-contr A → is-contr (Σₜ A B) → (a : A) → is-contr (B a)
+  base-is-prop+total-is-prop→fibres-are-prop
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′} →
+              is-prop A → is-prop (Σₜ A B) → (a : A) → is-prop (B a)
+  biimp-is-equiv
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              (A-pr : is-prop A) (B-pr : is-prop B) (to : A → B) (from : B → A) →
+              is-equiv to
+  biimp-is-equiv!
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              ⦃ A-pr : H-Level 1 A ⦄ ⦃ B-pr : H-Level 1 B ⦄ (to : A → B) →
+              (B → A) → is-equiv to
+  biinv     : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh}
+              {F∙G : A → A → Type ℓa∙} {G∙F : B → B → Type ℓb∙}
+              ⦃ _ = z : Refl F∙G ⦄ ⦃ _ = z₁ : Comp F G F∙G ⦄
+              ⦃ _ = z₂ : Refl G∙F ⦄ ⦃ _ = z₃ : Comp G F G∙F ⦄ {x : A} {y : B}
+              (f : F x y) (r : G y x) →
+              r retraction-of f → (s : G y x) → s section-of f → Biinv F G x y
+  bimap     : {ℓᵃ ℓᵇ ℓ ℓ′ : Level} {A : Type ℓᵃ} {B : A → Type ℓᵇ}
+              {P : A → Type ℓ} {Q : {a : A} → P a → B a → Type ℓ′}
+              (f : (a : A) → B a) →
+              ({a : A} (b : P a) → Q b (f a)) →
+              (.patternInTele0 : Σₜ A P) →
+              Σₜ (B (.patternInTele0 .fst)) (Q (.patternInTele0 .snd))
+  bimapˢ    : {ℓᵃ ℓᵇ ℓ ℓ′ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ}
+              {P : A → Type ℓ} {Q : B → Type ℓ′} (f : A → B) →
+              ({x : A} → P x → Q (f x)) → Σₜ A P → Σₜ B Q
+  brackets  : {@0 ℓ : Level} {@0 A : Type ℓ} {lvl : Level}
+              (Sem : Type lvl) (⟦_⟧₁ : A → Sem) →
+              ⟦⟧-notation A
+  builtin-equiv-proof-fast
+            : {la lt : Level} (T : Type la) (A : Type lt) (w : T ≃ A) (a : A)
+              (ψ : I) (f : Partial ψ (Helpers.fiber (w .fst) a)) →
+              Helpers.fiber (w .fst) a [ ψ ↦ f ]
+  builtin-path→equiv
+            : {ℓ : I → Level} (P : (i : I) → Type (ℓ i)) →
+              Agda.Builtin.Cubical.Equiv.A P ≃ Agda.Builtin.Cubical.Equiv.B P
+  builtin-path→is-equiv
+            : {ℓ : I → Level} (P : (i : I) → Type (ℓ i)) →
+              is-equiv (Agda.Builtin.Cubical.Equiv.f P)
+  case_of_  : {B..1 : Level} {A : Type B..1} {B.ℓᵇ : Level}
+              {B : A → Type B.ℓᵇ} (x : A) →
+              ((a : A) → B a) → B x
+  case_return_of_
+            : {A.ℓᵃ : Level} {A : Type A.ℓᵃ} {ℓᵇ : Level} (x : A)
+              (B : A → Type ℓᵇ) →
+              ((a : A) → B a) → B x
+  caseⁱ_of_ : {ℓ′ A.ℓ : Level} {A : Type A.ℓ} {B : Type ℓ′} (x : A) →
+              ((y : A) → x ＝ y → B) → B
+  caseⁱ_return_of_
+            : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ : Level} (x : A)
+              (P : A → Type ℓ′) →
+              ((y : A) → x ＝ y → P y) → P x
+  centre    : {A.ℓ : Level} {A : Type A.ℓ} → is-contr A → A
+  cirr      : Modality′
+  coe       : {ℓ̂ : I → Level} (A : (i : I) → Type (ℓ̂ i))
+              (i j : I) →
+              A i → A j
+  coe-path  : {ℓ : Level} (A : I → Type ℓ) (p : (i : I) → A i)
+              (i j : I) →
+              coe A i j (p i) ＝ p j
+  coe0→1    : {ℓ : Level} (A : I → Type ℓ) → A i0 → A i1
+  coe0→i    : {ℓ̂ : I → Level} (A : (i : I) → Type (ℓ̂ i)) (i : I) →
+              A i0 → A i
+  coe1→0    : {ℓ : Level} (A : I → Type ℓ) → A i1 → A i0
+  coe1→i    : {ℓ̂ : I → Level} (A : (i : I) → Type (ℓ̂ i)) (i : I) →
+              A i1 → A i
+  coei→0    : {ℓ̂ : I → Level} (A : (i : I) → Type (ℓ̂ i)) (i : I) →
+              A i → A i0
+  coei→1    : {ℓ̂ : I → Level} (A : (i : I) → Type (ℓ̂ i)) (i : I) →
+              A i → A i1
+  coei→i    : {ℓ : Level} (A : I → Type ℓ) (i : I) (x : A i) →
+              coe A i i x ＝ x
+  commutes→square
+            : {ℓ : Level} {A : Type ℓ} {w x y z : A} {p : w ＝ x} {q : w ＝ y}
+              {s : x ＝ z} {r : y ＝ z} →
+              p ∙ₚ s ＝ q ∙ₚ r → Square p q r s
+  comp      : {ℓ^ : I → Level} (A : (i : I) → Type (ℓ^ i)) (φ : I) →
+              ((i : I) → Partial (φ ∨ ~ i) (A i)) → A i1
+  congPᴱ    : {ℓ ℓ′ : Level} {@0 A : Type ℓ} {@0 x y : A}
+              {@0 p : x ＝ y} {@0 B : A → Type ℓ′} {@0 b₁ : B x} {@0 b₂ : B y} →
+              Erased (Pathᴾ-syntax (λ i → B (p i)) b₁ b₂) →
+              Pathᴾ-syntax (λ i → Erased (B (p i))) (erase b₁) (erase b₂)
+  congᴱ     : {ℓ : Level} {@0 A : Type ℓ} {@0 x y : A} →
+              Erased (x ＝ y) → erase x ＝ erase y
+  conjugate→square
+            : {ℓ : Level} {A : Type ℓ} {w x y z : A} {p : x ＝ y} {q : x ＝ z}
+              {r : z ＝ w} {s : y ＝ w} →
+              s ＝ p ⁻¹ ∙ₚ q ∙ₚ r → Square p q r s
+  const     : {A.ℓᵃ : Level} {A : Type A.ℓᵃ} {B.ℓᵇ : Level}
+              {B : Type B.ℓᵇ} →
+              A → @0 B → A
+  contractible-if-inhabited
+            : {A.ℓ : Level} {A : Type A.ℓ} → (A → is-contr A) → is-prop A
+  curry-≃   : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              {C : (x : A) → B x → Type ℓ″} →
+              ((x : A) (x₁ : B x) → C x x₁) ≃
+              ((x : Σₜ A B) → C (x .fst) (x .snd))
+  curry²    : {ℓᵃ ℓᵇ ℓᶜ : Level} {A : Type ℓᵃ} {B : A → Type ℓᵇ}
+              {C : (a : A) → B a → Type ℓᶜ} →
+              ((p : Σₜ A B) → C (p .fst) (p .snd)) → (x : A) (y : B x) → C x y
+  curry³    : {ℓᵃ ℓᵇ ℓᶜ : Level} {A : Type ℓᵃ} {B : A → Type ℓᵇ}
+              {C : (a : A) → B a → Type ℓᶜ} {ℓᵈ : Level}
+              {D : (a : A) (b : B a) → C a b → Type ℓᵈ} →
+              ((p : Σₜ A (λ a → Σₜ (B a) (C a))) →
+               D (p .fst) (p .snd .fst) (p .snd .snd)) →
+              (x : A) (y : B x) (z : C x y) → D x y z
+  double-left
+            : {ℓ : Level} {A : Type ℓ} {x y z : A} {p : x ＝ y} {q : y ＝ z}
+              {s : x ＝ z} →
+              p ∙ₚ q ＝ s → {w : A} {r : z ＝ w} → p ∙∙ q ∙∙ r ＝ s ∙ₚ r
+  double-right
+            : {ℓ : Level} {A : Type ℓ} {x y z : A} {p : x ＝ y} {q : y ＝ z}
+              {s : x ＝ z} →
+              s ＝ p ∙ₚ q → {w : A} {r : w ＝ x} → r ∙∙ p ∙∙ q ＝ r ∙ₚ s
+  enable-variadic-connectives
+            : Variadics
+  equiv-backward
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : Type ℓ′} → A ≃ B → B → A
+  equiv-centre
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              (e : A ≃ B) (y : B) →
+              fibre (e .fst) y
+  equiv-ext : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level}
+              {B : Type B.ℓ′} {e₀ e₁ : A ≃ B} →
+              e₀ .fst ＝ e₁ .fst → e₀ ＝ e₁
+  equiv-forward
+            : {ℓ ℓ' : Level} {A : Type ℓ} {B : Type ℓ'} → A ≃ B → A → B
+  equiv-is-contr
+            : {ℓ : Level} (A : Type ℓ) → is-contr (Σₜ (Type ℓ) (_≃_ A))
+  equiv-is-contrᴱ
+            : {ℓᵃ : Level} (A : Type ℓᵃ) → is-contrᴱ (Σₜ (Type ℓᵃ) (_≃_ A))
+  equiv-path
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              (e : A ≃ B) (y : B) (v : fibre (e .fst) y) →
+              equiv-centre e y ＝ v
+  equiv-path→identity-system
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {R : A → A → Type ℓ′}
+              {r : (a : A) → R a a} →
+              ({a b : A} → R a b ≃ a ＝ b) → is-identity-system R r
+  equiv-proof
+            : {ℓ ℓ' : Level} {A : Type ℓ} {B : Type ℓ'} {f : A → B} →
+              is-equiv f → (y : B) → Helpers.isContr (Helpers.fiber f y)
+  equivᴱ≃equiv
+            : {A.ℓᵃ : Level} {@0 A : Type A.ℓᵃ} {B.ℓᵇ : Level}
+              {@0 B : Type B.ℓᵇ} →
+              (A ≃ᴱ B) ≃ (A ≃ B)
+  erase     : {@0 ℓ : Level} {@0 A : Type ℓ} (@0 erased₁ : A) →
+              Erased A
+  erased    : {@0 ℓ : Level} {@0 A : Type ℓ} → Erased A → A
+  erased-is-contr
+            : {ℓ : Level} {@0 A : Type ℓ} → @0 is-contr A → is-contr (Erased A)
+  erased-is-of-hlevel
+            : {ℓᵃ : Level} {@0 A : Type ℓᵃ} (n : HLevel) →
+              @0 is-of-hlevel n A → is-of-hlevel n (Erased A)
+  erased-is-prop
+            : {ℓ : Level} {@0 A : Type ℓ} → @0 is-prop A → is-prop (Erased A)
+  erased-path
+            : {ℓᵃ : Level} {@0 A : Type ℓᵃ} {@0 x y : A} →
+              Erased (x ＝ y) ≃ erase x ＝ erase y
+  erased≃id : {A.ℓ : Level} {A : Type A.ℓ} → Erased A ≃ A
+  explicit  : {B..1 : Level} {A : Type B..1} {B.ℓᵇ : Level}
+              {B : A → Type B.ℓᵇ} →
+              ({a : A} → B a) → (x : A) → B x
+  extend→is-contr
+            : {A.ℓ : Level} {A : Type A.ℓ} →
+              ((φ : I) (p : Partial φ A) → A [ φ ↦ p ]) → is-contr A
+  fibre     : {ℓ ℓ′ : Level} {A : Type ℓ} {B : Type ℓ′} →
+              (A → B) → B → Type (ℓ ⊔ ℓ′)
+  fibrewise-is-equiv→total-is-equiv
+            : {Q.A : Level} {A : Type Q.A} {P.ℓ′ : Level} {P : A → Type P.ℓ′}
+              {Q.ℓ″ : Level} {Q : A → Type Q.ℓ″} {f : (x : A) → P x → Q x} →
+              ({x : A} → is-equiv (f x)) → is-equiv (total f)
+  fibrewise-is-equiv≃total-is-equiv
+            : {Q.A : Level} {A : Type Q.A} {P.ℓ′ : Level} {P : A → Type P.ℓ′}
+              {Q.ℓ″ : Level} {Q : A → Type Q.ℓ″} {f : (x : A) → P x → Q x} →
+              ({x : A} → is-equiv (f x)) ≃ is-equiv (total f)
+  fibreᴱ    : {ℓᵃ ℓᵇ : Level} {A : Type ℓᵃ} {@0 B : Type ℓᵇ}
+              (f : A → B) (@0 y : B) →
+              Type (ℓᵃ ⊔ ℓᵇ)
+  fibreᴱ≃fibre
+            : {A.ℓᵃ : Level} {@0 A : Type A.ℓᵃ} {B.ℓᵇ : Level}
+              {@0 B : Type B.ℓᵇ} {@0 f : A → B} {@0 y : B} →
+              fibreᴱ f y ≃ fibre f y
+  fibre→fibreᴱ
+            : {ℓᵃ ℓᵇ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ} {f : A → B} {y : B} →
+              fibre f y → fibreᴱ f y
+  fill      : {ℓ^ : I → Level} (A : (i : I) → Type (ℓ^ i))
+              (φ i : I) →
+              ((i₁ : I) → Partial (φ ∨ ~ i₁) (A i₁)) → A i
+  first     : {A.ℓᵃ : Level} {A : Type A.ℓᵃ} {ℓᵇ ℓᶜ : Level}
+              {B : A → Type ℓᵇ} {C : A → Type ℓᶜ} →
+              ((a : A) → B a) →
+              (.patternInTele0 : Σₜ A C) →
+              B (.patternInTele0 .fst) ×ₜ C (.patternInTele0 .fst)
+  flip      : {A.ℓᵃ : Level} {A : Type A.ℓᵃ} {B.ℓᵇ : Level}
+              {B : Type B.ℓᵇ} {ℓᶜ : Level} {C : A → B → Type ℓᶜ} →
+              ((a : A) (b : B) → C a b) → (b : B) (a : A) → C a b
+  flip-lₑ   : {ℓᵃ : Level} {A : Type ℓᵃ} {a b c : A} {ab : a ＝ b}
+              {bc : b ＝ c} {ac : a ＝ c} →
+              ab ∙ₚ bc ＝ ac ≃ bc ＝ ab ⁻¹ ∙ₚ ac
+  flipˢ     : {A.ℓᵃ : Level} {A : Type A.ℓᵃ} {B.ℓᵇ : Level}
+              {B : Type B.ℓᵇ} {C.ℓᶜ : Level} {C : Type C.ℓᶜ} →
+              (A → B → C) → B → A → C
+  from-pathᴾ
+            : {ℓ : Level} {A : I → Type ℓ} {x : A i0} {y : A i1} →
+              Pathᴾ-syntax A x y → coe0→1 A x ＝ y
+  from-pathᴾ⁻
+            : {ℓ : Level} {A : I → Type ℓ} {x : A i0} {y : A i1} →
+              Pathᴾ-syntax A x y → x ＝ coe1→0 A y
+  from-to-pathᴾ
+            : {ℓ : Level} {A : I → Type ℓ} {x : A i0} {y : A i1}
+              (p : coe0→1 A x ＝ y) →
+              from-pathᴾ (to-pathᴾ p) ＝ p
+  fst       : {a b : Level} {A : Type a} {B : A → Type b} →
+              Σₜ A B → A
+  fun-ext   : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → I → Type ℓ′}
+              {f : (x : A) → B x i0} {g : (x : A) → B x i1} →
+              ((x : A) → Pathᴾ-syntax (B x) (f x) (g x)) →
+              Pathᴾ-syntax (λ i → (x : A) → B x i) f g
+  fun-ext-dep
+            : {ℓ ℓ′ : Level} {A : I → Type ℓ} {B : (i : I) → A i → Type ℓ′}
+              {f : (x : A i0) → B i0 x} {g : (x : A i1) → B i1 x} →
+              ({x₀ : A i0} {x₁ : A i1} (p : Pathᴾ-syntax A x₀ x₁) →
+               Pathᴾ-syntax (λ i → B i (p i)) (f x₀) (g x₁)) →
+              Pathᴾ-syntax (λ i → (x : A i) → B i x) f g
+  fun-ext-dep-≃
+            : {ℓ ℓ′ : Level} {A : I → Type ℓ} {B : (i : I) → A i → Type ℓ′}
+              {f : (x : A i0) → B i0 x} {g : (x : A i1) → B i1 x} →
+              ({x₀ : A i0} {x₁ : A i1} (p : Pathᴾ-syntax A x₀ x₁) →
+               Pathᴾ-syntax (λ i → B i (p i)) (f x₀) (g x₁))
+              ≃ Pathᴾ-syntax (λ i → (x : A i) → B i x) f g
+  fun-ext-≃ : {ℓ ℓ′ : Level} {A : Type ℓ} {B : Type ℓ′}
+              {f g : A → B} →
+              f ＝ g ≃ ((x : A) → f x ＝ g x)
+  fun-is-of-hlevel
+            : {ℓ′ A.ℓ : Level} {A : Type A.ℓ} {B : Type ℓ′} (n : HLevel) →
+              is-of-hlevel n B → is-of-hlevel n (A → B)
+  function-≃
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ : Level} {B : Type B.ℓ}
+              {C.ℓ : Level} {C : Type C.ℓ} {D.ℓ : Level} {D : Type D.ℓ} →
+              A ≃ B → C ≃ D → (A → C) ≃ (B → D)
+  generic-ae
+            : {ℓ ℓ′ : Level} {A B : Type ℓ} (F : Type ℓ → Type ℓ′) →
+              A ≃ B → F A ≃ F B
+  glue      : {ℓ ℓ' : Level} {A : Type ℓ} {φ : I}
+              {T : Partial φ (Type ℓ')} {e : PartialP φ (λ .p → T _ ≃ A)} →
+              PartialP φ (λ .p → T p) →
+              A → Agda.Builtin.Cubical.Glue.primGlue A T e
+  glue-inc  : {ℓ ℓ′ : Level} {A : Type ℓ} (φ : I)
+              {Tf : Partial φ (Σₜ (Type ℓ′) (λ B → B ≃ A))}
+              (p : PartialP φ (λ .p₁ → (λ @0 { (φ = i1) → Tf _ .fst }) p₁)) →
+              A [ φ ↦ (λ @0 { (φ = i1) → Tf _ .snd .fst (p _) }) ] → Glue A Tf
+  happly    : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → I → Type ℓ′}
+              {f : (x : A) → B x i0} {g : (x : A) → B x i1} →
+              Pathᴾ-syntax (λ i → (x : A) → B x i) f g →
+              (x : A) → Pathᴾ-syntax (B x) (f x) (g x)
+  has-retraction
+            : {ℓa ℓa∙ ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : A → B → Type ℓh} {O : B → A → Type ℓh}
+              {A∙ : A → A → Type ℓa∙} ⦃ r : Refl A∙ ⦄ ⦃ t : Comp I₁ O A∙ ⦄
+              {x : A} {y : B} (s : I₁ x y) →
+              Type (ℓa∙ ⊔ ℓh)
+  has-section
+            : {ℓa ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : B → A → Type ℓh} {O : A → B → Type ℓh}
+              {B∙ : B → B → Type ℓb∙} ⦃ _ : Refl B∙ ⦄ ⦃ _ : Comp I₁ O B∙ ⦄
+              {x : A} {y : B} (r : O x y) →
+              Type (ℓb∙ ⊔ ℓh)
+  hcomp     : {A.ℓ : Level} {A : Type A.ℓ} (φ : I) →
+              ((i : I) → Partial (φ ∨ ~ i) A) → A
+  hcomp-unique
+            : {A.ℓ : Level} {A : Type A.ℓ} (φ : I)
+              (u : (i : I) → Partial (φ ∨ ~ i) A)
+              (h₂
+               : (i : I) →
+                 A [ ~ i ∨ φ ↦ (λ { (i = i0) → u i0 _ ; (φ = i1) → u i _ }) ]) →
+              hcomp φ u ＝ outS (h₂ i1)
+  hetero-homotopy≃homotopy
+            : {ℓ ℓ′ : Level} {A : I → Type ℓ} {B : I → Type ℓ′}
+              {f : A i0 → B i0} {g : A i1 → B i1} →
+              ({x₀ : A i0} {x₁ : A i1} →
+               Pathᴾ-syntax A x₀ x₁ → Pathᴾ-syntax B (f x₀) (g x₁))
+              ≃ ((x : A i0) → Pathᴾ-syntax B (f x) (g (coe0→1 A x)))
+  hfill     : {A.ℓ : Level} {A : Type A.ℓ} (φ : I) →
+              I → ((i : I) → Partial (φ ∨ ~ i) A) → A
+  hlevel    : {ℓ : Level} {A : Type ℓ} (n : HLevel)
+              ⦃ x : H-Level n A ⦄ →
+              is-of-hlevel n A
+  hlevel-basic-instance
+            : {A.ℓ : Level} {A : Type A.ℓ} (n : HLevel) →
+              is-of-hlevel n A → {k : ℕ} → H-Level (n + k) A
+  hlevel-instance
+            : {@0 ℓ : Level} {@0 n : ℕ} {@0 T : Type ℓ}
+              (has-of-hlevel : is-of-hlevel n T) →
+              H-Level n T
+  hlevel-prop-instance
+            : {A.ℓ : Level} {A : Type A.ℓ} {h : HLevel} →
+              is-prop A → H-Level (suc h) A
+  homotopy-invert
+            : {ℓ : Level} {A : Type ℓ} {f : A → A} (H : (x : A) → f x ＝ x)
+              {x : A} →
+              H (f x) ＝ ap f (H x)
+  homotopy-natural
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : Type ℓ′} {f g : A → B}
+              (H : (x : A) → f x ＝ g x) {x y : A} (p : x ＝ y) →
+              H x ∙ₚ ap g p ＝ ap f p ∙ₚ H y
+  homotopy-sym-inv
+            : {ℓ : Level} {A : Type ℓ} {f : A → A} (H : (x : A) → f x ＝ x)
+              (x : A) →
+              Path (f x ＝ f x) (λ i → H (H x (~ i)) i) (λ _ → f x)
+  i0        : I
+  i1        : I
+  id        : {A.ℓᵃ : Level} {A : Type A.ℓᵃ} → A → A
+  id-is-equiv
+            : {A.ℓ : Level} {A : Type A.ℓ} → is-equiv id
+  id-qinv   : {ℓa ℓf : Level} {A : Type ℓa} {F : A → A → Type ℓf}
+              ⦃ _ = z : Refl F ⦄ ⦃ _ = z₁ : Trans F ⦄ ⦃ _ : HUnit-o F ⦄ {x : A} →
+              quasi-inverse refl
+  identity-system-gives-path
+            : {R..1 : Level} {R.A : Type R..1} {R.ℓ′ : Level}
+              {R : R.A → R.A → Type R.ℓ′} {r : (a : R.A) → R a a} →
+              is-identity-system R r → {x y : R.A} → R x y ≃ x ＝ y
+  identity-system→is-of-hlevel
+            : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ : Level} (n : HLevel)
+              {R : A → A → Type ℓ′} {r : (x : A) → R x x} →
+              is-identity-system R r →
+              ((x y : A) → is-of-hlevel n (R x y)) → is-of-hlevel (suc n) A
+  identity-system→is-of-hlevel!
+            : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ : Level} (n : HLevel)
+              {R : A → A → Type ℓ′} {r : (x : A) → R x x} →
+              is-identity-system R r →
+              ⦃ _ : {x y : A} → H-Level n (R x y) ⦄ → is-of-hlevel (suc n) A
+  implicit  : {B..1 : Level} {A : Type B..1} {B.ℓᵇ : Level}
+              {B : A → Type B.ℓᵇ} →
+              ((a : A) → B a) → {x : A} → B x
+  inS       : {ℓ : Level} {A : Type ℓ} {φ : I} (x : A) →
+              A [ φ ↦ (λ ._ → x) ]
+  inhabited-prop-is-contr
+            : {A.ℓ : Level} {A : Type A.ℓ} → A → is-prop A → is-contr A
+  inspect   : {A.ℓ : Level} {A : Type A.ℓ} (x : A) → Singletonₚ x
+  inv-≃     : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level}
+              {B : Type B.ℓ′} →
+              (A ≃ B) ≃ (B ≃ A)
+  inverses-∙
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓc ℓc∙ ℓab ℓac ℓbc : Level} {A : Type ℓa}
+              {B : Type ℓb} {C : Type ℓc} {F : A → B → Type ℓab}
+              {F⁻ : B → A → Type ℓab} {G : B → C → Type ℓbc}
+              {G⁻ : C → B → Type ℓbc} {F∙G : A → C → Type ℓac}
+              {G⁻∙F⁻ : C → A → Type ℓac} {A∙ : A → A → Type ℓa∙}
+              {B∙ : B → B → Type ℓb∙} {C∙ : C → C → Type ℓc∙}
+              ⦃ _ = z : Comp F F⁻ A∙ ⦄ ⦃ _ = z₁ : Comp F⁻ F B∙ ⦄
+              ⦃ _ = z₂ : Comp G G⁻ B∙ ⦄ ⦃ _ = z₃ : Comp G⁻ G C∙ ⦄
+              ⦃ _ = z₄ : Comp F∙G G⁻∙F⁻ A∙ ⦄ ⦃ _ = z₅ : Comp G⁻∙F⁻ F∙G C∙ ⦄
+              ⦃ _ = z₆ : Comp F G F∙G ⦄ ⦃ _ = z₇ : Comp G⁻ F⁻ G⁻∙F⁻ ⦄
+              ⦃ _ = z₈ : Comp B∙ G G ⦄ ⦃ _ = z₉ : Comp F⁻ F∙G G ⦄
+              ⦃ _ : GAssoc F⁻ F G B∙ F∙G G ⦄ ⦃ _ : GAssoc G⁻ F⁻ F∙G G⁻∙F⁻ G C∙ ⦄
+              ⦃ _ = z₁₀ : Comp G G⁻∙F⁻ F⁻ ⦄ ⦃ _ = z₁₁ : Comp B∙ F⁻ F⁻ ⦄
+              ⦃ _ : GAssoc F G G⁻∙F⁻ F∙G F⁻ A∙ ⦄
+              ⦃ _ : GAssoc G G⁻ F⁻ B∙ G⁻∙F⁻ F⁻ ⦄ ⦃ _ = z₁₂ : Refl A∙ ⦄
+              ⦃ _ = z₁₃ : Refl B∙ ⦄ ⦃ _ = z₁₄ : Refl C∙ ⦄ ⦃ _ : GUnit-o B∙ G ⦄
+              ⦃ _ : GUnit-o B∙ F⁻ ⦄ {a : A} {b : B} {c : C} {f : F a b}
+              {f⁻¹ : F⁻ b a} {g : G b c} {g⁻¹ : G⁻ c b} →
+              Inverses f f⁻¹ → Inverses g g⁻¹ → Inverses (f ∙ g) (g⁻¹ ∙ f⁻¹)
+  inverses→qinv
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} {f : F x y} {g : G y x} →
+              Inverses f g → quasi-inverse f
+  invol     : {ℓa ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : A → B → Type ℓh} {O : B → A → Type ℓh} ⦃ s₁ : Dual I₁ O ⦄
+              ⦃ s₂ : Dual O I₁ ⦄ ⦃ r : GInvol I₁ O ⦄ {x : A} {y : B}
+              (i : I₁ x y) →
+              GInvolutivity I₁ O i (i ᵒᵖ) (i ᵒᵖ ᵒᵖ)
+  is-2-groupoid
+            : {ℓ : Level} → Type ℓ → Type ℓ
+  is-biinv  : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ : Refl A∙ ⦄
+              ⦃ _ : Comp F G A∙ ⦄ ⦃ _ : Refl B∙ ⦄ ⦃ _ : Comp G F B∙ ⦄ {x : A}
+              {y : B} →
+              F x y → Type (ℓa∙ ⊔ ℓb∙ ⊔ ℓh)
+  is-biinv→is-equiv
+            : {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb} {f : A → B} →
+              is-biinv f → is-equiv f
+  is-biinv→post-is-equiv
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓc ℓc∙ ℓab ℓac ℓbc : Level} {A : Type ℓa}
+              {B : Type ℓb} {C : Type ℓc} {A∙ : A → A → Type ℓa∙}
+              {B∙ : B → B → Type ℓb∙} {C∙ : C → C → Type ℓc∙}
+              {F : A → B → Type ℓab} {F⁻ : B → A → Type ℓab} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Refl B∙ ⦄ ⦃ _ = z₂ : Comp F F⁻ A∙ ⦄
+              ⦃ _ = z₃ : Comp F⁻ F B∙ ⦄ ⦃ _ = z₄ : Comp B∙ F⁻ F⁻ ⦄
+              ⦃ _ = z₅ : Comp F⁻ A∙ F⁻ ⦄ ⦃ _ : GUnit-o B∙ F⁻ ⦄
+              ⦃ _ : GUnit-i F⁻ A∙ ⦄ ⦃ _ : GAssoc F⁻ F F⁻ B∙ A∙ F⁻ ⦄ {x : A}
+              {y : B} {z = z₆ : C} {G : B → C → Type ℓbc}
+              {F∙G : A → C → Type ℓac} ⦃ _ = z₇ : Comp F G F∙G ⦄
+              ⦃ _ = z₈ : Comp F⁻ F∙G G ⦄ ⦃ _ = z₉ : Comp A∙ F∙G F∙G ⦄
+              ⦃ _ = z₁₀ : Comp B∙ G G ⦄ ⦃ _ : GUnit-o A∙ F∙G ⦄
+              ⦃ _ : GUnit-o B∙ G ⦄ ⦃ _ : GAssoc F F⁻ F∙G A∙ G F∙G ⦄
+              ⦃ _ : GAssoc F⁻ F G B∙ F∙G G ⦄ {f : F x y} →
+              is-biinv f → is-equiv (z₇ Comp.∙ f)
+  is-biinv→pre-is-equiv
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓc ℓc∙ ℓab ℓac ℓbc : Level} {A : Type ℓa}
+              {B : Type ℓb} {C : Type ℓc} {A∙ : A → A → Type ℓa∙}
+              {B∙ : B → B → Type ℓb∙} {C∙ : C → C → Type ℓc∙}
+              {F : A → B → Type ℓab} {F⁻ : B → A → Type ℓab} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Refl B∙ ⦄ ⦃ _ = z₂ : Comp F F⁻ A∙ ⦄
+              ⦃ _ = z₃ : Comp F⁻ F B∙ ⦄ ⦃ _ = z₄ : Comp B∙ F⁻ F⁻ ⦄
+              ⦃ _ = z₅ : Comp F⁻ A∙ F⁻ ⦄ ⦃ _ : GUnit-o B∙ F⁻ ⦄
+              ⦃ _ : GUnit-i F⁻ A∙ ⦄ ⦃ _ : GAssoc F⁻ F F⁻ B∙ A∙ F⁻ ⦄ {x : A}
+              {y : B} {z = z₆ : C} {G : C → A → Type ℓac}
+              {G∙F : C → B → Type ℓbc} ⦃ _ = z₇ : Comp G F G∙F ⦄
+              ⦃ _ = z₈ : Comp G∙F F⁻ G ⦄ ⦃ _ = z₉ : Comp G∙F B∙ G∙F ⦄
+              ⦃ _ = z₁₀ : Comp G A∙ G ⦄ ⦃ _ : GUnit-i G∙F B∙ ⦄
+              ⦃ _ : GUnit-i G A∙ ⦄ ⦃ _ : GAssoc G F F⁻ G∙F A∙ G ⦄
+              ⦃ _ : GAssoc G∙F F⁻ F G B∙ G∙F ⦄ {f : F x y} →
+              is-biinv f → is-equiv (_∙ f)
+  is-biinv→qinv
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {F⁻ : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Refl B∙ ⦄ ⦃ _ = z₂ : Comp F F⁻ A∙ ⦄
+              ⦃ _ = z₃ : Comp F⁻ F B∙ ⦄ ⦃ _ = z₄ : Comp B∙ F⁻ F⁻ ⦄
+              ⦃ _ = z₅ : Comp F⁻ A∙ F⁻ ⦄ ⦃ _ : GUnit-o B∙ F⁻ ⦄
+              ⦃ _ : GUnit-i F⁻ A∙ ⦄ ⦃ _ : GAssoc F⁻ F F⁻ B∙ A∙ F⁻ ⦄ {x : A}
+              {y : B} {f : F x y} →
+              is-biinv f → quasi-inverse f
+  is-biinv→unique-inverse
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {F⁻ : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Refl B∙ ⦄ ⦃ _ = z₂ : Comp F F⁻ A∙ ⦄
+              ⦃ _ = z₃ : Comp F⁻ F B∙ ⦄ ⦃ _ = z₄ : Comp B∙ F⁻ F⁻ ⦄
+              ⦃ _ = z₅ : Comp F⁻ A∙ F⁻ ⦄ ⦃ _ : GUnit-o B∙ F⁻ ⦄
+              ⦃ _ : GUnit-i F⁻ A∙ ⦄ ⦃ _ : GAssoc F⁻ F F⁻ B∙ A∙ F⁻ ⦄ {x : A}
+              {y : B} {f : F x y} (.patternInTele0 : is-biinv f) →
+              .patternInTele0 .fst .retraction ＝ .patternInTele0 .snd .section
+  is-central
+            : {ℓ : Level} {A : Type ℓ} (c : A) → Type ℓ
+  is-contr  : {ℓ : Level} → Type ℓ → Type ℓ
+  is-contr-is-prop
+            : {A.ℓ : Level} {A : Type A.ℓ} → is-prop (is-contr A)
+  is-contrᴱ : {ℓ : Level} → Type ℓ → Type ℓ
+  is-contr→extend
+            : {A.ℓ : Level} {A : Type A.ℓ} →
+              is-contr A → (φ : I) (p : Partial φ A) → A [ φ ↦ p ]
+  is-contr→is-contrᴱ
+            : {A.ℓᵃ : Level} {@0 A : Type A.ℓᵃ} → is-contr A → is-contrᴱ A
+  is-contr→is-equiv
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′} →
+              is-contr A → is-contr B → {f : A → B} → is-equiv f
+  is-contr→is-prop
+            : {A.ℓ : Level} {A : Type A.ℓ} → is-contr A → is-prop A
+  is-contr→is-set
+            : {A.ℓ : Level} {A : Type A.ℓ} → is-contr A → is-set A
+  is-contr→≃
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′} →
+              is-contr A → is-contr B → A ≃ B
+  is-equiv  : {ℓ ℓ' : Level} {A : Type ℓ} {B : Type ℓ'} (f : A → B) →
+              Type (ℓ ⊔ ℓ')
+  is-equiv-comp
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              {C.ℓ″ : Level} {C : Type C.ℓ″} {f : A → B} {g : B → C} →
+              is-equiv f → is-equiv g → is-equiv (g ∘ f)
+  is-equiv-inv
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              {f : A → B} (fe : is-equiv f) →
+              is-equiv (is-equiv→inverse fe)
+  is-equiv-is-prop
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              (f : A → B) →
+              is-prop (is-equiv f)
+  is-equivᴱ : {ℓ ℓ′ : Level} {A : Type ℓ} {B : Type ℓ′} (f : A → B) →
+              Type (ℓ ⊔ ℓ′)
+  is-equivᴱ→counit
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {@0 B : Type ℓ′} {@0 f : A → B}
+              (eqv : is-equivᴱ f) (y : B) →
+              Erased (f (is-equivᴱ→inverse eqv y) ＝ y)
+  is-equivᴱ→inverse
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {@0 B : Type ℓ′} {@0 f : A → B} →
+              is-equivᴱ f → B → A
+  is-equivᴱ→qinvᴱ
+            : {f..1 : Level} {f.A : Type f..1} {f..1 = f..2 : Level}
+              {f.B : Type f..2} {f : f.A → f.B} →
+              is-equivᴱ f → quasi-inverseᴱ f
+  is-equivᴱ→unit
+            : {ℓ ℓ′ : Level} {@0 A : Type ℓ} {@0 B : Type ℓ′} {@0 f : A → B}
+              (eqv : is-equivᴱ f) (@0 x : A) →
+              Erased (is-equivᴱ→inverse eqv (f x) ＝ x)
+  is-equivᴱ≃is-equiv
+            : {A.ℓᵃ : Level} {@0 A : Type A.ℓᵃ} {B.ℓᵇ : Level}
+              {@0 B : Type B.ℓᵇ} {f : A → B} →
+              is-equivᴱ f ≃ is-equiv f
+  is-equiv→counit
+            : {f..1 : Level} {f.A : Type f..1} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              {f : f.A → B} (eqv : is-equiv f) (y : B) →
+              f (is-equiv→inverse eqv y) ＝ y
+  is-equiv→inverse
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              {f : A → B} →
+              is-equiv f → B → A
+  is-equiv→is-equivᴱ
+            : {ℓᵃ ℓᵇ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ} {f : A → B} →
+              is-equiv f → is-equivᴱ f
+  is-equiv→is-of-hlevel
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ : Level} {B : Type B.ℓ}
+              (h : HLevel) (f : A → B) →
+              is-equiv f → is-of-hlevel h A → is-of-hlevel h B
+  is-equiv→post-is-equiv
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              {C.ℓ″ : Level} {C : Type C.ℓ″} {f : A → B} →
+              is-equiv f → is-equiv (λ g x → g (f x))
+  is-equiv→pre-is-equiv
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              {C.ℓ″ : Level} {C : Type C.ℓ″} {f : A → B} →
+              is-equiv f → is-equiv (λ section₁ x → f (section₁ x))
+  is-equiv→qinv
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              {f : A → B} →
+              is-equiv f → quasi-inverse f
+  is-equiv→unit
+            : {A.ℓ f..1 : Level} {f.B : Type f..1} {A : Type A.ℓ} {f : A → f.B}
+              (eqv : is-equiv f) (x : A) →
+              is-equiv→inverse eqv (f x) ＝ x
+  is-equiv→zag
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              {f : A → B} (eqv : is-equiv f) (y : B) →
+              ap (is-equiv→inverse eqv) (is-equiv→counit eqv y) ＝
+              is-equiv→unit eqv (is-equiv→inverse eqv y)
+  is-equiv→zig
+            : {A.ℓ f..1 : Level} {f.B : Type f..1} {A : Type A.ℓ} {f : A → f.B}
+              (eqv : is-equiv f) (x : A) →
+              ap f (is-equiv→unit eqv x) ＝ is-equiv→counit eqv (f x)
+  is-groupoid
+            : {ℓ : Level} → Type ℓ → Type ℓ
+  is-identity-system
+            : {ℓ ℓ′ : Level} {A : Type ℓ} (R : A → A → Type ℓ′)
+              (rfl : (a : A) → R a a) →
+              Type (ℓ ⊔ ℓ′)
+  is-locally-of-size
+            : {ℓ : Level} (ℓ′ : Level) → Type ℓ → Type (ℓ ⊔ ℓsuc ℓ′)
+  is-of-hlevel
+            : {ℓ : Level} → HLevel → Type ℓ → Type ℓ
+  is-of-hlevel-+
+            : {A.ℓ : Level} {A : Type A.ℓ} (h₀ h₁ : HLevel) →
+              is-of-hlevel h₀ A → is-of-hlevel (h₁ + h₀) A
+  is-of-hlevel-+-left
+            : {A.ℓ : Level} {A : Type A.ℓ} (h₀ h₁ : HLevel) →
+              is-of-hlevel h₀ A → is-of-hlevel (h₀ + h₁) A
+  is-of-hlevel-dep
+            : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ : Level} →
+              HLevel → (A → Type ℓ′) → Type (A.ℓ ⊔ ℓ′)
+  is-of-hlevel-is-of-hlevel-suc
+            : {h : HLevel} {A.ℓ : Level} {A : Type A.ℓ} (h₁ : HLevel) →
+              is-of-hlevel (suc h₁) (is-of-hlevel h A)
+  is-of-hlevel-is-prop
+            : {A.ℓ : Level} {A : Type A.ℓ} (h : HLevel) →
+              is-prop (is-of-hlevel h A)
+  is-of-hlevel-suc
+            : {A.ℓ : Level} {A : Type A.ℓ} (h : HLevel) →
+              is-of-hlevel h A → is-of-hlevel (suc h) A
+  is-of-hlevel-Ω→is-of-hlevel
+            : {A.ℓ : Level} {A : Type A.ℓ} (h : HLevel) →
+              ((x : A) → is-of-hlevel (suc h) (x ＝ x)) →
+              is-of-hlevel (suc h) on-paths-of A
+  is-of-hlevelᴱ
+            : {ℓ : Level} → HLevel → Type ℓ → Type ℓ
+  is-of-hlevelᴱ≃is-of-hlevel
+            : {A.ℓᵃ : Level} {@0 A : Type A.ℓᵃ} {n : HLevel} →
+              is-of-hlevelᴱ n A ≃ is-of-hlevel n A
+  is-of-hlevel→is-of-hlevel-dep
+            : {B.A.1 : Level} {A : Type B.A.1} {B.ℓ′ : Level}
+              {B : A → Type B.ℓ′} (n : HLevel) →
+              ((x : A) → is-of-hlevel (suc n) (B x)) → is-of-hlevel-dep n B
+  is-of-size
+            : {ℓ : Level} (ℓ′ : Level) → Type ℓ → Type (ℓ ⊔ ℓsuc ℓ′)
+  is-prop   : {ℓ : Level} → Type ℓ → Type ℓ
+  is-prop-is-prop
+            : {A.ℓ : Level} {A : Type A.ℓ} → is-prop (is-prop A)
+  is-propᴱ  : {ℓ : Level} → Type ℓ → Type ℓ
+  is-prop→is-of-hlevel-suc
+            : {A.ℓ : Level} {A : Type A.ℓ} {h : HLevel} →
+              is-prop A → is-of-hlevel (suc h) A
+  is-prop→is-set
+            : {A.ℓ : Level} {A : Type A.ℓ} → is-prop A → is-set A
+  is-prop→is-set-□
+            : {A.ℓ : Level} {A : Type A.ℓ} → is-prop A → is-set-□ A
+  is-prop→pathᴾ
+            : {ℓ : Level} {B : I → Type ℓ} →
+              ((i : I) → is-prop (B i)) →
+              (b₀ : B i0) (b₁ : B i1) → Pathᴾ-syntax B b₀ b₁
+  is-prop→pathᴾ-is-contr
+            : {ℓ : Level} {A : I → Type ℓ} →
+              ((i : I) → is-prop (A i)) →
+              (x : A i0) (y : A i1) → is-contr (Pathᴾ-syntax A x y)
+  is-prop→squareᴾ
+            : {ℓ : Level} {B : I → I → Type ℓ} →
+              ((i j : I) → is-prop (B i j)) →
+              {a : B i0 i0} {c : B i0 i1} {b : B i1 i0} {d : B i1 i1}
+              (p : Pathᴾ-syntax (B i0) a c) (q : Pathᴾ-syntax (λ i → B i i0) a b)
+              (r : Pathᴾ-syntax (B i1) b d)
+              (s : Pathᴾ-syntax (λ i → B i i1) c d) →
+              Squareᴾ B p q r s
+  is-retraction
+            : {@0 ℓa ℓa∙ ℓb ℓh : Level} {@0 A : Type ℓa} {@0 B : Type ℓb}
+              {@0 I = I₁ : A → B → Type ℓh} {@0 O : B → A → Type ℓh}
+              {@0 A∙ : A → A → Type ℓa∙} ⦃ @0 r : Refl A∙ ⦄
+              ⦃ @0 t : Comp I₁ O A∙ ⦄ {@0 x : A} {@0 y : B} {@0 s : I₁ x y}
+              (r₁ : has-retraction s) →
+              r₁ .retraction retraction-of s
+  is-section
+            : {@0 ℓa ℓb ℓb∙ ℓh : Level} {@0 A : Type ℓa} {@0 B : Type ℓb}
+              {@0 I = I₁ : B → A → Type ℓh} {@0 O : A → B → Type ℓh}
+              {@0 B∙ : B → B → Type ℓb∙} ⦃ @0 _ = z : Refl B∙ ⦄
+              ⦃ @0 _ = z₁ : Comp I₁ O B∙ ⦄ {@0 x : A} {@0 y : B} {@0 r : O x y}
+              (r₁ : has-section r) →
+              r₁ .section section-of r
+  is-set    : {ℓ : Level} → Type ℓ → Type ℓ
+  is-set-□  : {ℓ : Level} → Type ℓ → Type ℓ
+  is-set-□→is-set
+            : {A.ℓ : Level} {A : Type A.ℓ} → is-set-□ A → is-set A
+  is-set→cast-pathᴾ
+            : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ : Level} {x y : A} {p q : x ＝ y}
+              (P : A → Type ℓ′) {px : P x} {py : P y} →
+              is-set A →
+              Pathᴾ-syntax (λ i → P (p i)) px py →
+              Pathᴾ-syntax (λ i → P (q i)) px py
+  is-set→is-set-□
+            : {A.ℓ : Level} {A : Type A.ℓ} → is-set A → is-set-□ A
+  is-set→squareᴾ
+            : {ℓ : Level} {A : I → I → Type ℓ} →
+              ((i j : I) → is-set (A i j)) →
+              {a : A i0 i0} {b : A i0 i1} {c : A i1 i0} {d : A i1 i1}
+              (p : Pathᴾ-syntax (λ j → A j i0) a c) (q : Pathᴾ-syntax (A i0) a b)
+              (s : Pathᴾ-syntax (A i1) c d)
+              (r : Pathᴾ-syntax (λ j → A j i1) b d) →
+              Squareᴾ A q p s r
+  is-unique : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {ℙA : Type ℓ′}
+              ⦃ m : Membership A ℙA ℓ″ ⦄ →
+              ℙA → Type (ℓ ⊔ ℓ″)
+  is1-empty : {ℓ : Level} {A : Partial i0 (Type ℓ)} →
+              PartialP i0 (λ .p → A p)
+  is1-left  : (i j : I) → IsOne i → IsOne (i ∨ j)
+  is1-right : (i j : I) → IsOne j → IsOne (i ∨ j)
+  iso       : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} (f : F x y) (g : G y x) →
+              f retraction-of g → f section-of g → Iso F G x y
+  level-of-term
+            : {ℓ : Level} {A : Type ℓ} → A → Level
+  level-of-type
+            : {ℓ : Level} → Type ℓ → Level
+  lift      : {@0 ℓ ℓ′ : Level} {@0 A : Type ℓ} (lower₁ : A) →
+              Lift ℓ′ A
+  lift-inst : {ℓ ℓ′ : Level} {A : Type ℓ} ⦃ _ : A ⦄ → Lift ℓ′ A
+  liftω     : {@0 ℓ : Level} {@0 A : Type ℓ} (lower₁ : A) → Liftω A
+  liftω-inst
+            : {ℓ : Level} {A : Type ℓ} ⦃ _ : A ⦄ → Liftω A
+  lift≃id   : {ℓ′ A.ℓ : Level} {A : Type A.ℓ} → Lift ℓ′ A ≃ A
+  line→is-equiv
+            : {ℓ̂ : I → Level} (P : (i : I) → Type (ℓ̂ i)) →
+              is-equiv (Foundations.Equiv.Base.g P i0)
+  line→≃    : {ℓ̂ : I → Level} (P : (i : I) → Type (ℓ̂ i)) →
+              Foundations.Equiv.Base.L P ≃ Foundations.Equiv.Base.R P
+  lower     : {@0 ℓ ℓ′ : Level} {@0 A : Type ℓ} → Lift ℓ′ A → A
+  lower     : {@0 ℓ : Level} {@0 A : Type ℓ} → Liftω A → A
+  magic-square
+            : {A.ℓ : Level} {A : Type A.ℓ} {x y z : A} (p : x ＝ y)
+              (q : y ＝ z) →
+              Square p p q q
+  make-adjunction
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓah ℓbh ℓh ℓiη ℓiε : Level} {A : Type ℓa}
+              ⦃ ua = ua₁ : Underlying A ⦄ {B : Type ℓb} ⦃ ub : Underlying B ⦄
+              {A∙ : A → A → Type ℓa∙} ⦃ _ = z : Refl A∙ ⦄ {B∙ : B → B → Type ℓb∙}
+              ⦃ _ = z₁ : Refl B∙ ⦄ {F : A → B → Type ℓh} {G : B → A → Type ℓh}
+              ⦃ _ = z₂ : Comp F G A∙ ⦄ ⦃ _ = z₃ : Comp G F B∙ ⦄ {C : A}
+              {CHom : ⌞ C ⌟ → ⌞ C ⌟ → Type ℓah} ⦃ _ = z₄ : Refl CHom ⦄
+              ⦃ _ = z₅ : Trans CHom ⦄ {D : B} {DHom : ⌞ D ⌟ → ⌞ D ⌟ → Type ℓbh}
+              ⦃ _ = z₆ : Refl DHom ⦄ ⦃ _ = z₇ : Trans DHom ⦄ {L : F C D}
+              ⦃ _ = z₈ : Funlike ur (F C D) ⌞ C ⌟ (λ _ → ⌞ D ⌟) ⦄
+              ⦃ _ = z₉
+                : {x y : ⌞ C ⌟} →
+                  Funlike ur (F C D) (CHom x y)
+                  (λ .patternInTele0 →
+                     DHom (fst .patternInTele0 # x) (fst .patternInTele0 # y)) ⦄
+              {R : G D C} ⦃ _ = z₁₀ : Funlike ur (G D C) ⌞ D ⌟ (λ _ → ⌞ C ⌟) ⦄
+              ⦃ _ = z₁₁
+                : {x y : ⌞ D ⌟} →
+                  Funlike ur (G D C) (DHom x y)
+                  (λ .patternInTele0 →
+                     CHom (fst .patternInTele0 # x) (fst .patternInTele0 # y)) ⦄
+              {Iη : A∙ C C → A∙ C C → Type ℓiη}
+              ⦃ _ = z₁₂
+                : Funlike ur (Iη refl (L ∙ R)) ⌞ C ⌟
+                  (λ .patternInTele0 →
+                     CHom (.patternInTele0 .snd) (R # (L # snd .patternInTele0))) ⦄
+              {Iε : B∙ D D → B∙ D D → Type ℓiε}
+              ⦃ _ = z₁₃
+                : Funlike ur (Iε (R ∙ L) refl) ⌞ D ⌟
+                  (λ .patternInTele0 →
+                     DHom (L # (R # snd .patternInTele0)) (.patternInTele0 .snd)) ⦄
+              (η : Iη refl (L ∙ R)) (ε : Iε (R ∙ L) refl)
+              (zig
+               : (x : ⌞ C ⌟) →
+                 Path (DHom (L # x) (L # x)) (L # (η # x) ∙ ε # (L # x)) refl)
+              (zag
+               : (y : ⌞ D ⌟) →
+                 Path (CHom (R # y) (R # y)) (η # (R # y) ∙ R # (ε # y)) refl) →
+              Adjoint A∙ B∙ F G C CHom D DHom L R Iη Iε
+  make-biinv
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {@0 x : A} {@0 y : B} (to : F x y)
+              (has-biinv : is-biinv to) →
+              Biinv F G x y
+  make-inverses
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {@0 x : A} {@0 y : B} {@0 f : F x y}
+              {@0 g : G y x} (inv-o : f retraction-of g)
+              (inv-i : f section-of g) →
+              Inverses f g
+  make-is-biinv
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} {f : F x y} (r : G y x) →
+              r retraction-of f → (s : G y x) → s section-of f → is-biinv f
+  make-iso  : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {@0 x : A} {@0 y : B} (to : F x y)
+              (from : G y x) (inverses : Inverses to from) →
+              Iso F G x y
+  make-qinv : {@0 ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {@0 A : Type ℓa}
+              {@0 B : Type ℓb} {@0 A∙ : A → A → Type ℓa∙}
+              {@0 B∙ : B → B → Type ℓb∙} {@0 F : A → B → Type ℓh}
+              {@0 G : B → A → Type ℓh} ⦃ @0 _ = z : Refl A∙ ⦄
+              ⦃ @0 _ = z₁ : Comp F G A∙ ⦄ ⦃ @0 _ = z₂ : Refl B∙ ⦄
+              ⦃ @0 _ = z₃ : Comp G F B∙ ⦄ {@0 x : A} {@0 y : B} {@0 f : F x y}
+              (inv : G y x) (inverses : Inverses f inv) →
+              quasi-inverse f
+  make-retraction
+            : {ℓa ℓa∙ ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : A → B → Type ℓh} {O : B → A → Type ℓh}
+              {A∙ : A → A → Type ℓa∙} ⦃ r : Refl A∙ ⦄ ⦃ t : Comp I₁ O A∙ ⦄
+              {x : A} {y : B} {@0 s : I₁ x y} (retraction₁ : O y x)
+              (is-retraction₁ : retraction₁ retraction-of s) →
+              has-retraction s
+  make-section
+            : {ℓa ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : B → A → Type ℓh} {O : A → B → Type ℓh}
+              {B∙ : B → B → Type ℓb∙} ⦃ _ = z : Refl B∙ ⦄
+              ⦃ _ = z₁ : Comp I₁ O B∙ ⦄ {x : A} {y : B} {@0 r : O x y}
+              (section₁ : I₁ y x) (is-section₁ : section₁ section-of r) →
+              has-section r
+  mempty    : {ℓ : Level} {A : Type ℓ} ⦃ r : Pointed A ⦄ → A
+  minv      : {ℓ : Level} {A : Type ℓ} ⦃ r : Has-unary-op A ⦄ → A → A
+  minv-invol
+            : {ℓᵃ : Level} {A : Type ℓᵃ} ⦃ s : Has-unary-op A ⦄ ⦃ r : Invol A ⦄
+              (x : A) →
+              Involutivity A (Has-unary-op.minv s) x
+  or-square : {ℓ : Level} {A : Type ℓ} {x y : A} (p : x ＝ y) →
+              Square p p (λ _ → y) (λ _ → y)
+  outS      : {ℓ : Level} {A : Type ℓ} {φ : I} {u : Partial φ A} →
+              A [ φ ↦ u ] → A
+  over-left→over
+            : {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb} {ℓp ℓq : Level}
+              {P : A → Type ℓp} {Q : B → Type ℓq} (e : A ≃ B) →
+              ((x : A) → P x ≃ Q (Equiv.to e x)) → P ≃[ e ] Q
+  over-right→over
+            : {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb} {ℓp ℓq : Level}
+              {P : A → Type ℓp} {Q : B → Type ℓq} (e : A ≃ B) →
+              ((x : B) → P (Equiv.from e x) ≃ Q x) → P ≃[ e ] Q
+  over→total
+            : {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb} {ℓp ℓq : Level}
+              {P : A → Type ℓp} {Q : B → Type ℓq} (e : A ≃ B) →
+              P ≃[ e ] Q → Σₜ A P ≃ Σₜ B Q
+  partial-pushout
+            : {ℓ : Level} (i j : I) {A : Partial (i ∨ j) (Type ℓ)}
+              {ai
+               : PartialP (i ∧ j) (λ .p → (λ { (i = i1) (j = i1) → A _ }) p)} →
+              (.(z : IsOne i) →
+               A _ [ i ∧ j ↦ (λ { (i = i1) (j = i1) → ai _ }) ]) →
+              (.(z : IsOne j) →
+               A _ [ i ∧ j ↦ (λ { (i = i1) (j = i1) → ai _ }) ]) →
+              PartialP (i ∨ j) (λ .p → A p)
+  paste     : {s′.ℓ : Level} {s′.A : Type s′.ℓ} {q′.x s′.x : s′.A}
+              {p p′ : q′.x ＝ s′.x} {r′.x : s′.A} {q q′ : q′.x ＝ r′.x}
+              {s′.y : s′.A} {r r′ : r′.x ＝ s′.y} {s s′ : s′.x ＝ s′.y} →
+              p ＝ p′ →
+              q ＝ q′ → r ＝ r′ → s ＝ s′ → Square p q r s → Square p′ q′ r′ s′
+  pasteᴾ    : {y′..1 : Level} {y′.A : Type y′..1} {w x : y′.A}
+              {p : w ＝ x} {w′ x′ : y′.A} {p′ : w′ ＝ x′} {z : y′.A} {q : w ＝ z}
+              {z′ : y′.A} {q′ : w′ ＝ z′} {y : y′.A} {r : x ＝ y} {y′ : y′.A}
+              {r′ : x′ ＝ y′} {s : z ＝ y} {s′ : z′ ＝ y′} {α : w ＝ w′} {β : x ＝ x′}
+              {γ : z ＝ z′} {δ : y ＝ y′} →
+              Square α p β p′ →
+              Square α q γ q′ →
+              Square β r δ r′ →
+              Square γ s δ s′ → Square p q s r → Square p′ q′ s′ r′
+  path-identity-system
+            : {ℓ : Level} {A : Type ℓ} →
+              is-identity-system (Path A) (λ z _ → z)
+  path-is-of-hlevel
+            : {A.ℓ : Level} {A : Type A.ℓ} (h : HLevel) →
+              is-of-hlevel (suc h) A → (x y : A) → is-of-hlevel h (x ＝ y)
+  path-is-of-hlevel-same
+            : {A.ℓ : Level} {A : Type A.ℓ} (h : HLevel) →
+              is-of-hlevel h A → {x y : A} → is-of-hlevel h (x ＝ y)
+  paths     : {A.ℓ : Level} {A : Type A.ℓ} (A-c : is-contr A) →
+              is-central (centre A-c)
+  pathᴾ-is-of-hlevel
+            : {ℓ : Level} {A : I → Type ℓ} (h : HLevel) →
+              is-of-hlevel (suc h) (A i1) →
+              (x : A i0) (y : A i1) → is-of-hlevel h (Pathᴾ-syntax A x y)
+  pathᴾ-is-of-hlevel-same
+            : {ℓ : Level} {A : I → Type ℓ} (h : HLevel) →
+              is-of-hlevel h (A i1) →
+              {x : A i0} {y : A i1} → is-of-hlevel h (Pathᴾ-syntax A x y)
+  pathᴾ=path
+            : {ℓ : Level} (P : I → Type ℓ) (p : P i0) (q : P i1) →
+              Pathᴾ-syntax P p q ＝ (transport P p ＝ q)
+  pathᴾ=path⁻
+            : {ℓ : Level} (P : I → Type ℓ) (p : P i0) (q : P i1) →
+              Pathᴾ-syntax P p q ＝ (p ＝ transport (λ i → P (~ i)) q)
+  path≅equiv
+            : {B.ℓ : Level} {A B : Type B.ℓ} → Isoₜ (A ＝ B) (A ≃ B)
+  primFaceForall
+            : (I → I) → I
+  primPOr   : {ℓ : Level} (i j : I) {A : Partial (i ∨ j) (Type ℓ)} →
+              PartialP i (λ .p → A _) →
+              PartialP j (λ .p → A _) → PartialP (i ∨ j) (λ .p → A p)
+  prim^glueU
+            : {la : Level} {φ : I} {T : I → Partial φ (Type la)}
+              {A : Type la [ φ ↦ T i0 ]} →
+              PartialP φ (λ .p → T i1 p) →
+              outS A → Agda.Primitive.Cubical.primHComp T (outS A)
+  prim^unglueU
+            : {la : Level} {φ : I} {T : I → Partial φ (Type la)}
+              {A : Type la [ φ ↦ T i0 ]} →
+              Agda.Primitive.Cubical.primHComp T (outS A) → outS A
+  prop!     : {ℓ : Level} {A : I → Type ℓ}
+              ⦃ A-pr : H-Level 1 (A i0) ⦄ {x : A i0} {y : A i1} →
+              Pathᴾ-syntax A x y
+  prop-extₑ : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level}
+              {B : Type B.ℓ′} (A-pr : is-prop A) (B-pr : is-prop B) (to : A → B)
+              (from : B → A) →
+              A ≃ B
+  prop-extₑ!
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              ⦃ A-pr : H-Level 1 A ⦄ ⦃ B-pr : H-Level 1 B ⦄ →
+              (A → B) → (B → A) → A ≃ B
+  prop-over-ext
+            : {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb} {ℓp ℓq : Level}
+              {P : A → Type ℓp} {Q : B → Type ℓq} (e : A ≃ B) →
+              ({a : A} → is-prop (P a)) →
+              ({b : B} → is-prop (Q b)) →
+              ((x : A) → P x → Q (Equiv.to e x)) →
+              ((x : B) → Q x → P (Equiv.from e x)) → P ≃[ e ] Q
+  prop-over-ext!
+            : {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb} {ℓp ℓq : Level}
+              {P : A → Type ℓp} {Q : B → Type ℓq} (e : A ≃ B)
+              ⦃ _ : {a : A} → H-Level 1 (P a) ⦄
+              ⦃ _ : {b : B} → H-Level 1 (Q b) ⦄ →
+              ((x : A) → P x → Q (Equiv.to e x)) →
+              ((x : B) → Q x → P (Equiv.from e x)) → P ≃[ e ] Q
+  qinv      : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} {f : F x y} (g : G y x) →
+              f retraction-of g → f section-of g → quasi-inverse f
+  qinv-∙    : {ℓa ℓa∙ ℓb ℓb∙ ℓc ℓc∙ ℓab ℓac ℓbc : Level}
+              {A : Type ℓa} {B : Type ℓb} {C : Type ℓc} {F : A → B → Type ℓab}
+              {F⁻ : B → A → Type ℓab} {G : B → C → Type ℓbc}
+              {G⁻ : C → B → Type ℓbc} {F∙G : A → C → Type ℓac}
+              {G⁻∙F⁻ : C → A → Type ℓac} {A∙ : A → A → Type ℓa∙}
+              {B∙ : B → B → Type ℓb∙} {C∙ : C → C → Type ℓc∙}
+              ⦃ _ = z : Comp F F⁻ A∙ ⦄ ⦃ _ = z₁ : Comp F⁻ F B∙ ⦄
+              ⦃ _ = z₂ : Comp G G⁻ B∙ ⦄ ⦃ _ = z₃ : Comp G⁻ G C∙ ⦄
+              ⦃ _ = z₄ : Comp F∙G G⁻∙F⁻ A∙ ⦄ ⦃ _ = z₅ : Comp G⁻∙F⁻ F∙G C∙ ⦄
+              ⦃ _ = z₆ : Comp F G F∙G ⦄ ⦃ _ = z₇ : Comp G⁻ F⁻ G⁻∙F⁻ ⦄
+              ⦃ _ = z₈ : Comp B∙ G G ⦄ ⦃ _ = z₉ : Comp F⁻ F∙G G ⦄
+              ⦃ _ : GAssoc F⁻ F G B∙ F∙G G ⦄ ⦃ _ : GAssoc G⁻ F⁻ F∙G G⁻∙F⁻ G C∙ ⦄
+              ⦃ _ = z₁₀ : Comp G G⁻∙F⁻ F⁻ ⦄ ⦃ _ = z₁₁ : Comp B∙ F⁻ F⁻ ⦄
+              ⦃ _ : GAssoc F G G⁻∙F⁻ F∙G F⁻ A∙ ⦄
+              ⦃ _ : GAssoc G G⁻ F⁻ B∙ G⁻∙F⁻ F⁻ ⦄ ⦃ _ = z₁₂ : Refl A∙ ⦄
+              ⦃ _ = z₁₃ : Refl B∙ ⦄ ⦃ _ = z₁₄ : Refl C∙ ⦄ ⦃ _ : GUnit-o B∙ G ⦄
+              ⦃ _ : GUnit-o B∙ F⁻ ⦄ {a : A} {b : B} {c : C} {f : F a b}
+              {g : G b c} →
+              quasi-inverse f → quasi-inverse g → quasi-inverse (f ∙ g)
+  qinvᴱ→is-equivᴱ
+            : {A.ℓᵃ : Level} {@0 A : Type A.ℓᵃ} {B.ℓᵇ : Level}
+              {@0 B : Type B.ℓᵇ} {@0 f : A → B} →
+              quasi-inverseᴱ f → is-equivᴱ f
+  qinvᴱ≃qinv
+            : {A.ℓᵃ : Level} {@0 A : Type A.ℓᵃ} {B.ℓᵇ : Level}
+              {@0 B : Type B.ℓᵇ} {@0 f : A → B} →
+              quasi-inverseᴱ f ≃ quasi-inverse f
+  qinv→fibre-is-prop
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              {f : A → B} (r : quasi-inverse f) (y : B) (x₀ x₁ : A)
+              (p₀ : f x₀ ＝ y) (p₁ : f x₁ ＝ y) →
+              (x₀ , p₀) ＝ (x₁ , p₁)
+  qinv→has-section
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} {f : F x y} →
+              quasi-inverse f → has-section f
+  qinv→is-biinv
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} {f : F x y} →
+              quasi-inverse f → is-biinv f
+  qinv→is-equiv
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              {f : A → B} (r : quasi-inverse f) →
+              is-equiv f
+  qinv→is-of-hlevel
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ : Level} {B : Type B.ℓ}
+              (h : HLevel) (f : A → B) →
+              quasi-inverse f → is-of-hlevel h A → is-of-hlevel h B
+  qinv→qinvᴱ
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              {f : A → B} →
+              quasi-inverse f → quasi-inverseᴱ f
+  qinv→retract
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} (f : F x y) →
+              quasi-inverse f → Retract G x y
+  qinv→retract⁻
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} (f : F x y) →
+              quasi-inverse f → Retract F y x
+  qinv→≅    : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} (f : F x y) →
+              quasi-inverse f → Iso F G x y
+  quasi-inverse
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ : Refl A∙ ⦄
+              ⦃ _ : Comp F G A∙ ⦄ ⦃ _ : Refl B∙ ⦄ ⦃ _ : Comp G F B∙ ⦄ {x : A}
+              {y : B} (f : F x y) →
+              Type (ℓa∙ ⊔ ℓb∙ ⊔ ℓh)
+  quasi-inverseᴱ
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level} {B : Type B.ℓ′}
+              (f : A → B) →
+              Type (A.ℓ ⊔ B.ℓ′)
+  recall    : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              (f : (x : A) → B x) (x : A) →
+              Recall f x (f x)
+  recompute : {@0 ℓ : Level} {@0 A : Type ℓ} →
+              Recomputable A → Erased A → A
+  refl      : {ℓa ℓ : Level} {A : Type ℓa} {_~_ : A → A → Type ℓ}
+              ⦃ r : Refl _~_ ⦄ →
+              Reflexivity _~_
+  refl-helper
+            : {ℓ : Level} {A : Type ℓ} {x : A} → x ＝ x
+  reflₚ     : {A.ℓ : Level} {A : Type A.ℓ} {x : A} → x ＝ x
+  resizing-cond
+            : {ℓ ℓ′ : Level} {X : Type ℓ} (s : is-of-size ℓ′ X) → s .fst ≃ X
+  retract-qinv→section-qinv
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : Type ℓ′} (r : Retractₜ A B) →
+              quasi-inverse (r .fst) → quasi-inverse (r .snd .section)
+  retraction
+            : {@0 ℓa ℓa∙ ℓb ℓh : Level} {@0 A : Type ℓa} {@0 B : Type ℓb}
+              {@0 I = I₁ : A → B → Type ℓh} {@0 O : B → A → Type ℓh}
+              {@0 A∙ : A → A → Type ℓa∙} ⦃ @0 r : Refl A∙ ⦄
+              ⦃ @0 t : Comp I₁ O A∙ ⦄ {@0 x : A} {@0 y : B} {@0 s : I₁ x y} →
+              has-retraction s → O y x
+  retract→is-contr
+            : {B.ℓ : Level} {B : Type B.ℓ} {A.ℓ : Level} {A : Type A.ℓ} →
+              Retractₜ B A → is-contr A → is-contr B
+  retract→is-of-hlevel
+            : {B.ℓ : Level} {B : Type B.ℓ} {A.ℓ : Level} {A : Type A.ℓ}
+              (n : HLevel) →
+              Retractₜ B A → is-of-hlevel n A → is-of-hlevel n B
+  retract→is-prop
+            : {B.ℓ : Level} {B : Type B.ℓ} {A.ℓ : Level} {A : Type A.ℓ} →
+              Retractₜ B A → is-prop A → is-prop B
+  rirr      : Modality′
+  second    : {ℓᵃ ℓᵇ ℓᶜ : Level} {A : Type ℓᵃ} {B : A → Type ℓᵇ}
+              {C : A → Type ℓᶜ} →
+              ({x : A} → B x → C x) → Σₜ A B → Σₜ A C
+  section   : {@0 ℓa ℓb ℓb∙ ℓh : Level} {@0 A : Type ℓa}
+              {@0 B : Type ℓb} {@0 I = I₁ : B → A → Type ℓh}
+              {@0 O : A → B → Type ℓh} {@0 B∙ : B → B → Type ℓb∙}
+              ⦃ @0 _ = z : Refl B∙ ⦄ ⦃ @0 _ = z₁ : Comp I₁ O B∙ ⦄ {@0 x : A}
+              {@0 y : B} {@0 r : O x y} →
+              has-section r → I₁ y x
+  set-identity-is-prop
+            : {R..1 : Level} {A : Type R..1} {R.ℓ′ : Level}
+              {R : A → A → Type R.ℓ′} {r : (a : A) → R a a} {a b : A} →
+              is-identity-system R r → is-set A → is-prop (R a b)
+  set-identity-system
+            : {R..1 : Level} {R.A : Type R..1} {R.ℓ′ : Level}
+              {R : R.A → R.A → Type R.ℓ′} {r : (x : R.A) → R x x} →
+              ((x y : R.A) → is-prop (R x y)) →
+              ({x y : R.A} → R x y → x ＝ y) → is-identity-system R r
+  set-identity-system!
+            : {R..1 : Level} {R.A : Type R..1} {R.ℓ′ : Level}
+              {R : R.A → R.A → Type R.ℓ′} {r : (x : R.A) → R x x}
+              ⦃ R-pr : {x y : R.A} → H-Level 1 (R x y) ⦄ →
+              ({x y : R.A} → R x y → x ＝ y) → is-identity-system R r
+  singletonᴾ-is-contr
+            : {ℓ : Level} (A : I → Type ℓ) (a : A i0) →
+              is-contr (Singletonᴾ A a)
+  singletonᴾ-is-prop
+            : {ℓ : Level} (A : I → Type ℓ) (a : A i0) (s : Singletonᴾ A a) →
+              (transport A a , transport-filler A a) ＝ s
+  singletonₚ-is-contr
+            : {ℓ : Level} {A : Type ℓ} {a : A} →
+              Singletonₚ a → is-contr (Singletonₚ a)
+  singletonₚ-is-prop
+            : {ℓ : Level} {A : Type ℓ} {a : A} (s : Singletonₚ a) →
+              (a , reflₚ) ＝ s
+  size      : {ℓᵃ : Level} {A : Type ℓᵃ} (ℓ : Level)
+              ⦃ s : Size ℓ A ⦄ →
+              is-of-size ℓ A
+  size-instance
+            : {@0 ℓ : Level} {@0 ℓ′ : Level} {@0 T : Type ℓ}
+              (has-of-size : is-of-size ℓ′ T) →
+              Size ℓ′ T
+  snd       : {a b : Level} {A : Type a} {B : A → Type b}
+              (r : Σₜ A B) →
+              B (r .fst)
+  square→commutes
+            : {ℓ : Level} {A : Type ℓ} {w x y z : A} {p : w ＝ x} {q : w ＝ y}
+              {s : x ＝ z} {r : y ＝ z} →
+              Square p q r s → p ∙ₚ s ＝ q ∙ₚ r
+  square→conjugate
+            : {ℓ : Level} {A : Type ℓ} {w x y z : A} {p : x ＝ y} {q : x ＝ z}
+              {r : z ＝ w} {s : y ＝ w} →
+              Square p q r s → s ＝ p ⁻¹ ∙ₚ q ∙ₚ r
+  strict-contr-fibres
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : Type ℓ′} {f : A → B} (g : B → A)
+              (b : B) →
+              Σₜ (fibre f (f (g b)))
+              (λ t →
+                 (x : fibre f b) →
+                 Path (fibre f (f (g b))) t (g (f (x .fst)) , ap (f ∘ g) (x .snd)))
+  subst     : {y..1 : Level} {A : Type y..1} {ℓ′ : Level} {x y : A}
+              (B : A → Type ℓ′) →
+              x ＝ y → B x → B y
+  subst-comp
+            : {ℓ ℓ′ : Level} {A : Type ℓ} (B : A → Type ℓ′) {x y z : A}
+              (p : x ＝ y) (q : y ＝ z) (u : B x) →
+              subst B (p ∙ₚ q) u ＝ subst B q (subst B p u)
+  subst-filler
+            : {y..1 : Level} {A : Type y..1} {ℓ′ : Level} {x y : A}
+              (B : A → Type ℓ′) (p : x ＝ y) (b : B x) →
+              Pathᴾ-syntax (λ i → B (p i)) b (subst B p b)
+  subst-is-equiv
+            : {y..1 : Level} {A : Type y..1} {ℓ′ : Level} {x y : A}
+              {B : A → Type ℓ′} (p : x ＝ y) →
+              is-equiv (subst B p)
+  subst-path-both
+            : {A.ℓ : Level} {A : Type A.ℓ} {x x′ : A} (p : x ＝ x)
+              (adj : x ＝ x′) →
+              subst (λ x₁ → x₁ ＝ x₁) adj p ＝ symₚ adj ∙ₚ p ∙ₚ adj
+  subst-path-left
+            : {ℓᵃ : Level} {A : Type ℓᵃ} {x y x′ : A} (p : x ＝ y)
+              (left : x ＝ x′) →
+              subst (λ e → e ＝ y) left p ＝ left ⁻¹ ∙ₚ p
+  subst-path-right
+            : {ℓᵃ : Level} {A : Type ℓᵃ} {x y y′ : A} (p : x ＝ y)
+              (right : y ＝ y′) →
+              subst (_＝_ x) right p ＝ p ∙ₚ right
+  subst-refl
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′} {x : A}
+              (px : B x) →
+              subst B (λ _ → x) px ＝ px
+  subst-slice
+            : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} (B : A → Type ℓ′)
+              (C : A → Type ℓ″) (F : {x : A} → B x → C x) {x y : A} (p : x ＝ y)
+              (b : B x) →
+              subst C p (F b) ＝ F (subst B p b)
+  subst-slice-filler
+            : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} (B : A → Type ℓ′)
+              (C : A → Type ℓ″) (F : {x : A} → B x → C x) {x y : A} (p : x ＝ y) →
+              Pathᴾ-syntax (λ i → B (p i) → C (p i)) F
+              (subst C p ∘ F ∘ subst B (sym p))
+  subst-≃   : {y..1 : Level} {A : Type y..1} {ℓ′ : Level} {x y : A}
+              (P : A → Type ℓ′) →
+              x ＝ y → P x ≃ P y
+  subst²    : {ℓ′ y..1 : Level} {A : Type y..1} {ℓ″ : Level}
+              {x y : A} {B : Type ℓ′} {z w : B} (C : A → B → Type ℓ″) →
+              x ＝ y → z ＝ w → C x z → C y w
+  subst²-filler
+            : {ℓ′ y..1 : Level} {A : Type y..1} {ℓ″ : Level} {x y : A}
+              {B : Type ℓ′} {z w : B} (C : A → B → Type ℓ″) (p : x ＝ y)
+              (q : z ＝ w) (c : C x z) →
+              Pathᴾ-syntax (λ i → C (p i) (q i)) c (subst² C p q c)
+  substᴱ    : {ℓ ℓ′ : Level} {@0 A : Type ℓ} (B : @0 A → Type ℓ′)
+              {@0 x y : A} →
+              Erased (x ＝ y) → B x → B y
+  subst⁻-filler
+            : {ℓ ℓ′ : Level} {A : Type ℓ} (B : A → Type ℓ′) {x y : A}
+              (p : x ＝ y) (b : B y) →
+              Pathᴾ-syntax (λ i → B (p (~ i))) b (subst B (sym p) b)
+  subst⁻-subst
+            : {ℓ ℓ′ : Level} {A : Type ℓ} (B : A → Type ℓ′) {x y : A}
+              (p : x ＝ y) (u : B x) →
+              subst B (sym p) (subst B p u) ＝ u
+  suc       : ℕ → ℕ
+  sym       : {ℓᵃ ℓ : Level} {A : Type ℓᵃ} {R : A → A → Type ℓ}
+              ⦃ r : Sym R ⦄ {x y : A} →
+              R x y → R y x
+  sym-∙     : {z..1 : Level} {z.A : Type z..1} {x y z : z.A}
+              (p : x ＝ y) (q : y ＝ z) →
+              symₚ (p ∙ₚ q) ＝ symₚ q ∙ₚ symₚ p
+  sym-≃     : {y..1 : Level} {y.A : Type y..1} {x y : y.A} →
+              x ＝ y ≃ y ＝ x
+  symₚ      : {A.ℓ : Level} {A : Type A.ℓ} {x y : A} → x ＝ y → y ＝ x
+  the       : {ℓ : Level} (A : Type ℓ) → A → A
+  tiltₑ     : {ℓᵃ : Level} {A : Type ℓᵃ} {a b c : A} {ab : a ＝ b}
+              {bc : b ＝ c} {ac : a ＝ c} →
+              ab ⁻¹ ∙ₚ ac ＝ bc ≃ ab ＝ ac ∙ₚ bc ⁻¹
+  to-from-pathᴾ
+            : {ℓ : Level} {A : I → Type ℓ} {x : A i0} {y : A i1}
+              (p : Pathᴾ-syntax A x y) →
+              to-pathᴾ (from-pathᴾ p) ＝ p
+  to-path   : {@0 ℓ ℓ′ : Level} {@0 A : Type ℓ}
+              {@0 R : A → A → Type ℓ′} {@0 rfl : (a : A) → R a a} →
+              is-identity-system R rfl → {a b : A} → R a b → a ＝ b
+  to-path-over
+            : {@0 ℓ ℓ′ : Level} {@0 A : Type ℓ} {@0 R : A → A → Type ℓ′}
+              {@0 rfl : (a : A) → R a a} (r : is-identity-system R rfl) {a b : A}
+              (p : R a b) →
+              Pathᴾ-syntax (λ i → R a (r .to-path p i)) (rfl a) p
+  to-path-refl
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {R : A → A → Type ℓ′}
+              {r : (a : A) → R a a} {x : A} (ids : is-identity-system R r) →
+              ids .to-path (r x) ＝ (λ _ → x)
+  to-pathᴾ  : {ℓ : Level} {A : I → Type ℓ} {x : A i0} {y : A i1} →
+              coe0→1 A x ＝ y → Pathᴾ-syntax A x y
+  to-pathᴾ⁻ : {ℓ : Level} {A : I → Type ℓ} {x : A i0} {y : A i1} →
+              x ＝ coe1→0 A y → Pathᴾ-syntax A x y
+  total     : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {P : A → Type ℓ′}
+              {Q : A → Type ℓ″} →
+              ((x : A) → P x → Q x) → Σₜ A P → Σₜ A Q
+  total-fibres-equiv
+            : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {P : A → Type ℓ′}
+              {Q : A → Type ℓ″} {x : A} {v : Q x} {f : (x₁ : A) → P x₁ → Q x₁} →
+              fibre (f x) v ≃ fibre (total f) (x , v)
+  total-is-equiv→fibrewise-is-equiv
+            : {Q.A : Level} {A : Type Q.A} {P.ℓ′ : Level} {P : A → Type P.ℓ′}
+              {Q.ℓ″ : Level} {Q : A → Type Q.ℓ″} {f : (x : A) → P x → Q x} →
+              is-equiv (total f) → {x : A} → is-equiv (f x)
+  transfer-identity-system
+            : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ ℓ″ : Level}
+              {R : A → A → Type ℓ′} {S : A → A → Type ℓ″} {r : (a : A) → R a a}
+              {s : (a : A) → S a a} (ids : is-identity-system R r)
+              (eqv : (x y : A) → R x y ≃ S x y)
+              (pres : (x : A) → eqv x x .fst (r x) ＝ s x) →
+              is-identity-system S s
+  transp    : {ℓ : I → Level} (A : (i : I) → Type (ℓ i)) →
+              I → A i0 → A i1
+  transp-proof-builtin
+            : {l : Level} (e : I → Type l) (φ : I) (a : Partial φ (e i0))
+              (b : e i1 [ φ ↦ (λ .o → transp e i0 (a _)) ]) →
+              Helpers.fiber (transp e i0) (outS b)
+  transport : {ℓ : Level} {A B : Type ℓ} → A ＝ B → A → B
+  transport-comp
+            : {ℓ : Level} {C : Type ℓ} {A B : Type ℓ} (p : A ＝ B) (q : B ＝ C)
+              (x : A) →
+              transport (p ∙ₚ q) x ＝ transport q (transport p x)
+  transport-filler
+            : {ℓ : Level} {A B : Type ℓ} (p : A ＝ B) (x : A) →
+              Pathᴾ-syntax (λ i → p i) x (transport p x)
+  transport-filler-ext
+            : {B.ℓ : Level} {A B : Type B.ℓ} (p : A ＝ B) →
+              Pathᴾ-syntax (λ i → A → p i) id (transport p)
+  transport-flip
+            : {ℓ : Level} {A : I → Type ℓ} {x : A i0} {y : A i1} →
+              x ＝ transport (λ i → A (~ i)) y → transport A x ＝ y
+  transport-is-equiv
+            : {B.ℓ : Level} {A B : Type B.ℓ} (p : A ＝ B) →
+              is-equiv (transport p)
+  transport-line-equiv
+            : {ℓ̂ : I → Level} (P : (i : I) → Type (ℓ̂ i)) (i : I) →
+              P i ≃ Foundations.Equiv.Base.R P
+  transport-line-is-equiv
+            : {ℓ̂ : I → Level} (P : (i : I) → Type (ℓ̂ i)) (i : I) →
+              is-equiv (Foundations.Equiv.Base.g P i)
+  transport-path
+            : {ℓᵃ : Level} {A : Type ℓᵃ} {x y x′ y′ : A} (p : x ＝ y)
+              (left : x ＝ x′) (right : y ＝ y′) →
+              transport (λ i → left i ＝ right i) p ＝ left ⁻¹ ∙ₚ p ∙ₚ right
+  transport-refl
+            : {ℓ : Level} {A : Type ℓ} (x : A) → transport (λ _ → A) x ＝ x
+  transport⁻-filler-ext
+            : {ℓ : Level} {A B : Type ℓ} (p : A ＝ B) →
+              Pathᴾ-syntax (λ i → p i → A) id (transport (sym p))
+  transport⁻-transport
+            : {ℓ : Level} {A B : Type ℓ} (p : A ＝ B) (a : A) →
+              transport (sym p) (transport p a) ＝ a
+  tt        : ⊤ₜ
+  ua        : {B.ℓ : Level} {A B : Type B.ℓ} → A ≃ B → A ＝ B
+  ua-glue   : {B.ℓ : Level} {A B : Type B.ℓ} (e : A ≃ B) (i : I)
+              (x : Partial (~ i) A)
+              (y : B [ ~ i ↦ (λ @0 { (i = i0) → e .fst (x _) }) ]) →
+              ua e i [ ~ i ∨ i ↦ (λ @0 { (i = i0) → x _ ; (i = i1) → outS y }) ]
+  ua-idₑ    : {A.ℓ : Level} {A : Type A.ℓ} →
+              ua ((λ x → x) , id-is-equiv) ＝ (λ _ → A)
+  ua-pathᴾ→=
+            : {B.ℓ : Level} {A B : Type B.ℓ} (e : A ≃ B) {x : A} {y : B} →
+              Pathᴾ-syntax (λ i → ua e i) x y → e .fst x ＝ y
+  ua-pathᴾ≃=
+            : {B.ℓ : Level} {A B : Type B.ℓ} (e : A ≃ B) {x : A} {y : B} →
+              e .fst x ＝ y ≃ Pathᴾ-syntax (λ i → ua e i) x y
+  ua-unglue : {B.ℓ : Level} {A B : Type B.ℓ} (e : A ≃ B) (i : I) →
+              ua e i → B
+  ua-β      : {B.ℓ : Level} {A B : Type B.ℓ} (e : A ≃ B) (x : A) →
+              transport (ua e) x ＝ e .fst x
+  ua-β⁻¹    : {B.ℓ : Level} {A B : Type B.ℓ} (e : A ≃ B) (x : B) →
+              transport (λ i → ua e (~ i)) x ＝ is-equiv→inverse (e .snd) x
+  ua-η      : {B.ℓ : Level} {A B : Type B.ℓ} (p : A ＝ B) →
+              ua (=→≃ p) ＝ p
+  ua-∙ₑ     : {ℓ : Level} {A B C : Type ℓ} (f : A ≃ B) (g : B ≃ C) →
+              ua (f ∙ₑ g) ＝ ua f ∙ₚ ua g
+  ua→       : {ℓ ℓ′ : Level} {A₀ A₁ : Type ℓ} {e : A₀ ≃ A₁}
+              {B : I → Type ℓ′} {f₀ : A₀ → B i0} {f₁ : A₁ → B i1} →
+              ((x : A₀) → Pathᴾ-syntax B (f₀ x) (f₁ (e .fst x))) →
+              Pathᴾ-syntax (λ i → ua e i → B i) f₀ f₁
+  uncongPᴱ  : {ℓ ℓ′ : Level} {@0 A : Type ℓ} {@0 x y : A}
+              {@0 p : x ＝ y} {@0 B : A → Type ℓ′} {@0 b₁ : B x} {@0 b₂ : B y} →
+              Pathᴾ-syntax (λ i → Erased (B (p i))) (erase b₁) (erase b₂) →
+              Erased (Pathᴾ-syntax (λ i → B (p i)) b₁ b₂)
+  uncongᴱ   : {ℓ : Level} {@0 A : Type ℓ} {@0 x y : A} →
+              erase x ＝ erase y → Erased (x ＝ y)
+  unglue    : {ℓ ℓ′ : Level} {A : Type ℓ} (φ : I)
+              {T : Partial φ (Type ℓ′)} {e : PartialP φ (λ .p → T _ ≃ A)} →
+              Agda.Builtin.Cubical.Glue.primGlue A T e → A
+  unglue-is-equiv
+            : {ℓ ℓ′ : Level} {A : Type ℓ} (φ : I)
+              {B : Partial φ (Σₜ (Type ℓ′) (λ X → X ≃ A))} →
+              is-equiv (unglue φ)
+  univalence
+            : {B.ℓ : Level} {A B : Type B.ℓ} → is-equiv =→≃
+  univalence-identity-system
+            : {ℓ : Level} →
+              is-identity-system _≃_ (λ z → (λ x → x) , id-is-equiv)
+  univalence⁻¹
+            : {B.ℓ : Level} {A B : Type B.ℓ} → is-equiv ua
+  ur        : Modality′
+  whisker-bothₑ
+            : {ℓ ℓ′ ℓ″ ℓ‴ : Level} {A : Type ℓ} {B : Type ℓ′} {C : Type ℓ″}
+              {D : Type ℓ‴} →
+              A ≃ C → B ≃ D → (A ≃ B) ≃ (C ≃ D)
+  whisker-lₑ
+            : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : Type ℓ′} {C : Type ℓ″} →
+              A ≃ C → (A ≃ B) ≃ (C ≃ B)
+  whisker-path-l
+            : {ℓ : Level} {A : Type ℓ} {x y z : A} → x ＝ y → (x ＝ z) ＝ (y ＝ z)
+  whisker-path-lₑ
+            : {b..1 : Level} {b.A : Type b..1} {a c b : b.A} →
+              a ＝ c → a ＝ b ≃ c ＝ b
+  whisker-path-r
+            : {ℓ : Level} {A : Type ℓ} {x y z : A} → y ＝ z → (x ＝ y) ＝ (x ＝ z)
+  whisker-path-rₑ
+            : {a..1 : Level} {a.A : Type a..1} {b c a : a.A} →
+              b ＝ c → a ＝ b ≃ a ＝ c
+  whisker-rₑ
+            : {B.ℓ′ : Level} {B : Type B.ℓ′} {C.ℓ″ : Level} {C : Type C.ℓ″}
+              {A.ℓ : Level} {A : Type A.ℓ} →
+              B ≃ C → (A ≃ B) ≃ (A ≃ C)
+  zero      : ℕ
+  ~_        : I → I
+  ~⟨⟩-syntax
+            : {ℓᵃ ℓᵇ ℓᶜ ℓ ℓ′ ℓ″ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ}
+              {C : Type ℓᶜ} {_~L_ : A → B → Type ℓ} {_~R_ : B → C → Type ℓ′}
+              {_~O_ : A → C → Type ℓ″} ⦃ tra : Comp _~L_ _~R_ _~O_ ⦄ (x : A)
+              {y : B} {z : C} →
+              x ~L y → y ~R z → x ~O z
+  ¬_        : {ℓa ℓ ℓ′ : Level} {A : Type ℓa} {R : Type ℓ}
+              ⦃ r : ¬-notation A R ⦄ (a : A) ⦃ _ : r .¬-notation.Constraint a ⦄ →
+              R
+  ¬-notation
+            : {ℓa ℓ ℓ′ : Level} (A : Type ℓa) (R : Type ℓ) →
+              Type (ℓa ⊔ ℓ ⊔ ℓsuc ℓ′)
+  ×-Fun     : {ℓᵃ ℓᵇ ℓ ℓ′ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ}
+              {X : A → Type ℓ} {Y : B → Type ℓ′} →
+              ×-notation ((a : A) → X a) ((b : B) → Y b)
+              ((ab : A ×ₜ B) → X (ab .fst) ×ₜ Y (ab .snd))
+  ×-Type    : {ℓ ℓ′ : Level} →
+              ×-notation (Type ℓ) (Type ℓ′) (Type (ℓ ⊔ ℓ′))
+  ×-ap      : {ℓ′ ℓ″ ℓ‴ A.ℓ : Level} {A : Type A.ℓ} {B : Type ℓ′}
+              {C : Type ℓ″} {D : Type ℓ‴} →
+              A ≃ C → B ≃ D → A ×ₜ B ≃ C ×ₜ D
+  ×-assoc   : {ℓ′ ℓ″ A.ℓ : Level} {A : Type A.ℓ} {B : Type ℓ′}
+              {C : Type ℓ″} →
+              A ×ₜ B ×ₜ C ≃ (A ×ₜ B) ×ₜ C
+  ×-is-of-hlevel
+            : {ℓ′ A.ℓ : Level} {A : Type A.ℓ} {B : Type ℓ′} (n : HLevel) →
+              is-of-hlevel n A → is-of-hlevel n B → is-of-hlevel n (A ×ₜ B)
+  ×-is-of-size
+            : {ℓ ℓ′ ℓ″ ℓ‴ : Level} {A : Type ℓ} {B : Type ℓ′} →
+              is-of-size ℓ″ A → is-of-size ℓ‴ B → is-of-size (ℓ″ ⊔ ℓ‴) (A ×ₜ B)
+  ×-notation
+            : {ℓa ℓb ℓ ℓ′ : Level} (A : Type ℓa) (B : Type ℓb) (R : Type ℓ) →
+              Type (ℓa ⊔ ℓb ⊔ ℓ ⊔ ℓsuc ℓ′)
+  ×-path    : {ℓ′ A.ℓ : Level} {A : Type A.ℓ} {B : Type ℓ′} {a c : A}
+              {b d : B} →
+              a ＝ c → b ＝ d → (a , b) ＝ (c , d)
+  ×-path-inv
+            : {ℓ′ A.ℓ : Level} {A : Type A.ℓ} {B : Type ℓ′} {a c : A}
+              {b d : B} →
+              (a , b) ＝ (c , d) → (a ＝ c) ×ₜ (b ＝ d)
+  ×-swap    : {ℓ′ A.ℓ : Level} {A : Type A.ℓ} {B : Type ℓ′} →
+              A ×ₜ B ≃ B ×ₜ A
+  Π         : {ℓa ℓb ℓ : Level} {A : Type ℓa}
+              ⦃ _ = x : Underlying A ⦄ {B : Type ℓb} {R : Type ℓ}
+              ⦃ r : Π-notation A B R ⦄ (X : A) →
+              (⌞ X ⌟ → B) → R
+  Π-Type    : {ℓ ℓ′ : Level} {A : Type ℓ}
+              ⦃ ua = ua₁ : Underlying A ⦄ →
+              Π-notation A (Type ℓ′) (Type (ℓ′ ⊔ ua₁ .Underlying.ℓ-underlying))
+  Π-ap      : {ℓ ℓ′ ℓ″ ℓ‴ : Level} {A : Type ℓ} {A′ : Type ℓ′}
+              {P : A → Type ℓ″} {Q : A′ → Type ℓ‴} (e : A ≃ A′) →
+              ((x : A) → P x ≃ Q (e $ x)) → ((x : A) → P x) ≃ ((x : A′) → Q x)
+  Π-cod-≃   : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ ℓ″ : Level}
+              {P : A → Type ℓ′} {Q : A → Type ℓ″} →
+              ((x : A) → P x ≃ Q x) → ((x : A) → P x) ≃ ((x : A) → Q x)
+  Π-contract-dom
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {P : A → Type ℓ′}
+              (A-c : is-contr A) →
+              ((x : A) → P x) ≃ P (centre A-c)
+  Π-dom-≃   : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : Type ℓ′}
+              {P : A → Type ℓ″} (e : B ≃ A) →
+              ((x : A) → P x) ≃ ((x : B) → P (e $ x))
+  Π-is-of-hlevel
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′} (h : HLevel) →
+              ((x : A) → is-of-hlevel h (B x)) → is-of-hlevel h ((x : A) → B x)
+  Π-is-of-size
+            : {ℓ ℓ′ ℓ″ ℓ‴ : Level} {A : Type ℓ} {B : A → Type ℓ′} →
+              is-of-size ℓ″ A →
+              ((a : A) → is-of-size ℓ‴ (B a)) →
+              is-of-size (ℓ″ ⊔ ℓ‴) ((x : A) → B x)
+  Π-notation
+            : {ℓa ℓb ℓ : Level} (A : Type ℓa) ⦃ _ : Underlying A ⦄
+              (B : Type ℓb) (R : Type ℓ) →
+              Typeω
+  Π[_]      : {ℓ : Level} {A : Type ℓ} ⦃ r : Closure-Π A ⦄ →
+              A → Type (r .Closure-Π.ℓ-total-Π)
+  Π²-is-of-hlevel
+            : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ ℓ″ : Level} {B : A → Type ℓ′}
+              {C : (a : A) → B a → Type ℓ″} (n : HLevel) →
+              ((x : A) (y : B x) → is-of-hlevel n (C x y)) →
+              is-of-hlevel n ((x : A) (y : B x) → C x y)
+  Π³-is-of-hlevel
+            : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ ℓ″ ℓ‴ : Level} {B : A → Type ℓ′}
+              {C : (a : A) → B a → Type ℓ″}
+              {D : (a : A) (b : B a) → C a b → Type ℓ‴} (n : HLevel) →
+              ((x : A) (y : B x) (z : C x y) → is-of-hlevel n (D x y z)) →
+              is-of-hlevel n ((x : A) (y : B x) (z : C x y) → D x y z)
+  Πᴱ        : {ℓa ℓb ℓ : Level} {A : Type ℓa}
+              ⦃ _ = x : Underlying A ⦄ {B : Type ℓb} {R : Type ℓ}
+              ⦃ r : Πᴱ-notation A B R ⦄ (X : A) →
+              (@0 ⌞ X ⌟ → B) → R
+  Πᴱ-Type   : {ℓ ℓ′ : Level} {A : Type ℓ}
+              ⦃ ua = ua₁ : Underlying A ⦄ →
+              Πᴱ-notation A (Type ℓ′) (Type (ℓ′ ⊔ ua₁ .Underlying.ℓ-underlying))
+  Πᴱ-notation
+            : {ℓa ℓb ℓ : Level} (A : Type ℓa) ⦃ _ : Underlying A ⦄
+              (B : Type ℓb) (R : Type ℓ) →
+              Typeω
+  Π≃∀       : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ : Level}
+              {P : A → Type ℓ′} →
+              ((x : A) → P x) ≃ ({x : A} → P x)
+  Σ         : {ℓa ℓb ℓ : Level} {A : Type ℓa}
+              ⦃ _ = x : Underlying A ⦄ {B : Type ℓb} {R : Type ℓ}
+              ⦃ r : Σ-notation A B R ⦄ (X : A) →
+              (⌞ X ⌟ → B) → R
+  Σ-Type    : {ℓ ℓ′ : Level} {A : Type ℓ}
+              ⦃ ua = ua₁ : Underlying A ⦄ →
+              Σ-notation A (Type ℓ′) (Type (ℓ′ ⊔ ua₁ .Underlying.ℓ-underlying))
+  Σ-ap      : {ℓ ℓ′ ℓ″ ℓ‴ : Level} {A : Type ℓ} {A′ : Type ℓ′}
+              {P : A → Type ℓ″} {Q : A′ → Type ℓ‴} (e : A ≃ A′) →
+              ((x : A) → P x ≃ Q (e .fst x)) → Σₜ A P ≃ Σₜ A′ Q
+  Σ-ap-fst  : {A.ℓ : Level} {A : Type A.ℓ} {B..1 : Level}
+              {A′ : Type B..1} {B.ℓ″ : Level} {B : A′ → Type B.ℓ″} (e : A ≃ A′) →
+              Σₜ A (B ∘ e .fst) ≃ Σₜ A′ B
+  Σ-ap-snd  : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {P : A → Type ℓ′}
+              {Q : A → Type ℓ″} →
+              ((x : A) → P x ≃ Q x) → Σₜ A P ≃ Σₜ A Q
+  Σ-assoc   : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              {C : (a : A) → B a → Type ℓ″} →
+              Σₜ A (λ x → Σₜ (B x) (C x)) ≃
+              Σₜ (Σₜ A B)
+              (λ .patternInTele0 →
+                 C (.patternInTele0 .fst) (.patternInTele0 .snd))
+  Σ-contract-fst
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              (A-c : is-contr A) →
+              Σₜ A B ≃ B (centre A-c)
+  Σ-contract-snd
+            : {B.ℓ″ B.A : Level} {A : Type B.A} {B : A → Type B.ℓ″} →
+              ((x : A) → is-contr (B x)) → Σₜ A B ≃ A
+  Σ-contract-sndᴱ
+            : {ℓᵃ ℓᵇ : Level} {A : Type ℓᵃ} {B : A → Type ℓᵇ} →
+              ((x : A) → is-contrᴱ (B x)) → Σₜ A B ≃ᴱ A
+  Σ-inj-set : {B..1 : Level} {A : Type B..1} {B.ℓ″ : Level}
+              {B : A → Type B.ℓ″} {x : A} {y z : B x} →
+              is-set A → Path (Σₜ A B) (x , y) (x , z) → y ＝ z
+  Σ-inj-set!
+            : {B..1 : Level} {A : Type B..1} {B.ℓ″ : Level} {B : A → Type B.ℓ″}
+              {x : A} {y z : B x} ⦃ A-set : H-Level 2 A ⦄ →
+              Path (Σₜ A B) (x , y) (x , z) → y ＝ z
+  Σ-is-of-hlevel
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′} (n : HLevel) →
+              is-of-hlevel n A →
+              ((x : A) → is-of-hlevel n (B x)) → is-of-hlevel n (Σₜ A B)
+  Σ-is-of-size
+            : {ℓ ℓ′ ℓ″ ℓ‴ : Level} {A : Type ℓ} {B : A → Type ℓ′} →
+              is-of-size ℓ″ A →
+              ((a : A) → is-of-size ℓ‴ (B a)) → is-of-size (ℓ″ ⊔ ℓ‴) (Σₜ A B)
+  Σ-notation
+            : {ℓa ℓb ℓ : Level} (A : Type ℓa) ⦃ _ : Underlying A ⦄
+              (B : Type ℓb) (R : Type ℓ) →
+              Typeω
+  Σ-path    : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              {x y : Σₜ A B} (p : x .fst ＝ y .fst) →
+              subst B p (x .snd) ＝ y .snd → x ＝ y
+  Σ-path-iso
+            : {ℓ ℓ′ : Level} {A : Type ℓ} {B : A → Type ℓ′} {x y : Σₜ A B} →
+              Isoₜ (Σₜ (x .fst ＝ y .fst) (λ p → subst B p (x .snd) ＝ y .snd))
+              (x ＝ y)
+  Σ-pathᴾ   : {ℓ ℓ′ : Level} {A : I → Type ℓ}
+              {B : (i : I) → A i → Type ℓ′} {x : Σₜ (A i0) (B i0)}
+              {y : Σₜ (A i1) (B i1)} (p : Pathᴾ-syntax A (x .fst) (y .fst)) →
+              Pathᴾ-syntax (λ i → B i (p i)) (x .snd) (y .snd) →
+              Pathᴾ-syntax (λ i → Σₜ (A i) (B i)) x y
+  Σ-pathᴾ-iso
+            : {ℓ ℓ′ : Level} {A : I → Type ℓ} {B : (i : I) → A i → Type ℓ′}
+              {x : Σₜ (A i0) (B i0)} {y : Σₜ (A i1) (B i1)} →
+              Isoₜ
+              (Σₜ (Pathᴾ-syntax A (x .fst) (y .fst))
+               (λ p → Pathᴾ-syntax (λ i → B i (p i)) (x .snd) (y .snd)))
+              (Pathᴾ-syntax (λ i → Σₜ (A i) (B i)) x y)
+  Σ-prop-path
+            : {B..1 : Level} {B.A : Type B..1} {B.ℓ″ : Level}
+              {B : B.A → Type B.ℓ″} →
+              ((x : B.A) → is-prop (B x)) →
+              {x y : Σₜ B.A B} → x .fst ＝ y .fst → x ＝ y
+  Σ-prop-path!
+            : {A.ℓ B.ℓ″ : Level} {A : Type A.ℓ} {B : A → Type B.ℓ″}
+              ⦃ B-pr : {x : A} → H-Level 1 (B x) ⦄ {x y : Σₜ A B} →
+              x .fst ＝ y .fst → x ＝ y
+  Σ-prop-path-is-equiv
+            : {B..1 : Level} {B.A : Type B..1} {B.ℓ″ : Level}
+              {B : B.A → Type B.ℓ″} (bp : (x : B.A) → is-prop (B x))
+              {x y : Σₜ B.A B} →
+              is-equiv (Σ-prop-path bp)
+  Σ-prop-path-≃
+            : {B..1 : Level} {B.A : Type B..1} {B.ℓ″ : Level}
+              {B : B.A → Type B.ℓ″} →
+              ((x : B.A) → is-prop (B x)) →
+              {x y : Σₜ B.A B} → x .fst ＝ y .fst ≃ x ＝ y
+  Σ-prop-pathᴾ
+            : {ℓ ℓ′ : Level} {A : I → Type ℓ} {B : (i : I) → A i → Type ℓ′} →
+              ((i : I) (x : A i) → is-prop (B i x)) →
+              {x : Σₜ (A i0) (B i0)} {y : Σₜ (A i1) (B i1)} →
+              Pathᴾ-syntax A (x .fst) (y .fst) →
+              Pathᴾ-syntax (λ i → Σₜ (A i) (B i)) x y
+  Σ-prop-pathᴾ!
+            : {ℓ ℓ′ : Level} {A : I → Type ℓ} {B : (i : I) → A i → Type ℓ′}
+              ⦃ _ : {i : I} {x : A i} → H-Level 1 (B i x) ⦄
+              {x : Σₜ (A i0) (B i0)} {y : Σₜ (A i1) (B i1)} →
+              Pathᴾ-syntax A (x .fst) (y .fst) →
+              Pathᴾ-syntax (λ i → Σₜ (A i) (B i)) x y
+  Σ-prop-square
+            : {ℓ ℓ' : Level} {A : Type ℓ} {B : A → Type ℓ'}
+              {w x y z : Σₜ A B} →
+              ((x₁ : A) → is-prop (B x₁)) →
+              {p : x ＝ w} {q : x ＝ y} {r : y ＝ z} {s : w ＝ z} →
+              Square (ap (λ r₁ → fst r₁) p) (ap (λ r₁ → fst r₁) q)
+              (ap (λ r₁ → fst r₁) r) (ap (λ r₁ → fst r₁) s) →
+              Square p q r s
+  Σ-prop-square!
+            : {ℓ ℓ' : Level} {A : Type ℓ} {B : A → Type ℓ'} {w x y z : Σₜ A B}
+              ⦃ _ : {x = x₁ : A} → H-Level 1 (B x₁) ⦄ {p : x ＝ w} {q : x ＝ y}
+              {r : y ＝ z} {s : w ＝ z} →
+              Square (ap (λ r₁ → fst r₁) p) (ap (λ r₁ → fst r₁) q)
+              (ap (λ r₁ → fst r₁) r) (ap (λ r₁ → fst r₁) s) →
+              Square p q r s
+  Σ-retract-fst
+            : {B..1 : Level} {A : Type B..1} {A′.ℓ′ : Level} {A′ : Type A′.ℓ′}
+              {B.ℓ″ : Level} {B : A → Type B.ℓ″} (r : Retractₜ A A′) →
+              Retractₜ (Σₜ A B) (Σₜ A′ (B ∘ r .fst))
+  Σ-retract-snd
+            : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {P : A → Type ℓ′}
+              {Q : A → Type ℓ″} →
+              ((x : A) → Retractₜ (P x) (Q x)) → Retractₜ (Σₜ A P) (Σₜ A Q)
+  Σ-square  : {ℓ ℓ' : Level} {A : Type ℓ} {B : A → Type ℓ'}
+              {w x y z : Σₜ A B} {p : x ＝ w} {q : x ＝ y} {r : y ＝ z} {s : w ＝ z}
+              (θ
+               : Square (ap (λ r₁ → fst r₁) p) (ap (λ r₁ → fst r₁) q)
+                 (ap (λ r₁ → fst r₁) r) (ap (λ r₁ → fst r₁) s)) →
+              Squareᴾ (λ i j → B (θ i j)) (ap (λ r₁ → snd r₁) q)
+              (ap (λ r₁ → snd r₁) p) (ap (λ r₁ → snd r₁) s)
+              (ap (λ r₁ → snd r₁) r) →
+              Square p q r s
+  Σ-swap    : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : Type ℓ′}
+              {C : A → B → Type ℓ″} →
+              Σₜ A (λ x → Σₜ B (C x)) ≃ Σₜ B (λ y → Σₜ A (λ x → C x y))
+  Σ-Π-distrib
+            : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : A → Type ℓ′}
+              {C : (x : A) → B x → Type ℓ″} →
+              ((x : A) → Σₜ (B x) (C x)) ≃
+              Σₜ ((x : A) → B x) (λ f → (x : A) → C x (f x))
+  Σ[_]      : {ℓ : Level} {A : Type ℓ} ⦃ r : Total-Σ A ⦄ →
+              A → Type (r .Total-Σ.ℓ-total-Σ)
+  Σₜ        : {a b : Level} (A : Type a) (B : A → Type b) →
+              Type (a ⊔ b)
+  ℓ-decidability
+            : {ℓ : Level} {A : Type ℓ} ⦃ r : Decidability A ⦄ → Level
+  ℓ-reflectance
+            : {ℓa ℓb : Level} {A : Type ℓa} {B : Type ℓb}
+              ⦃ r : Reflectance A B ⦄ →
+              Level
+  ℓ-total-Π : {ℓ : Level} {A : Type ℓ} ⦃ r : Closure-Π A ⦄ → Level
+  ℓ-total-Σ : {ℓ : Level} {A : Type ℓ} ⦃ r : Total-Σ A ⦄ → Level
+  ℓ-total-∀ : {ℓ : Level} {A : Type ℓ} ⦃ r : Closure-∀ A ⦄ → Level
+  ℓ-total-∀ᴱ
+            : {ℓ : Level} {A : Type ℓ} ⦃ r : Closure-∀ᴱ A ⦄ → Level
+  ℓ-underlying
+            : {ℓ : Level} {T : Type ℓ} ⦃ r : Underlying T ⦄ → Level
+  ℓsuc      : Level → Level
+  ℕ         : Type
+  ⇒-Type    : {ℓ ℓ′ : Level} →
+              ⇒-notation (Type ℓ) (Type ℓ′) (Type (ℓ ⊔ ℓ′))
+  ⇒-notation
+            : {ℓa ℓb ℓ ℓ′ : Level} (A : Type ℓa) (B : Type ℓb) (R : Type ℓ) →
+              Type (ℓa ⊔ ℓb ⊔ ℓ ⊔ ℓsuc ℓ′)
+  ∀-Type    : {ℓ ℓ′ : Level} {A : Type ℓ}
+              ⦃ ua = ua₁ : Underlying A ⦄ →
+              ∀-notation A (Type ℓ′) (Type (ℓ′ ⊔ ua₁ .Underlying.ℓ-underlying))
+  ∀-cod-≃   : {Q.A.1 : Level} {A : Type Q.A.1} {ℓ′ Q.ℓ′ : Level}
+              {Q : A → Type Q.ℓ′} {P : A → Type ℓ′} →
+              ((x : A) → P x ≃ Q x) → ({x : A} → P x) ≃ ({x : A} → Q x)
+  ∀-is-of-hlevel
+            : {A.ℓ : Level} {A : Type A.ℓ} {ℓ′ : Level} {B : A → Type ℓ′}
+              (h : HLevel) →
+              ((x : A) → is-of-hlevel h (B x)) → is-of-hlevel h ({x : A} → B x)
+  ∀-notation
+            : {ℓa ℓb ℓ : Level} (A : Type ℓa) ⦃ _ : Underlying A ⦄
+              (B : Type ℓb) (R : Type ℓ) →
+              Typeω
+  ∀[_]      : {ℓ : Level} {A : Type ℓ} ⦃ r : Closure-∀ A ⦄ →
+              A → Type (r .Closure-∀.ℓ-total-∀)
+  ∀ᴱ        : {ℓa ℓb ℓ : Level} {A : Type ℓa}
+              ⦃ _ = x : Underlying A ⦄ {B : Type ℓb} {R : Type ℓ}
+              ⦃ r : ∀ᴱ-notation A B R ⦄ (X : A) →
+              (@0 ⌞ X ⌟ → B) → R
+  ∀ᴱ-Type   : {ℓ ℓ′ : Level} {A : Type ℓ}
+              ⦃ ua = ua₁ : Underlying A ⦄ →
+              ∀ᴱ-notation A (Type ℓ′) (Type (ℓ′ ⊔ ua₁ .Underlying.ℓ-underlying))
+  ∀ᴱ-notation
+            : {ℓa ℓb ℓ : Level} (A : Type ℓa) ⦃ _ : Underlying A ⦄
+              (B : Type ℓb) (R : Type ℓ) →
+              Typeω
+  ∀ᴱ[_]     : {ℓ : Level} {A : Type ℓ} ⦃ r : Closure-∀ᴱ A ⦄ →
+              @0 A → Type (r .Closure-∀ᴱ.ℓ-total-∀ᴱ)
+  ∀′        : {ℓa ℓb ℓ : Level} {A : Type ℓa}
+              ⦃ _ = x : Underlying A ⦄ {B : Type ℓb} {R : Type ℓ}
+              ⦃ r : ∀-notation A B R ⦄ (X : A) →
+              (⌞ X ⌟ → B) → R
+  ∂         : I → I
+  ∃         : {ℓa ℓb ℓ : Level} {A : Type ℓa}
+              ⦃ _ = x : Underlying A ⦄ {B : Type ℓb} {R : Type ℓ}
+              ⦃ r : ∃-notation A B R ⦄ (X : A) →
+              (⌞ X ⌟ → B) → R
+  ∃!        : {ℓ ℓ′ : Level} (A : Type ℓ) →
+              (A → Type ℓ′) → Type (ℓ ⊔ ℓ′)
+  ∃!-syntax : {ℓ ℓ′ : Level} (A : Type ℓ) →
+              (A → Type ℓ′) → Type (ℓ ⊔ ℓ′)
+  ∃-notation
+            : {ℓa ℓb ℓ : Level} (A : Type ℓa) ⦃ _ : Underlying A ⦄
+              (B : Type ℓb) (R : Type ℓ) →
+              Typeω
+  ∙-assoc   : {ℓa ℓb ℓc ℓd ℓx ℓy ℓz ℓu ℓv ℓw : Level} {A : Type ℓa}
+              {B : Type ℓb} {C : Type ℓc} {D : Type ℓd} {X : A → B → Type ℓx}
+              {Y : B → C → Type ℓy} {Z : C → D → Type ℓz} {U : A → C → Type ℓu}
+              {V : B → D → Type ℓv} {W : A → D → Type ℓw} ⦃ tu : Comp X Y U ⦄
+              ⦃ tv : Comp Y Z V ⦄ ⦃ tw₁ : Comp X V W ⦄ ⦃ tw₂ : Comp U Z W ⦄
+              ⦃ r : GAssoc X Y Z U V W ⦄ {a : A} {b : B} {c : C} {d : D}
+              (p : X a b) (q : Y b c) (r₁ : Z c d) →
+              GAssociativity X Y Z U V W p q r₁ (p ∙ q) (q ∙ r₁) (p ∙ q ∙ r₁)
+              ((p ∙ q) ∙ r₁)
+  ∙-cancel-l
+            : {ℓ : Level} {A : Type ℓ} {x y z : A} (p : x ＝ y) (q : y ＝ z) →
+              p ⁻¹ ∙ₚ p ∙ₚ q ＝ q
+  ∙-cancel-l′
+            : {ℓ : Level} {A : Type ℓ} {x y : A} {p : x ＝ y} {q : y ＝ x} →
+              p ∙ₚ q ＝ (λ _ → x) → {z : A} {r : x ＝ z} → p ∙ₚ q ∙ₚ r ＝ r
+  ∙-cancel-r
+            : {ℓ : Level} {A : Type ℓ} {x y z : A} (p : x ＝ y) (q : z ＝ y) →
+              (p ∙ₚ q ⁻¹) ∙ₚ q ＝ p
+  ∙-cancel-r′
+            : {ℓ : Level} {A : Type ℓ} {x y : A} {p : x ＝ y} {q : y ＝ x} →
+              p ∙ₚ q ＝ (λ _ → x) → {z : A} {r : z ＝ x} → (r ∙ₚ p) ∙ₚ q ＝ r
+  ∙-cancel′-l
+            : {ℓ : Level} {A : Type ℓ} {x y z : A} (p : x ＝ y) (q r : y ＝ z) →
+              p ∙ₚ q ＝ p ∙ₚ r → q ＝ r
+  ∙-cancel′-r
+            : {ℓ : Level} {A : Type ℓ} {x y z : A} (p : y ＝ z) (q r : x ＝ y) →
+              q ∙ₚ p ＝ r ∙ₚ p → q ＝ r
+  ∙-elim-l  : {ℓ : Level} {A : Type ℓ} {y : A} {p : y ＝ y} →
+              p ＝ (λ _ → y) → {z : A} {q : y ＝ z} → p ∙ₚ q ＝ q
+  ∙-elim-r  : {ℓ : Level} {A : Type ℓ} {y : A} {p : y ＝ y} →
+              p ＝ (λ _ → y) → {x : A} {q : x ＝ y} → q ∙ₚ p ＝ q
+  ∙-extend-l
+            : {ℓ : Level} {A : Type ℓ} {x y z w : A} {p : x ＝ y} {q : y ＝ z}
+              {r : x ＝ w} {s : w ＝ z} →
+              p ∙ₚ q ＝ r ∙ₚ s → {u : A} {t : z ＝ u} → p ∙ₚ q ∙ₚ t ＝ r ∙ₚ s ∙ₚ t
+  ∙-extend-r
+            : {ℓ : Level} {A : Type ℓ} {x y z w : A} {p : x ＝ y} {q : y ＝ z}
+              {r : x ＝ w} {s : w ＝ z} →
+              p ∙ₚ q ＝ r ∙ₚ s →
+              {u : A} {t : u ＝ x} → (t ∙ₚ p) ∙ₚ q ＝ (t ∙ₚ r) ∙ₚ s
+  ∙-filler  : {z..1 : Level} {z.A : Type z..1} {x y z : z.A}
+              (p : x ＝ y) (q : y ＝ z) →
+              Square-syntax tt y x y z (symₚ p) reflₚ q (p ∙ₚ q)
+  ∙-filler-l
+            : {z..1 : Level} {z.A : Type z..1} {x y z : z.A} (p : x ＝ y)
+              (q : y ＝ z) →
+              Square-syntax tt x x y z reflₚ p q (p ∙ₚ q)
+  ∙-filler-r
+            : {z..1 : Level} {z.A : Type z..1} {x y z : z.A} (p : x ＝ y)
+              (q : y ＝ z) →
+              Square-syntax tt y x z z (symₚ p) q reflₚ (p ∙ₚ q)
+  ∙-flip-rₑ : {ℓᵃ : Level} {A : Type ℓᵃ} {a b c : A} {ab : a ＝ b}
+              {bc : b ＝ c} {ac : a ＝ c} →
+              ab ∙ₚ bc ＝ ac ≃ ab ＝ ac ∙ₚ bc ⁻¹
+  ∙-id-comm : {ℓ : Level} {A : Type ℓ} {x y : A} {p : x ＝ y} →
+              p ∙ₚ (λ _ → y) ＝ (λ _ → x) ∙ₚ p
+  ∙-id-i    : {ℓa ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {L : A → B → Type ℓh} {R : B → B → Type ℓb∙} ⦃ r : Refl R ⦄
+              ⦃ t : Comp L R L ⦄ ⦃ r = r₁ : GUnit-i L R ⦄ {x : A} {y : B}
+              (p : L x y) →
+              GUnitality-i L R p (Refl.refl r) (p ∙ refl)
+  ∙-id-o    : {ℓa ℓa∙ ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {L : A → A → Type ℓa∙} {R : A → B → Type ℓh} ⦃ r : Refl L ⦄
+              ⦃ t : Comp L R R ⦄ ⦃ r = r₁ : GUnit-o L R ⦄ {x : A} {y : B}
+              (q : R x y) →
+              GUnitality-o L R q (Refl.refl r) (refl ∙ q)
+  ∙-insert-l
+            : {ℓ : Level} {A : Type ℓ} {x y : A} {p : x ＝ y} {q : y ＝ x} →
+              p ∙ₚ q ＝ (λ _ → x) → {z : A} {r : x ＝ z} → r ＝ p ∙ₚ q ∙ₚ r
+  ∙-insert-r
+            : {ℓ : Level} {A : Type ℓ} {x y : A} {p : x ＝ y} {q : y ＝ x} →
+              p ∙ₚ q ＝ (λ _ → x) → {z : A} {r : z ＝ x} → r ＝ (r ∙ₚ p) ∙ₚ q
+  ∙-intro-l : {ℓ : Level} {A : Type ℓ} {y : A} {p : y ＝ y} →
+              p ＝ (λ _ → y) → {z : A} {q : y ＝ z} → q ＝ p ∙ₚ q
+  ∙-intro-r : {ℓ : Level} {A : Type ℓ} {y : A} {p : y ＝ y} →
+              p ＝ (λ _ → y) → {x : A} {q : x ＝ y} → q ＝ q ∙ₚ p
+  ∙-inv-i   : {ℓa ℓb ℓh ℓa∙ : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : A → B → Type ℓh} {O : B → A → Type ℓh}
+              {A∙ : A → A → Type ℓa∙} ⦃ r : Refl A∙ ⦄ ⦃ s : Dual I₁ O ⦄
+              ⦃ t : Comp I₁ O A∙ ⦄ ⦃ r = r₁ : GInv-i I₁ O A∙ ⦄ {x : A} {y : B}
+              (p : I₁ x y) →
+              p section-of (p ⁻¹)
+  ∙-inv-o   : {ℓa ℓa∙ ℓb ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {I = I₁ : A → B → Type ℓh} {O : B → A → Type ℓh}
+              {A∙ : A → A → Type ℓa∙} ⦃ r : Refl A∙ ⦄ ⦃ s : Dual O I₁ ⦄
+              ⦃ t : Comp I₁ O A∙ ⦄ ⦃ r = r₁ : GInv-o I₁ O A∙ ⦄ {x : A} {y : B}
+              (p : O y x) →
+              p retraction-of (p ⁻¹)
+  ∙-pull-l  : {ℓ : Level} {A : Type ℓ} {x y z : A} {p : x ＝ y}
+              {q : y ＝ z} {s : x ＝ z} →
+              p ∙ₚ q ＝ s → {w : A} {r : z ＝ w} → p ∙ₚ q ∙ₚ r ＝ s ∙ₚ r
+  ∙-pull-r  : {ℓ : Level} {A : Type ℓ} {x y z : A} {p : x ＝ y}
+              {q : y ＝ z} {s : x ＝ z} →
+              p ∙ₚ q ＝ s → {w : A} {r : w ＝ x} → (r ∙ₚ p) ∙ₚ q ＝ r ∙ₚ s
+  ∙-push-l  : {ℓ : Level} {A : Type ℓ} {x y z : A} {p : x ＝ y}
+              {q : y ＝ z} {s : x ＝ z} →
+              s ＝ p ∙ₚ q → {w : A} {r : z ＝ w} → s ∙ₚ r ＝ p ∙ₚ q ∙ₚ r
+  ∙-push-r  : {ℓ : Level} {A : Type ℓ} {x y z : A} {p : x ＝ y}
+              {q : y ＝ z} {s : x ＝ z} →
+              s ＝ p ∙ₚ q → {w : A} {r : w ＝ x} → r ∙ₚ s ＝ (r ∙ₚ p) ∙ₚ q
+  ∙-unique  : {z..1 : Level} {z.A : Type z..1} {x y z : z.A}
+              {p : x ＝ y} {q : y ＝ z} (r : x ＝ z) →
+              Square-syntax tt y x y z (symₚ p) reflₚ q r → r ＝ p ∙ₚ q
+  ∙ₑ-cancel-l
+            : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : Type ℓ′} {C : Type ℓ″}
+              (f : A ≃ B) (g : B ≃ C) →
+              f ⁻¹ ∙ₑ f ∙ₑ g ＝ g
+  ∙ₑ-cancel-r
+            : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : Type ℓ′} {C : Type ℓ″}
+              (f : A ≃ B) (g : C ≃ B) →
+              (f ∙ₑ g ⁻¹) ∙ₑ g ＝ f
+  ∙∙-contract
+            : {ℓᵃ : Level} {A : Type ℓᵃ} {x y z w : A} (p : w ＝ x) (q : x ＝ y)
+              (r : y ＝ z) (β : Σₜ (w ＝ z) (Square (symₚ p) q r)) →
+              (p ∙∙ q ∙∙ r , ∙∙-filler p q r) ＝ β
+  ∙∙-filler : {ℓ : Level} {A : I → Type ℓ} {a₀ a₀′ : A i0}
+              {a₁ a₁′ : A i1} (p : a₀ ＝ a₀′) (q : Pathᴾ-syntax A a₀′ a₁)
+              (r : a₁ ＝ a₁′) →
+              Pathᴾ-syntax (λ i → Pathᴾ-syntax A (p (~ i)) (r i)) q (p ∙∙ q ∙∙ r)
+  ∙∙-unique : {ℓᵃ : Level} {A : Type ℓᵃ} {x y z w : A} (p : w ＝ x)
+              (q : x ＝ y) (r : y ＝ z) (α β : Σₜ (w ＝ z) (Square (symₚ p) q r)) →
+              α ＝ β
+  ∙∙=∙      : {w..1 : Level} {w.A : Type w..1} {x y z w : w.A}
+              (p : x ＝ y) (q : y ＝ z) (r : z ＝ w) →
+              p ∙∙ q ∙∙ r ＝ p ∙ₚ q ∙ₚ r
+  ≃-is-of-hlevel
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ : Level} {B : Type B.ℓ}
+              (n : HLevel) →
+              is-of-hlevel n A → is-of-hlevel n B → is-of-hlevel n (A ≃ B)
+  ≃-is-of-hlevel-left-suc
+            : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ : Level} {B : Type B.ℓ}
+              (n : HLevel) →
+              is-of-hlevel (suc n) A → is-of-hlevel (suc n) (A ≃ B)
+  ≃-is-of-hlevel-right-suc
+            : {B.ℓ : Level} {B : Type B.ℓ} {A.ℓ : Level} {A : Type A.ℓ}
+              (n : HLevel) →
+              is-of-hlevel (suc n) B → is-of-hlevel (suc n) (A ≃ B)
+  ≃→is-of-hlevel
+            : {B.ℓ : Level} {B : Type B.ℓ} {A.ℓ : Level} {A : Type A.ℓ}
+              (h : HLevel) →
+              B ≃ A → is-of-hlevel h A → is-of-hlevel h B
+  ≃→is-of-hlevel!
+            : {B.ℓ : Level} {B : Type B.ℓ} {A.ℓ : Level} {A : Type A.ℓ}
+              (h : HLevel) →
+              B ≃ A → ⦃ A-hl : H-Level h A ⦄ → is-of-hlevel h B
+  ≃→is-of-size
+            : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : Type ℓ′} →
+              A ≃ B → is-of-size ℓ″ A → is-of-size ℓ″ B
+  ≃→is-of-size!
+            : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : Type ℓ′} →
+              A ≃ B → ⦃ _ : Size ℓ″ A ⦄ → is-of-size ℓ″ B
+  ≃→≃ᴱ      : {ℓᵃ ℓᵇ : Level} {A : Type ℓᵃ} {B : Type ℓᵇ} →
+              A ≃ B → A ≃ᴱ B
+  ≃→≅       : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level}
+              {B : Type B.ℓ′} →
+              A ≃ B → Isoₜ A B
+  ≃→⊣       : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level}
+              {B : Type B.ℓ′} (e : A ≃ B) →
+              Adjᶠ (_$_ e) (_$_ (e ⁻¹))
+  ≅-Fun     : {ℓ ℓ′ : Level} →
+              ≅-notation (Type ℓ) (Type ℓ′) (Type (ℓ ⊔ ℓ′))
+  ≅-notation
+            : {ℓa ℓb ℓ : Level} (A : Type ℓa) (B : Type ℓb) (R : Type ℓ) →
+              Typeω
+  ≅ₜ→⊣      : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level}
+              {B : Type B.ℓ′} (i : Isoₜ A B) →
+              Adjᶠ (i .Iso.to) (i .Iso.from)
+  ≅→=       : {B.ℓ : Level} {A B : Type B.ℓ} → Isoₜ A B → A ＝ B
+  ≅→from-has-retraction
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} (i : Iso F G x y) →
+              has-retraction (i .Iso.from)
+  ≅→from-has-section
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} (i : Iso F G x y) →
+              has-section (i .Iso.from)
+  ≅→is-of-hlevel
+            : {B.ℓ : Level} {B : Type B.ℓ} {A.ℓ : Level} {A : Type A.ℓ}
+              (h : HLevel) →
+              Isoₜ B A → is-of-hlevel h A → is-of-hlevel h B
+  ≅→is-of-hlevel!
+            : {B.ℓ : Level} {B : Type B.ℓ} {A.ℓ : Level} {A : Type A.ℓ}
+              (h : HLevel) →
+              Isoₜ B A → ⦃ A-hl : H-Level h A ⦄ → is-of-hlevel h B
+  ≅→is-of-size
+            : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : Type ℓ′} →
+              Isoₜ A B → is-of-size ℓ″ A → is-of-size ℓ″ B
+  ≅→is-of-size!
+            : {ℓ ℓ′ ℓ″ : Level} {A : Type ℓ} {B : Type ℓ′} →
+              Isoₜ A B → ⦃ _ : Size ℓ″ A ⦄ → is-of-size ℓ″ B
+  ≅→qinv    : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} (i : Iso F G x y) →
+              quasi-inverse (i .Iso.to)
+  ≅→retract : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} →
+              Iso F G x y → Retract F y x
+  ≅→to-has-retraction
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} (i : Iso F G x y) →
+              has-retraction (i .Iso.to)
+  ≅→to-has-section
+            : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Comp F G A∙ ⦄ ⦃ _ = z₂ : Refl B∙ ⦄
+              ⦃ _ = z₃ : Comp G F B∙ ⦄ {x : A} {y : B} (i : Iso F G x y) →
+              has-section (i .Iso.to)
+  ≅→≃       : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level}
+              {B : Type B.ℓ′} →
+              Isoₜ A B → A ≃ B
+  ≅→≊       : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {F : A → B → Type ℓh} {G : B → A → Type ℓh}
+              {F∙G : A → A → Type ℓa∙} {G∙F : B → B → Type ℓb∙}
+              ⦃ _ = z : Refl F∙G ⦄ ⦃ _ = z₁ : Comp F G F∙G ⦄
+              ⦃ _ = z₂ : Refl G∙F ⦄ ⦃ _ = z₃ : Comp G F G∙F ⦄ {x : A} {y : B} →
+              Iso F G x y → Biinv F G x y
+  ≈↔→≈      : {A.ℓa : Level} {A : Type A.ℓa} {ℙA₁.ℓ₁ : Level}
+              {ℙA₁ : Type ℙA₁.ℓ₁} {ℓ′ ℙA₂.ℓ₂ : Level} {ℙA₂ : Type ℙA₂.ℓ₂}
+              {ℓ″ : Level} ⦃ m₁ : Membership A ℙA₁ ℓ′ ⦄
+              ⦃ m₂ : Membership A ℙA₂ ℓ″ ⦄ {S : ℙA₁} {T : ℙA₂} →
+              S ≈↔ T → S ≈ T
+  ≊-Fun     : {ℓ ℓ′ : Level} →
+              ≊-notation (Type ℓ) (Type ℓ′) (Type (ℓ ⊔ ℓ′))
+  ≊-notation
+            : {ℓa ℓb ℓ : Level} (A : Type ℓa) (B : Type ℓb) (R : Type ℓ) →
+              Typeω
+  ≊→≅       : {ℓa ℓa∙ ℓb ℓb∙ ℓh : Level} {A : Type ℓa} {B : Type ℓb}
+              {A∙ : A → A → Type ℓa∙} {B∙ : B → B → Type ℓb∙}
+              {F : A → B → Type ℓh} {F⁻ : B → A → Type ℓh} ⦃ _ = z : Refl A∙ ⦄
+              ⦃ _ = z₁ : Refl B∙ ⦄ ⦃ _ = z₂ : Comp F F⁻ A∙ ⦄
+              ⦃ _ = z₃ : Comp F⁻ F B∙ ⦄ ⦃ _ = z₄ : Comp B∙ F⁻ F⁻ ⦄
+              ⦃ _ = z₅ : Comp F⁻ A∙ F⁻ ⦄ ⦃ _ : GUnit-o B∙ F⁻ ⦄
+              ⦃ _ : GUnit-i F⁻ A∙ ⦄ ⦃ _ : GAssoc F⁻ F F⁻ B∙ A∙ F⁻ ⦄ {x : A}
+              {y : B} →
+              Biinv F F⁻ x y → Iso F F⁻ x y
+  ⊎-notation
+            : {ℓa ℓb ℓ ℓ′ : Level} (A : Type ℓa) (B : Type ℓb) (R : Type ℓ) →
+              Type (ℓa ⊔ ℓb ⊔ ℓ ⊔ ℓsuc ℓ′)
+  ⊎₁-notation
+            : {ℓa ℓb ℓ ℓ′ : Level} (A : Type ℓa) (B : Type ℓb) (R : Type ℓ) →
+              Type (ℓa ⊔ ℓb ⊔ ℓ ⊔ ℓsuc ℓ′)
+  ⊕-notation
+            : {ℓa ℓb ℓ ℓ′ : Level} (A : Type ℓa) (B : Type ℓb) (R : Type ℓ) →
+              Type (ℓa ⊔ ℓb ⊔ ℓ ⊔ ℓsuc ℓ′)
+  ⊗-notation
+            : {ℓa ℓb ℓ ℓ′ : Level} (A : Type ℓa) (B : Type ℓb) (R : Type ℓ) →
+              Type (ℓa ⊔ ℓb ⊔ ℓ ⊔ ℓsuc ℓ′)
+  ⊣-Fun     : {A.ℓ : Level} {A : Type A.ℓ} {B.ℓ′ : Level}
+              {B : Type B.ℓ′} →
+              ⊣-notation (A → B) (B → A) (Type (A.ℓ ⊔ B.ℓ′))
+  ⊣-notation
+            : {ℓᵃ ℓᵇ ℓ : Level} (A : Type ℓᵃ) (B : Type ℓᵇ) (R : Type ℓ) →
+              Typeω
+  ⊤         : {ℓ : Level} {R : Type ℓ} ⦃ r : ⊤-notation R ⦄ → R
+  ⊤-notation
+            : {ℓ : Level} (R : Type ℓ) → Typeω
+  ⊤ₜ        : Type
+  ⊥         : {ℓ : Level} {R : Type ℓ} ⦃ r : ⊥-notation R ⦄ → R
+  ⊥-notation
+            : {ℓ : Level} (R : Type ℓ) → Typeω
+  ⊻-notation
+            : {ℓa ℓb ℓ ℓ′ : Level} (A : Type ℓa) (B : Type ℓb) (R : Type ℓ) →
+              Type (ℓa ⊔ ℓb ⊔ ℓ ⊔ ℓsuc ℓ′)
+  ⌞_⌟       : {ℓ : Level} {T : Type ℓ} ⦃ r : Underlying T ⦄ →
+              T → Type (r .Underlying.ℓ-underlying)
+  ⟦_⟧       : {ℓ : Level} {A : Type ℓ} ⦃ r : ⟦⟧-notation A ⦄ →
+              A → r .⟦⟧-notation.Sem
+  ⟦⟧-notation
+            : {ℓ : Level} (A : Type ℓ) → Typeω
+  ⟪_⟫       : {@0 ℓ ℓ′ : Level} {@0 A : Type ℓ} {@0 B : A → Type ℓ′}
+              {@0 f : (x : A) → B x} {@0 x : A} {@0 y : B x} (eq : f x ＝ y) →
+              Recall f x y
+  𝒰         : Type₁
+  𝒰ω        : Typeω₁
