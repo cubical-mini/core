@@ -33,4 +33,4 @@ instance
   Fun-Pull .pull-refl {v} _ = v
 
   Funs-HUnderlying : HUnderlying Funs
-  Funs-HUnderlying = mk-hunderlying fst id id
+  Funs-HUnderlying = mk-hunderlying id id

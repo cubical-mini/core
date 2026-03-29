@@ -9,8 +9,8 @@ module _ {m ℓ-ob⁻} {Ob⁻ : ob-sig ℓ-ob⁻} {n ℓ-ob⁺} {Ob⁺ : ob-sig 
     constructor mk-underlying
     no-eta-equality
     field
-      {ℓ-und⁻} : Levels m → Level
-      {ℓ-und⁺} : Levels n → Level
+      {ℓ-und⁻} : ℓ-sig 1 (m , _)
+      {ℓ-und⁺} : ℓ-sig 1 (n , _)
       ⌞_⌟⁻     : ∀{lxs} (x : Ob⁻ lxs) → Type (ℓ-und⁻ lxs)
       ⌞_⌟⁺     : ∀{lys} (y : Ob⁺ lys) → Type (ℓ-und⁺ lys)
       ⌞_⌟₁     : ∀{lxs lys} {x : Ob⁻ lxs} {y : Ob⁺ lys}
@@ -23,12 +23,12 @@ module _ {m ℓ-ob} {Ob : ob-sig ℓ-ob} {ℓ-hom} where
     HUnderlying = Underlying C
 
   module _ {C : HQuiver-onω m Ob ℓ-hom} (open Quiver-onω C renaming (Het to Hom)) where
-    module _ (ℓ-und : Levels m → Level) (⌞_⌟ : ∀{ls} (t : Ob ls) → Type (ℓ-und ls))
+    module _ {ℓ-und : ℓ-sig 1 (m , _)} (⌞_⌟ : ∀{ls} (t : Ob ls) → Type (ℓ-und ls))
       (⌞_⌟₁ : ∀{lxs lys} {x : Ob lxs} {y : Ob lys} → Hom x y → ⌞ x ⌟ → ⌞ y ⌟) where
       mk-hunderlying : HUnderlying C
       mk-hunderlying = mk-underlying ⌞_⌟ ⌞_⌟ ⌞_⌟₁
 
-    module _ ⦃ _ : Underlying C ⦄ where
+    module _ ⦃ _ : HUnderlying C ⦄ where
       ⌞_⌟ = ⌞_⌟⁺
 
 {-# DISPLAY Underlying.⌞_⌟⁻ _ = ⌞_⌟ #-}
