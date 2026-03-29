@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Diagram.Coproduct.Indexed where
 
 open import Foundations.Base

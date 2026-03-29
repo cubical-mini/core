@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Data.Word where
 
 open import Agda.Builtin.Word public

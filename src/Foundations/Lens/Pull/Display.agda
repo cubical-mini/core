@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Lens.Pull.Display where
 
 open import Foundations.Base

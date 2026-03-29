@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Notation.Underlying where
 
 open import Foundations.Base

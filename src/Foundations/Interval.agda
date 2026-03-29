@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Interval where
 
 open import Foundations.Interval.Base public

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Notation.Refl where
 
 open import Foundations.Base

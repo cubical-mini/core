@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Total where
 
 open import Foundations.Total.Base public

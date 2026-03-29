@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Interval.Instances where
 
 open import Foundations.Base

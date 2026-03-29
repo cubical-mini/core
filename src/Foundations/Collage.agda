@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Collage where
 
 open import Foundations.Base

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Cubical.Pi where
 
 open import Foundations.Base

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Diagram.Colimit where
 
 open import Foundations.Base

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Data.Sum where
 
 open import Prim.Type

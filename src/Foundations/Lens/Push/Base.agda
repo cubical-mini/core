@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Lens.Push.Base where
 
 open import Foundations.Base

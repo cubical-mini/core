@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Reflection.Meta where
 
 open import Prim.Data.Equality

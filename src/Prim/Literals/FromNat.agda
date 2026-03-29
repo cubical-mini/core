@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Literals.FromNat where
 
 open import Agda.Builtin.FromNat public

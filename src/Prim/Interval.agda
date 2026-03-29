@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Interval where
 
 open import Prim.Type

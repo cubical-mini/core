@@ -1,4 +1,3 @@
-{-# OPTIONS --safe --erased-cubical #-}
 module Prim.Kan where
 
 open import Prim.Interval

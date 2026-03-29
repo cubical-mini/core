@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Diagram.Negation where
 
 open import Foundations.Base

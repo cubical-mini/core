@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Discrete.Base where
 
 open import Prim.Interval public

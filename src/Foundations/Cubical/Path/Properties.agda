@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Cubical.Path.Properties where
 
 open import Prim.Data.Sigma

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Cubical.HLevel.Properties where
 
 open import Prim.Interval

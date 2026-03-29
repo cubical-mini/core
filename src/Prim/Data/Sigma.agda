@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Data.Sigma where
 
 open import Prim.Type

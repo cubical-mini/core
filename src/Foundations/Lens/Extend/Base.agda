@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Lens.Extend.Base where
 
 open import Foundations.Base

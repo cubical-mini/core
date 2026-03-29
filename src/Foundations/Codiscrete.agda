@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Codiscrete where
 
 open import Prim.Interval

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Data.Unit where
 
 open import Prim.Type

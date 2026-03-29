@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Type where
 
 open import Agda.Primitive public

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Lens.Pull where
 
 open import Foundations.Lens.Pull.Assoc   public

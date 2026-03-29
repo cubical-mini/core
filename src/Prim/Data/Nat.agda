@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Data.Nat where
 
 open import Prim.Type

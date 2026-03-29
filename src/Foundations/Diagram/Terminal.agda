@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Diagram.Terminal where
 
 open import Foundations.Base

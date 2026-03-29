@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Meta.Base where
 
 open import Prim.Reflection          public

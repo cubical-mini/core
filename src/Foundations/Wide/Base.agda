@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Wide.Base where
 
 open import Foundations.Base

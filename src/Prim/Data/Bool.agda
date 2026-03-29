@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Data.Bool where
 
 open import Prim.Type

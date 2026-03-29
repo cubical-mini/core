@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Cubical.HLevel.Base where
 
 open import Prim.Kan

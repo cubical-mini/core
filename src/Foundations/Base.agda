@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Base where
 
 open import Prim.Data.Nat public

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Literals.FromNeg where
 
 open import Agda.Builtin.FromNeg public

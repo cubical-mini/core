@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Reflection.Argument where
 
 open import Agda.Builtin.Reflection

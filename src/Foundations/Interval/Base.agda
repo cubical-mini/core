@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Interval.Base where
 
 open import Prim.Kan

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Lens.Push where
 
 open import Foundations.Lens.Push.Assoc   public

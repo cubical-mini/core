@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Functions where
 
 open import Foundations.Base

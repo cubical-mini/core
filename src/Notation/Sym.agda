@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Notation.Sym where
 
 open import Foundations.Base

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Diagram.Coproduct.Binary where
 
 open import Foundations.Base

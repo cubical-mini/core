@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Data.Char where
 
 open import Agda.Builtin.Char public

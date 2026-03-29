@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Path where
 
 open import Foundations.Discrete.Base   public

@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Data.Float where
 
 open import Agda.Builtin.Float public

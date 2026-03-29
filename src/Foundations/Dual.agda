@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Dual where
 
 open import Foundations.Dual.Base public

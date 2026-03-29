@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Foundations.Discrete where
 
 open import Foundations.Cubical.Path public

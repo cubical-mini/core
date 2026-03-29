@@ -1,4 +1,3 @@
-{-# OPTIONS --safe #-}
 module Prim.Data.Int where
 
 open import Agda.Builtin.Int public
