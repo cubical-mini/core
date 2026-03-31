@@ -2,12 +2,16 @@
   description = "A non-standard library for Cubical Agda";
 
   inputs = {
-    agda.url = "github:agda/agda";
-    flake-parts.url = "github:hercules-ci/flake-parts?rev=34fed993f1674c8d06d58b37ce1e0fe5eebcb9f5";
-    nixpkgs.url = "github:NixOS/nixpkgs?rev=d351d0653aeb7877273920cd3e823994e7579b0b";
+    nixpkgs.url = "github:NixOS/nixpkgs";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    agda = {
+      url = "github:agda/agda";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
   };
 
-  outputs = inputs@{ flake-parts, ... }:
+  outputs = inputs@{ flake-parts , ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       perSystem = { pkgs , system, ... }: let
         coreName = "cm-core";
@@ -24,9 +28,7 @@
             ];
           };
           buildInputs = [ ];
-          meta = {
-            description = "cubical-mini core";
-          };
+          meta.description = "cubical-mini core";
         };
 
         core-doc = pkgs.agdaPackages.mkDerivation {
@@ -39,9 +41,7 @@
             ];
           };
           buildInputs = [ core ];
-          meta = {
-            description = "cubical-mini core documentation";
-          };
+          meta.description = "cubical-mini core documentation";
         };
 
         core-test = pkgs.agdaPackages.mkDerivation {
@@ -54,9 +54,7 @@
             ];
           };
           buildInputs = [ core core-doc ];
-          meta = {
-            description = "cubical-mini core test suite";
-          };
+          meta.description = "cubical-mini core test suite";
         };
 
       in {
