@@ -71,10 +71,15 @@
 
         devShells.default = pkgs.mkShell {
           packages = [
+            (pkgs.agda.withPackages (p: [ core core-doc core-test ]))
+            pkgs.bashInteractive
             pkgs.emacs
             pkgs.haskellPackages.fix-whitespace
-            (pkgs.agda.withPackages (p: [ core core-doc core-test ]))
+            pkgs.tmux
           ];
+          shellHook = ''
+            exec $PWD/.devenv/startup.sh
+          '';
         };
 
         checks.default = core-test;
