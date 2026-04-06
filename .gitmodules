@@ -1,0 +1,4 @@
+[submodule "doc/theme"]
+	path = doc/theme
+	url = https://github.com/cubical-mini/forest-theme
+	branch = agda-forester

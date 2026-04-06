@@ -1,0 +1,9 @@
+\title{cubical-mini}
+\p{
+  Welcome. Here we'll try to use Cubical Agda both as a programming language and as a tool to explore mathematics.
+}
+
+\p{
+  The core library is optimized for expressivity \em{and} performance, it's made for the Agda machine.
+  This forest is for humans though.
+}

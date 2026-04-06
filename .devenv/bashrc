@@ -3,4 +3,4 @@ export LANG=C.UTF-8
 PS1='\u@\h:\w\$ '
 
 alias ls='ls --color=auto -CF'
-alias emacs="emacs -l $PWD/.devenv/init.el"
+alias emacs="emacs -l $PROJECT_ROOT/.devenv/init.el"

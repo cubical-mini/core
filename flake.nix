@@ -9,9 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
+    forester.url = "sourcehut:~jonsterling/ocaml-forester";
   };
 
-  outputs = inputs@{ flake-parts , ... }:
+  outputs = inputs@{ flake-parts , forester , ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       perSystem = { pkgs , system, ... }: let
         coreName = "cm-core";
@@ -71,14 +72,18 @@
 
         devShells.default = pkgs.mkShell {
           packages = [
+            forester.packages.${system}.default
             (pkgs.agda.withPackages (p: [ core core-doc core-test ]))
             pkgs.bashInteractive
             pkgs.emacs
+            pkgs.fswatch
             pkgs.haskellPackages.fix-whitespace
+            pkgs.haskellPackages.wai-app-static
             pkgs.tmux
           ];
           shellHook = ''
-            exec $PWD/.devenv/startup.sh
+            export PROJECT_ROOT="$PWD"
+            exec $PROJECT_ROOT/.devenv/startup.sh
           '';
         };
 
