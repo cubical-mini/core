@@ -1,0 +1,128 @@
+\date{2025-02-19}
+\author{samueltoth}
+\tag{macro}
+
+\export{basic-macros}
+\export{agda-macros}
+
+\xmlns:html{http://www.w3.org/1999/xhtml}
+
+\def\citek[refid]{\let\escape[x]{\x}\<html:span>[class]{link-reference}{[\escape{[\refid]}](\refid)}}
+
+\def\citet[tid][refid]{
+\let\escape[x]{\x}\<html:span>[class]{link-reference}[tid]{\tid}[refid]{\refid}{[\escape{[\refid, \tid]}](\refid)}
+}
+
+
+\def\embed[src]{
+  \<html:embed>[type]{text/html}[src]{\src}{}
+}
+
+\def\hidden[x]{}
+
+\def\rm[x]{\textrm{\x}}
+
+\def\tot[x]{{\startverb \~\stopverb{\x}}}
+
+\def\refl{\textrm{refl}}
+\def\Type{\textsf{Type}}
+
+\def\b1{\mathbb{1}}
+\def\b2{\mathbb{2}}
+\def\bR{\mathbb{R}}
+\def\bQ{\mathbb{Q}}
+\def\bZ{\mathbb{Z}}
+\def\bN{\mathbb{N}}
+
+
+\def\UU{\mathcal{U}}
+\def\UV{\mathcal{V}}
+\def\UW{\mathcal{W}}
+
+\def\CC{\mathcal{C}}
+\def\CD{\mathcal{D}}
+\def\CE{\mathcal{E}}
+\def\SS{#{\mathcal{S}}}
+
+\def\fibre[f][a]{\textrm{fib}_{\f}(\a)}
+
+\def\op{\mathfrak{op}}
+
+\def\id{\operatorname{id}}
+\def\ap{\operatorname{ap}}
+\def\fst{\operatorname{fst}}
+\def\snd{\operatorname{snd}}
+\def\glue{\operatorname{glue}}
+\def\point{\operatorname{point}}
+
+\def\lhtpy{\sim_{\Delta}}
+\def\rhtpy{\mathrel{{}_{\Delta}{\sim}}}
+
+
+\def\II{\mathbb{II}}
+
+\def\Hom{\operatorname{Hom}}
+
+\def\modflat[x]{\langle \flat | \x \rangle}
+\def\modsharp[x]{\langle \sharp | \x \rangle}
+\def\mod{\textsf{mod}}
+
+\def\toeq{\xrightarrow{\sim}}
+
+\def\qed{#{\square}}
+
+\def\proof[body]{
+\scope{
+  \put\transclude/toc{false}
+  \subtree{
+    \taxon{Proof}
+    \body
+    \qed
+  }
+}
+}
+
+\def\ttt{#{\boxslash}}
+
+\def\const{\operatorname{const}}
+\def\nullhtpy{\operatorname{\textrm{null{-}htpy}}}
+
+\def\pulldpow{\operatorname{\hat{\mathsf{\Pi}}}}
+\def\pullpow[f][g]{{\left\langle{\f},{\g}\right\rangle}}
+\def\pushsum{\operatorname{\hat{\mathsf{\Sigma}}}}
+\def\pushprod{\mathbin{\square}}
+
+
+
+
+\def\remark[body]{
+\scope{
+  \put\transclude/toc{false}
+\subtree{
+  \taxon{Remark}
+  \body
+}
+}
+}
+
+\def\closedScope[~body]{
+\scope{
+  \put\transclude/toc{false}
+  \put\transclude/expanded{false}
+  \body{}
+}
+}
+
+\def\todo[x]{
+\scope{
+   \put\transclude/toc{false}
+\subtree{
+   \taxon{Todo}
+   \<html:p>[style]{color: red;}{\x}
+}
+}
+}
+
+\def\details[x]{
+ \<html:details>{\x}
+}

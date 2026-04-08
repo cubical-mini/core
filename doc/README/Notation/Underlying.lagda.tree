@@ -1,18 +1,29 @@
-```agda
+\title{Underlying}
+\date{2026-04-09}
+\taxon{Module}
+\author{pavelturyansky}
+\import{stt-macros}
+
+\details{\agda{
 module README.Notation.Underlying where
 
 open import Foundations.Base
 open import Foundations.Functions
+}}
 
+
+\agda{
 open import Notation.Underlying
-```
+}
 
-`Underlying` notation is for quivers where:
-- both sorts of objects are morally displayed over types,
-  but not neccessarily have the form `Σ Type λ T → Some-Structure-on T`
-- heteromorphisms are structured functions
+\p{\code{Underlying} notation is for quivers where:}
+\ul{
+  \li{both sorts of objects are morally displayed over types, but not neccessarily have the form
+      #{\Sigma_{T : \Type} \text{Some-Structure-on}(T)}}
+  \li{heteromorphisms are structured functions}
+}
 
-```agda
+\agda{
 record Preset ℓo ℓh : Type (lsuc (ℓo ⊔ ℓh)) where
   field
     Ob  : Type ℓo
@@ -33,7 +44,9 @@ Presets .Quiver-onω.Het = Monotone
 instance
   Presets-HUnderlying : HUnderlying Presets
   Presets-HUnderlying = mk-hunderlying Preset.Ob Monotone.hom
-```
+}
 
-TODO: add a non-trivial `Underlying` instance for an inherently heterogeneous quiver
-Forgetting/adding free structure sound boring, is there something cool to consider?
+\p{
+  TODO: add a non-trivial `Underlying` instance for an inherently heterogeneous quiver.
+  Forgetting/adding free structure sound boring, is there something cool to consider?
+}

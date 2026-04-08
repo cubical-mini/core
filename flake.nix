@@ -5,14 +5,15 @@
     nixpkgs.url = "github:NixOS/nixpkgs";
     flake-parts.url = "github:hercules-ci/flake-parts";
     agda = {
-      url = "github:agda/agda";
+      url = "github:cubical-mini/agda?ref=agda-forester";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
     forester.url = "sourcehut:~jonsterling/ocaml-forester";
+    treelist.url = "github:samtoth/treelist";
   };
 
-  outputs = inputs@{ flake-parts , forester , ... }:
+  outputs = inputs@{ flake-parts , forester , treelist , ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       perSystem = { pkgs , system, ... }: let
         coreName = "cm-core";
@@ -80,6 +81,7 @@
             pkgs.haskellPackages.fix-whitespace
             pkgs.haskellPackages.wai-app-static
             pkgs.tmux
+            treelist.packages.${system}.default
           ];
           shellHook = ''
             export PROJECT_ROOT="$PWD"

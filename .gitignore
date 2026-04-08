@@ -1,10 +1,13 @@
-*.agdai
 *~
 \.*#*
 \#*
-dist-newstyle/
+*.agdai
 _build/
 MAlonzo/**
+dist-newstyle/
+Everything.agda
 result
 result-*
 doc/output
+doc/trees/autogen
+forest-map.json
