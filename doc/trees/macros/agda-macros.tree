@@ -1,4 +1,3 @@
-
 \xmlns:html{http://www.w3.org/1999/xhtml}
 
 \def\embed[src]{
@@ -6,15 +5,28 @@
 }
 
 \def\agda[bod]{
-\<html:div>[class]{Agda}{
-\pre{\bod}
+  \<html:div>[class]{Agda}{
+    \pre{\bod}
+  }
 }
+
+\def\summary[bod]{
+  \<html:summary>{
+    \bod
+  }
 }
 
 \def\details[bod]{
-\<html:details>{
-\bod
+  \<html:details>{
+    \bod
+  }
 }
+
+\def\boring[gist][bod]{
+  \details{
+    \summary{\gist}
+    \bod
+  }
 }
 
 \def\spanclass[col][bod]{\<html:span>[class]{\col}{\bod}}

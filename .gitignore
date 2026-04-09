@@ -1,4 +1,5 @@
 *~
+*.swp
 \.*#*
 \#*
 *.agdai
@@ -8,6 +9,7 @@ dist-newstyle/
 Everything.agda
 result
 result-*
-doc/output
-doc/trees/autogen
+output/
+doc/html/
+doc/trees/autogen/
 forest-map.json

@@ -7,20 +7,22 @@ trap 'rm -f "$tmp_file"' EXIT
 
 echo "module Everything where" > "$tmp_file"
 
-find doc -type f -name '*.lagda.tree' | \
-  grep -v "Everything" | sort | \
-  sed -re 's@.*doc/@@g;s@.lagda.tree@@g;s@/@.@g;s@^@open import @g;s@$@@g' \
-  >> "$tmp_file"
-
 find src -type f -name '*.agda' | \
   grep -v "Everything" | sort | \
   sed -re 's@.*src/@@g;s@.agda@@g;s@/@.@g;s@^@open import @g;s@$@@g' \
   >> "$tmp_file"
 
-EFILE=$PROJECT_ROOT/doc/Everything.agda
+find src -type f -name '*.lagda.tree' | \
+  grep -v "Everything" | sort | \
+  sed -re 's@.*src/@@g;s@.lagda.tree@@g;s@/@.@g;s@^@open import @g;s@$@@g' \
+  >> "$tmp_file"
+
+EFILE=$PROJECT_ROOT/src/Everything.agda
 
 if [ ! -f "$EFILE" ] || ! cmp -s "$tmp_file" "$EFILE"; then
   mv "$tmp_file" "$EFILE"
 else
   rm -f "$tmp_file"
 fi
+
+echo "Regenerated Everything.agda"

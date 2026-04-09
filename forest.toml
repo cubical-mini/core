@@ -1,4 +1,4 @@
 [forest]
-trees = ["trees"]
-assets = ["assets"]
+trees = ["doc/trees"]
+assets = ["doc/assets"]
 url = "https://cubical-mini.github.io/core/"

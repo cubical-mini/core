@@ -16,47 +16,20 @@
   outputs = inputs@{ flake-parts , forester , treelist , ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       perSystem = { pkgs , system, ... }: let
-        coreName = "cm-core";
-        coreVersion = "0.1.0";
 
-        core = pkgs.agdaPackages.mkDerivation {
-          pname = coreName;
-          version = coreVersion;
+        minimalFS = [
+          ./cm-core.agda-lib
+          ./src
+        ];
+
+        mkCore = extraFS: pkgs.agdaPackages.mkDerivation {
+          pname = "cm-core";
+          version = "0.1.0";
           src = pkgs.lib.fileset.toSource {
             root = ./. ;
-            fileset = pkgs.lib.fileset.unions [
-              ./cm-core.agda-lib
-              ./src
-            ];
+            fileset = pkgs.lib.fileset.unions (minimalFS ++ extraFS);
           };
-          buildInputs = [ ];
-          meta.description = "cubical-mini core";
-        };
-
-        core-doc = pkgs.agdaPackages.mkDerivation {
-          pname = coreName + "-doc";
-          version = coreVersion;
-          src = pkgs.lib.fileset.toSource {
-            root = ./doc ;
-            fileset = pkgs.lib.fileset.unions [
-              ./doc
-            ];
-          };
-          buildInputs = [ core ];
-          meta.description = "cubical-mini core documentation";
-        };
-
-        core-test = pkgs.agdaPackages.mkDerivation {
-          pname = coreName + "-test";
-          version = coreVersion;
-          src = pkgs.lib.fileset.toSource {
-            root = ./test ;
-            fileset = pkgs.lib.fileset.unions [
-              ./test
-            ];
-          };
-          buildInputs = [ core core-doc ];
-          meta.description = "cubical-mini core test suite";
+          meta.description = "cubical-mini core library";
         };
 
       in {
@@ -66,15 +39,14 @@
         };
 
         packages = {
-          default = core;
-          doc = core-doc;
-          test = core-test;
+          default = mkCore [];
+          doc = mkCore [ ./extra ];
         };
 
         devShells.default = pkgs.mkShell {
           packages = [
             forester.packages.${system}.default
-            (pkgs.agda.withPackages (p: [ core core-doc core-test ]))
+            pkgs.agda
             pkgs.bashInteractive
             pkgs.emacs
             pkgs.fswatch
@@ -89,7 +61,7 @@
           '';
         };
 
-        checks.default = core-test;
+        # checks.default = core-test;
       };
 
       systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];

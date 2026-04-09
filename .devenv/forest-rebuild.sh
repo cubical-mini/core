@@ -1,3 +1,3 @@
 #!/bin/sh
 
-forester build "$PROJECT_ROOT/doc/forest.toml"
+forester build "$PROJECT_ROOT/forest.toml" --dev

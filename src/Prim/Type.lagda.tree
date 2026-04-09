@@ -1,3 +1,8 @@
+\title{Prim.Type}
+\taxon{Module}
+\import{agda-macros}
+
+\agda{
 module Prim.Type where
 
 open import Agda.Primitive public
@@ -59,3 +64,4 @@ auto ⦃ (a) ⦄ = a
 
 autoω : {A : Typeω} → ⦃ A ⦄ → A
 autoω ⦃ (a) ⦄ = a
+}

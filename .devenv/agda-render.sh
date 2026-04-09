@@ -1,6 +1,5 @@
 #!/bin/sh
 
-$PROJECT_ROOT/.devenv/agda-gen-everything.sh
-echo "Regenerated Everything.agda"
-
-cd $PROJECT_ROOT/doc; agda --forest --forest-dir=trees/autogen --fhtml-dir=output/html Everything.agda
+agda --forest --forest-dir="$PROJECT_ROOT/doc/trees/autogen" --fhtml-dir="$PROJECT_ROOT/doc/html" "$PROJECT_ROOT/src/Everything.agda"
+rm -rf "$PROJECT_ROOT/output/html"
+cp -R "$PROJECT_ROOT/doc/html" "$PROJECT_ROOT/output/html"

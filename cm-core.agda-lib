@@ -1,5 +1,5 @@
 name: cm-core-0.1.0
-include: src
+include: src extra
 depend:
 flags:
   --cubical=erased

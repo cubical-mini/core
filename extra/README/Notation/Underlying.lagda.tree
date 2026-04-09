@@ -1,10 +1,11 @@
-\title{Underlying}
+\title{Notation.Underlying}
 \date{2026-04-09}
 \taxon{Module}
 \author{pavelturyansky}
-\import{stt-macros}
+\import{agda-macros}
 
-\details{\agda{
+\boring{Imports}{
+\agda{
 module README.Notation.Underlying where
 
 open import Foundations.Base
