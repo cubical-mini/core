@@ -1,10 +1,19 @@
 \title{Prim.Type}
 \taxon{Module}
-\import{agda-macros}
+\import{stt-macros}
+
+\boring{Imports}{\agda{
+module Prim.Type where
+}}
+
+\p{
+  Agda provides us with a plethora of universes, stratified by levels.
+  Programming tasks usually require only the lowest \code{lzero} or maybe the next one.
+  Most of the mathematics we're interested in here will require arbitrary finite levels,
+  and to make life easier sometimes we'll have to wander into ω level territory.
+}
 
 \agda{
-module Prim.Type where
-
 open import Agda.Primitive public
   using ()
   renaming ( Set  to 𝒰
@@ -19,7 +28,10 @@ open import Agda.Primitive public
         ; _⊔_ )
   renaming ( Set   to Type
            ; Setω  to Typeω )
+}
 
+\boring{Unsorted stuff}{
+\agda{
 level-of-type : {ℓ : Level} → Type ℓ → Level
 level-of-type {ℓ} _ = ℓ
 
@@ -36,11 +48,6 @@ record Liftω {ℓ} (A : Type ℓ) : Typeω where
   field lowerω : A
 open Liftω public
 
-record Erased {ℓ} (@0 A : Type ℓ) : Type ℓ where
-  constructor erase
-  field @0 erased : A
-open Erased public
-
 instance
   Lift-default : {ℓ ℓ′ : Level} {A : Type ℓ} → ⦃ A ⦄ → Lift ℓ′ A
   Lift-default ⦃ (a) ⦄ = lift a
@@ -48,10 +55,7 @@ instance
   Liftω-default : {ℓ : Level} {A : Type ℓ} → ⦃ A ⦄ → Liftω A
   Liftω-default ⦃ (a) ⦄ = liftω a
 
-  Erased-default : {ℓ : Level} {A : Type ℓ} → ⦃ A ⦄ → Erased A
-  Erased-default ⦃ (a) ⦄ .erased = a
-
-{-# INCOHERENT Lift-default Liftω-default Erased-default #-}
+{-# INCOHERENT Lift-default Liftω-default #-}
 
 
 -- Useful gadgets
@@ -64,4 +68,5 @@ auto ⦃ (a) ⦄ = a
 
 autoω : {A : Typeω} → ⦃ A ⦄ → A
 autoω ⦃ (a) ⦄ = a
-}
+}}
+\todo{Move those gadgets to a dedicated module.}

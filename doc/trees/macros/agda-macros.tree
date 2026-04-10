@@ -24,7 +24,7 @@
 
 \def\boring[gist][bod]{
   \details{
-    \summary{\gist}
+    \summary{▸ \gist}
     \bod
   }
 }

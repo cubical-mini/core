@@ -52,6 +52,7 @@
             pkgs.fswatch
             pkgs.haskellPackages.fix-whitespace
             pkgs.haskellPackages.wai-app-static
+            pkgs.ibm-plex
             pkgs.tmux
             treelist.packages.${system}.default
           ];

@@ -4,6 +4,8 @@
 
 ;; Project specific config
 
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono"))
+
 (load-file (let ((coding-system-for-read 'utf-8))
                 (shell-command-to-string "agda --emacs-mode locate")))
 
