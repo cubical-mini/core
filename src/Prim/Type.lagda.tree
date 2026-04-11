@@ -1,4 +1,4 @@
-\title{Prim.Type}
+\title{Universes and levels}
 \taxon{Module}
 \import{stt-macros}
 
@@ -30,7 +30,11 @@ open import Agda.Primitive public
            ; Setω  to Typeω )
 }
 
-\boring{Unsorted stuff}{
+\p{
+  Agda's predicative, but universes of types are not cumulative, sometimes
+  we have to lift things manually.
+}
+
 \agda{
 level-of-type : {ℓ : Level} → Type ℓ → Level
 level-of-type {ℓ} _ = ℓ
@@ -41,19 +45,19 @@ level-of-term {ℓ} _ = ℓ
 record Lift {ℓ} ℓ′ (A : Type ℓ) : Type (ℓ ⊔ ℓ′) where
   constructor lift
   field lower : A
-open Lift public
 
 record Liftω {ℓ} (A : Type ℓ) : Typeω where
-  constructor liftω
-  field lowerω : A
-open Liftω public
+  constructor lift
+  field lower : A
+}
 
+\boring{Unsorted stuff}{\agda{
 instance
   Lift-default : {ℓ ℓ′ : Level} {A : Type ℓ} → ⦃ A ⦄ → Lift ℓ′ A
   Lift-default ⦃ (a) ⦄ = lift a
 
   Liftω-default : {ℓ : Level} {A : Type ℓ} → ⦃ A ⦄ → Liftω A
-  Liftω-default ⦃ (a) ⦄ = liftω a
+  Liftω-default ⦃ (a) ⦄ = lift a
 
 {-# INCOHERENT Lift-default Liftω-default #-}
 

@@ -1,7 +1,14 @@
 #!/bin/sh
 
+rm -rf "$PROJECT_ROOT/doc/html"
 mkdir -p "$PROJECT_ROOT/doc/html"
-mkdir -p "$PROJECT_ROOT/output/html"
+ln -s "$PROJECT_ROOT/theme/Agda.css" "$PROJECT_ROOT/doc/html/Agda.css"
+
+rm -rf "$PROJECT_ROOT/output"
+mkdir -p "$PROJECT_ROOT/output"
+ln -s "$PROJECT_ROOT/doc/html/" "$PROJECT_ROOT/output/html"
+
+rm -rf "$PROJECT_ROOT/doc/trees/autogen"
 mkdir -p "$PROJECT_ROOT/doc/trees/autogen"
 
 $PROJECT_ROOT/.devenv/agda-gen-everything.sh

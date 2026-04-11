@@ -3,7 +3,6 @@ include: src extra
 depend:
 flags:
   --cubical=erased
-  --erased-matches
   --erasure
   --exact-split
   --experimental-lazy-instances
@@ -15,6 +14,7 @@ flags:
   --no-import-sorts
   --no-prop
   --no-qualified-instances
+  --no-sized-types
 
   -Werror
   -WnoUnsupportedIndexedMatch
