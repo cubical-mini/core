@@ -165,6 +165,23 @@
         "type": "github"
       }
     },
+    "forest-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775877544,
+        "narHash": "sha256-qBMjBNSMlSBmmPI+mA6fOtQxWITi0xy7Og29UCvDpJE=",
+        "owner": "cubical-mini",
+        "repo": "forest-theme",
+        "rev": "6b9f0b30ab026f1993da375de6595a7d91f6eb79",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cubical-mini",
+        "ref": "agda-forester",
+        "repo": "forest-theme",
+        "type": "github"
+      }
+    },
     "forester": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -488,6 +505,7 @@
       "inputs": {
         "agda": "agda",
         "flake-parts": "flake-parts",
+        "forest-theme": "forest-theme",
         "forester": "forester",
         "nixpkgs": "nixpkgs_3",
         "treelist": "treelist"
