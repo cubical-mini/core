@@ -1,0 +1,49 @@
+name: Default build
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install nix
+        uses: cachix/install-nix-action@v31
+
+      - name: Set up Cachix
+        uses: cachix/cachix-action@v17
+        with:
+          name: cm-core
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: Typecheck and render HTML
+        run: |
+          nix build .#html
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: result/
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    if: ${{ github.ref_name == 'master' }}
+
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Deploy pages
+        uses: actions/deploy-pages@v4
