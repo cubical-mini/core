@@ -1,0 +1,42 @@
+\title{Goals}
+\date{2026-04-13}
+\import{stt-macros}
+
+\p{
+After a few years of using Cubical Agda we experienced that category theory (as a discipline, not as a
+particular theory of 1-categories) is a powerful metamathematical tool which can help factor out a lot
+of common structure when dealing with both (higher) algebra and order theory.
+}
+
+\p{
+Idea of the core library is not to use Agda primitives directly for building things like it was in
+[old cubical-mini](https://github.com/cmcmA20/cubical-mini), though they will be available for the
+reasons of backward compatibility. Now we want to develop a few very abstract interfaces and then
+expose the primitives as specific \em{instances} of those. So the core is just an insulation layer,
+partially protecting the downstream from arbitrariness of the usual stdlib interfaces.
+}
+
+\p{
+  At the moment there are two main abstractions to develop, and a few direct applications of them:
+
+  \ol{
+    \li{
+      Quivers, using [this paper](sterling2026reflexivegraphlensesunivalent) and some DIY theory
+
+      \ul{
+        \li{Characterizing identity of complex types in a compositional way to derive SIP and transport/subst}
+        \li{Make notation based on universal constructions}
+      }
+    }
+
+    \li{
+      Polynomial functors, porting the [work of Aberlé](aberlé2026compositionalprogramverificationpolynomial)
+
+      \ul{
+        \li{ Exploring sheaves (see [these](pedrot2021ds) [papers](ahman2026sheavesoraclecomputations)) }
+        \li{ Exploring [higher modalities](RSS2020) }
+        \li{ Programming with effects }
+      }
+    }
+  }
+}

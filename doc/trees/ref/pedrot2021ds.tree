@@ -1,0 +1,21 @@
+\title{Debunking Sheaves}
+\date{2021-02-08}
+\taxon{Reference}
+\author/literal{Pierre-Marie Pédrot}
+
+\subtree{
+\taxon{Abstract}
+\p{
+In this note I will give a direct reformulation of sheaves in type theory that I came
+up with after translating back the topos theoretic notions straight out of the reference
+book Sheaves in Geometry and Logic. The main takeaways of this note are
+the following:
+\ul{
+\li{ Despite the name, sheaves have nothing to do with presheaves. }
+\li{ What it means to be a sheaf can be defined in a basic type theory. }
+\li{ Sheafification, by contrast, requires advanced machinery and generates monsters. }
+}
+As a coproduct, this also gives a straightforward explanation for Beth semantics without
+the need to go through Kripke semantics.
+}
+}

@@ -1,0 +1,38 @@
+\title{Sheaves as oracle computations}
+\date{2026-02-25}
+\taxon{Reference}
+\author/literal{Danel Ahman}
+\author/literal{Andrej Bauer}
+
+\subtree{
+\taxon{Abstract}
+\p{
+In type theory, an oracle may be specified abstractly by a predicate whose domain is the type
+of queries asked of the oracle, and whose proofs are the oracle answers. Such a specification
+induces an oracle modality that captures a computational intuition about oracles: at each
+step of reasoning we either know the result, or we ask the oracle a query and proceed upon
+receiving an answer. We characterize an oracle modality as the least one forcing the given
+predicate. We establish an adjoint retraction between modalities and propositional containers,
+from which it follows that every modality is an oracle modality. The left adjoint maps sums to
+suprema, which makes suprema of modalities easy to compute when they are given in terms of
+oracle modalities. We also study sheaves for oracle modalities. We describe sheafification in
+terms of a quotient-inductive type of computation trees, and describe sheaves as algebras for
+the corresponding monad. We also introduce equifoliate trees, an intensional notion of oracle
+computation given by a (non-propositional) container. Equifoliate trees descend to sheaves, and
+lift from sheaves in case the container is projective. As an application, we give a concrete
+description of all Lawvere-Tierney topologies in a realizability topos, closely related to a
+game-theoretic characterization by Takayuki Kihara.
+}
+}
+
+\meta{bibtex}{
+@misc{ahman2026sheavesoraclecomputations,
+      title={Sheaves as oracle computations},
+      author={Danel Ahman and Andrej Bauer},
+      year={2026},
+      eprint={2602.22135},
+      archivePrefix={arXiv},
+      primaryClass={math.LO},
+      url={https://arxiv.org/abs/2602.22135},
+}
+}

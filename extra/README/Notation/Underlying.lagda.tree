@@ -2,7 +2,7 @@
 \date{2026-04-09}
 \taxon{Module}
 \author{pavelturyansky}
-\import{agda-macros}
+\import{stt-macros}
 
 \boring{Imports}{
 \agda{
@@ -48,6 +48,6 @@ instance
 }
 
 \p{
-  TODO: add a non-trivial `Underlying` instance for an inherently heterogeneous quiver.
+  \todo{add a non-trivial \code{Underlying} instance for an inherently heterogeneous quiver.}
   Forgetting/adding free structure sound boring, is there something cool to consider?
 }

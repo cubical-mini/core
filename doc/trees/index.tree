@@ -1,9 +1,13 @@
 \title{cubical-mini}
+\author{alexgryzlov}
+\author{pavelturyansky}
 \p{
-  Welcome! Here we'll try to use Cubical Agda both as a programming language and as a tool to explore mathematics.
+  Welcome! Here we're trying to use Cubical Agda both as a programming language and as a tool to explore mathematics.
 }
 
-\p{
-  The core library is optimized for expressivity \em{and} performance, it's made for the Agda machine.
-  This forest is for humans though.
+\ul{
+ \li{Use \code{Ctrl+k} to search for a specific topic}
+ \li{Check [our organization](https://github.com/cubical-mini)}
 }
+
+\transclude{goals}

@@ -1,0 +1,33 @@
+\title{Compositional Program Verification with Polynomial Functors in Dependent Type Theory}
+\date{2026-04-01}
+\taxon{Reference}
+\author/literal{C. B. Aberlé}
+
+\subtree{
+\taxon{Abstract}
+\p{
+We present a framework for compositional program verification based on polynomial functors in
+dependent type theory. In this framework, polynomial functors serve as program interfaces,
+Kleisli morphisms for the free monad monad serve as implementations, and dependent polynomials
+encode pre/postcondition specifications. We show that implementations and their verifications
+compose via wiring diagrams, and that Mealy machines provide a compositional coalgebraic
+operational semantics. We identify the abstract categorical structure underlying this
+compositionality as a monoidal functor from specifications to interfaces with a compatible
+monoidal natural transformation of lax monoidal presheaves; this opens the door to
+generalizations to other categories, monoidal products, etc., including settings for concurrency
+and relational verification, which we sketch. As a proof-of-concept, the entire framework has
+been formalized in Agda.
+}
+}
+
+\meta{bibtex}{
+@misc{aberlé2026compositionalprogramverificationpolynomial,
+      title={Compositional Program Verification with Polynomial Functors in Dependent Type Theory},
+      author={C. B. Aberlé},
+      year={2026},
+      eprint={2604.01303},
+      archivePrefix={arXiv},
+      primaryClass={cs.LO},
+      url={https://arxiv.org/abs/2604.01303},
+}
+}
