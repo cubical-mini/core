@@ -1,6 +1,7 @@
 export LANG=C.UTF-8
 
+PR=${PR:-$PWD}
 PS1='\u@\h:\w\$ '
 
 alias ls='ls --color=auto -CF'
-alias emacs="emacs -l .devenv/init.el"
+alias emacs="emacs -l $PR/.devenv/init.el"

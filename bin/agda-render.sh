@@ -1,6 +1,5 @@
 #!/bin/sh
 
-mkdir -p doc/trees/autogen
-mkdir -p output/html
+PR=${PR:-$PWD}
 
-agda --forest --forest-dir="doc/trees/autogen" --fhtml-dir="output/html" "src/Everything.agda"
+agda --forest --forest-dir="$PR/doc/trees/autogen" --fhtml-dir="$PR/output/core/html" --html-prefix='..' "$PR/src/Everything.agda"

@@ -11,11 +11,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776355048,
-        "narHash": "sha256-jPtYXU5Kb2MLlz7bSZXjsO6WFlWRRnPaC8EgV8yDpWg=",
+        "lastModified": 1776436634,
+        "narHash": "sha256-nLavqmM4ynoTze9GaOJAXxP7kZFid0DcKbz7H+zMuEY=",
         "owner": "cubical-mini",
         "repo": "agda",
-        "rev": "9a4d3c2a5294d30deb1f840dd3bf1ef336654a78",
+        "rev": "324d474c0e4bacd697238e1e423e3edc52c4a4d3",
         "type": "github"
       },
       "original": {

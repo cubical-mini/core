@@ -1,3 +1,5 @@
 #!/bin/sh
 
-forester build "forest.toml"
+PR=${PR:-$PWD}
+
+forester build "$PR/forest.toml"

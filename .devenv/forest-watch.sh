@@ -1,3 +1,5 @@
 #!/bin/sh
 
-fswatch --event Created --event Updated --event Removed --event Renamed -or "doc/trees" | xargs -n1 forest-rebuild.sh
+PR=${PR:-$PWD}
+
+fswatch --event Created --event Updated --event Removed --event Renamed -or "$PR/doc/trees" | xargs -n1 forest-rebuild.sh

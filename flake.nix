@@ -68,7 +68,6 @@
             agda-render.sh
             forest-rebuild.sh
             mkdir -p $out/
-            cp -R output/html $out/
             cp -R output/core/* $out/
           '';
         };
@@ -99,7 +98,9 @@
             treelist.packages.${system}.default
           ];
           shellHook = ''
-            $PWD/.devenv/startup.sh
+            export PR=$PWD
+
+            $PR/.devenv/startup.sh
           '';
         };
 

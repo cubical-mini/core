@@ -1,11 +1,13 @@
 #!/bin/sh
 
-mkdir -p 'doc/assets'
+PR=${PR:-$PWD}
 
-rm -rf 'doc/trees/autogen'
-mkdir -p 'doc/trees/autogen'
+mkdir -p "$PR/doc/assets"
 
-rm -rf 'output/html'
-mkdir -p 'output/html'
+rm -rf "$PR/doc/trees/autogen"
+mkdir -p "$PR/doc/trees/autogen"
 
-cp -f 'theme/Agda.css' 'output/html/'
+rm -rf "$PR/output"
+mkdir -p "$PR/output/core/html"
+
+cp -f "$PR/theme/Agda.css" "$PR/output/core/html/"

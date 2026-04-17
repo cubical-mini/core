@@ -11,4 +11,5 @@ result
 result-*
 output/
 doc/trees/autogen/
+doc/html/
 forest-map.json
