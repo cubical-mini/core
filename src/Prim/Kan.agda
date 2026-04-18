@@ -54,6 +54,7 @@ hfill : {ℓ : Level} {A : Type ℓ} (φ : I) → I
       → ((i : I) → Partial (φ ∨ ~ i) A)
       → A
 hfill {A} φ i u = hcomp (φ ∨ ~ i) (fill-sys.sys (λ _ → A) φ i u)
+-- TODO vaguely recall that beautiful display form isn't possible for `hfill`
 
 open import Agda.Builtin.Cubical.Path public
   renaming ( _≡_   to _＝_

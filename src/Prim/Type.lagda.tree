@@ -2,8 +2,14 @@
 \taxon{Module}
 \import{stt-macros}
 
-\boring{Imports}{\agda{
+\boring{Seldom used}{\agda{
 module Prim.Type where
+
+open import Agda.Primitive public
+  using ( SSet
+        ; SSetω
+        ; LevelUniv
+        )
 }}
 
 \p{
@@ -19,20 +25,20 @@ open import Agda.Primitive public
   renaming ( Set  to 𝒰
            ; Setω to 𝒰ω )
 open import Agda.Primitive public
-  using ( SSet
-        ; SSetω
-        ; LevelUniv
-        ; Level
-        ; lzero
-        ; lsuc
-        ; _⊔_ )
-  renaming ( Set   to Type
-           ; Setω  to Typeω )
+  renaming ( Level to Level
+           ; lzero to lzero
+           ; lsuc  to lsuc
+           ; _⊔_   to _⊔_
+           ; Set   to Type
+           ; Setω  to Typeω
+           )
 }
 
 \p{
   Agda's predicative, but universes of types are not cumulative, sometimes
-  we have to lift things manually.
+  we have to lift things manually. New library design makes it possible to
+  partially emulate cumulativity for most practical purposes, but \code{Lift}s
+  will stay for backward compatibility reasons.
 }
 
 \agda{
@@ -72,5 +78,6 @@ auto ⦃ (a) ⦄ = a
 
 autoω : {A : Typeω} → ⦃ A ⦄ → A
 autoω ⦃ (a) ⦄ = a
-}}
+}
 \todo{Move those gadgets to a dedicated module.}
+}
