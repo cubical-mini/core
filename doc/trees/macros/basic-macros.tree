@@ -1,3 +1,76 @@
+\xmlns:html{http://www.w3.org/1999/xhtml}
+\author{samueltoth}
+\contributor{pavelturyansky}
+\tag{macro}
+
+\def\spanclass[col][bod]{\<html:span>[class]{\col}{\bod}}
+
+\def\embed[src]{
+  \<html:embed>[type]{text/html}[src]{\src}{}
+}
+
+\def\details[x]{
+  \<html:details>{\x}
+}
+
+\def\summary[x]{
+  \<html:summary>{\x}
+}
+
+\def\boring[gist][body]{
+  \details{
+    \summary{▸ \gist}
+    \body
+  }
+}
+
+\def\qed{#{\square}}
+
+\def\proof[body]{
+ \scope{
+   \put\transclude/toc{false}
+   \subtree{
+     \taxon{Proof}
+     \body
+     \qed
+   }
+ }
+}
+
+\def\remark[body]{
+  \scope{
+    \put\transclude/toc{false}
+    \subtree{
+      \taxon{Remark}
+      \body
+    }
+  }
+}
+
+\def\todo[x]{
+  \scope{
+    \put\transclude/toc{false}
+    \subtree{
+      \taxon{Todo}
+      \<html:p>[style]{color: red;}{\x}
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \def\latex-preamble{
  \startverb
  \usepackage{tikz, tikz-cd, mathtools, amssymb, stmaryrd}
@@ -39,14 +112,4 @@
          }
   \stopverb
   }{\body{}}}
-}
-
-\def\proof[body]{
- \scope{
-   \put\transclude/toc{false}
-   \subtree{
-     \taxon{Proof}
-     \body
-   }
- }
 }

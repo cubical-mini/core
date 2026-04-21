@@ -1,6 +1,6 @@
 \title{Universes and levels}
 \taxon{Module}
-\import{stt-macros}
+\import{cmc-macros}
 
 \boring{Seldom used}{\agda{
 module Prim.Type where

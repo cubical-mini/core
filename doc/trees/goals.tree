@@ -1,6 +1,6 @@
 \title{Goals}
 \date{2026-04-13}
-\import{stt-macros}
+\import{cmc-macros}
 
 \p{
 After a few years of using Cubical Agda we experienced that category theory (as a discipline, not as a

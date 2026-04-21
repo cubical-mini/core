@@ -2,7 +2,7 @@
 \date{2026-04-09}
 \taxon{Module}
 \author{pavelturyansky}
-\import{stt-macros}
+\import{cmc-macros}
 
 \boring{Imports}{
 \agda{

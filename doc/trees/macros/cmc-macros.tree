@@ -1,0 +1,15 @@
+\xmlns:html{http://www.w3.org/1999/xhtml}
+\date{2026-04-21}
+\author{pavelturyansky}
+\tag{macro}
+
+\export{basic-macros}
+\export{agda-macros}
+
+\def\refl{\textrm{refl}}
+\def\Type{\textsf{Type}}
+
+\def\id{\operatorname{id}}
+\def\ap{\operatorname{ap}}
+\def\Hom{\operatorname{Hom}}
+\def\Het{\operatorname{Het}}

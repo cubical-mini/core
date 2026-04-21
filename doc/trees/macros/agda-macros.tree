@@ -1,36 +1,12 @@
 \xmlns:html{http://www.w3.org/1999/xhtml}
-
-\def\embed[src]{
-  \<html:embed>[type]{text/html}[src]{\src}{}
-}
+\author{samueltoth}
+\import{basic-macros}
 
 \def\agda[bod]{
   \<html:div>[class]{Agda}{
     \pre{\bod}
   }
 }
-
-\def\summary[bod]{
-  \<html:summary>{
-    \bod
-  }
-}
-
-\def\details[bod]{
-  \<html:details>{
-    \bod
-  }
-}
-
-\def\boring[gist][bod]{
-  \details{
-    \summary{▸ \gist}
-    \bod
-  }
-}
-
-\def\spanclass[col][bod]{\<html:span>[class]{\col}{\bod}}
-
 
 \def\Function[bod]{\spanclass{Function}{\bod}}
 \def\Symbol[bod]{\spanclass{Symbol}{\bod}}

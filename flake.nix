@@ -72,6 +72,21 @@
           '';
         };
 
+        tex = (pkgs.texlive.combine {
+          inherit (pkgs.texlive)
+            scheme-small
+            latexindent
+            dvisvgm
+            pgf
+            tikz-cd
+            spath3
+            mathtools
+            amsfonts
+            stmaryrd
+            standalone
+          ;
+        });
+
       in {
         _module.args.pkgs = import inputs.nixpkgs {
           inherit system;
@@ -95,6 +110,7 @@
             pkgs.ibm-plex
             pkgs.tmux
             scripts
+            tex
             treelist.packages.${system}.default
           ];
           shellHook = ''
